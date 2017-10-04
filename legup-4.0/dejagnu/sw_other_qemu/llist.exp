@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd llist
+set test "llist"
+set expected {Result: 4831}
+
+run-test-qemu $test $expected
+
+cd ..

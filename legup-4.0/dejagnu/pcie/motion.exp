@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/chstone/motion
+set test "motion"
+
+set pcieexpected {#\s+avm_mem_readdata:\s+000000ce0000061e\n#\s+avm_mem_readdata:\s+0000002900000046\n#\s+avm_mem_readdata:\s+000000ce0000061e\n#\s+avm_mem_readdata:\s+000000d800000078\n#\s+avm_mem_readdata:\s+000000c800000000\n#\s+avm_mem_readdata:\s+000000f000000000\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../../examples

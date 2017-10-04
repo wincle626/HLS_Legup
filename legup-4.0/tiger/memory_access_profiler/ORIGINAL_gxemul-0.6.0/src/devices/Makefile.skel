@@ -1,0 +1,69 @@
+#
+#  Makefile for GXemul devices
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(XINCLUDE) $(DINCLUDE)
+
+OBJS=device.o bus_isa.o bus_pci.o lk201.o \
+	dev_8253.o dev_8259.o dev_adb.o dev_ahc.o dev_algor.o dev_asc.o \
+	dev_bebox.o dev_bt431.o dev_bt455.o dev_bt459.o dev_clmpcc.o \
+	dev_colorplanemask.o dev_cons.o dev_cpc700.o dev_dc7085.o \
+	dev_dec21030.o dev_dec21143.o dev_dec5800.o dev_dec_ioasic.o \
+	dev_disk.o dev_dreamcast_asic.o dev_dreamcast_g2.o \
+	dev_dreamcast_gdrom.o dev_dreamcast_maple.o dev_dreamcast_rtc.o \
+	dev_eagle.o dev_ether.o dev_fb.o dev_fbctrl.o dev_fdc.o \
+	dev_footbridge.o dev_gc.o dev_gt.o dev_hammerhead.o dev_i80321.o \
+	dev_igsfb.o dev_iq80321_7seg.o dev_irqc.o dev_jazz.o dev_kn01.o \
+	dev_kn02.o dev_kn220.o dev_kn230.o dev_le.o \
+	dev_lpt.o dev_m8820x.o dev_malta_lcd.o dev_mb8696x.o dev_mc146818.o \
+	dev_mk48txx.o dev_mp.o dev_mvme187.o dev_ns16550.o dev_ohci.o \
+	dev_osiop.o dev_pcc2.o dev_pccmos.o dev_pcic.o dev_pckbc.o \
+	dev_pmagja.o dev_pmppc.o dev_prep.o dev_ps2_ether.o dev_ps2_gif.o \
+	dev_ps2_gs.o dev_ps2_spd.o dev_ps2_stuff.o dev_pvr.o dev_px.o \
+	dev_ram.o dev_random.o dev_rs5c313.o dev_rtc.o dev_rtl8139c.o \
+	dev_scc.o dev_sfb.o dev_sgi_gbe.o dev_sgi_ip19.o dev_sgi_ip20.o \
+	dev_sgi_ip22.o dev_sgi_ip30.o dev_sgi_ip32.o dev_sgi_mardigras.o \
+	dev_sh4.o dev_sii.o dev_sn.o dev_ssc.o dev_turbochannel.o \
+	dev_uninorth.o dev_unreadable.o dev_v3.o dev_vga.o dev_vme.o \
+	dev_vr41xx.o dev_wdc.o dev_z8530.o dev_zero.o
+
+all: fonts_done
+	$(MAKE) objs
+
+fonts_done: fonts_made
+	$(MAKE) font8x8.cc font8x10.cc font8x16.cc
+
+fonts_made:
+	cd fonts; $(MAKE)
+
+autodev.cc: autodev_head.cc autodev_middle.cc autodev_tail.cc makeautodev.sh bus_pci.cc $(OBJS)
+	./makeautodev.sh
+
+objs: $(OBJS)
+	$(MAKE) autodev.o
+
+$(OBJS): Makefile
+
+dev_vga.o: font8x8.cc font8x16.cc font8x10.cc
+
+dev_fb.o: fb_include.cc dev_fb.cc
+
+font8x8.cc:
+	cp -f fonts/font8x8.cc .
+
+font8x10.cc:
+	cp -f fonts/font8x10.cc .
+
+font8x16.cc:
+	cp -f fonts/font8x16.cc .
+
+
+clean:
+	rm -f $(OBJS) *core font8x16.cc font8x10.cc font8x8.cc
+	rm -f autodev.[co]*
+	cd fonts; $(MAKE) clean
+
+clean_all: clean
+	cd fonts; $(MAKE) clean_all
+	rm -f Makefile fonts/Makefile
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+./compile_to_assembly ../../examples/chstone/adpcm/adpcm.c
+./compile_to_assembly ../../examples/chstone/aes/aes.c
+./compile_to_assembly ../../examples/chstone/blowfish/bf.c
+./compile_to_assembly ../../examples/chstone/dfadd/dfadd.c
+./compile_to_assembly ../../examples/chstone/dfdiv/dfdiv.c
+./compile_to_assembly ../../examples/chstone/dfmul/dfmul.c
+./compile_to_assembly ../../examples/chstone/dfsin/dfsin.c
+./compile_to_assembly ../../examples/chstone/gsm/gsm.c
+./compile_to_assembly ../../examples/chstone/jpeg/main.c
+./compile_to_assembly ../../examples/chstone/mips/mips.c
+./compile_to_assembly ../../examples/chstone/motion/mpeg2.c
+./compile_to_assembly ../../examples/chstone/sha/sha_driver.c
+
+mv main.s jpeg.s	## rename main.s -> jpeg.s so its useful
+rm adpcm.bc aes.bc bf.bc dfadd.bc dfdiv.bc dfmul.bc dfsin.bc gsm.bc main.bc mips.bc mpeg2.bc sha_driver.bc

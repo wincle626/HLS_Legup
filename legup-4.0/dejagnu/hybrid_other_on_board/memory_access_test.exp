@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd memory_access_test
+set test "memory_access_test"
+
+set hybridexpected {Result: 32}
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ..

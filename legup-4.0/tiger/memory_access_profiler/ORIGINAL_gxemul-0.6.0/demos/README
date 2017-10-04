@@ -1,0 +1,33 @@
+Overview
+--------
+
+This directory contains various simple tutorial-like demos, which
+demonstrate some of the functionality of the the "test machines" in GXemul.
+
+Each directory has a README file, containing examples on how to build and
+run the demo programs for various target architectures.
+
+
+Simple demos:
+-------------
+
+  o)  hello		Prints Hello World to the console.
+
+  o)  rectangles	Draws random rectangles to the framebuffer, using
+			manual pixel fill-loops.
+
+  o)  disk		Reads sectors from a disk image, and dumps the
+			contents in hex and ascii to the console.
+
+  o)  mp                Multi-Processor demo (not very functional yet)
+
+
+License note
+------------
+
+These demos are not under the same license(s) as the rest of GXemul.
+
+The demos, and the testmachine include header files, are public domain, so
+you can reuse the code even in projects which have licenses that are
+incompatible with the BSD-style licenses used for GXemul itself.
+

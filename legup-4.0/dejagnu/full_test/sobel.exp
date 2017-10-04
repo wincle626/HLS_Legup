@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/sobel
+set test "sobel"
+set expected {Count:\s+7119\s+}
+set gxexpected {reg: v0 = 0x0000000000000001}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

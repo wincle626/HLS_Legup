@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/motion
+set test "motion"
+
+set expected {Result: 12}
+
+run-test-qemu $test $expected
+
+cd ../..

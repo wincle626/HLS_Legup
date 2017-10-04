@@ -1,0 +1,6 @@
+file_aout.cc  a.out executable file support
+file_ecoff.cc  ECOFF file support
+file_elf.cc  ELF file support
+file_macho.cc  Mach-O file support
+file_raw.cc  Raw file support
+file_srec.cc  SREC file support

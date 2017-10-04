@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogSelectSignals</class>
+ <widget class="QDialog" name="DialogSelectSignals">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>710</width>
+    <height>563</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>DialogSelectSignals</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QTableWidget" name="tableWidgetFunctions">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tableWidgetIRs">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tableWidgetSignals">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+             <weight>75</weight>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Load Signals</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidgetExtra">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+               <weight>75</weight>
+               <italic>true</italic>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="tableWidgetSelectedSignals">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>150</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <italic>true</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>598</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>604</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidgetFunctions</sender>
+   <signal>itemClicked(QTableWidgetItem*)</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>tableWidgetFunctions_ItemClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>122</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidgetIRs</sender>
+   <signal>itemClicked(QTableWidgetItem*)</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>tableWidgetIRs_ItemClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>282</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidgetSignals</sender>
+   <signal>itemDoubleClicked(QTableWidgetItem*)</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>tableWidgetSignals_ItemDoubleClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>456</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>238</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidgetExtra</sender>
+   <signal>itemDoubleClicked(QTableWidgetItem*)</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>tableWidgetExtra_ItemDoubleClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>558</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>488</x>
+     <y>62</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidgetSelectedSignals</sender>
+   <signal>itemDoubleClicked(QTableWidgetItem*)</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>tableWidgetSelectedSignals_ItemDoubleClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>571</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>DialogSelectSignals</receiver>
+   <slot>pushButtonLoadSignals_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>579</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>626</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>tableWidgetFunctions_ItemClicked(QTableWidgetItem*)</slot>
+  <slot>tableWidgetIRs_ItemClicked(QTableWidgetItem*)</slot>
+  <slot>tableWidgetSignals_ItemDoubleClicked(QTableWidgetItem*)</slot>
+  <slot>tableWidgetSelectedSignals_ItemDoubleClicked(QTableWidgetItem*)</slot>
+  <slot>tableWidgetExtra_ItemDoubleClicked(QTableWidgetItem*)</slot>
+  <slot>pushButtonLoadSignals_clicked()</slot>
+ </slots>
+</ui>

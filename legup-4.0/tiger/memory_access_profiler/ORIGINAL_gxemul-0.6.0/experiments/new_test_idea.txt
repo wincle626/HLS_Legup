@@ -1,0 +1,239 @@
+2005-05-31: Idea about reasonably fast emulation using Dynamic Translation,
+but _NOT_ binary translation. (So there is no need for individual assembly 
+language backends.)
+
+I got the inspiration for this when geist (in #osdev on Freenode) said 
+that he had a 10-instruction overhead per emulated instruction in his 
+emulator. I went to sleep with that statement ringing in my mind, and woke 
+up a few hours later. Depending on how you count, it seems to be possible 
+to get down to as few as 5+n+1 instructions overhead on i386, per emulated 
+instruction, where n is the number of instructions it takes to do the 
+actual work (for example 7 for a simple "add"-like instruction).
+
+(On Alpha, it's about 8+n+1, or 7+n+1 if you skip an alignment-unop. 
+Also, on i386, a variant with 6+n+1 instructions gives better performance 
+than 5+n+1, so this is probably best to leave for the compiler to 
+optimize.)
+
+-------------------------------------------------------------------------------
+
+Initial tests:  a full page of 1024 add instructions followed by a return 
+to the start of the page gives the following result:
+
+	2.8 GHz Xeon:	168 MIPS (16.66 cycles per emulated instruction)
+			  [ 6 instrs in the main loop + 7 instrs for the add
+			  + 1 instr for the return from the add function = 14. ]
+			with gcc -O3 -fomit-frame-pointer
+
+	533 MHz pca56:	14.6 MIPS (36.3 cycles per emulated instruction)
+			  [ 7 instrs in the main loop + 7 instrs for the add
+			  + 1 instr for the return from the add function
+			  + 1 unop for alignment in the main loop = 16 instrs. ]
+			with ccc -fast -O4
+
+(see new_test_1.c)
+
+-------------------------------------------------------------------------------
+
+	run_one_instruction(struct cpu *cpu)
+	{
+		/*
+		 *  Get the instruction to execute, and advance the
+		 *  program counter:
+		 *
+		 *  Actually, the program counter itself isn't increased here.
+		 *  cpu->next_instr_call can be seen as an offset into the
+		 *  current "page".  cpu->current_page can be a pointer to that
+		 *  page. So by taking
+		 *
+		 *   ((size_t)cpu->next_instr_call - (size_t)cpu->current_page
+		 *    )  / sizeof(struct instr_call)
+		 *
+		 *  we get the lowest bits of the program counter. This is
+		 *  only necessary for jumps and at the end of a translated
+		 *  page.
+		 */
+		struct instr_call *ic = cpu->next_instr_call;
+		cpu->next_instr_call ++;
+		ic->f(cpu, ic);
+
+Pseudo-code for Alpha:  cpu is in a0.
+	move	a0, s0			; save away a0
+lop:
+	lq	a1, next_instr_call(a0)	; a1 is ic
+	addq	a1, 64, t1		; t1 = a1 + sizeof(struct instr_call)
+	sq	t1, next_instr_call(a0)	; cpu->next_instr_call ++;
+
+	lq	t2, f(a1)		; t2 = ic->f
+	jsr	ra,(t2),0		; call ic->f(cpu, ic);
+
+	move	s0, a0			; restore a0
+	+ some fuss about the global pointer
+	(goto lop)
+
+On i386, perhaps:
+	;  assuming ebx is cpu
+	mov	esi, [ebx + next_instr_call]	; esi = ic = cpu->next_ic..
+	add	[ebx + next_instr_call], 32	; cpu->next_instr_call ++;
+	push	esi				; push ic
+	push	ebx				; push cpu
+	call	[esi + f]			; ic->f
+	pop	ebx				; restore cpu pointer
+	pop	eax	; nonsense
+loop...
+
+		/*
+		 *  If the program counter is changed because of a jump or so,
+		 *  then cpu->next_instr_call should have been updated by
+		 *  the 'f' function.
+		 *
+		 *  If there was an exception, it could simply have been set
+		 *  to something outside of the array.
+		 *
+		 *  If we reach the end of a "translated" page, then there
+		 *  could be a special function there as well.
+		 */
+	}
+
+f could be something like:
+
+	f_add(struct cpu *cpu, struct instr_call *ic)
+	{
+		int32_t *a = (int32_t *) ic->arg[0];
+		int32_t *b = (int32_t *) ic->arg[1];
+		int32_t *c = (int32_t *) ic->arg[2];
+
+		*a = (*b) + (*c);
+
+In pseudo-alpha assembler:  a0=cpu, a1=ic
+	ld t0, 8(a1)
+	ld t1, 16(a1)
+	ld t2, 24(a1)
+	ld t3, 0(t1)
+	ld t4, 0(t2)
+	addl t3,t4, t5
+	sd t5, 0(t0)
+	ret
+	}
+
+The arguments in the instr_call struct should be set up specifically for 
+each function. An "add", as seen in the example above, usually needs two 
+pointers to source values in memory, and a destination.
+
+-------------------------------------------------------------------------------
+
+Things to think about:
+
+	x)  Exceptions:
+		need to be detected by individual functions, and when
+		detected, change cpu->next_instr_call to something which
+		breaks out of the main loop.
+
+	x)  Single-stepping
+		One solution is to have multiple run-loops. One which is
+		used with single-stepping, and one for fast runs.
+
+	x)  End of page?  What is a good page size?  (It must be equal or
+		less than an emulated hardware page, so maybe 4KB or less.)
+
+	x)  Default page = filled with entries of "this needs to be
+		translated" function. (An optimization is to try to translate
+		a few at a time, not just one, to minimize the number of
+		calls/returns from the translator function.)
+
+	x)  Writes to a translated page should either invalidate the entire
+		page's translations, or at least those entries that are
+		written to.
+
+	x)  Common "combinations" of instructions:
+		o)  Doesn't work at the end of a page.
+		o)  The second (and third etc) of the instructions still
+		    has to be translated, but still, common instructions
+		    can be combined.
+
+	x)  Keeping track of the number of executed instructions:
+		Any instruction which changes the execution flow, or at
+		the end of a page, or if an exception occurs, can check
+		what the program counter is and compare it to the last
+		value where the number of instructions was known. This
+		works for fixed-size ISAs such as MIPS, anyway.
+
+-------------------------------------------------------------------------------
+
+A variant for non-fixed-size-ISAs:
+
+	o)  The instr_call struct can contain a field which says how many
+	    bytes long the instruction was.
+
+		struct instr_call *ic = cpu->next_instr_call;
+		cpu->next_instr_call ++;
+		ic->f(cpu, ic);
+
+	    must then be changed into
+
+		struct instr_call *ic = cpu->next_instr_call;
+		cpu->next_instr_call += id->instruction_length;
+		ic->f(cpu, ic);
+
+	    At the end of the page, there must be more than one "end of page"
+	    entry, to account for the various possible instruction lengths.
+
+	o)  There has to be one translation entry for each _byte_ of code,
+	    not just for each possible instruction (say, every fourth byte
+	    for MIPS).  (Another example would be m68k, where there would
+	    have to be a translation entry for every other byte of code.)
+
+-------------------------------------------------------------------------------
+
+An alternative would be to have the main run-loop look like this:
+(see new_test_2.c)
+
+        for (;;) {
+                ic = cpu->next_instr_call++;
+                ic->f(ic);
+
+                ic = cpu->next_instr_call++;
+                ic->f(ic);
+
+		/*  ..  */
+	}
+
+if ic contains a pointer to the cpu struct (for those functions that need 
+it; a simple "add" doesn't, for example).
+
+This results in just 5 (!) instructions overhead per emulated instruction, 
+plus the code for the specific instruction (for example 8 for a simple 
+"add"). objdump -d shows that the main run-loop looks like this on i386, 
+if no cpu struct argument is used:
+
+  080485ba <r>:
+   80485ba:       53                      push   %ebx
+   80485bb:       83 ec 08                sub    $0x8,%esp
+   80485be:       8b 5c 24 10             mov    0x10(%esp,1),%ebx
+   80485c2:       8b 43 08                mov    0x8(%ebx),%eax       ! 1
+   80485c5:       8d 48 14                lea    0x14(%eax),%ecx      ! 2
+   80485c8:       89 4b 08                mov    %ecx,0x8(%ebx)       ! 3
+   80485cb:       89 04 24                mov    %eax,(%esp,1)        ! 4
+   80485ce:       ff 10                   call   *(%eax)              ! 5
+
+where the last 5 lines are then repeated for each inlined instruction call.
+
+However, initial experiments on both Alpha and i386 hosts indicate that
+this is _slower_ in practice than ic->f(cpu, ic), even when cpu is not used.
+
+So, since passing along cpu produces faster code, and since cpu often 
+_will_ be used, then the first choice is better.
+
+-------------------------------------------------------------------------------
+
+2007-04-21: Interestingly, this approach is very similar to what is used
+in a paper from 1990, by Robert Bedichek. "Some Efficient 
+Architecture Simlation Techniques".
+
+     http://xsim.com/papers/bedichek90some.pdf
+
+The paper details the same solution to intermediate representation that I 
+use in GXemul, including the end-of-page stuff, and to-be-translated 
+instruction.
+
+-------------------------------------------------------------------------------

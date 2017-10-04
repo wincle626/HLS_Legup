@@ -1,0 +1,29 @@
+load_lib legup.exp
+
+set expected {# result =\s+4\s+}
+
+cd ../examples/parallel/single/hash
+
+cd ../../pthreads/hash
+
+set test "hash Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/hash_pipeline
+
+set test "hash_pipeline Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/hash_2
+set test "hash_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../hash_3
+set test "hash_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../hash_4
+set test "hash_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

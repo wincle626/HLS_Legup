@@ -1,0 +1,20 @@
+The vJTAGUart component is a replacement for the JTAG UART supplied by Altera.  The JTAG_Atlantic.dll library used to access the JTAG UART doesn't seem to work on the PWF so the vJTAGUart was created to replace it.  It uses virtual JTAG to communicate with a PC, and on the Avalon bus side the interface is the same as the JTAG UART with various bits missing.  It doesn't use interrupts, and though the register maps are the same, only some parts of it are functional.  Specifically the data register is implemented as with the JTAG UARt, while the control register only implements the WSPACE field.
+
+The virtual JTAG interface uses a 2-bit instruction register, the functionality of the possible IR values is as follows
+
+IR Value  |                       Description
+   0      | UART Write, writing an 8 bit value to this writes that to the UART write FIFO
+          | so it can then be read by the processor, if the write FIFO is full this
+          | will not do anything
+   1      | UART Write FIFO left, write 9 0 bits and read back the amount of space left
+          | in the write FIFO
+   2      | UART read. write 8 0 bits and read back a 8-bit character from the UART
+          | Read FIFO, if there's nothing in the read FIFO the value you get it undefined
+   3      | UART read FIFO available, write 9 0  bits and read back the amount of data
+          | available in the read FIFO
+
+Serial.tcl is a tcl script that implements a terminal for use with the vJTAGUart, it connects to a port on localhost which all terminal data goes over.  It takes 4 arguments: a cable name, a device number, a virtual JTAG instance number and a port.  As an example if you had a device on a cable USB-Blaster [USB-0] with a vJTAGUart with an instance number of 1 (see the compilation report to see what instance numbers are assigned to which things), and you had setup a listening socket on port 5000 for terminal traffic you would run the script as:
+
+quartus_stp -t serial.tcl "USB-Blaster [USB-0]" 0 1 5000
+
+There is more information about virtual JTAG in the sld_virtual_jtag Megafunction User Guide, located at: http://www.altera.com/literature/ug/ug_virtualjtag.pdf, look at the Quartus II Scripting Reference Manual for more information on using virtual JTAG from TCL scripts.  If you're unfamiliar with JTAG, check out the Wikipedia article: http://en.wikipedia.org/wiki/JTAG for a brief overview you may also wish to consult the TI JTAG Primer at http://web.archive.org/web/20060429074428/http://focus.ti.com/lit/an/ssya002c/ssya002c.pdf, of particular interest is the state machine diagram on page 24 (3-5).

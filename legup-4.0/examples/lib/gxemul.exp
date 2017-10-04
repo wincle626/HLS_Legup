@@ -1,0 +1,38 @@
+#!/usr/bin/expect
+
+###################################################
+#
+# This script runs gxemul with the script argument
+# and prints the exit value of pc and register v0.
+#
+###################################################
+
+# don't print gxemul output
+log_user 0
+
+eval spawn gxemul $argv
+
+
+    ## wait until gxemul breaks
+    # '?' means the .* is not greedy
+    expect {
+        -re "BREAKPOINT: pc = (.*?)\r" {
+            # first match (1) of regular expression
+            puts "exit at: pc = $expect_out(1,string)"
+
+            expect GXemul>
+            send reg\r
+            expect -re "v0 = (.*?) "
+            puts "reg: v0 = $expect_out(1,string)"
+
+            expect GXemul>
+            send quit\r
+        }
+        default { 
+            puts "Gxemul Error:"
+            puts "$expect_out(buffer)"
+
+            puts "If you are using a gxemul older than 0.6 run:"
+            puts "export GXEMUL_OPT=testmips"
+        }
+    }

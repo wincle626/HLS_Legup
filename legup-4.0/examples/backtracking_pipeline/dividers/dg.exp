@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd backtracking_pipeline/dividers
+set test "backtracking_pipeline/dividers"
+set expected {return_val=\s+108\s+.*Cycles:\s+153\s+}
+
+run-test $test $expected
+
+cd ../..

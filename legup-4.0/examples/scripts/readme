@@ -1,0 +1,2 @@
+This directory contains various scripts use by the Makefile used by multiple
+benchmarks and/or flows.

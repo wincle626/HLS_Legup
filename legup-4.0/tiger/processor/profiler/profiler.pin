@@ -1,0 +1,745 @@
+ -- Copyright (C) 1991-2010 Altera Corporation
+ -- Your use of Altera Corporation's design tools, logic functions 
+ -- and other software and tools, and its AMPP partner logic 
+ -- functions, and any output files from any of the foregoing 
+ -- (including device programming or simulation files), and any 
+ -- associated documentation or information are expressly subject 
+ -- to the terms and conditions of the Altera Program License 
+ -- Subscription Agreement, Altera MegaCore Function License 
+ -- Agreement, or other applicable license agreement, including, 
+ -- without limitation, that your use is for the sole purpose of 
+ -- programming logic devices manufactured by Altera and sold by 
+ -- Altera or its authorized distributors.  Please refer to the 
+ -- applicable agreement for further details.
+ -- 
+ -- This is a Quartus II output file. It is for reporting purposes only, and is
+ -- not intended for use as a Quartus II input file. This file cannot be used
+ -- to make Quartus II pin assignments - for instructions on how to make pin
+ -- assignments, please see Quartus II help.
+ ---------------------------------------------------------------------------------
+
+
+
+ ---------------------------------------------------------------------------------
+ -- NC            : No Connect. This pin has no internal connection to the device.
+ -- DNU           : Do Not Use. This pin MUST NOT be connected.
+ -- VCCINT        : Dedicated power pin, which MUST be connected to VCC  (1.2V).
+ -- VCCIO         : Dedicated power pin, which MUST be connected to VCC
+ --                 of its bank.
+ --					Bank 1:		3.3V
+ --					Bank 2:		3.3V
+ --					Bank 3:		3.3V
+ --					Bank 4:		3.3V
+ --					Bank 5:		3.3V
+ --					Bank 6:		3.3V
+ --					Bank 7:		3.3V
+ --					Bank 8:		3.3V
+ -- GND           : Dedicated ground pin. Dedicated GND pins MUST be connected to GND.
+ --					It can also be used to report unused dedicated pins. The connection
+ --					on the board for unused dedicated pins depends on whether this will
+ --					be used in a future design. One example is device migration. When
+ --					using device migration, refer to the device pin-tables. If it is a
+ --					GND pin in the pin table or if it will not be used in a future design
+ --					for another purpose the it MUST be connected to GND. If it is an unused
+ --					dedicated pin, then it can be connected to a valid signal on the board
+ --					(low, high, or toggling) if that signal is required for a different
+ --					revision of the design.
+ -- GND+          : Unused input pin. It can also be used to report unused dual-purpose pins.
+ --					This pin should be connected to GND. It may also be connected  to a
+ --					valid signal  on the board  (low, high, or toggling)  if that signal
+ --					is required for a different revision of the design.
+ -- GND*          : Unused  I/O  pin.   For transceiver I/O banks, connect each pin marked GND*
+ --           	    either individually through a 10k Ohm resistor to GND or tie all pins
+ --           	    together and connect through a single 10k Ohm resistor to GND.
+ --           	    For non-transceiver I/O banks, connect each pin marked GND* directly to GND
+ --           	    or leave it unconnected.
+ -- RESERVED      : Unused I/O pin, which MUST be left unconnected.
+ -- RESERVED_INPUT    : Pin is tri-stated and should be connected to the board.
+ -- RESERVED_INPUT_WITH_WEAK_PULLUP    : Pin is tri-stated with internal weak pull-up resistor.
+ -- RESERVED_INPUT_WITH_BUS_HOLD       : Pin is tri-stated with bus-hold circuitry.
+ -- RESERVED_OUTPUT_DRIVEN_HIGH        : Pin is output driven high.
+ ---------------------------------------------------------------------------------
+
+
+
+ ---------------------------------------------------------------------------------
+ -- Pin directions (input, output or bidir) are based on device operating in user mode.
+ ---------------------------------------------------------------------------------
+
+Quartus II Version 9.1 Build 350 03/24/2010 Service Pack 2 SJ Web Edition
+CHIP  "profiler"  ASSIGNED TO AN: EP2C35F672C6
+
+Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
+-------------------------------------------------------------------------------------------------------------
+GND                          : A2        : gnd    :                   :         :           :                
+VCCIO3                       : A3        : power  :                   : 3.3V    : 3         :                
+GND*                         : A4        :        :                   :         : 3         :                
+GND*                         : A5        :        :                   :         : 3         :                
+GND*                         : A6        :        :                   :         : 3         :                
+avm_profileMaster_readdata[23] : A7        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[2] : A8        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_waitrequest : A9        : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[12]                       : A10       : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO3                       : A11       : power  :                   : 3.3V    : 3         :                
+GND                          : A12       : gnd    :                   :         :           :                
+GND+                         : A13       :        :                   :         : 4         :                
+pc[2]                        : A14       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND                          : A15       : gnd    :                   :         :           :                
+VCCIO4                       : A16       : power  :                   : 3.3V    : 4         :                
+instr[10]                    : A17       : input  : 3.3-V LVTTL       :         : 4         : N              
+pc[1]                        : A18       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : A19       :        :                   :         : 4         :                
+GND*                         : A20       :        :                   :         : 4         :                
+GND*                         : A21       :        :                   :         : 4         :                
+GND*                         : A22       :        :                   :         : 4         :                
+GND*                         : A23       :        :                   :         : 4         :                
+VCCIO4                       : A24       : power  :                   : 3.3V    : 4         :                
+GND                          : A25       : gnd    :                   :         :           :                
+istall                       : AA1       : input  : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : AA2       :        :                   :         : 1         :                
+GND*                         : AA3       :        :                   :         : 1         :                
+avm_profileMaster_byteenable[0] : AA4       : output : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : AA5       :        :                   :         : 1         :                
+GND*                         : AA6       :        :                   :         : 1         :                
+GND*                         : AA7       :        :                   :         : 1         :                
+VCCA_PLL1                    : AA8       : power  :                   : 1.2V    :           :                
+instrEx[25]                  : AA9       : input  : 3.3-V LVTTL       :         : 8         : N              
+GND*                         : AA10      :        :                   :         : 8         :                
+GND*                         : AA11      :        :                   :         : 8         :                
+avm_profileMaster_writedata[27] : AA12      : output : 3.3-V LVTTL       :         : 8         : N              
+GND*                         : AA13      :        :                   :         : 7         :                
+GND*                         : AA14      :        :                   :         : 7         :                
+GND*                         : AA15      :        :                   :         : 7         :                
+GND*                         : AA16      :        :                   :         : 7         :                
+GND*                         : AA17      :        :                   :         : 7         :                
+GND*                         : AA18      :        :                   :         : 7         :                
+VCCA_PLL4                    : AA19      : power  :                   : 1.2V    :           :                
+GND*                         : AA20      :        :                   :         : 7         :                
+GND_PLL4                     : AA21      : gnd    :                   :         :           :                
+VCCIO6                       : AA22      : power  :                   : 3.3V    : 6         :                
+avm_profileMaster_byteenable[3] : AA23      : output : 3.3-V LVTTL       :         : 6         : N              
+GND*                         : AA24      :        :                   :         : 6         :                
+GND*                         : AA25      :        :                   :         : 6         :                
+instrEx[11]                  : AA26      : input  : 3.3-V LVTTL       :         : 6         : N              
+GND*                         : AB1       :        :                   :         : 1         :                
+GND*                         : AB2       :        :                   :         : 1         :                
+GND*                         : AB3       :        :                   :         : 1         :                
+GND*                         : AB4       :        :                   :         : 1         :                
+VCCIO1                       : AB5       : power  :                   : 3.3V    : 1         :                
+VCCIO8                       : AB6       : power  :                   : 3.3V    : 8         :                
+GND                          : AB7       : gnd    :                   :         :           :                
+instrEx[27]                  : AB8       : input  : 3.3-V LVTTL       :         : 8         : N              
+VCCIO8                       : AB9       : power  :                   : 3.3V    : 8         :                
+GND*                         : AB10      :        :                   :         : 8         :                
+GND                          : AB11      : gnd    :                   :         :           :                
+avm_profileMaster_writedata[3] : AB12      : output : 3.3-V LVTTL       :         : 8         : N              
+VCCIO8                       : AB13      : power  :                   : 3.3V    : 8         :                
+VCCIO7                       : AB14      : power  :                   : 3.3V    : 7         :                
+GND*                         : AB15      :        :                   :         : 7         :                
+GND                          : AB16      : gnd    :                   :         :           :                
+VCCIO7                       : AB17      : power  :                   : 3.3V    : 7         :                
+GND*                         : AB18      :        :                   :         : 7         :                
+GND                          : AB19      : gnd    :                   :         :           :                
+GND*                         : AB20      :        :                   :         : 7         :                
+GND*                         : AB21      :        :                   :         : 7         :                
+VCCIO7                       : AB22      : power  :                   : 3.3V    : 7         :                
+GND*                         : AB23      :        :                   :         : 6         :                
+GND*                         : AB24      :        :                   :         : 6         :                
+avm_profileMaster_writedata[24] : AB25      : output : 3.3-V LVTTL       :         : 6         : N              
+GND*                         : AB26      :        :                   :         : 6         :                
+GND*                         : AC1       :        :                   :         : 1         :                
+GND*                         : AC2       :        :                   :         : 1         :                
+GND*                         : AC3       :        :                   :         : 1         :                
+GND                          : AC4       : gnd    :                   :         :           :                
+avm_profileMaster_byteenable[1] : AC5       : output : 3.3-V LVTTL       :         : 8         : N              
+GND*                         : AC6       :        :                   :         : 8         :                
+GND*                         : AC7       :        :                   :         : 8         :                
+GND*                         : AC8       :        :                   :         : 8         :                
+avm_profileMaster_address[6] : AC9       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[14] : AC10      : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[21] : AC11      : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_writedata[15] : AC12      : output : 3.3-V LVTTL       :         : 8         : N              
+GND+                         : AC13      :        :                   :         : 8         :                
+GND*                         : AC14      :        :                   :         : 7         :                
+GND*                         : AC15      :        :                   :         : 7         :                
+GND*                         : AC16      :        :                   :         : 7         :                
+GND*                         : AC17      :        :                   :         : 7         :                
+GND*                         : AC18      :        :                   :         : 7         :                
+GND*                         : AC19      :        :                   :         : 7         :                
+GND*                         : AC20      :        :                   :         : 7         :                
+GND*                         : AC21      :        :                   :         : 7         :                
+GND*                         : AC22      :        :                   :         : 7         :                
+GND*                         : AC23      :        :                   :         : 6         :                
+NC                           : AC24      :        :                   :         :           :                
+GND*                         : AC25      :        :                   :         : 6         :                
+GND*                         : AC26      :        :                   :         : 6         :                
+VCCIO1                       : AD1       : power  :                   : 3.3V    : 1         :                
+GND*                         : AD2       :        :                   :         : 1         :                
+instrEx[17]                  : AD3       : input  : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : AD4       :        :                   :         : 8         :                
+GND*                         : AD5       :        :                   :         : 8         :                
+GND*                         : AD6       :        :                   :         : 8         :                
+GND*                         : AD7       :        :                   :         : 8         :                
+GND*                         : AD8       :        :                   :         : 8         :                
+GND                          : AD9       : gnd    :                   :         :           :                
+avm_profileMaster_readdata[27] : AD10      : input  : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_writedata[19] : AD11      : output : 3.3-V LVTTL       :         : 8         : N              
+GND*                         : AD12      :        :                   :         : 8         :                
+GND+                         : AD13      :        :                   :         : 8         :                
+GND                          : AD14      : gnd    :                   :         :           :                
+GND*                         : AD15      :        :                   :         : 7         :                
+GND*                         : AD16      :        :                   :         : 7         :                
+GND*                         : AD17      :        :                   :         : 7         :                
+GND                          : AD18      : gnd    :                   :         :           :                
+GND*                         : AD19      :        :                   :         : 7         :                
+VCCIO7                       : AD20      : power  :                   : 3.3V    : 7         :                
+avm_profileMaster_address[0] : AD21      : output : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AD22      :        :                   :         : 7         :                
+GND*                         : AD23      :        :                   :         : 7         :                
+GND*                         : AD24      :        :                   :         : 6         :                
+GND*                         : AD25      :        :                   :         : 6         :                
+VCCIO6                       : AD26      : power  :                   : 3.3V    : 6         :                
+GND                          : AE1       : gnd    :                   :         :           :                
+GND*                         : AE2       :        :                   :         : 1         :                
+GND*                         : AE3       :        :                   :         : 1         :                
+GND*                         : AE4       :        :                   :         : 8         :                
+GND*                         : AE5       :        :                   :         : 8         :                
+GND*                         : AE6       :        :                   :         : 8         :                
+GND*                         : AE7       :        :                   :         : 8         :                
+avm_profileMaster_address[2] : AE8       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[25] : AE9       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[16] : AE10      : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_writedata[4] : AE11      : output : 3.3-V LVTTL       :         : 8         : N              
+instrEx[6]                   : AE12      : input  : 3.3-V LVTTL       :         : 8         : N              
+instrEx[21]                  : AE13      : input  : 3.3-V LVTTL       :         : 8         : N              
+GND+                         : AE14      :        :                   :         : 7         :                
+avm_profileMaster_address[1] : AE15      : output : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AE16      :        :                   :         : 7         :                
+GND*                         : AE17      :        :                   :         : 7         :                
+avm_profileMaster_writedata[17] : AE18      : output : 3.3-V LVTTL       :         : 7         : N              
+avm_profileMaster_byteenable[2] : AE19      : output : 3.3-V LVTTL       :         : 7         : N              
+instrEx[2]                   : AE20      : input  : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AE21      :        :                   :         : 7         :                
+instrEx[14]                  : AE22      : input  : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AE23      :        :                   :         : 7         :                
+~LVDS150p/nCEO~              : AE24      : output : 3.3-V LVTTL       :         : 6         : N              
+GND*                         : AE25      :        :                   :         : 6         :                
+GND                          : AE26      : gnd    :                   :         :           :                
+GND                          : AF2       : gnd    :                   :         :           :                
+VCCIO8                       : AF3       : power  :                   : 3.3V    : 8         :                
+GND*                         : AF4       :        :                   :         : 8         :                
+instrEx[5]                   : AF5       : input  : 3.3-V LVTTL       :         : 8         : N              
+instrEx[28]                  : AF6       : input  : 3.3-V LVTTL       :         : 8         : N              
+instrEx[29]                  : AF7       : input  : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[9] : AF8       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[23] : AF9       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_writedata[7] : AF10      : output : 3.3-V LVTTL       :         : 8         : N              
+VCCIO8                       : AF11      : power  :                   : 3.3V    : 8         :                
+GND                          : AF12      : gnd    :                   :         :           :                
+GND*                         : AF13      :        :                   :         : 8         :                
+GND+                         : AF14      :        :                   :         : 7         :                
+GND                          : AF15      : gnd    :                   :         :           :                
+VCCIO7                       : AF16      : power  :                   : 3.3V    : 7         :                
+GND*                         : AF17      :        :                   :         : 7         :                
+instrEx[12]                  : AF18      : input  : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AF19      :        :                   :         : 7         :                
+GND*                         : AF20      :        :                   :         : 7         :                
+instrEx[10]                  : AF21      : input  : 3.3-V LVTTL       :         : 7         : N              
+avm_profileMaster_writedata[29] : AF22      : output : 3.3-V LVTTL       :         : 7         : N              
+GND*                         : AF23      :        :                   :         : 7         :                
+VCCIO7                       : AF24      : power  :                   : 3.3V    : 7         :                
+GND                          : AF25      : gnd    :                   :         :           :                
+GND                          : B1        : gnd    :                   :         :           :                
+GND*                         : B2        :        :                   :         : 2         :                
+GND*                         : B3        :        :                   :         : 2         :                
+GND*                         : B4        :        :                   :         : 3         :                
+instrEx[18]                  : B5        : input  : 3.3-V LVTTL       :         : 3         : N              
+GND*                         : B6        :        :                   :         : 3         :                
+avm_profileMaster_readdata[19] : B7        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[0] : B8        : input  : 3.3-V LVTTL       :         : 3         : N              
+instr[21]                    : B9        : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[13]                       : B10       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[7]                        : B11       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[11]                       : B12       : input  : 3.3-V LVTTL       :         : 3         : N              
+GND+                         : B13       :        :                   :         : 4         :                
+pc[5]                        : B14       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[26]                    : B15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[4]                     : B16       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[18]                    : B17       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[3]                     : B18       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : B19       :        :                   :         : 4         :                
+GND*                         : B20       :        :                   :         : 4         :                
+GND*                         : B21       :        :                   :         : 4         :                
+GND*                         : B22       :        :                   :         : 4         :                
+GND*                         : B23       :        :                   :         : 4         :                
+instrEx[26]                  : B24       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : B25       :        :                   :         : 5         :                
+GND                          : B26       : gnd    :                   :         :           :                
+VCCIO2                       : C1        : power  :                   : 3.3V    : 2         :                
+instrEx[30]                  : C2        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : C3        :        :                   :         : 2         :                
+GND*                         : C4        :        :                   :         : 3         :                
+GND*                         : C5        :        :                   :         : 3         :                
+GND*                         : C6        :        :                   :         : 3         :                
+avm_profileMaster_readdata[6] : C7        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[25] : C8        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[21] : C9        : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[19]                       : C10       : input  : 3.3-V LVTTL       :         : 3         : N              
+insValid                     : C11       : input  : 3.3-V LVTTL       :         : 3         : N              
+instr[27]                    : C12       : input  : 3.3-V LVTTL       :         : 3         : N              
+instrEx[0]                   : C13       : input  : 3.3-V LVTTL       :         : 3         : N              
+GND                          : C14       : gnd    :                   :         :           :                
+instr[25]                    : C15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[15]                    : C16       : input  : 3.3-V LVTTL       :         : 4         : N              
+pc[0]                        : C17       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND                          : C18       : gnd    :                   :         :           :                
+GND*                         : C19       :        :                   :         : 4         :                
+VCCIO4                       : C20       : power  :                   : 3.3V    : 4         :                
+GND*                         : C21       :        :                   :         : 4         :                
+GND*                         : C22       :        :                   :         : 4         :                
+GND*                         : C23       :        :                   :         : 4         :                
+GND*                         : C24       :        :                   :         : 5         :                
+GND*                         : C25       :        :                   :         : 5         :                
+VCCIO5                       : C26       : power  :                   : 3.3V    : 5         :                
+GND*                         : D1        :        :                   :         : 2         :                
+GND*                         : D2        :        :                   :         : 2         :                
+~nCSO~ / RESERVED_INPUT_WITH_WEAK_PULLUP : D3        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND                          : D4        : gnd    :                   :         :           :                
+instr[22]                    : D5        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[1] : D6        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_address[26] : D7        : output : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[26] : D8        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[20] : D9        : input  : 3.3-V LVTTL       :         : 3         : N              
+instr[23]                    : D10       : input  : 3.3-V LVTTL       :         : 3         : N              
+reset                        : D11       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[4]                        : D12       : input  : 3.3-V LVTTL       :         : 3         : N              
+instrEx[1]                   : D13       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[16]                       : D14       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[6]                     : D15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[1]                     : D16       : input  : 3.3-V LVTTL       :         : 4         : N              
+pc[21]                       : D17       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : D18       :        :                   :         : 4         :                
+GND*                         : D19       :        :                   :         : 4         :                
+GND*                         : D20       :        :                   :         : 4         :                
+GND*                         : D21       :        :                   :         : 4         :                
+VCCIO4                       : D22       : power  :                   : 3.3V    : 4         :                
+instrEx[16]                  : D23       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND                          : D24       : gnd    :                   :         :           :                
+instrEx[22]                  : D25       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : D26       :        :                   :         : 5         :                
+instr[13]                    : E1        : input  : 3.3-V LVTTL       :         : 2         : N              
+pc[20]                       : E2        : input  : 3.3-V LVTTL       :         : 2         : N              
+~ASDO~ / RESERVED_INPUT_WITH_WEAK_PULLUP : E3        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND_PLL3                     : E4        : gnd    :                   :         :           :                
+instrEx[19]                  : E5        : input  : 3.3-V LVTTL       :         : 2         : N              
+VCCIO3                       : E6        : power  :                   : 3.3V    : 3         :                
+GND                          : E7        : gnd    :                   :         :           :                
+avm_profileMaster_readdata[8] : E8        : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO3                       : E9        : power  :                   : 3.3V    : 3         :                
+avm_profileMaster_address[20] : E10       : output : 3.3-V LVTTL       :         : 3         : N              
+GND                          : E11       : gnd    :                   :         :           :                
+pc[22]                       : E12       : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO3                       : E13       : power  :                   : 3.3V    : 3         :                
+VCCIO4                       : E14       : power  :                   : 3.3V    : 4         :                
+instr[5]                     : E15       : input  : 3.3-V LVTTL       :         : 4         : N              
+GND                          : E16       : gnd    :                   :         :           :                
+VCCIO4                       : E17       : power  :                   : 3.3V    : 4         :                
+GND*                         : E18       :        :                   :         : 4         :                
+GND                          : E19       : gnd    :                   :         :           :                
+GND*                         : E20       :        :                   :         : 4         :                
+GND_PLL2                     : E21       : gnd    :                   :         :           :                
+instrEx[24]                  : E22       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : E23       :        :                   :         : 5         :                
+instrEx[7]                   : E24       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : E25       :        :                   :         : 5         :                
+GND*                         : E26       :        :                   :         : 5         :                
+avm_profileMaster_readdata[13] : F1        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[24] : F2        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : F3        :        :                   :         : 2         :                
+GND*                         : F4        :        :                   :         : 2         :                
+VCCIO2                       : F5        : power  :                   : 3.3V    : 2         :                
+instrEx[31]                  : F6        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : F7        :        :                   :         : 2         :                
+GNDA_PLL3                    : F8        : gnd    :                   :         :           :                
+avm_profileMaster_readdata[31] : F9        : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_writedata[1] : F10       : output : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_writedata[5] : F11       : output : 3.3-V LVTTL       :         : 3         : N              
+pc[15]                       : F12       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[18]                       : F13       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[30]                    : F14       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[16]                    : F15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[9]                     : F16       : input  : 3.3-V LVTTL       :         : 4         : N              
+avm_profileMaster_writedata[28] : F17       : output : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : F18       :        :                   :         : 4         :                
+GNDA_PLL2                    : F19       : gnd    :                   :         :           :                
+GND*                         : F20       :        :                   :         : 5         :                
+GND*                         : F21       :        :                   :         : 5         :                
+VCCIO5                       : F22       : power  :                   : 3.3V    : 5         :                
+instr[17]                    : F23       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : F24       :        :                   :         : 5         :                
+instr[14]                    : F25       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : F26       :        :                   :         : 5         :                
+avm_profileMaster_readdata[11] : G1        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[5] : G2        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[3] : G3        : input  : 3.3-V LVTTL       :         : 2         : N              
+instr[19]                    : G4        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : G5        :        :                   :         : 2         :                
+GND*                         : G6        :        :                   :         : 2         :                
+GND_PLL3                     : G7        : gnd    :                   :         :           :                
+VCCA_PLL3                    : G8        : power  :                   : 1.2V    :           :                
+avm_profileMaster_writedata[0] : G9        : output : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[14] : G10       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[9]                        : G11       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[6]                        : G12       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[10]                       : G13       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[0]                     : G14       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[8]                     : G15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[20]                    : G16       : input  : 3.3-V LVTTL       :         : 4         : N              
+avm_profileMaster_writedata[31] : G17       : output : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : G18       :        :                   :         : 4         :                
+VCCA_PLL2                    : G19       : power  :                   : 1.2V    :           :                
+GND_PLL2                     : G20       : gnd    :                   :         :           :                
+GND*                         : G21       :        :                   :         : 5         :                
+GND*                         : G22       :        :                   :         : 5         :                
+avm_profileMaster_readdata[16] : G23       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : G24       :        :                   :         : 5         :                
+GND*                         : G25       :        :                   :         : 5         :                
+GND*                         : G26       :        :                   :         : 5         :                
+pc[24]                       : H1        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[13] : H2        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[28] : H3        : input  : 3.3-V LVTTL       :         : 2         : N              
+pc[25]                       : H4        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND                          : H5        : gnd    :                   :         :           :                
+instr[29]                    : H6        : input  : 3.3-V LVTTL       :         : 2         : N              
+VCCD_PLL3                    : H7        : power  :                   : 1.2V    :           :                
+avm_profileMaster_readdata[9] : H8        : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO3                       : H9        : power  :                   : 3.3V    : 3         :                
+avm_profileMaster_address[12] : H10       : output : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[29] : H11       : input  : 3.3-V LVTTL       :         : 3         : N              
+avm_profileMaster_readdata[30] : H12       : input  : 3.3-V LVTTL       :         : 3         : N              
+GND                          : H13       : gnd    :                   :         :           :                
+GND                          : H14       : gnd    :                   :         :           :                
+instr[2]                     : H15       : input  : 3.3-V LVTTL       :         : 4         : N              
+instr[12]                    : H16       : input  : 3.3-V LVTTL       :         : 4         : N              
+avm_profileMaster_writedata[30] : H17       : output : 3.3-V LVTTL       :         : 4         : N              
+VCCIO4                       : H18       : power  :                   : 3.3V    : 4         :                
+GND*                         : H19       :        :                   :         : 5         :                
+VCCD_PLL2                    : H20       : power  :                   : 1.2V    :           :                
+GND*                         : H21       :        :                   :         : 5         :                
+GND                          : H22       : gnd    :                   :         :           :                
+GND*                         : H23       :        :                   :         : 5         :                
+instrEx[13]                  : H24       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : H25       :        :                   :         : 5         :                
+GND*                         : H26       :        :                   :         : 5         :                
+avm_profileMaster_address[28] : J1        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_writedata[11] : J2        : output : 3.3-V LVTTL       :         : 2         : N              
+instr[11]                    : J3        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[3] : J4        : output : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : J5        :        :                   :         : 2         :                
+avm_profileMaster_readdata[17] : J6        : input  : 3.3-V LVTTL       :         : 2         : N              
+instr[31]                    : J7        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND*                         : J8        :        :                   :         : 2         :                
+avm_profileMaster_readdata[12] : J9        : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[3]                        : J10       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[17]                       : J11       : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO3                       : J12       : power  :                   : 3.3V    : 3         :                
+pc[14]                       : J13       : input  : 3.3-V LVTTL       :         : 3         : N              
+pc[23]                       : J14       : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCIO4                       : J15       : power  :                   : 3.3V    : 4         :                
+dstall                       : J16       : input  : 3.3-V LVTTL       :         : 4         : N              
+avm_profileMaster_writedata[25] : J17       : output : 3.3-V LVTTL       :         : 4         : N              
+GND*                         : J18       :        :                   :         : 4         :                
+VCCIO5                       : J19       : power  :                   : 3.3V    : 5         :                
+avm_profileMaster_writedata[22] : J20       : output : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : J21       :        :                   :         : 5         :                
+instrEx[9]                   : J22       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : J23       :        :                   :         : 5         :                
+GND*                         : J24       :        :                   :         : 5         :                
+GND*                         : J25       :        :                   :         : 5         :                
+GND*                         : J26       :        :                   :         : 5         :                
+avm_profileMaster_readdata[7] : K1        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[22] : K2        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[31] : K3        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[27] : K4        : output : 3.3-V LVTTL       :         : 2         : N              
+instr[7]                     : K5        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[18] : K6        : input  : 3.3-V LVTTL       :         : 2         : N              
+instr[24]                    : K7        : input  : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdata[10] : K8        : input  : 3.3-V LVTTL       :         : 2         : N              
+instr[28]                    : K9        : input  : 3.3-V LVTTL       :         : 3         : N              
+VCCINT                       : K10       : power  :                   : 1.2V    :           :                
+VCCINT                       : K11       : power  :                   : 1.2V    :           :                
+VCCINT                       : K12       : power  :                   : 1.2V    :           :                
+VCCINT                       : K13       : power  :                   : 1.2V    :           :                
+VCCINT                       : K14       : power  :                   : 1.2V    :           :                
+VCCINT                       : K15       : power  :                   : 1.2V    :           :                
+GND*                         : K16       :        :                   :         : 4         :                
+GND*                         : K17       :        :                   :         : 4         :                
+GND*                         : K18       :        :                   :         : 5         :                
+GND*                         : K19       :        :                   :         : 5         :                
+GND                          : K20       : gnd    :                   :         :           :                
+GND*                         : K21       :        :                   :         : 5         :                
+GND*                         : K22       :        :                   :         : 5         :                
+GND*                         : K23       :        :                   :         : 5         :                
+avm_profileMaster_write      : K24       : output : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : K25       :        :                   :         : 5         :                
+avm_profileMaster_writedata[14] : K26       : output : 3.3-V LVTTL       :         : 5         : N              
+VCCIO2                       : L1        : power  :                   : 3.3V    : 2         :                
+avm_profileMaster_address[17] : L2        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[4] : L3        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_readdatavalid : L4        : input  : 3.3-V LVTTL       :         : 2         : N              
+GND                          : L5        : gnd    :                   :         :           :                
+avm_profileMaster_address[22] : L6        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[18] : L7        : output : 3.3-V LVTTL       :         : 2         : N              
+TMS                          : L8        : input  :                   :         : 2         :                
+avm_profileMaster_address[15] : L9        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[10] : L10       : output : 3.3-V LVTTL       :         : 2         : N              
+VCCINT                       : L11       : power  :                   : 1.2V    :           :                
+GND                          : L12       : gnd    :                   :         :           :                
+GND                          : L13       : gnd    :                   :         :           :                
+GND                          : L14       : gnd    :                   :         :           :                
+GND                          : L15       : gnd    :                   :         :           :                
+VCCINT                       : L16       : power  :                   : 1.2V    :           :                
+VCCINT                       : L17       : power  :                   : 1.2V    :           :                
+VCCINT                       : L18       : power  :                   : 1.2V    :           :                
+avm_profileMaster_address[29] : L19       : output : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : L20       :        :                   :         : 5         :                
+GND*                         : L21       :        :                   :         : 5         :                
+GND                          : L22       : gnd    :                   :         :           :                
+avm_profileMaster_writedata[10] : L23       : output : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : L24       :        :                   :         : 5         :                
+GND*                         : L25       :        :                   :         : 5         :                
+VCCIO5                       : L26       : power  :                   : 3.3V    : 5         :                
+GND                          : M1        : gnd    :                   :         :           :                
+avm_profileMaster_address[5] : M2        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_address[7] : M3        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_writedata[2] : M4        : output : 3.3-V LVTTL       :         : 2         : N              
+avm_profileMaster_writedata[9] : M5        : output : 3.3-V LVTTL       :         : 2         : N              
+TCK                          : M6        : input  :                   :         : 2         :                
+TDO                          : M7        : output :                   :         : 2         :                
+TDI                          : M8        : input  :                   :         : 2         :                
+VCCIO2                       : M9        : power  :                   : 3.3V    : 2         :                
+VCCINT                       : M10       : power  :                   : 1.2V    :           :                
+VCCINT                       : M11       : power  :                   : 1.2V    :           :                
+GND                          : M12       : gnd    :                   :         :           :                
+GND                          : M13       : gnd    :                   :         :           :                
+GND                          : M14       : gnd    :                   :         :           :                
+GND                          : M15       : gnd    :                   :         :           :                
+VCCINT                       : M16       : power  :                   : 1.2V    :           :                
+VCCINT                       : M17       : power  :                   : 1.2V    :           :                
+VCCIO5                       : M18       : power  :                   : 3.3V    : 5         :                
+GND*                         : M19       :        :                   :         : 5         :                
+GND*                         : M20       :        :                   :         : 5         :                
+GND*                         : M21       :        :                   :         : 5         :                
+GND*                         : M22       :        :                   :         : 5         :                
+avm_profileMaster_writedata[13] : M23       : output : 3.3-V LVTTL       :         : 5         : N              
+GND*                         : M24       :        :                   :         : 5         :                
+instrEx[4]                   : M25       : input  : 3.3-V LVTTL       :         : 5         : N              
+GND                          : M26       : gnd    :                   :         :           :                
+GND+                         : N1        :        :                   :         : 2         :                
+GND+                         : N2        :        :                   :         : 2         :                
+DATA0                        : N3        : input  :                   :         : 2         :                
+nCE                          : N4        :        :                   :         : 2         :                
+VCCIO2                       : N5        : power  :                   : 3.3V    : 2         :                
+DCLK                         : N6        :        :                   :         : 2         :                
+nCONFIG                      : N7        :        :                   :         : 2         :                
+GND                          : N8        : gnd    :                   :         :           :                
+avm_profileMaster_readdata[15] : N9        : input  : 3.3-V LVTTL       :         : 2         : N              
+VCCINT                       : N10       : power  :                   : 1.2V    :           :                
+GND                          : N11       : gnd    :                   :         :           :                
+GND                          : N12       : gnd    :                   :         :           :                
+GND                          : N13       : gnd    :                   :         :           :                
+GND                          : N14       : gnd    :                   :         :           :                
+GND                          : N15       : gnd    :                   :         :           :                
+GND                          : N16       : gnd    :                   :         :           :                
+VCCINT                       : N17       : power  :                   : 1.2V    :           :                
+GND*                         : N18       :        :                   :         : 5         :                
+GND                          : N19       : gnd    :                   :         :           :                
+GND*                         : N20       :        :                   :         : 5         :                
+NC                           : N21       :        :                   :         :           :                
+VCCIO5                       : N22       : power  :                   : 3.3V    : 5         :                
+GND*                         : N23       :        :                   :         : 5         :                
+GND*                         : N24       :        :                   :         : 5         :                
+GND+                         : N25       :        :                   :         : 5         :                
+GND+                         : N26       :        :                   :         : 5         :                
+pc[8]                        : P1        : input  : 3.3-V LVTTL       :         : 1         : N              
+clk                          : P2        : input  : 3.3-V LVTTL       :         : 1         : N              
+avm_profileMaster_writedata[12] : P3        : output : 3.3-V LVTTL       :         : 1         : N              
+avm_profileMaster_address[19] : P4        : output : 3.3-V LVTTL       :         : 1         : N              
+VCCIO1                       : P5        : power  :                   : 3.3V    : 1         :                
+GND*                         : P6        :        :                   :         : 1         :                
+GND*                         : P7        :        :                   :         : 1         :                
+GND                          : P8        : gnd    :                   :         :           :                
+avm_profileMaster_readdata[4] : P9        : input  : 3.3-V LVTTL       :         : 2         : N              
+VCCINT                       : P10       : power  :                   : 1.2V    :           :                
+GND                          : P11       : gnd    :                   :         :           :                
+GND                          : P12       : gnd    :                   :         :           :                
+GND                          : P13       : gnd    :                   :         :           :                
+GND                          : P14       : gnd    :                   :         :           :                
+GND                          : P15       : gnd    :                   :         :           :                
+GND                          : P16       : gnd    :                   :         :           :                
+GND*                         : P17       :        :                   :         : 6         :                
+GND*                         : P18       :        :                   :         : 5         :                
+GND                          : P19       : gnd    :                   :         :           :                
+MSEL0                        : P20       :        :                   :         : 6         :                
+MSEL1                        : P21       :        :                   :         : 6         :                
+VCCIO6                       : P22       : power  :                   : 3.3V    : 6         :                
+GND*                         : P23       :        :                   :         : 6         :                
+GND*                         : P24       :        :                   :         : 6         :                
+GND+                         : P25       :        :                   :         : 6         :                
+GND+                         : P26       :        :                   :         : 6         :                
+GND                          : R1        : gnd    :                   :         :           :                
+avm_profileMaster_address[30] : R2        : output : 3.3-V LVTTL       :         : 1         : N              
+avm_profileMaster_read       : R3        : output : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : R4        :        :                   :         : 1         :                
+avm_profileMaster_writedata[6] : R5        : output : 3.3-V LVTTL       :         : 1         : N              
+instrEx[15]                  : R6        : input  : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : R7        :        :                   :         : 1         :                
+GND*                         : R8        :        :                   :         : 1         :                
+VCCIO1                       : R9        : power  :                   : 3.3V    : 1         :                
+VCCINT                       : R10       : power  :                   : 1.2V    :           :                
+VCCINT                       : R11       : power  :                   : 1.2V    :           :                
+GND                          : R12       : gnd    :                   :         :           :                
+GND                          : R13       : gnd    :                   :         :           :                
+GND                          : R14       : gnd    :                   :         :           :                
+GND                          : R15       : gnd    :                   :         :           :                
+VCCINT                       : R16       : power  :                   : 1.2V    :           :                
+GND*                         : R17       :        :                   :         : 6         :                
+VCCIO6                       : R18       : power  :                   : 3.3V    : 6         :                
+GND*                         : R19       :        :                   :         : 6         :                
+GND*                         : R20       :        :                   :         : 6         :                
+GND                          : R21       : gnd    :                   :         :           :                
+nSTATUS                      : R22       :        :                   :         : 6         :                
+CONF_DONE                    : R23       :        :                   :         : 6         :                
+GND*                         : R24       :        :                   :         : 6         :                
+GND*                         : R25       :        :                   :         : 6         :                
+GND                          : R26       : gnd    :                   :         :           :                
+VCCIO1                       : T1        : power  :                   : 3.3V    : 1         :                
+GND*                         : T2        :        :                   :         : 1         :                
+GND*                         : T3        :        :                   :         : 1         :                
+GND*                         : T4        :        :                   :         : 1         :                
+GND                          : T5        : gnd    :                   :         :           :                
+GND*                         : T6        :        :                   :         : 1         :                
+GND*                         : T7        :        :                   :         : 1         :                
+GND*                         : T8        :        :                   :         : 1         :                
+avm_profileMaster_address[24] : T9        : output : 3.3-V LVTTL       :         : 1         : N              
+avm_profileMaster_writedata[8] : T10       : output : 3.3-V LVTTL       :         : 1         : N              
+VCCINT                       : T11       : power  :                   : 1.2V    :           :                
+GND                          : T12       : gnd    :                   :         :           :                
+GND                          : T13       : gnd    :                   :         :           :                
+GND                          : T14       : gnd    :                   :         :           :                
+GND                          : T15       : gnd    :                   :         :           :                
+VCCINT                       : T16       : power  :                   : 1.2V    :           :                
+GND*                         : T17       :        :                   :         : 6         :                
+GND*                         : T18       :        :                   :         : 6         :                
+GND*                         : T19       :        :                   :         : 6         :                
+GND*                         : T20       :        :                   :         : 6         :                
+GND*                         : T21       :        :                   :         : 6         :                
+GND*                         : T22       :        :                   :         : 6         :                
+GND*                         : T23       :        :                   :         : 6         :                
+GND*                         : T24       :        :                   :         : 6         :                
+instrEx[3]                   : T25       : input  : 3.3-V LVTTL       :         : 6         : N              
+VCCIO6                       : T26       : power  :                   : 3.3V    : 6         :                
+GND*                         : U1        :        :                   :         : 1         :                
+GND*                         : U2        :        :                   :         : 1         :                
+GND*                         : U3        :        :                   :         : 1         :                
+GND*                         : U4        :        :                   :         : 1         :                
+GND*                         : U5        :        :                   :         : 1         :                
+GND*                         : U6        :        :                   :         : 1         :                
+GND*                         : U7        :        :                   :         : 1         :                
+GND                          : U8        : gnd    :                   :         :           :                
+instrEx[20]                  : U9        : input  : 3.3-V LVTTL       :         : 1         : N              
+GND*                         : U10       :        :                   :         : 1         :                
+VCCINT                       : U11       : power  :                   : 1.2V    :           :                
+avm_profileMaster_writedata[18] : U12       : output : 3.3-V LVTTL       :         : 8         : N              
+VCCINT                       : U13       : power  :                   : 1.2V    :           :                
+VCCINT                       : U14       : power  :                   : 1.2V    :           :                
+VCCINT                       : U15       : power  :                   : 1.2V    :           :                
+VCCINT                       : U16       : power  :                   : 1.2V    :           :                
+GND*                         : U17       :        :                   :         : 7         :                
+instrEx[23]                  : U18       : input  : 3.3-V LVTTL       :         : 7         : N              
+GND                          : U19       : gnd    :                   :         :           :                
+GND*                         : U20       :        :                   :         : 6         :                
+GND*                         : U21       :        :                   :         : 6         :                
+GND*                         : U22       :        :                   :         : 6         :                
+GND*                         : U23       :        :                   :         : 6         :                
+GND*                         : U24       :        :                   :         : 6         :                
+GND*                         : U25       :        :                   :         : 6         :                
+GND*                         : U26       :        :                   :         : 6         :                
+GND*                         : V1        :        :                   :         : 1         :                
+GND*                         : V2        :        :                   :         : 1         :                
+GND*                         : V3        :        :                   :         : 1         :                
+GND*                         : V4        :        :                   :         : 1         :                
+GND*                         : V5        :        :                   :         : 1         :                
+GND*                         : V6        :        :                   :         : 1         :                
+GND*                         : V7        :        :                   :         : 1         :                
+VCCIO1                       : V8        : power  :                   : 3.3V    : 1         :                
+GND*                         : V9        :        :                   :         : 8         :                
+GND*                         : V10       :        :                   :         : 8         :                
+avm_profileMaster_writedata[21] : V11       : output : 3.3-V LVTTL       :         : 8         : N              
+VCCIO8                       : V12       : power  :                   : 3.3V    : 8         :                
+avm_profileMaster_writedata[16] : V13       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_writedata[23] : V14       : output : 3.3-V LVTTL       :         : 8         : N              
+VCCIO7                       : V15       : power  :                   : 3.3V    : 7         :                
+VCCINT                       : V16       : power  :                   : 1.2V    :           :                
+GND*                         : V17       :        :                   :         : 7         :                
+instrEx[8]                   : V18       : input  : 3.3-V LVTTL       :         : 7         : N              
+VCCIO6                       : V19       : power  :                   : 3.3V    : 6         :                
+GND*                         : V20       :        :                   :         : 6         :                
+GND*                         : V21       :        :                   :         : 6         :                
+GND*                         : V22       :        :                   :         : 6         :                
+GND*                         : V23       :        :                   :         : 6         :                
+GND*                         : V24       :        :                   :         : 6         :                
+GND*                         : V25       :        :                   :         : 6         :                
+GND*                         : V26       :        :                   :         : 6         :                
+GND*                         : W1        :        :                   :         : 1         :                
+GND*                         : W2        :        :                   :         : 1         :                
+GND*                         : W3        :        :                   :         : 1         :                
+GND*                         : W4        :        :                   :         : 1         :                
+GND                          : W5        : gnd    :                   :         :           :                
+GND*                         : W6        :        :                   :         : 1         :                
+GND_PLL1                     : W7        : gnd    :                   :         :           :                
+GND*                         : W8        :        :                   :         : 8         :                
+VCCIO8                       : W9        : power  :                   : 3.3V    : 8         :                
+GND*                         : W10       :        :                   :         : 8         :                
+avm_profileMaster_address[8] : W11       : output : 3.3-V LVTTL       :         : 8         : N              
+avm_profileMaster_address[11] : W12       : output : 3.3-V LVTTL       :         : 8         : N              
+GND                          : W13       : gnd    :                   :         :           :                
+GND                          : W14       : gnd    :                   :         :           :                
+GND*                         : W15       :        :                   :         : 7         :                
+GND*                         : W16       :        :                   :         : 7         :                
+GND*                         : W17       :        :                   :         : 7         :                
+VCCIO7                       : W18       : power  :                   : 3.3V    : 7         :                
+GND*                         : W19       :        :                   :         : 7         :                
+GND_PLL4                     : W20       : gnd    :                   :         :           :                
+GND*                         : W21       :        :                   :         : 6         :                
+GND                          : W22       : gnd    :                   :         :           :                
+GND*                         : W23       :        :                   :         : 6         :                
+GND*                         : W24       :        :                   :         : 6         :                
+GND*                         : W25       :        :                   :         : 6         :                
+GND*                         : W26       :        :                   :         : 6         :                
+GND*                         : Y1        :        :                   :         : 1         :                
+NC                           : Y2        :        :                   :         :           :                
+GND*                         : Y3        :        :                   :         : 1         :                
+GND*                         : Y4        :        :                   :         : 1         :                
+GND*                         : Y5        :        :                   :         : 1         :                
+GND_PLL1                     : Y6        : gnd    :                   :         :           :                
+VCCD_PLL1                    : Y7        : power  :                   : 1.2V    :           :                
+GNDA_PLL1                    : Y8        : gnd    :                   :         :           :                
+GND                          : Y9        : gnd    :                   :         :           :                
+GND*                         : Y10       :        :                   :         : 8         :                
+GND*                         : Y11       :        :                   :         : 8         :                
+avm_profileMaster_writedata[26] : Y12       : output : 3.3-V LVTTL       :         : 8         : N              
+GND*                         : Y13       :        :                   :         : 7         :                
+GND*                         : Y14       :        :                   :         : 7         :                
+GND*                         : Y15       :        :                   :         : 7         :                
+avm_profileMaster_writedata[20] : Y16       : output : 3.3-V LVTTL       :         : 7         : N              
+GND                          : Y17       : gnd    :                   :         :           :                
+GND*                         : Y18       :        :                   :         : 7         :                
+GNDA_PLL4                    : Y19       : gnd    :                   :         :           :                
+VCCD_PLL4                    : Y20       : power  :                   : 1.2V    :           :                
+GND*                         : Y21       :        :                   :         : 6         :                
+GND*                         : Y22       :        :                   :         : 6         :                
+GND*                         : Y23       :        :                   :         : 6         :                
+GND*                         : Y24       :        :                   :         : 6         :                
+GND*                         : Y25       :        :                   :         : 6         :                
+GND*                         : Y26       :        :                   :         : 6         :                

@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/dfmul
+set test "dfmul"
+
+set expected {Result: 20}
+
+run-test-qemu $test $expected
+
+cd ../..

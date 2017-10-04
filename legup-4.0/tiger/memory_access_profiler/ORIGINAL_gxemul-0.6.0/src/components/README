@@ -1,0 +1,19 @@
+How to add a new component:
+---------------------------
+
+Assuming you want to implement a FooComponent class:
+
+1. Copy a reasonably similar component's .cc file, e.g.
+   MIPS_CPUComponent.cc, to FooComponent.cc.
+
+2. Copy MIPS_CPUComponent.h to FooComponent.h.
+
+3. Substitute all occurances of MIPS_CPUComponent with
+   FooComponent in the .cc and .h files.
+
+4. Edit Makefile.skel to include FooComponent.o among the
+   OBJS to build.
+
+Then run   make clean_all   and   ./configure && make test
+
+Now you can modify the new component to suit your needs.

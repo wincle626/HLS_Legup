@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Introduction</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Introduction</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<table border="0" width="99%"><tr><td valign="top" align="left">
+<ul>
+  <li><a href="#overview">Overview</a>
+  <li><a href="#newvsold">New vs Old framework</a>
+  <li><a href="#free">Is GXemul Free software?</a>
+  <li><a href="#build">How to compile/build the emulator</a>
+  <li><a href="#run">How to run the emulator</a>
+  <li><a href="#cpus">Which processor architectures does GXemul emulate?</a>
+  <li><a href="#hosts">Which host architectures/platforms are supported?</a>
+  <li><a href="#accuracy">Emulation accuracy</a>
+  <li><a href="#emulmodes">Which machines does GXemul emulate?</a>
+</ul>
+</td><td valign="center" align="center">
+<a href="20050317-example.png"><img src="20050317-example_small.png"></a>
+<p>NetBSD/pmax 1.6.2 with X11<br>running in GXemul</td></tr></table>
+
+
+
+<p><br>
+<a name="overview"></a>
+<h3>Overview:</h3>
+
+GXemul is a framework for full-system computer architecture emulation. 
+Several processor architectures and machine types have been implemented. 
+It is working well enough to allow <a href="#emulmodes">unmodified 
+"guest" operating systems to run inside the emulator</a>, as if they were 
+running on real hardware.
+
+<p>The emulator emulates (networks of) real machines. The machines may 
+consist of
+<a href="http://en.wikipedia.org/wiki/ARM_architecture">ARM</a>,
+<a href="http://en.wikipedia.org/wiki/MIPS_architecture">MIPS</a>,
+<a href="http://en.wikipedia.org/wiki/Motorola_88000">Motorola 88K</a>,
+<a href="http://en.wikipedia.org/wiki/Powerpc">PowerPC</a>, and <a 
+href="http://en.wikipedia.org/wiki/SuperH">SuperH</a> processors, and 
+various surrounding hardware components such as framebuffers, busses, 
+interrupt controllers, ethernet controllers, disk controllers, and serial 
+port controllers.
+
+<p>GXemul, including the <a href="translation.html">dynamic translation
+system</a>, is implemented in
+portable C++ (although most parts are still legacy C-style code),
+which means that the emulator will run on practically any 64-bit or 32-bit
+<a href="http://en.wikipedia.org/wiki/Unix-like">Unix-like</a> systems,
+with few or no modifications.
+
+<p>Devices and processors are not simulated with 100% accuracy. They are 
+only "faked" well enough to allow guest operating systems to run without 
+complaining too much. Still, the emulator could be of interest for 
+academic research and experiments, such as when learning how to write 
+operating system code.
+
+<p>The emulator contains code which tries to emulate the workings of CPUs
+and surrounding hardware found in real machines, but it does not contain
+any ROM code. You will need some form of program (in binary form) to run
+in the emulator. For some emulation modes, PROM calls are handled by the
+emulator itself, so you do not need to use any ROM image at all.
+
+<p>You can use pre-compiled kernels (for example <a href="http://www.netbsd.org/">NetBSD</a>
+kernels, or Linux), or other programs that are in binary format, and in some cases
+even actual ROM images. A couple of different file formats are supported:
+<a href="http://en.wikipedia.org/wiki/Executable_and_Linkable_Format">ELF</a>,
+<a href="http://en.wikipedia.org/wiki/A.out">a.out</a>,
+<a href="http://en.wikipedia.org/wiki/COFF">COFF</a>/<a href="http://en.wikipedia.org/wiki/ECOFF">ECOFF</a>,
+<a href="http://en.wikipedia.org/wiki/SREC_%28file_format%29">SREC</a>, and raw binaries.
+
+<p>If you do not have a kernel as a separate file, but you have a bootable
+disk image, then it is sometimes possible to boot directly from that
+image. This works for example with DECstation emulation, <a href="dreamcast.html">Dreamcast 
+emulation</a>, or when booting from generic <a href="http://en.wikipedia.org/wiki/ISO9660">ISO9660</a>
+CDROM images if the kernel is included in the image as a plain file.
+
+<p>Thanks to (in no specific order) Joachim Buss, Olivier Houchard, Juli 
+Mallett, Juan Romero Pardines, Carl van Schaik, Miod Vallat, Alec Voropay,
+Göran Weinholt, Alexander Yurchenko, and everyone else who has provided
+feedback on previous releases.
+
+
+
+
+<p><br>
+<a name="newvsold"></a>
+<h3>New vs Old framework:</h3>
+
+Starting with GXemul 0.6.0, a new emulation framework designed from scratch is
+included. So far, only <a href="machines.html">very few emulation modes</a> have
+been rewritten to use this new framework; almost all emulation modes use the old
+(legacy) framework, which was developed in a more ad-hoc manner. The long-term
+goal is to rewrite everything to use the new framework.
+
+<p>(The documentation still largely refers to how things worked in the old framework.)
+
+<p>The new framework is described <a href="framework.html">here</a>.
+
+
+
+
+<p><br>
+<a name="free"></a>
+<h3>Is GXemul Free software?</h3>
+
+Yes. the GXemul source code is released under a Free license. The code in GXemul
+is Copyrighted software, it is <i>not</i> public domain. (If this is
+confusing to you, you might want to read up on the definitions of the
+four freedoms associated with Free software, <a
+href="http://www.gnu.org/philosophy/free-sw.html">http://www.gnu.org/philosophy/free-sw.html</a>.)
+
+<p>The main part of the code is released under a 3-clause BSD-style license
+(or "revised BSD-style" if one wants to use <a
+href="http://www.gnu.org/philosophy/bsd.html">GNU jargon</a>). Apart from
+the main code, some files are copied from other sources such as
+NetBSD, for example header files containing symbolic names of bitfields in
+device registers. They are also covered by similar licenses, but with some
+additional clauses. The main point, however, is that the licenses require
+that the original Copyright and license terms are included when you distribute
+a copy, modified or not, <i>even if it is in binary form</i>.
+
+<p>If you plan to redistribute GXemul <i>without</i> supplying the source
+code, then you need to comply with each individual source file some other
+way, for example by writing additional documentation containing Copyright
+notes. This has not been done in the official GXemul distribution, since it
+is in source code form and already includes the Copyright messages. You need
+to check all individual files for details. The "easiest way out" if you plan
+to redistribute code from GXemul is, of course, to let it remain Free Software
+and simply include the source code.
+
+
+
+
+<p><br>
+<a name="build"></a>
+<h3>How to compile/build the emulator:</h3>
+
+Uncompress the .tar.gz distribution file, and run
+<pre>
+	$ <b>./configure</b>
+	$ <b>make</b>
+</pre>
+
+<p>This should work on most Unix-like systems, with few or no modifications
+to the source code. Requirements are:
+<ul>
+	<li>A reasonably modern C++ compiler environment, including STL.
+</ul>
+
+<p>(Hopefully there are no GNU-specific parts in the source code. Still,
+the GNU C++ compiler is still the compiler most likely to be useful for
+building GXemul. There is a page on the GXemul homepage,
+<a href="http://gxemul.sourceforge.net/build.html">http://gxemul.sourceforge.net/build.html</a>,
+which lists various platforms, compilers, and which versions of GXemul that
+was built on those platforms.)
+
+<p>GXemul does not <i>require</i> any additional third-party libraries to build,
+however, the following optional libraries or third-party software give
+additional functionality:
+<ul>
+	<li>X11 libraries: for legacy mode framebuffer emulation.
+	<li><a href="http://www.doxygen.org/">Doxygen</a>: if installed, source code documentation will be generated
+		when documentation is built.
+</ul>
+
+<p>The emulator's performance is dependent on both runtime settings 
+and on compiler settings, so you might want to experiment with using 
+different <tt>CXX</tt>, <tt>CXXFLAGS</tt>, and <tt>LDFLAGS</tt> environment
+variable values when running the <tt>configure</tt> script.
+
+<p>During development of the emulator: <tt><b>configure --debug</b></tt> may be used
+to enable some debugging aids and turn off optimizations. <tt><b>make test</b></tt>
+can be used to run unit tests. If you often recompile the whole tree (<tt>make clean_all</tt>,
+followed by <tt>configure</tt> and <tt>make</tt> again), then using
+<a href="http://ccache.samba.org/">ccache</a> is recommended.
+
+<p>Running <tt><b>make install</b></tt> will install GXemul into <tt>/usr/local</tt>,
+or wherever the configure script detects that user software is installed on
+your system (may be overridden by setting the <tt>PREFIX</tt> environment variable before
+running <tt>configure</tt>).
+
+
+
+
+<p><br>
+<a name="run"></a>
+<h3>How to run the emulator:</h3>
+
+Once you have built GXemul, running it should be rather straight-forward.
+Running <tt><b>gxemul</b></tt> without arguments (or with the
+<b><tt>-h</tt></b> or <b><tt>-H</tt></b> command line options) will
+display a help message.
+
+<p>Running <tt><b>gxemul -V</b></tt> will start GXemul in an "empty state"
+in the interactive debugger. You may then type <tt><b>help</b></tt> to see
+a list of available commands.
+
+<p>To get some ideas about what is possible to run in the emulator, please 
+read the section about <a href="guestoses.html">installing "guest" 
+operating systems</a>. The most straight forward guest operating system to 
+install is <a href="http://www.netbsd.org/ports/pmax/">NetBSD/pmax</a>; the
+instructions provided <a href="guestoses.html#netbsdpmaxinstall">here</a> should let you install 
+NetBSD/pmax in a way very similar to how it is done on a real DECstation.
+
+<p>If you are interested in using the emulator to develop code on your 
+own, then you should also read the section about <a 
+href="experiments.html#hello">Hello World</a>.
+
+<p>To exit the emulator, type CTRL-C to show the 
+single-step debugger prompt (if it is not already displayed),
+and then type <tt><b>quit</b></tt>.
+
+<p>If you are starting an emulation by entering settings directly on the 
+command line, and you are not using the <tt><b>-x</b></tt> option, then 
+all terminal input and output will go to the main controlling terminal. 
+CTRL-C is used to break into the debugger, so in order to send CTRL-C to 
+the running (emulated) program, you may use CTRL-B. (This should be a 
+reasonable compromise to allow the emulator to be usable even on systems 
+without X Windows.)
+
+<p>There is no way to send an actual CTRL-B to the emulated program, when 
+typing in the main controlling terminal window. The solution is to either 
+use <a href="configfiles.html">configuration files</a>, or use 
+<tt><b>-x</b></tt>. Both these solutions cause new xterms to be opened for 
+each emulated serial port that is written to. CTRL-B and CTRL-C both have 
+their original meaning in those xterm windows.
+
+
+
+
+
+<p><br>
+<a name="cpus"></a>
+<h3>Which processor architectures does GXemul emulate?</h3>
+
+The architectures that are emulated well enough to let at least one 
+guest operating system run (per architecture) are 
+<a href="http://en.wikipedia.org/wiki/ARM_architecture">ARM</a>,   
+<a href="http://en.wikipedia.org/wiki/MIPS_architecture">MIPS</a>,   
+<a href="http://en.wikipedia.org/wiki/Motorola_88000">Motorola 88K</a>,
+<a href="http://en.wikipedia.org/wiki/Powerpc">PowerPC</a>, and   
+<a href="http://en.wikipedia.org/wiki/SuperH">SuperH</a>.
+
+<p>Please read the sections about <a href="#emulmodes">emulation 
+modes</a> and <a href="guestoses.html">guest operating
+systems</a> for more information about the machines and operating systems, 
+respectively, that can be considered "working" in the emulator.
+
+<p>(There is some code in GXemul for emulation of other architectures, but
+they are not stable or complete enough to be listed among the "working"
+architectures.)
+
+
+
+
+<p><br>
+<a name="hosts"></a>
+<h3>Which host architectures/platforms are supported?</h3>
+
+GXemul should hopefully compile and run on most modern host architectures
+(64-bit or 32-bit word-length) on most Unix-like operating systems, as long as
+there is a modern C++ compiler available.
+
+<p>If it does not build or run, then it can be considered a bug. Please
+report it to the development mailing list.
+
+<p>It is generally tested on FreeBSD/amd64, FreeBSD/alpha, Linux, and also
+NetBSD and OpenBSD inside GXemul itself.
+
+<p>Note 1: The <a href="translation.html">dynamic translation</a> engine 
+does <i>not</i> require backends for native code generation to be written 
+for each individual host architecture; the intermediate representation 
+that the dyntrans system uses can be executed on any host architecture.
+
+<p>Note 2: Although GXemul may build and run on non-Unix-like platforms,
+such as <a href="http://www.cygwin.com/">Cygwin</a>, Unix-like systems are
+the primary platform. Some functionality may be lost when running on Cygwin.
+
+
+
+
+<p><br>
+<a name="accuracy"></a>
+<h3>Emulation accuracy:</h3>
+
+GXemul is an instruction-level emulator; things that would happen in
+several steps within a real CPU are not taken into account (e.g. pipe-line
+stalls or out-of-order execution). Still, instruction-level accuracy seems
+to be enough to be able to run complete guest operating systems inside the
+emulator.
+
+<p>The existance of instruction and data caches is "faked" to let
+operating systems think that they are there, but for all practical
+purposes, these caches are non-working.
+
+<p>The emulator is in general <i>not</i> timing-accurate, neither at the
+instruction level nor on any higher level. An attempt is made to let
+emulated clocks run at the same speed as the host (i.e. an emulated timer
+running at 100 Hz will interrupt around 100 times per real second), but
+since the host speed may vary, e.g. because of other running processes,
+there is no guarantee as to how many instructions will be executed in
+each of these 100 Hz cycles.
+
+<p>If the host is very slow, the emulated clocks might even lag behind
+the real-world clock.
+
+
+
+
+<p><br>
+<a name="emulmodes"></a>
+<h3>Which machines does GXemul emulate?</h3>
+
+A few different machine types are emulated. The criteria used to include a
+machine in these lists is:
+<ul>
+	<li>For real machines: That the machine emulation is complete enough
+		to run <i>at least one</i> unmodified "guest OS".
+	<li>For GXemul's <tt>test*</tt> machines: That the experimental
+		devices for test machines work according to the documentation.
+</ul>
+
+<p><a href="machines.html">Machines emulated using the new framework</a>:
+<ul
+  <li><b><u>MIPS</u></b>
+  <ul>
+    <li><a href="machines/machine_testmips.html"><b>testmips</b></a> (<i>partial</i> support for experimental devices)
+  </ul>
+  <p>
+  <li><b><u>Motorola 88K</u></b>
+  <ul>
+    <!-- TODO <li><a href="machines/machine_mvme187.html"><b>Motorola MVME187</b></a> (<a href="machines/machine_mvme187.html#openbsdmvme88kinstall">OpenBSD/mvme88k</a>) -->
+    <li><a href="machines/machine_testm88k.html"><b>testm88k</b></a> (<i>partial</i> support for experimental devices)
+  </ul>
+</ul>
+
+<p>Machines emulated using the legacy framework:
+
+<p>
+<ul>
+  <li><b><u>ARM</u></b>
+  <ul>
+    <li><b>CATS</b> (<a href="guestoses.html#netbsdcatsinstall">NetBSD/cats</a>,
+	<a href="guestoses.html#openbsdcatsinstall">OpenBSD/cats</a>)
+    <li><b>IQ80321</b> (<a href="guestoses.html#netbsdevbarminstall">NetBSD/evbarm</a>)
+    <li><b>NetWinder</b> (<a href="guestoses.html#netbsdnetwinderinstall">NetBSD/netwinder</a>)
+    <li><b>testarm</b> (<a href="experiments.html#expdevices">experimental</a>, <a href="guestoses.html#helenos">HelenOS/arm</a>)
+  </ul>
+  <p>
+  <li><b><u>MIPS</u></b>
+  <ul>
+    <li><b>DECstation 5000/200</b> (<a href="guestoses.html#netbsdpmaxinstall">NetBSD/pmax</a>,
+	<a href="guestoses.html#openbsdpmaxinstall">OpenBSD/pmax</a>,
+	<a href="guestoses.html#ultrixinstall">Ultrix</a>,
+	<a href="guestoses.html#declinux">Linux/DECstation</a>,
+	<a href="guestoses.html#sprite">Sprite</a>)
+    <li><b>Acer Pica-61</b> (<a href="guestoses.html#netbsdarcinstall">NetBSD/arc</a>)
+    <li><b>NEC MobilePro 770, 780, 800, 880</b> (<a href="guestoses.html#netbsdhpcmipsinstall">NetBSD/hpcmips</a>)
+    <li><b>Cobalt</b> (<a href="guestoses.html#netbsdcobaltinstall">NetBSD/cobalt</a>)
+    <li><b>Malta</b> (<a href="guestoses.html#netbsdevbmipsinstall">NetBSD/evbmips</a>, <a href="unsupported.html#linux_malta2">Linux/Malta</a> <font color="#0000e0">(<super>*1</super>)</font>)
+    <li><b>Algorithmics P5064</b> (<a href="guestoses.html#netbsdalgorinstall">NetBSD/algor</a>)
+    <li><b>SGI O2 (aka IP32)</b> <font color="#0000e0">(<super>*2</super>)</font>
+	(<a href="guestoses.html#netbsdsgimips">NetBSD/sgi</a>)
+    <li><b>oldtestmips</b> (<a href="experiments.html#expdevices">experimental</a>, <a href="guestoses.html#helenos">HelenOS/mips</a>)
+  </ul>
+  <p>
+  <li><b><u>Motorola 88K</u></b>
+  <ul>
+    <li><b>Motorola MVME187</b> (<a href="guestoses.html#openbsdmvme88kinstall">OpenBSD/mvme88k</a>)
+    <li><b>oldtestm88k</b> (<a href="experiments.html#expdevices">experimental</a>)
+  </ul>
+  <p>
+  <li><b><u>PowerPC</u></b>
+  <ul>
+    <li><b>IBM 6050/6070 (PReP, PowerPC Reference Platform)</b> (<a href="guestoses.html#netbsdprepinstall">NetBSD/prep</a>)
+    <li><b>MacPPC (generic "G4" Macintosh)</b> (<a href="guestoses.html#netbsdmacppcinstall">NetBSD/macppc</a>)
+    <li><b>Artesyn PM/PPC</b> <font color="#0000e0">(<super>*2</super>)</font>
+	(<a href="guestoses.html#netbsdpmppc">NetBSD/pmppc</a>)
+    <li><b>testppc</b> (<a href="experiments.html#expdevices">experimental</a>)
+  </ul>
+  <p>
+  <li><b><u>SuperH</u></b>
+  <ul>
+    <li><b>Sega Dreamcast</b> (<a href="dreamcast.html#netbsd_generic_md">NetBSD/dreamcast</a>, <a href="dreamcast.html#linux_live_cd">Linux/dreamcast</a>)
+    <li><b>Landisk I-O DATA USL-5P</b> (<a href="guestoses.html#openbsdlandiskinstall">OpenBSD/landisk</a>)
+    <li><b>testsh</b> (<a href="experiments.html#expdevices">experimental</a>)
+  </ul>
+</ul>
+
+<p>
+<small><font color="#0000e0">(<super>*1</super>)</font> =
+Linux/Malta sometimes works as a guest OS, but running Linux/Malta in GXemul
+is much more experimental/unknown than NetBSD, so it is still on the
+<a href="unsupported.html">"unsupported"</a> page.</small>
+
+<br><small><font color="#0000e0">(<super>*2</super>)</font> =
+The emulation is enough for root-on-nfs, but no disk controller (SCSI nor 
+IDE) is emulated yet for this machine type.</small>
+
+<p>Note that of all of the machines above, none of them is emulated to 
+100%. The most complete emulation mode is probably the DECstation 
+5000/200. Things that will most likely <b>not</b> work include running 
+raw PROM images for most machines, SGI IRIX, MacOS X or Darwin, Windows 
+NT, or Dreamcast games.
+
+<p>There may be code in GXemul for emulation of some other machine types; the
+degree to which these work range from almost being able to run a complete
+OS, to almost completely unsupported, perhaps just enough support to
+output a few boot messages via serial console. (See the end of
+<a href="guestoses.html#generalnotes">this section</a> on the Guest OSes 
+page for some examples, but remember that these do not necessarily work.)
+
+<p>In addition to emulating real machines, there are also the test machines.
+A test machine consists of one or more CPUs and a few experimental devices
+such as:
+
+<p>
+<ul>
+  <li>a console I/O device (putchar() and getchar()...)
+  <li>an inter-processor communication device, for SMP experiments
+  <li>a very simple linear framebuffer device (for graphics output)
+  <li>a simple disk controller
+  <li>a simple ethernet controller
+  <li>a simple interrupt controller
+  <li>a real-time clock device
+</ul>
+
+<p>This mode is useful if you wish to run experimental code, but do not
+wish to target any specific real-world machine type, for example for
+educational purposes.
+
+<p>You can read more about these experimental devices <a
+href="experiments.html#expdevices">here</a>.
+
+
+
+</body>
+</html>

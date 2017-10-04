@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/longchain
+set test "pipeline/longchain"
+set expected {return_val=\s+550\s+.*Cycles:\s+34\s+}
+
+run-test $test $expected
+
+cd ../..

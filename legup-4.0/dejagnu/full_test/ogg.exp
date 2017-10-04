@@ -1,0 +1,12 @@
+load_lib legup.exp
+
+cd ogg
+set test "ogg"
+
+set expected {return_val=\s+2\s+}
+set gxexpected {reg: v0 = 0x0000000000000002}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

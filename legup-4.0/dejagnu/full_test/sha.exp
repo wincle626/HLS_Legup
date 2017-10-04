@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/sha
+set test "sha"
+
+set expected {return_val=\s+5\s+}
+set gxexpected {reg: v0 = 0x0000000000000005}
+
+run-test-full $test $expected $gxexpected
+
+cd ../..

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Release notes</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>Release notes for GXemul 0.6.0</h1>
+
+<p><i>Copyright (C) 2003-2010  Anders Gavare</i>
+
+<p><br>GXemul is a framework for full-system computer architecture emulation. 
+Several processor architectures and machine types have been implemented. 
+It is working well enough to allow <a href="guestoses.html">unmodified
+"guest" operating systems to run inside the emulator</a>,
+as if they were running on real hardware.
+
+<p>The emulator emulates (networks of) real machines. The machines may consist
+of ARM, MIPS, Motorola 88K, PowerPC, and SuperH processors, and various 
+surrounding hardware components such as framebuffers, busses, interrupt 
+controllers, ethernet controllers, disk controllers, and serial port 
+controllers.
+
+<p>The <a href="index.html">documentation</a> lists the machines and
+guest operating systems that 
+can be regarded as "working" in GXemul. The best working guest operating 
+system is <a href="guestoses.html#netbsdpmaxinstall">NetBSD/pmax</a>.
+
+
+<p><br>The main change between release 0.4.7.2 and 0.6.0 is:
+
+<ul>
+  <li>Since late 2007, a complete rewrite of the emulator's base framework
+  	has been going on. GXemul 0.6.0 is a <b><i>very early release</i></b>
+  	of the new framework. So far, <i><b>only the
+	<a href="machines/machine_testm88k.html">testm88k</a> machine mode</i></b>
+	has been rewritten to use the new framework, all other machine modes
+	run in legacy mode using the old framework (which is still included).
+
+	<p>In other words: <b>For most emulation modes, 0.6.0 will be
+	exactly like 0.4.7.2.</b>
+
+	<p>The new <tt>testm88k</tt> mode is much less complete than the old
+	<tt>testm88k</tt>; the reason for concentrating on this mode is to be able
+	to make an initial release of the new framework within a reasonable
+	time frame.
+	
+	<p>Compared to the other emulation modes, there are lots of things left
+	to do before the new framework can be considered working:
+	There are no lookup tables for fast loads/stores, no fast pc-to-pointer
+	lookups, no interrupt/trap/exception handling, no timers,
+	no breakpoint support, no general expression parsing, no I/O
+	(serial controllers nor graphical output handlers), no disk or
+	ethernet support, no MMU/virtual memory translation, and snapshotting
+	(for reverse debugging) isn't implemented yet. Still, it is probably
+	better to make many smaller releases (0.6.x) than to wait until
+	everything is in place.
+
+	<p>There is also a (bogus) <tt>testmips</tt> machine which will be
+	implemented using the new framework. To use the old <tt>testmips</tt>
+	machine, please use the name <tt>oldtestmips</tt> instead.
+</ul>
+
+<p>In addition to the new framework, a couple of other changes are worth
+mentioning:
+
+<ul>
+
+  <li>Many unused, rarely used, and bogus emulation modes and features
+  	were removed, to reduce the maintenance burden.
+
+  <p>
+  <li>Some operating systems listed on the
+	  <a href="guestoses.html">guest OS page</a> have had new releases;
+	  the documentation has been updated to reflect this.
+
+  <p>
+  <li>New source code (but not the legacy part) is
+  	<a href="doxygen/html/index.html">documented using Doxygen comments</a>,
+  	and there is a unit testing framework in place.
+
+  <p>
+  <li>There is now finally an <tt>install</tt> Makefile target, and
+  	the <tt>-j</tt> make option can be used to parallelize builds.
+  
+</ul>
+
+
+<p><br>Please read the HISTORY file for more details.
+
+<p><br>Files included in this release are:<pre>
+    HISTORY                       Detailed revision history / changelog.
+    LICENSE                       Copyright message / license.
+    README                        Quick start instructions, for the impatient.
+    configure, Makefile.skel      sh and make scripts for building GXemul.
+    demos/                        Tutorial-like demos of testmachine functionality.
+    <a href="index.html">doc/</a>                          Documentation. (*)
+    doc/RELEASE.html              This file.
+    <a href="TODO.html">doc/TODO</a>                      TODO notes.
+    experiments/                  Experimental code. (Usually not needed.)
+    man/                          Man page.
+    src/                          Source code.
+    test/                         Files used for testing.
+</pre>
+
+<p>(*) Note: In general, the documentation refers to how things worked
+in pre-0.6.0 releases.
+
+<p>To build the emulator, run the <tt>configure</tt> script, and then run 
+<tt>make</tt>. This should hopefully work on most Unix-like systems, with few
+or no modifications to the source code.
+
+<p>Regarding files in the <tt>src/include/</tt> directory: only some of 
+these are written by me, the rest are from other sources
+(such as <a href="http://www.netbsd.org/">NetBSD</a>).
+The license text says that "All advertising materials mentioning features 
+or use of this software" must display acknowledgements. Even though I do 
+<i>not</i> feel that I mention features or use of the header files (the 
+"software") in any advertising materials, I am still very grateful for the 
+fact that these people have made their files available for re-use, as Free 
+software, so regardless of legal requirements, I guess thanking them like 
+this is in order:<pre>
+    This product includes software developed by the University of
+    California, Berkeley and its contributors.
+
+    This product includes software developed for the
+    NetBSD Project.  See <a href="http://www.netbsd.org/">http://www.netbsd.org/</a> for
+    information about NetBSD.
+
+    This product includes software developed by Jonathan Stone for
+    the NetBSD Project.
+
+    This product includes software developed for the NetBSD Project
+    by Matthias Drochner.
+
+    This product includes software developed by the NetBSD
+    Foundation, Inc. and its contributors.
+
+    This product includes software developed by Christopher G. Demetriou.
+    [for the NetBSD Project.]
+
+    This product includes software developed by Adam Glass.
+
+    This product includes software developed by the PocketBSD project
+    and its contributors.
+
+    This product includes software developed by Peter Galbavy.
+
+    Carnegie Mellon University   (multiple header files,
+    no specific advertisement text required)
+
+    This product includes software developed by Charles M. Hannum.
+
+    This product includes software developed under <a href="http://www.openbsd.org/">OpenBSD</a> by Per Fogelström.
+
+    This product includes software developed by Per Fogelström.
+
+    This product includes software developed at Ludd, University of
+    Luleå, Sweden and its contributors.
+
+    This product includes software developed by Hellmuth Michaelis
+    and Joerg Wunsch
+
+    The font(s) in devices/fonts are Copyright (c) 1992, 1993, 1994
+    by Hellmuth Michaelis and Joerg Wunsch.  ("This product includes software
+    developed by Hellmuth Michaelis and Joerg Wunsch", well, the font
+    is maybe not software, but still...)
+
+    impactsr-bsd.h is Copyright (C) 2004 by Stanislaw Skowronek.
+
+    This product includes software developed for the NetBSD Project by
+    Wasabi Systems, Inc.  [by Simon Burge]
+
+    arcbios_other.h is Copyright (c) 1996 M. Warner Losh.
+
+    This product includes software developed by Marc Horowitz.
+
+    This product includes software developed by Brini.
+
+    This product includes software developed by Mark Brinicombe
+    for the NetBSD Project.
+
+    This product includes software developed by TooLs GmbH.
+
+    This product includes software developed by Manuel Bouyer.
+
+    This product includes software developed by the Alice Group.
+
+    This product includes software developed by Ichiro FUKUHARA.
+
+    This product includes software developed by Marcus Comstedt.
+
+    This product includes software developed by Bill Paul.
+
+    This product includes software developed by Nivas Madhur.
+</pre>
+
+
+<p>See individual files for license details, if you plan to redistribute 
+GXemul or reuse code.
+
+<p>GXemul's homepage is
+<a href="http://gxemul.sourceforge.net/">http://gxemul.sourceforge.net/</a>.
+
+
+
+</body>
+</html>
+

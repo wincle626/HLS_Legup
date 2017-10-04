@@ -1,0 +1,112 @@
+Cache Simulator README 
+By Kevin Nam
+
+## INTRODUCTION ##
+
+This program was written for the LegUp HLS Suite to simulate the cache hit/miss rates for different cache configurations,
+given a program's memory access stream.
+
+## COMPILING ##
+
+Just do "make"
+
+## USAGE ##
+
+Input file containing the stream of accessed addresses is required. This file must contain a 32bit address in each line (in HEX).
+
+Example of an input file:
+_______________________
+00801ee5
+00801ee6
+00801ee4
+00801ee7
+00801ee9
+00801eea
+00801ee8
+00801eeb
+00801eed
+00801eee
+00801eec
+00801eef
+00801ef1
+________________________
+
+The program has the following commandline arguments
+
+    specify file with memory access addresses:
+    -file <filename>
+
+    specify cache size. Default = 8KB.
+    -cachesize <kilobytes>
+
+    specify line size. Default = 16 bytes
+    -linesize <bytes>
+
+    specify ways/set. Default = 1 (direct mapped).
+    -ways <num>
+
+    specify replacement policy. Default = LRU.
+	for direct mapped caches, this argument is irrelavent.
+    -replacementpolicy <policy>
+        options: LRU, NMRU (random but not MRU), random
+
+    specify how many lines of cache ahead to prefetch. Default = 0. Prefetches on misses.
+    -prefetch <num>
+    
+    append the result to a csv file
+    -savecsv <csv filename>
+
+    turn on quiet mode (no warning messages)
+    -q
+
+An example of a valid usage:
+
+./cache_sim -file example_access_stream -cachesize 8 -ways 1 -linesize 16 -replacementpolicy LRU -prefetch 0 -savecsv results.csv
+
+The above will simulate the accesses contained in the file "example_access_stream" on a 8KB cache with 16B line size.
+This will use a direct mapped cache (ways = 1), the replacement policy will be ignored, use no prefetching, and will
+save the results to "results.csv".
+
+## INTERPRETTING THE RESULTS ##
+
+In the csv file, the columns are as follows:
+
+CACHE SIZE (KB) / LINE SIZE (B) / WAYS / REPLACEMENT POLICY / HIT COUNT / MISS COUNT / ESTIMATED FETCH CYCLES
+
+Lower misses does not necessarily mean better performance. Higher line sizes make each miss cost more cycles. 
+For a better estimate of performance, the simulator estimates the total fetch cycles.
+
+The estimated fetch cycles is an estimate of how many cycles are used to fetch data from memory as a result of all the misses.
+This is an estimate, based on the rough estimate of 25 cycles per fetch for a 16B line size. Knowing this,
+we can estimate the cycle counts for other line sizes using the fact that loading each additional word takes an additional
+2 cycles.
+
+For the DE4 DDR2 ram, each additional word takes 1 word and the default fetch cycles are lower.
+Tweak the #defines at the top of cache_sim.cpp as needed for more accurate estimates
+
+## GETTING THE ACCESS STREAM ##
+
+To get the access stream, you need to modify the tiger processor to print out the accessed addresses. To do this, do the following:
+
+Add the following to the data cache verilog:
+	always@ (memAddress) begin
+	if (memAddress > 32'd0 && avs_dCacheADDR_read == 1'b1 && memAddress[31] != 1'b1) begin
+	$display("[d%h]", memAddress);
+	end
+	end
+Add the following to the instruction cache verilog:
+	always@ (address) begin
+	if (address > 32'd0 && memRead == 1'b1 && address[31] != 1'b1) begin
+	$display("[i%h]", address);
+	end
+	end
+
+Then do make tigersim. Parse the modelsim output transcript with the included parser program 
+to get the instruction cache access stream and the data cache access stream.
+
+## PARSER ##
+
+./parser <input transcript file> <output data cache access stream file> <output instruction cache access stream file>
+
+The output files are then used with cache_sim
+

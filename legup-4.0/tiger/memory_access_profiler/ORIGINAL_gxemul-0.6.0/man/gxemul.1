@@ -1,0 +1,541 @@
+.\"
+.\" Copyright (C) 2004-2010  Anders Gavare.  All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions are met:
+.\"
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\" 3. The name of the author may not be used to endorse or promote products
+.\"    derived from this software without specific prior written permission.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" SUCH DAMAGE.
+.\" 
+.\" 
+.\" This is the man page for GXemul. Process this file with
+.\"
+.\"     groff -man -Tascii gxemul.1    or    nroff -man gxemul.1
+.\"
+.Dd JANUARY 2010
+.Dt GXEMUL 1
+.Os
+.Sh NAME
+.Nm gxemul
+.Nd an experimental framework for full-system machine emulation
+.Sh SYNOPSIS
+.Nm
+.Op options
+.Fl e
+.Ar name
+.Op file Ar ...
+.Nm
+.Op options
+.Ar configfile
+.Nm
+.Fl V
+.Nm
+.Fl H
+.Sh SYNOPSIS (LEGACY)
+.Nm
+.Op machine, other, and general options
+.Op file Ar ...
+.Nm
+.Op general options
+.Ar @configfile
+.Sh DESCRIPTION
+.Nm
+is a framework for full-system computer architecture emulation.
+Several processor architectures and machine types have been implemented.
+It is working well enough to allow unmodified "guest" operating
+systems (e.g. NetBSD) to run inside the emulator, as if they were running 
+on real hardware.
+.Pp
+The emulator emulates (networks of) real machines. The machines may consist
+of ARM, MIPS, Motorola 88K, PowerPC, and SuperH processors, and various
+surrounding hardware components such as framebuffers, busses, interrupt
+controllers, ethernet controllers, disk controllers, and serial port
+controllers.
+.Pp
+Note: Only very few emulated machine modes have been rewritten to use the new
+emulation framework introduced in version 0.6.0, so there are two different
+ways to use the emulator. (Most emulation modes and machines are only valid
+in the old framework.) The options available for the new framework are:
+.Pp
+.Bl -tag -width Ds
+.It Fl B
+Enables snapshotting (required for reverse execution/stepping).
+.It Fl e Ar name
+Start with a machine based on template 'name'. The name may be followed by
+optional arguments in parentheses, e.g.
+.Pp
+.Dl "gxemul -V -e 'testmips(cpu=R4400)'"
+.Pp
+Remember to use quotes if your shell gives special meaning to parentheses.
+.It Fl H
+Display a list of available machine templates.
+.It Fl q
+Start up in Quiet mode (i.e. suppress debug messages). If an error occurs
+during emulation which stops execution and drops the user into the debugger,
+quiet mode is turned off.
+.It Fl V
+Start up in interactive mode, paused. If this option is used,
+.Fl q
+is ignored.
+.El
+.Pp
+Any files supplied on the command line when using the
+.Fl e
+option will be loaded into root.machine0.mainbus0.cpu0 (which is assumed
+to be the main CPU in the machine created by the template configuration).
+.Pp
+When not using the
+.Fl e
+option, the config file should be one that was previously saved from within
+the emulator using the 'save' command.
+.Pp
+Starting the emulator with the
+.Fl V
+switch will bring you to the interactive debugger environment, without
+starting the emulation.
+.Sh RUNNING GUEST OPERATING SYSTEMS
+Please read the HTML documentation for more details on how to run complete
+guest operating systems in the emulator.
+.Sh DESCRIPTION (LEGACY)
+The emulator can be invoked in the following ways:
+.Pp
+1. When emulating a complete machine, configuration options can be
+supplied directly on the command line.
+.Pp
+2. Options can be read from a configuration file.
+.Pp
+The easiest way to use the emulator is to supply settings directly on the 
+command line.
+.Pp
+The most important thing you need to supply is the
+file argument. This is the name of a binary file (an ELF, a.out, COFF/ECOFF,
+SREC, or a raw binary image) which you wish to run in the emulator. This file
+might be an operating system kernel, or perhaps a ROM image file.
+If more than one filename is supplied, all files are loaded into memory, 
+and the entry point (if available) is taken from the last file.
+.Pp
+Apart from the name of a binary file, you must also use the
+.Fl E
+and/or
+.Fl e
+options to select which emulation mode to use. This is necessary because
+the emulator cannot in general deduce this from the file being executed.
+For example, a MIPS-based machine from DEC (a DECstation) is very different
+from a MIPS-based machine from SGI. Use
+.Nm
+.Fl H
+to get a list of available emulation modes.
+.Pp
+There are three exceptions to the normal invocation usage mentioned above.
+.Pp
+1. For DECstation emulation, if you have a bootable DECstation harddisk or
+CDROM image, then just supplying the diskimage via the
+.Fl d
+option is sufficient. The filename of the kernel can then be 
+skipped, as the emulator runs the bootblocks from the diskimage directly and 
+doesn't need the kernel as a separate file.
+.Pp
+2. If you supply an ISO9660 CDROM disk image, then using the
+.Fl j
+option to indicate a file on the CDROM filesystem to load is sufficient;
+no additional kernel filename needs to be supplied on the command line.
+.Pp
+3. For Dreamcast emulation, when booting e.g. a NetBSD/dreamcast CDROM 
+image, it is enough to supply the disk image (with the correct ISO 
+partition start offset). Bootblocks will be read directly from the CDROM
+image, and there is no need to supply the name of an external kernel on 
+the command line.
+.Pp
+Gzipped kernels are automatically unzipped, by calling the external gunzip 
+program, both when specifying a gzipped file directly on the command line 
+and when loading such a file using the
+.Fl j
+option.
+.Pp
+Machine selection options:
+.Bl -tag -width Ds
+.It Fl E Ar t
+Try to emulate machine type
+.Ar "t".
+This option is not always needed, if the
+.Fl e
+option uniquely selects a machine.
+(Use
+.Fl H
+to get a list of types.)
+.It Fl e Ar st
+Try to emulate machine subtype
+.Ar "st".
+Use this together with
+.Fl E .
+(This option is not always needed, if a machine type has no subtypes.)
+.El
+.Pp
+Other options:
+.Bl -tag -width Ds
+.It Fl C Ar x
+Try to emulate a specific CPU type,
+.Ar "x".
+This overrides the default CPU type for the machine being emulated.
+(Use
+.Fl H
+to get a list of available CPU types.)
+.It Fl d Ar [modifiers:]filename
+Add
+.Ar filename
+as a disk image. By adding one or more modifier characters and then a
+colon (":") as a prefix to
+.Ar filename,
+you can modify the way the disk image is treated. Available modifiers are:
+.Bl -tag -width Ds
+.It b
+Specifies that this is a boot device.
+.It c
+CD-ROM.
+.It d
+DISK (this is the default).
+.It f
+FLOPPY.
+.It gH;S;
+Override the default geometry; use H heads and S sectors-per-track.
+(The number of cylinders is calculated automatically.)
+.It i
+IDE. (This is the default for most machine types.)
+.It oOFS;
+Set the base offset for an ISO9660 filesystem on a disk image. The default 
+is 0. A suitable offset when booting from Dreamcast ISO9660 filesystem 
+images, which are offset by 11702 sectors, is 23965696.
+.It r
+Read-only (don't allow changes to be written to the file).
+.It s
+SCSI.
+.It t
+Tape.
+.It V
+Add an overlay filename to an already defined disk image.
+(A ID number must also be specified when this flag is used. See the 
+documentation for an example of how to use overlays.)
+.It 0-7
+Force a specific ID number.
+.El
+.Pp
+For SCSI devices, the ID number is the SCSI ID. For IDE harddisks, the ID 
+number has the following meaning:
+.Bl -tag -width Ds
+.It 0
+Primary master.
+.It 1
+Primary slave.
+.It 2
+Secondary master.
+.It 3
+Secondary slave.
+.El
+.Pp
+Unless otherwise specified, filenames ending with ".iso" or ".cdr" are 
+assumed to be CDROM images. Most others are assumed to be disks. Depending
+on which machine is being emulated, the default for disks can be either 
+SCSI or IDE. Some disk images that are very small are assumed to be floppy 
+disks. (If you are not happy with the way a disk image is detected, then 
+you need to use explicit prefixes to force a specific type.)
+.Pp
+For floppies, the gH;S; prefix is ignored. Instead, the number of 
+heads and cylinders are assumed to be 2 and 80, respectively, and the 
+number of sectors per track is calculated automatically. (This works for 
+720KB, 1.2MB, 1.44MB, and 2.88MB floppies.)
+.It Fl I Ar hz
+Set the main CPU's frequency to
+.Ar hz
+Hz. This option does not work for all emulated machine modes. It affects 
+the way count/compare interrupts are faked to simulate emulated time = 
+real world time. If the guest operating system relies on RTC interrupts
+instead of count/compare interrupts, then this option has no effect.
+.Pp
+Setting the frequency to zero disables automatic synchronization of 
+emulated time vs real world time, and the count/compare system runs at a 
+fixed rate.
+.It Fl i
+Enable instruction trace, i.e. display disassembly of each instruction as
+it is being executed.
+.It Fl J
+Disable instruction combinations in the dynamic translator.
+.It Fl j Ar n
+Set the name of the kernel to
+.Ar "n".
+When booting from an ISO9660 filesystem, the emulator will try to boot 
+using this file. (In some emulation modes, eg. DECstation, this name is passed 
+along to the boot program. Useful names are "bsd" for OpenBSD/pmax, 
+"vmunix" for Ultrix, or "vmsprite" for Sprite.)
+.It Fl M Ar m
+Emulate
+.Ar m
+MBs of physical RAM. This overrides the default amount of RAM for the 
+selected machine type.
+.It Fl N
+Display the number of executed instructions per second on average, at
+regular intervals.
+.It Fl n Ar nr
+Set the number of processors in the machine, for SMP experiments.
+.Pp
+Note 1: The emulator allocates quite a lot of virtual memory for
+per-CPU translation tables. On 64-bit hosts, this is normally not a
+problem. On 32-bit hosts, this can use up all available virtual userspace
+memory. The solution is to either run the emulator on a 64-bit host,
+or limit the number of emulated CPUs to a reasonably low number.
+.Pp
+Note 2: SMP simulation is not working very well yet; multiple processors 
+are simulated, but synchronization between the processors does not map
+very well to how real-world SMP systems work.
+.It Fl O
+Force a "netboot" (tftp instead of disk), even when a disk image is
+present (for DECstation, SGI, and ARC emulation).
+.It Fl o Ar arg
+Set the boot argument (mostly useful for DEC, ARC, or SGI emulation).
+Default
+.Ar arg
+for DEC is "\-a", for ARC/SGI it is "\-aN", and for CATS it is "\-A".
+.It Fl p Ar pc
+Add a breakpoint.
+.Ar pc
+can be a symbol, or a numeric value. (Remember to use the "0x" prefix for
+hexadecimal values.)
+.It Fl Q
+Disable the built-in (software-only) PROM emulation. This option is useful
+for experimenting with running raw ROM images from real machines. The default 
+behaviour of the emulator is to "fake" certain PROM calls used by guest 
+operating systems (e.g. NetBSD), so that no real PROM image is needed.
+.It Fl R
+Use a random bootstrap cpu, instead of CPU nr 0. (This option is only 
+meaningful together with the
+.Fl n
+option.)
+.It Fl r
+Dump register contents for every executed instruction.
+.It Fl S
+Initialize emulated RAM to random data, instead of zeroes. This option
+is useful when trying to trigger bugs in a program that occur because the
+program assumed that uninitialized memory contains zeros. (Use with
+care.)
+.It Fl s Ar flags:filename
+Gather statistics based on the current emulated program counter value, 
+while the program executes. The statistics is actually just a raw dump of 
+all program counter values in sequence, suitable for post-analysis with 
+separate tools. Output is appended to
+.Ar filename.
+.Pp
+The
+.Ar flags
+should include one or more of the following type specifiers:
+.Bl -tag -width Ds
+.It v
+Virtual. This means that the program counter value is used.
+.It p
+Physical. This means that the physical address of where the program
+is actually running is used.
+.It i
+Instruction call. This type of statistics gathering is practically only 
+useful during development of the emulator itself. The output is a list of
+addresses of instruction call functions (ic->f), which after some
+post-processing can be used as a basis for deciding when to implement
+instruction combinations.
+.El
+.Pp
+The
+.Ar flags
+may also include the following optional modifiers:
+.Bl -tag -width Ds
+.It d
+Disabled at startup.
+.It o
+Overwrite the file, instead of appending to it.
+.El
+.Pp
+Statistics gathering can be enabled/disabled at runtime by using the
+"statistics_enabled = yes" and "statistics_enabled = no" debugger 
+commands.
+.Pp
+When gathering instruction statistics using the
+.Fl s
+option, instruction combinations are always disabled (i.e. an implicit
+.Fl J
+flag is added to the command line).
+.It Fl T
+Halt if the emulated program attempts to access non-existing memory.
+.It Fl t
+Show a trace tree of all function calls being made.
+.It Fl U
+Enable slow_serial_interrupts_hack_for_linux.
+.It Fl X
+Use X11. This option enables graphical framebuffers.
+.It Fl x
+Open up new xterms for emulated serial ports. The default behaviour is to 
+open up xterms when using configuration files, or if X11 is enabled. When 
+starting up a simple emulation session with settings directly on the 
+command line, and neither
+.Fl X
+nor
+.Fl x
+is used, then all output is confined to the terminal that
+.Nm
+started in.
+.It Fl Y Ar n
+Scale down framebuffer windows by
+.Ar n
+x
+.Ar n
+times. This option is useful when emulating a very large framebuffer, and 
+the actual display is of lower resolution. If
+.Ar n
+is negative, then there will be no scaledown, but emulation of certain 
+graphic controllers will be scaled up
+by
+.Ar -n
+times instead. E.g. Using
+.Ar -2
+with VGA text mode emulation will result in 80x25 character cells rendered 
+in a 1280x800 window, instead of the normal resolution of 640x400.
+.It Fl Z Ar n
+Set the number of graphics cards, for emulating a dual-head or tripple-head
+environment. (Only for DECstation emulation so far.)
+.It Fl z Ar disp
+Add
+.Ar disp
+as an X11 display to use for framebuffers.
+.El
+.Pp
+General options:
+.Bl -tag -width Ds
+.It Fl c Ar cmd
+Add
+.Ar cmd
+as a command to run before starting the simulation. A similar effect can 
+be achieved by using the
+.Fl V
+option, and entering the commands manually.
+.It Fl D
+Causes the emulator to skip a call to srandom(). This leads to somewhat
+more deterministic behaviour than running without this option.
+However, if the emulated machine has clocks or timer interrupt sources,
+or if user interaction is taking place (e.g. keyboard input at irregular
+intervals), then this option is meaningless.
+.It Fl H
+Display a list of available CPU types and machine types.
+(Most of these don't work. Please read the HTML documentation included in the
+.Nm
+distribution for details on which modes that actually work.)
+.It Fl h
+Display a list of all available command line options.
+.It Fl k Ar n
+Set the size of the dyntrans cache (per emulated CPU) to
+.Ar n
+MB. The default size is 48 MB.
+.It Fl K
+Force the single-step debugger to be entered at the end of a simulation.
+.It Fl q
+Quiet mode; this suppresses startup messages.
+.It Fl V
+Start up in the single-step debugger, paused. If this option is used,
+.Fl q
+is ignored.
+.It Fl v
+Increase verbosity (show more debug messages). This option can be used
+multiple times.
+.El
+.Pp
+Configuration file startup:
+.Bl -tag -width Ds
+.It @ Ar configfile
+Start an emulation based on the contents of
+.Ar "configfile".
+.El
+.Pp
+For more information, please read the HTML documentation in the doc/
+subdirectory of the
+.Nm
+distribution.
+.Sh LEGACY EXAMPLES
+The following command will start NetBSD/pmax on an emulated DECstation 
+5000/200 (3MAX):
+.Pp
+.Dl "gxemul -e 3max -d nbsd_pmax.img"
+.Pp
+nbsd_pmax.img should be a raw disk image containing a bootable 
+NetBSD/pmax filesystem.
+.Pp
+The following command will start an emulation session based on settings in 
+the configuration file "mysession". The \-v option tells gxemul to be
+verbose.
+.Pp
+.Dl "gxemul -v @mysession"
+.Pp
+If you have compiled the small Hello World program mentioned in the
+.Nm
+documentation, the following command will start up an
+emulated test machine in "paused" mode:
+.Pp
+.Dl "gxemul -E testmips -V hello_mips"
+.Pp
+Paused mode means that you enter the interactive single-step debugger
+directly at startup, instead of launching the Hello World program.
+.Pp
+The paused mode is also what should be used when running "unknown" files 
+for the first time in the emulator. E.g. if you have a binary which you 
+think is some kind of MIPS ROM image, then you can try the following:
+.Pp
+.Dl "gxemul -vv -E baremips -V 0xbfc00000:image.raw"
+.Pp
+You can then use the single-stepping functionality of the built-in 
+debugger to run the code in the ROM image, to see how it behaves. Based on 
+that, you can deduce what machine type it was actually from (the 
+baremips machine is not a real machine), and perhaps try again with 
+another emulation mode.
+.Pp
+In general, however, real ROM images require much more emulation detail 
+than GXemul provides, so they can usually not run.
+.Pp
+Please read the HTML documentation for more details.
+.Sh BUGS
+There are many bugs. Some of the known bugs are mentioned in the TODO 
+file in the
+.Nm
+source distribution, some are marked as TODO in the source code itself.
+.Pp
+Most emulation modes are LEGACY modes, which have not yet been rewritten
+to use the new framework. The documentation is most likely buggy, in the
+sense that it describes things from the old framework when the new one
+applies, and/or vice versa.
+.Pp
+.Nm
+is in general not cycle-accurate; it does not simulate individual
+pipe-line stages or penalties caused by branch-prediction misses or
+cache misses, so it cannot be used for accurate simulation of any actual
+real-world processor.
+.Pp
+.Nm
+is in general not timing-accurate. Many emulation modes try to make the
+guest operating system's clock run at the same speed as the host clock.
+However, the number of instructions executed per clock tick can
+obviously vary, depending on the current CPU load on the host.
+.Sh AUTHOR
+GXemul is Copyright (C) 2003-2009  Anders Gavare <anders@gavare.se>
+.Pp
+See http://gxemul.sourceforge.net/ for more information. For other Copyright
+messages, see the corresponding parts of the source code and/or
+documentation.

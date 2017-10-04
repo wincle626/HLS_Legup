@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: TODO list</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>TODO list for GXemul</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+
+<p>Because of severe lack of spare time that can be allocated to the GXemul
+project, the first 0.6.x releases will most likely not be very meaningful to
+end-users, since almost all old features will be deprecated/legacy features,
+and the new features will only work with <tt>testm88k</tt> (which most users
+will not care about). Still, it feels like the way to go forward.
+
+<p>(The name "0.5.x" was skipped. This was the C++ version that was supposed
+to be a complete rewrite from scratch, with no legacy mode support.
+There was not enough spare time.)
+
+
+<p><pre>
+
+Some things, in no specific order, that I'd like to fix:
+(Some items in this list are perhaps already fixed.)
+
+<i>Legend:
+
+[ ] = not started yet, or just planning/thinking about it
+[/] = started, either "on paper" or actual implementation
+[X] = done  (but usually these entries are removed from the TODO list)
+
+------------------------------------------------------------------------
+</i>
+
+  [/]	Improve dyntrans CTRL-C behavior! Abort quicker.
+  	[X]  Implement an abort instruction call
+  		[X]  sync pc should take this kind of abort into consideration.
+	[X]  Rename exceptionInDelaySlot -> exceptionOrAbortInDelaySlot
+	[X]  Get rid of abort_in_delay_slot (handled by abort).
+	[/]  Unit tests for the above (M88K).
+  	[/]  Function call trace -> abort quickly on ctrl-c.
+  		[ ]  There is still a crash bug; try interleaving continue +
+  			CTRL-C + continue + CTRL-C, with trace enabled!
+
+  [ ]	Refactor/move helper functions into some helper module:
+	[ ]  SplitStringIntoVector
+	[ ]  parse_number
+
+  [ ]	Plugin framework
+  	Note: The term "Plugin" does not mean dynamically loaded. It simply is a
+  	generalization of "something" which is the common base for file loaders,
+  	framebuffers, statistics viewers, etc.
+	[ ] Base class for plugins.
+	[ ] Plugin registry.
+	[ ] MOVE src/main/fileloaders TO PLUGINS!!! --------------------------
+	[ ] On-reset commands should be _PER COMPONENT_ instead of per GXemul
+		instance (will likely be good for testm88k-reset, stack pointer etc.)
+		[ ] Serialize the on-reset command list (per component) 
+	[ ] Plugins may be attached to component paths!
+		[ ] Multiple components to one plugin (e.g. keyboard + framebuffer to one plugin)
+		[ ] Multiple plugins monitoring the same component.
+	[ ] Think about the "load" command. Load vs attach?
+	[ ] What should a plugin be able to do?
+		[ ] Attach/load
+		[ ] On-reset
+		[ ] Detach
+		[ ] Monitor changes in component(s)' state
+		[ ] Periodical updates (e.g. framebuffers)
+		[ ] Run in a different thread (pthread multithreading?)
+		[ ] Insert stuff into the event queue (e.g. keyboard keypresses
+			from a framebuffer/keyboard plugin)
+	[ ] The Snapshots (the clones) release the plugin connection; the plugins only
+		work on the main tree.
+	[ ] Plugins have to be compatible with replaying during reverse execution!
+		(Maybe they should be disconnected while re-executing?)
+	[ ] Think about how events should contain changes such as breakpoints,
+		added/removed plugins, etc.
+	[ ] Example plugins:
+		[ ] File loaders
+		[ ] Disk image mappers
+		[ ] Framebuffer displays
+			[ ] Think about VGA (charcell AND video framebuffer, being able
+				to switch live)
+		[ ] Keyboards (host -> emulated)
+		[ ] Serial controller -> scrollback buffer -> xterm / other window
+			or even connected to stdin/stdout or files or terminals.
+		[ ] Audio (emulated -> host)
+		[ ] Cache statistics viewer.
+
+	[ ]  CONSISTENT and extensible way of supplying files, disk images,
+		raw files, ... to various plugins on the command line,
+		e.g.:
+			[component:]filename
+
+		where cpu0 would be the default component. This would make it
+		look nice when adding disk images, like wd0:netbsd.img
+
+			[component:][plugin([args]):]name
+
+		e.g. loader could be raw(vaddr[,skiplen[,entry]])
+		or                   file(raw(vaddr[,skiplen[,entry]]))
+
+		so,	monkey:filename		would load into component monkey
+		but	monkey():filename	would load into the default comonent
+						using the monkey loader.
+		and	a:b(c):filename		would load into component a using
+						the b loader, with args c
+
+		"Plugin descriptors"
+			optional component
+			optional plugin([args])
+			optional name
+
+		If all fields are left out, it's an empty descriptor, which is
+		ignored. GXemul's command line syntax would then be:
+		
+			gxemul [options] [.gxemul file] [plugin descriptors...]
+
+		[ ]  The set of loaders to ask could be different depending on
+		     which interfaces the component supports. For AddressDataBus,
+		     it would be the regular file loaders (ELF, raw, a.out, ...).
+
+		     For block devices (disks, e.g. wd0, sd0), it would be a
+		     disk image mapper.
+
+		filename is also optional, and in fact more like a second
+		argument. E.g. the sdl() plugin doesn't need a filename.
+
+		The "load" command could be replaced by some kind of "attach"
+		command, which would run the same thing as the plugin descriptors
+		entered on the command line:
+		
+		Example output:
+			GXemul> attach wd0:netbsd.img
+			wd0: Attaching to image(): netbsd.img
+			     SCSI disk image, 2400 MB
+
+			GXemul> attach vfb:sdl(apa bepa)
+			vfb0: Unable to attaching to sdl(apa bepa)
+			Invalid arguments to sdl().
+
+			GXemul> attach vfb:sdl()
+			vfb0: Attaching to sdl()
+
+			GXemul> attach test/FileLoader_A.OUT_M88K
+			cpu0: Attaching to file(): test/FileLoader_A.OUT_M88K
+			      a.out: entry point 0x000012b8
+			      text + data = 4096 + 4096 bytes
+			      symbols: 1260 bytes at 0x2000
+			      strings: 1070 bytes at 0x24ec
+			      14 symbols read
+
+		Note that the load command should still be used for loading
+		[parts of] emulation setups!
+
+		Think more about this!
+		----------------------
+
+			netbsd-GENERIC.gz			(load a basic file into cpu0)
+			cpu1:netbsd-GENERIC.gz			(load into a specific cpu)
+			wd0:netbsd.img				(disk image file mapper)
+			wd0:image(readonly):netbsd.img		(mapper with arguments! non-writable image)
+			wd0:image(cow):netbsd.img		(non-writable, but COW to temporary file (TMPDIR))
+			cpu0.dcache:cachestatisticsviewer()
+			vga0:sdl()				(for displaying graphical controllers, which can
+								be interrogated about memory format, resolution etc)
+			vga0:sdl(DISPLAY=othermachine:1.0)	(sdl on remote display)
+			fb_videoram0:sdl(x=800,y=600,data=rgb24) (for displaying raw memory ranges)
+			com0:stdio()		(default stdio)
+			com0:xterm()		(new xterm)
+			...
+
+		com0:stdio() should not be needed, if it is the default
+		choice. com0:null() would disconnect com0 from any output.
+		stdio() would then have to be a plugin which handles multi-
+		plexing of multiple outputs, and allows one input serial
+		console.
+
+  [/]	The testm88k machine.
+
+	[X]  Implement 88100 instruction disassembly.
+	[X]  Implement basic 88K instruction execution, enough to run
+	     the rectangle drawing demo.
+	[ ]  Framebuffer output?
+		[ ]  Start thinking about the plugin framework, use sdl
+		     for video output!
+
+  [/]	The testmips machine.
+
+	[X]  Implement basic 32-bit MIPS instruction execution, enough to run
+	     the rectangle drawing demo.
+	[ ]  Implement basic 64-bit MIPS instruction execution, enough to run
+	     the 64-bit variant of the rectangle drawing demo.
+	[ ]  Implement basic 16-bit MIPS instruction encoding, enough to run
+	     the 16-bit-encoded variant of the rectangle drawing demo (on both
+	     64-bit and 32-bit emulated CPUs).
+	[ ]  All the other devices (interrupts, ethernet, serial, SMP, ...)
+
+  [/]	STEP EXECUTIONS, REVERSE EXECUTION, SNAPSHOTTING, ...
+
+	[/] Continuous execution forward.
+		[ ]  "Sloppy" accuracy mode: it could be possible to
+		     interleave large chunks even when components "collide"
+		     in time. (This will cause reverse execution support to
+		     be turned off.)
+
+	[ ] step recalculation:
+		[ ] When a component is added to the tree, recalculate its nr of steps!
+		[/] "paused" cpu state, in SMP machines during bootup. (Non-executing components.)
+		    [ ] When a component changes state from paused = true to false,
+		        recalculate its number of steps!
+		[ ] Removing components (at least if the Fastest one is removed) should
+		    also trigger recalculation.
+		[ ] When a component's frequency is changed, recalculate its nr of steps!
+		    (This requires variable write handlers, including inheritance!)
+		    Frequency changes are tricky, especially when it comes to reverse
+		    execution, so think CAREFULLY about this!
+
+	[/] Reverse execution/debugging:
+		[ ]  When running in reverse, debug output should be disabled!
+			(Also, update calls to plugins (e.g. framebuffers) should
+			be disabled, until the target step is reached.)
+		[ ]  Regular saving of state, and limiting the number of such
+		     saves by logarithmic removal.
+		[ ]  Disk image overlays!
+			[ ]  Unit tests.
+		[ ]  In addition to saving state, all modifications done to the
+		     component tree, and e.g. breakpoints, need to be stored
+		     together with their time stamp ("step"). And also all
+		     "external events", of course.
+		     * I.e. if a USB storage device is connected as step 1000, and we're
+		       running in reverse to step 800 to check something, and
+		       then continue again, the default behaviour should be that
+		       at step 1000 the USB device is connected again.
+		     * Or if we run 10 steps, change cpu0.pc, and run 10 more steps,
+		       then running backwards 10 steps could work, but not more?
+		       Think about this!
+		[ ]  Simulation across multiple hosts?
+
+	[ ]  Cycle accurate slowdown? E.g. when simulating a 1 MHz microcontroller,
+		and a TV display, maybe the host is much faster than what is
+		required. The gxemul process could then yield some of its CPU time,
+		just about enough to make the process run at real-time speed.
+		(With warnings printed whenever real-time is not possible, because
+		the host is too slow.) This would be useful for some simulations
+		involving real-world Sound producing devices.
+
+  [/]	NEW DYNTRANS IMPLEMENTATION, ...
+
+	[/]  Basic run loop.
+		[X]  PC to pointers
+			[X]  Dyntrans page allocation
+		[/]  Large chunks is safe vs "single stepping" dyntrans...
+			[ ] Only "size 2" so far, i.e. delay slots. No support for
+			    longer instruction combos have been implemented yet.
+		[/]  Unit tests.
+
+	[ ]  Memory writes => invalidate corresponding dyntrans translation pages!
+	     (needed for full guest OS emulation, and self-modifying code)
+
+	[ ]  Interrupts should be cycle accurate, and affect the cpu's
+	     m_nextIC (and other state, such as processor status registers)
+	     _immediately_.
+
+	[/]  Helpers for CPU implementations:
+		[X]  dyntrans pages?
+		[ ]  pc to dyntrans page lookups? 32-bit and 64-bit
+		[ ]  memory to direct host page lookups, TLB-entry based
+
+	[ ]  For instruction combination implementations, the first thing
+	     checked is whether instr combos is allowed, if not then call
+	     the original function call instead. This makes it possible to
+	     run fast, and then "break slowly" before a hazard.
+
+	[ ]  Try variable-length ISAs early on. Maybe amd64? Or AVR32?
+
+	[ ]  Multi-encoding ISAs, such as MIPS (MIPS16), ARM (Thumb).
+
+		Commands used to compile MIPS16 test programs:
+		mips64-unknown-elf-gcc-4.3.2 -mips16 -O3 urk.c -c
+		mips64-unknown-elf-ld urk.o -o urk -e f -Ttext 0xffffffff80004000
+
+	[ ]  Optional native code generation: Probably don't have time to
+		implement this in the near future; everything else also needs
+		to be prioritized against this feature, so...
+
+	[ ] Instruction cache emulation
+		[ ]  cache component on cpus
+		[ ]  For each emulated instruction, call a stub handler with
+		     the current pc. It is responsible for updating statistics etc.
+		     (Only for cycle accurate emulation, not for sloppy emulation?)
+		     (Or should there be a separate setting for cache vs non-cache
+		     emulation?)
+
+	[ ] Generic bus load/store access:
+		[ ] Pointers to host memory pages, for fast loads and stores:
+			[ ]  host_load and host_store (as before)
+			[ ]  host_load_user and host_store_user (as before,
+			     for those archs that need it, e.g. ARM and M88K?)
+		[ ]  Pointers to handler functions, for:
+			[ ]  device access
+			[ ]  data cache emulation
+			[ ]  breakpoints
+			[ ]  Investigate: http://vm-kernel.org/blog/2009/07/10/qemu-internal-part-2-softmmu/
+			     indicates that QEMU uses similar lookup mechanisms as GXemul, but
+			     uses an additional bit in the looked up page address to indicate
+			     I/O space. Investigate whether this is faster than having a pure
+			     pointer, and a separate lookup when the pointer is NULL!
+
+	[ ] Conditional breakpoints before AND after device accesses!
+
+	[ ] Conditional breakpoints before AND after CPU instruction
+	    execution (somewhat different from generic device access).
+
+  [/]	The MVME187 machine.
+
+	[X]  Loading OpenBSD/mvme88k bsd and bsd.rd executables!
+	     I.e. implement an a.out file loader.
+	[ ]  More initial register contents upon reset: r31 isn't enough for
+	     mvme187. See old machine_mvme88k.cc for details.
+		[ ]  Soft PROM emulation.
+			MAYBE implement PROM emulation as a plugin? Like
+
+				attach cpu0:mvmeprom(187)
+
+			or even just:  attach mvmeprom(187)
+			since cpu0 would be the default component.
+
+			The plugin would then be responsible for on-reset
+			behavior, AND handling of PROM calls.
+
+			If a software PROM emulation plugin is used for
+			emulating different boot loaders, then that can be
+			specified as arguments, like:  bootregs=linux or
+			bootregs=netbsd  or similar.
+
+     	[ ]  -Q command line flag (backwards compatibility) for
+     	     turning off soft PROM emulation?
+     	[ ]  Ability to load raw files (e.g. PROM).
+	[ ]  Serial controller component.
+	[ ]  Plugin (?) for serial output (i.e. a terminal window), or
+	     posibility to connect to stdin/stdout. Should be enough to
+	     show boot messages.
+	[ ]  Separate 88200 CMMUs? So that the two are really two
+	     separate devices.
+	[ ]  Implement 88K virtual to physical memory translation.
+	[/]  Implement 88100 instruction execution (completely).
+	[ ]  Implement 88110 instruction disassembly (e.g. "graphics" instructions)
+	[ ]  Implement 88110 instruction execution.
+	[ ]  Disk bootblock boot.
+	[ ]  Reimplement everything from the old mvme187 implementation.
+	[ ]  Ethernet :)
+	[ ]  Dyntrans "user memory" implementation for M88K!
+	[ ]  xmem emulation (set transaction registers)
+	[ ]  Instruction trace by using bits of ??IP control regs.
+	[ ]  Breakpoints: How to indicate user space vs supervisor? (Also the
+	    "dump" instruction and other things need this support.)
+	[ ]  Instruction disassembly, and implementation:
+		o)  See http://www.panggih.staff.ugm.ac.id/download/GCC/info/gcc.i5
+		    for some strange cases of when "div" can fail (?)
+		o)  Floating point stuff:
+			+) Refactor all the fsub, fadd, fmul etc. They
+			   are currently quite horribly redundant.
+			+) Exceptions for overflow etc!
+
+  [ ]	Address formats?
+  	"xxxx:yyyy", "xxxx:yyyyyyyy", "zzzzzzzzzzzzzzzz" for amd64, plus i/o ports
+  	"uxxxxxxxx" vs "sxxxxxxxx" for M88K
+	most likely others for "bank select" embedded archs/microcontrollers.
+
+  [ ]	amd64/x86 emulation:
+  	a) Non-dyntrans emulation mode, as a "proof" that CPUs can be implemented
+	   using slow interpretation, and do not need to be complex dyntrans 
+	   implementations. (PC emulation isn't exactly GXemul's niche, anyway,
+	   so it is ok that it is extremely slow. There are other emulators
+	   and virtualizers for users who need a fast x86/amd64 experience.)
+	b) interesting because of mode switches (16-bit, 32-bit, and long 64-bit)
+	c) interseting because of odd address format (non-RISC style)
+	d) interesting because there are lots of guest OSes and other software
+	   to test with
+	e) how about making the name "pc" in CPUComponent overridable? on amd64,
+	   it is either ip, eip, or rip, depending on mode.
+	f) override bus reads/writes, because amd64 transparently allows
+	   unaligned loads/stores.
+
+  [ ]	Memory/bus reads in "no exception" mode (for disasm and memory dumping,
+  	and other things).
+
+  [/]	Symbol registry.
+  	[X]  Add ELF symbols (see end of FileLoader_ELF.cc).
+  	[X]  Load a.out symbols.
+  	[ ]  Cloning a CPUComponent should also clone its symbol registry!
+  	     Think about serializing symbols...
+
+  [ ]   Make sure that BOTH old and new configuration files work!
+
+  [ ]	Niceness fixes:
+  	[/]  make refcount_ptr&lt;T&gt; support const T as well, so that e.g. code in
+  	     Component::LookupPath can be made to work without a const_cast!
+  	[ ]  avoid exceptions (better to return failure some other way)
+
+  [ ]	Call m_gxemul->GetRootComponent()->FlushCachedState(); when a component
+  	is e.g. moved or copied?  Example: cpu0 in machine0 is moved to machine1,
+  	and then cpu.dump is executed. It should then use the mainbus of machine1,
+  	not machine0!  (Maybe not necessary for interactive use; FlushCachedState
+  	is called by consoleui before very command... hm.)
+
+  [ ]	Cache short path names if evaluation/generation of them becomes too heavy.
+
+  [/]	Mainbus component:
+	[ ]  Maybe this should simply be a "Bus" base class? That way,
+	     it could be reused by PCI Busses, VME busses, and others. HOWEVER,
+	     the concept of address range and overlap may differ between
+	     bus types, or maybe not even exist in some busses.
+	[ ]  AddressDataBus should be extended to allow for direct
+	     page mapping.
+	[ ]  Unit tests for the above!
+
+  [ ]	Interrupt subsystem
+   	[ ]  Components exposing an InterruptPin interface? Think about this...
+
+  [ ]	Timers
+	[ ]  Host speed approaching timers:  a device that wishes
+	     to cause interrupts 100 times per emulated second
+	     will interrupt (approximately) 100 times per host
+	     second. This is most useful for running full guest
+	     operating systems at full speed, "virtual machine"
+	     mode.
+	[ ]  Exact emulation:  a device wishing to cause 100
+	     interrupts per emulated second may take much more
+	     or much less than one host second to execute.
+	     ("Cycle accurate" mode.)
+
+   [/]  State/model:
+        [X]  Variable write handlers.
+             [ ] root.step to move to a certain execution step!
+             	 [X] Change backward-step to set root.step = root.step - 1.
+             	 [ ] Only allow decreasing root.step if snapshots are enabled.
+             	 [ ] Allow increasing root.step always: it means to continue until
+             	     the number of steps have been executed (a kind of specia breakpoint!)
+             	 [X] Do not allow writes to *.step for non-root components!
+             	 [X] Do not check writes to *.step during deserialization!
+	     [X] cpu.model = "R4000"   <==  assigning to the "model" variable should:
+	  	[X]  handle writes specifically
+	  	[X]  lookup if R4000 is a valid model for the cpu architecture
+	  	[ ]  Better error reporting when supplying model using e.g.
+	  	     the command line   -e "testmips(cpu=R1000)"  should show
+	  	     the same error message as when running cpu.model="R1000".
+	[ ]  MIPS ABI selection now works (cpu.abi="o32" vs n32 and n64). However,
+	     only the NEW names are registered as state variable names! How should
+	     this be handled? Custom "aliasing" variables?
+	[ ]  Custom ToString variants? Useful for bit fields, control
+	     registers, etc. "Verbose tostring"?
+	[ ]  Loaded files should be part of state/model! But not part
+	     of the component tree. I.e. state = components +
+	     other configuration!
+	[ ]  Disk images: reverse execution should reverse disk contents,
+	     i.e. overlays must be used if reverse execution support is
+	     enabled.
+
+  [ ]	Serialize symbols
+
+  [ ]	Serialize breakpoints
+
+  [ ]	File loaders:
+   	[ ]  automagic .gz (and .bz2) file extraction into /tmp or $TMP or such.
+	[ ]  symbol handling, line number info, data types?
+	[ ]  argument handling! (arg count, at least)
+	[ ]  all the others (macho, ecoff, srec, ...)
+
+  [ ]  Disk images.
+	[ ]  r vs R modifier: read only disk images causes writes to
+	     fail, while R could create an implicit empty overlay
+	     in the tmp directory, so that writes within a session
+	     will succeed. At reboot/reset they'd be lost.
+
+  [ ]	Breakpoints
+
+	Breakpoint = some form of expression, which will be evaluated
+	after (or before?) running each cycle. (*)
+	
+	(*) Implementation-wise, it may be optimized away, but the semantics
+	should be this.
+
+	NOTE: It will not be possible to break INSIDE a component's step,
+	but only before or after all components within that step have
+	executed. I.e.:
+	o) when single-stepping, the breakpoint may simply set a flag during
+	   execution, and when all components within that step have executed,
+	   the resulting triggered breakpoints may be displayed.
+	o) when running continuously, the breakpoint may still not break immediately
+	   (?) because components may be mixed within the last step? TODO: Think
+	   about this.
+
+	TODO: Any state variable change in any component? How about RAM/custom
+	changes? How about register _READS_ or custom reads.
+
+	All Load/stores to virtual addresses?
+
+	[ ]  For all breakpoints, it should be possible to break
+	     both _before_ and _after_ a change has occurred!
+
+	[ ]  For all breakpoints/watchpoints, a Count should be kept, and the
+	     emulation should only break once the Count has reached a limit.
+	     (Usually 1, but should be possible to set to any positive value.)
+
+	[ ]  Worst case: Checked on device cycle execution, if necessary.
+
+	[ ]  Per memory-mapped/addressable device
+	     Checked on load/store device access.
+
+	[ ]  Per instruction (for CPU components)
+	     It may be easiest to simply turn off native code
+	     generation, except for stuff like "check if pc = xyz"-
+	     style breakpoints. Those can be embedded.
+
+   [/]  Function call trace etc.
+   	[ ]  string lookup for args
+   	[ ]  symbol lookup for args
+   	[ ]  Document in doc/components/component_cpu.html how to use
+   	     tracing, what the showFunction* state variables do, etc.
+   	[ ]  trace command (taking an argument: nr of calls, default is 1?)
+   		which is the same as setting a breakpoint for cpuX.nrOfFunctionCalls = Z
+   		where Z is one more than before than it was before running the command.
+   		And each function call increases that variable.
+   		trace then temporarily turns on showFunctionTraceCall and
+   		runs until the breakpoint hits (or CTRL-C), and then removes
+   		the breakpoint automatically (even if CTRL-C was hit), and
+   		restores showFunctionTraceCall.
+	     Variants:	trace on	turns on tracing for all CPUs (but doesn't
+	     				run anything)
+	     		trace off	turns off tracing for all CPUs
+	     		trace [n]	runs with trace enabled for n function calls,
+	     				n = 10 by default?
+	     showFunctionCallReturn should be false by default.
+	[ ]  -t command line option, for backward compatibility?
+
+   [ ]  Stack dump (of the emulated machine)
+   	[ ]  A method on CPU components?
+
+   [ ]	Components (general):
+	[ ]  "help" about components could show a file:/// link to
+	     the installed documentation about that component or
+	     machine! (If it exists.) Fallback: refer to the machine or
+	     component on gxemul.sourceforge.net (but warn about
+	     versions).
+	[ ]  Limit where components can be added. Like "drop targets"?
+		E.g. a machine can be added at the root, but a machine can not
+		be added on a pcibus. Similarly, a pcibus can not be added
+		at the root. It has to be in a machine of some kind.
+		Think about this. Perhaps as simple as a "if parent class is
+		not blah blah then disallow adding".
+			A machine can be added into a dummy component.
+			A dummy component can be added into a dummy component.
+			A pcibus can be added into a mainbus (in a machine.)
+			etc.
+		bool IsItOkToAddItToThisProposedParentComponent(propsedParent) const;
+
+  [ ]	ConsoleUI and/or CommandInterpreter: Make use of COLUMNS environment variable
+	when printing e.g. tab completion tables.
+
+  [ ]	Command interpreter:
+
+	[/]  State variable assignments:
+		[ ]  Expression evaluator, +-*/, string concatenation, type
+		     correctness (e.g. bool vs int), hex vs decimal,
+		     prefixes like M, K etc.  (4M = 4*1048576 ...)
+			(StateVariable::EvaluateExpression)
+		[ ]  Execution of _expressions_, not just variables. e.g.:
+			cpu.pc		prints the pc value
+			cpu.pc+4	should print the _expression_ pc+4
+			cpu.pc=expr	assignment
+
+	[ ]  Minimal paths ala machine0.cpu0 would be cool if they worked.
+	     I.e. if there's machine0.mainbus0.cpu0 and machine1.mainbus0.cpu0,
+	     but no mainbus1, then machineX.cpu0 would be shorter, and still
+	     uniquely identify the cpu.
+
+	[ ]  Help on methods and method arguments? E.g. cpu.unassemble [addr]
+
+	[ ]  Right now, entering a command such as "c" says "unknown command".
+	     It should say "ambigous command"!
+
+	[/]  Tab completion for everything:
+
+		[ ]  tab completion should use the Shortest Path, not the
+		     full path. E.g.:  cpu + TAB should expand to cpu0 only
+		     in a default testmips machine, NOT root.machine0.mainbus0.cpu0!
+		     This will most likely require a change in unit tests etc.
+
+		[ ]  syntax based completion? e.g.:
+			help [cmd]   tab completes the first argument as a
+				     command
+			add component-name		-- component name
+			load [filename [component-path]]  -- filename etc.
+
+		     This will require a uniform way of describing arguments,
+		     and whether or not they should be optional. The tab
+		     completer must then parse the command line, including
+		     figuring out which arguments were optional, etc.
+
+		     Also, when such syntax is taken into account, the
+		     CommandInterpreter can check syntax _before_ running
+		     Command::Execute. That means that individual Commands
+		     do not have to do manual checking on entry that the
+		     number of arguments is correct etc.
+
+			[ ]  filename
+			[ ]  command name
+			[ ]  component path
+			[ ]  optional vs mandatory args...?
+			[ ]  scan all commands' args at startup, and have an
+				assert() in place, so that unknown arg types
+				are caught during development!
+
+	[ ]  Command aliases? e.g.
+		d = cpu0.dump
+		c = continue
+		s = step
+		u = cpu.unassemble
+	     But maybe the cpu in question may be changed with a "focus" command?
+	     Otherwise it would only work with 1 cpu.
+
+	[ ]	recursive component.var
+			Dumps a tree of the "var" variable _FROM_ the component,
+			i.e. including all children. E.g.
+			recursive mainbus0.memoryMappedAddr
+			would dump
+				mainbus0
+				|-- ram0  memoryMappedAddr = 0
+				|-- rom0  memoryMappedAddr = 0x1fc00000
+				\-- com0  memoryMappedAddr = 0x190003f8
+			or something.
+
+	[ ]	recursive component.var = value
+			would set the "var" variable in the component including
+			all sub components. Not all components may have the
+			variable, so debug output should indicate which variables
+			were set and which were not set.
+
+   [/]	RAM component:
+	[ ]  Make the save/load of state more efficient. Right now, it's a hex dump! Yuck.
+	[ ]  methods for searching for values (strings, words, etc?)
+	[ ]  methods for bulk fill/copy [from other address/data busses?]
+
+   [ ]  Cache components.
+
+	[ ]  Implement the addressable data bus interface, but if data is contained
+	     in the cache (a small memory area), do not call the main memory.
+	     Rather straight-forward idea, but will take time to implement
+	     all common variants: associativity, statistics gathering (i.e.
+	     "who [i.e. which PC] evicted who [which other PC] from the cache"), ...
+
+		[ ]  Caches should be added _onto_ a cpu. The cpu first looks
+		     for a cache as an address data bus, THEN for a parent. Hm.
+		[ ]  The cache must then go downwards TWO steps (../..) to get
+		     past the owning cpu, when trying to reach the mainbus/ram.
+
+	[ ]  Unit tests.
+
+   [ ]	Floating point helper.
+
+	Make this more complete/accurate than the old one, i.e. support
+	inf/nan, exceptions, signaling stuff, denormalized/normalized?
+
+	[ ]  non-IEEE modes (i.e. x86/vax/...)?
+	[ ]  Unit tests
+
+   [ ]	Userland emulation
+
+   	[ ]  Begin with e.g. FreeBSD/amd64, or FreeBSD/alpha, NetBSD/something,
+   	     or Linux/something.
+	[ ]  Try to prefix "/emul/mips/" or similar to all filenames,
+	     and only if that fails, try the given filename.
+             Read this setting from an environment variable, and only
+             if there is none, fall back to hardcoded string.
+	[ ]  File descriptor (0,1,2) assumptions? Think about this.
+	[ ]  Dynamic linking! (libs from /emul/xxxx etc)
+	[ ]  Initial register/stack contents (environment, command line args).
+	[ ]  Return value (from main).
+	[ ]  mmap emulation layer
+	[ ]  errno emulation layer
+	[ ]  ioctl emulation layer for all devices :-[
+	[ ]  struct conversions for many syscalls
+
+
+
+-------------------------------------------------------------------------------
+
+NOTE: MOST of the stuff below are from pre-0.6.0, so the comments may be
+      a bit out of date, or more likely, only correspond to the LEGACY parts
+      of the code.
+      
+      The long-term goal is to rewrite everything using the new framework,
+      and therefore the comments below will either be incorporated in the
+      rewrite, or they are not applicable any longer.
+
+-------------------------------------------------------------------------------
+
+
+
+MIPS:
+	o)  Nicer MIPS status bits in register dumps.
+	o)  Floating point exception correctness.
+	o)  Fix this? Triggered by NetBSD/sgimips? Hm:
+		to_be_translated(): TODO: unimplemented instruction:
+		000000000065102c: 00200800 (d)  rot_00  at,zr,0
+	o)  Some more work on opcodes.
+		x) MIPS64 revision 2.
+			o)  Find out which actual CPUs implement the rev2 ISA!
+			o)  DINS, DINSM, DINSU etc
+			o)  DROTR32 and similar MIPS64 rev 2 instructions,
+			    which have a rotation bit which differs from
+			    previous ISAs.
+		x) _MAYBE_ TX79 and R5900 actually differ in their
+		   opcodes? Check this carefully!
+	o)  Dyntrans: Count register updates are probably not 100% correct yet.
+	o)  (Re)implement 128-bit loads/stores for R5900.
+	o)  Coprocessor 1x (i.e. 3) should cause cp1 exceptions, not 3?
+		(See http://lists.gnu.org/archive/html/qemu-devel/2007-05/msg00005.html)
+	o)  R4000 and others:
+		x)  watchhi/watchlo exceptions, and other exception
+		    handling details
+	o)  MIPS 5K* have 42 physical address bits, not 40/44?
+	o)  R10000 and others:  (R12000, R14000 ?)
+		x)  The code before the line
+			/*  reg[COP0_PAGEMASK] = cpu->cd.mips.coproc[0]->tlbs[0].mask & PAGEMASK_MASK;  */
+		    in cpu_mips.c is not correct for R10000 according to
+		    Lemote's Godson patches for GXemul. TODO: Go through all
+		    register definitions according to http://techpubs.sgi.com/library/tpl/cgi-bin/getdoc.cgi/hdwr/bks/SGI_Developer/books/R10K_UM/sgi_html/t5.Ver.2.0.book_263.html#HEADING334
+		    and make sure everything works with R10000.
+		    Then test with OpenBSD/sgi?
+		x)  Entry LO mask (as above).
+		x)  memory space, exceptions, ...
+		x)  use cop0 framemask for tlb lookups
+		    (http://techpubs.sgi.com/library/tpl/cgi-bin/getdoc.cgi/hdwr/bks/SGI_Developer/books/R10K_UM/sgi_html/t5.Ver.2.0.book_284.html)
+	o)  Playstation 2 with NetBSD? Perhaps USB keyboard is a big step
+	    on the way to running the whole OS. (?)
+
+SuperH:
+	x)  Auto-generation of loads/stores! This should get rid of at least
+	    the endianness check in each load/store.
+	x)  Experiment with whether or not correct ITLB emulation is
+	    actually needed. (20070522: I'm turning it off today.)
+	x)  SH4 interrupt controller:
+		x)  MASKING should be possible!
+	x)  SH4 UBC (0xff200000)
+	x)  SH4 DMA (0xffa00000): non-dreamcast-PVR modes
+	x)  Store queues can copy 32 bytes at a time, there's no need to
+	    copy individual 32-bit words. (Performance improvement.)
+	    (Except that e.g. the Dreamcast TA currently receives using
+	    32-bit words... hm)
+	x)  SH4 BSC (Bus State Controller)
+	x)  Instruction tracing should include symbols for branch targets,
+	    and so on, to make the output more human readable.
+	x)  SH3-specific devices: Pretty much everything!
+	x)  NetBSD/evbsh3, hpcsh! Linux?
+	x)  Floating point speed!
+	x)  Floating point exception correctness.
+		E.g. fipr and the other "geometric" instructions should
+		throw an exception if the "precision" bit is wrong
+		(since the geometric instructions loose precision).
+		See the manual about this!
+	x)  Exceptions for unaligned load/stores. OpenBSD/landisk uses
+	    this mechanism for its reboot code (machine_reset).
+
+Dreamcast:
+	x)  Try to make the ROM from my real Dreamcast boot.
+	x)  PVR:  Lots of stuff. See dev_pvr.c.
+		x)  DMA to non-0x10000000
+		x)  Textures...
+		x)  Make it fast! if possible
+	x)  G2 DMA
+	x)  SPU: Sound emulation (ARM cpu).
+	x)  LAN adapter (dev_mb8696x.c).  NetBSD root-on-nfs.
+	x)  Better GDROM support
+	x)  Modem
+	x)  PCI bridge/bus?
+	x)  Maple bus:
+		x)  Correct controller input
+		x)  Mouse input
+	x)  Software emulation of BIOS calls:
+		x)  GD-ROM emulation: Use the GDROM device.
+		x)  Use the VGA font as a fake ROM font. (Better than
+		    nothing.)
+	x)  Make as many as possible of the KOS examples run!
+	x)  More homebrew demos/games.
+	x)  VME processor emulation? "(Sanyo LC8670 "Potato")" according to
+	    Wikipedia, LC86K87 according to Comstedt's page. See
+	    http://www.maushammer.com/vmu.html for a good description of
+	    the differences between LC86104C and the one used in the VME.
+
+POWER/PowerPC:
+	x)  Fix DECR timer speed, so it matches the host.
+	x)  NetBSD/prep 3.x triggers a possible bug in the emulator:
+	    <wdc_exec_command(0xd005e514,0xd60cdd30,0,8,..)>
+	      <ata_get_xfer(0,0xd60cdd30,0,8,..)>
+	        <0x26c550(&ata_xfer_pool,2,0,8,..)>
+	        <0x35c71c(0x3f27000,0,52,8,..)>
+	      <ata_exec_xfer(0xd005e4c8,0x3f27000,0,13,..)>
+	        <atastart(0xd005e4c8,0x3f27000,0,13,..)>
+	          <__wdccommand_start(0xd005e4c8,0x3f27000,0,13,..)>
+	            <bsw1(&prep_isa_io_space_tag,0x800001f6,0,176,..)>
+		[ wdc: write to SDH: 0xb0 (sectorsize 2, lba=1, drive 1, head 0) ]
+	            <wdcwait(0xd005e4c8,72,64,0xbb8,..)>
+	              <0x198120(0xd005e4c8,72,64,0xbb8,..)>
+	                <bsr1(&prep_isa_io_space_tag,0,0,0xbb8,..)>
+	                <delay(100,0,0,0xbb8,..)>
+	    Note: <bsr1(&prep_isa_io_space_tag,0,0,0xbb8,..)>
+	x)  PPC optimizations; instr combs
+	x)  64-bit stuff: either Linux on G5, or perhaps some hobbyist
+		version of AIX? (if there exists such a thing)
+	x)  macppc: adb controller; keyboard (for framebuffer mode)
+	x)  make OpenBSD/macppc work (PCI controller stuff)
+	x)  Floating point exception correctness.
+	x)  Alignment exceptions.
+
+PReP:
+	x)  Clock time! ("Bad battery blah blah")
+
+Algor:
+	o)  Other models than the P5064?
+	o)  PCI interrupts... needed for stuff like the tlp NIC?
+
+Malta:
+	o)  The Linux/Malta kernel at people.debian.org/~ths/qemu/malta/
+	    almost works:
+		./gxemul -x -o 'rd_start=0x80800000 rd_size=10000000 init=/bin/sh' -C 4KEc
+		  -e malta 0x80800000:people.debian.org/~ths/qemu/malta/initrd.gz 
+		  people.debian.org/~ths/qemu/malta/vmlinux
+	    (Remove "init=/bin/sh" to boot into the Debian installer.)
+	    There are at least two things that need to be fixed:
+		1. PCI IDE; make Linux oops.
+		2. Implement the NIC.
+
+SGI O2:
+	Play around with the SGI O2 PROM image again, from the real O2.
+
+	0.3.7: Ok, starts up with graphics (_IF_ the cache detection is skipped)
+
+	20051112: Ok with graphics
+	20051127: Ok
+	20051201: Ok			-- Somewhere between 20051201 and 20051203
+	20051203: Not work.		   I apparently lost the graphical boot
+	20051211: Does NOT work.
+
+	0.3.8: Boots but switches to serial console ("could not open console") (also with
+	       cache detection skipped manually)
+	0.4.0: The cache detection breakpoint is not triggered :(
+
+HPCmips:
+	x)  Mouse/pad support! :)
+	x)  A NIC? (As a PCMCIA device?)
+
+ARM:
+	o)  See netwinder_reset() in NetBSD; the current "an internal error
+	    occured" message after reboot/halt is too ugly.
+	o)  Generic ARM "wait"-like instruction?
+	o)  try to get netbsd/evbarm 3.x or 4.x running (iq80321)
+	o)  netbsd/iyonix? the i80321 device currently tells netbsd that
+	    RAM starts at 0xa0000000, but that is perhaps not correct for the
+	    iyonix.
+	o)  make the xscale counter registers (ccnt) work
+	o)  make the ata controller usable for FreeBSD!
+	o)  Debian/cats crashes because of unimplemented coproc stuff.
+	    fix this?
+
+Test machines:
+	o)  dev_fb 2D acceleration functions, to make dev_fb useful for
+	    simple graphical OSes:
+		x) block fill and copy
+		x) draw characters (from the built-in font)?
+	o)  dev_fb input device? mouse pointer coordinates and buttons
+		(allow changes in these to cause interrupts as well?)
+	o)  Redefine the halt() function so that it stops "sometimes
+	    soon", i.e. usage in demo code should be:
+		for (;;) {
+			halt();
+		}
+	o)  More demos/examples.
+
+Dyntrans:
+	x)  For 32-bit emulation modes, that have emulated TLBs: tlbindex
+	    arrays of mapped pages? Things to think about:
+		x)  Only 32-bit mode! (64-bit => too much code)
+		x)  One array for global pages, and one array _PER ASID_,
+		    for those archs that support that. On M88K, there should
+		    be one array for userspace, and one for supervisor, etc.
+		x)  Larger-than-4K-pages must fill several bits in the array.
+		x)  No TLB search will be necessary.
+		x)  Total host space used, for 4 KB pages: 1 MB per table,
+		    i.e. 65 MB for 32-bit MIPS, 2 MB for M88K, if one byte
+		    is used as the tlb index.
+		x)  (The index is actually +1, so that 0 means no hit.)
+	x)  "Merge" the cur_physpage and cur_ic_page variables/pointers to
+	    one? I.e. change cur_ic_page to cur_physpage.ic_page or something.
+	x)  Instruction combination collisions? How to avoid easily...
+	x)  superh -- no hostpage for e.g. 0x8c000000. devices as ram!
+	x)  Think about how to do both SHmedia and SHcompact in a reasonable
+	    way! (Or AMD64 long/protected/real, for that matter.)
+	x)  68K emulation; think about how to do variable instruction
+	    lengths across page boundaries.
+	x)  Dyntrans with valgrind-inspired memory checker. (In memory_rw,
+	    it would be reasonably simple to add; in each individual fast
+	    load/store routine = a lot more work, and it would become
+	    kludgy very fast.)
+		o)  Mark every address with bits which tell whether or not the address
+		    has been written to.
+		o)  What should happen when programs are loaded?  Text/data, bss (zero
+		    filled). But stack space and heap is uninitialized.
+		o)  Uninitialized local variables:
+			A load from a place on the stack which has not previously
+			been stored to => warning. Increasing the stack pointer using
+			any available means should reset the memory to uninitialized.
+		o)  If calls to malloc() and free() can be intercepted:
+			o)  Access to a memory area after free() => warning.
+			o)  Memory returned by malloc() is marked as not-initialized.
+			o)  Non-passive, but good to have: Change the argument
+			    given to malloc, to return a slightly larger memory
+			    area, i.e.  margin_before + size + margin_after,
+			    and return the pointer  + margin_before.
+			    Any access to the margin_before or _after space results
+			    in warnings. (free() must be modified to free the
+			    actually allocated address.)
+	x)  Dyntrans with SMP... lots of work to be done here.
+	x)  Dyntrans with cache emulation... lots of work here as well.
+	x)  Remove the concept of base RAM completely; it would be more
+	    generic to allow RAM devices to be used "anywhere".
+	o)  dev_mp doesn't work well with dyntrans yet
+	o)  In general, IPIs, CAS, LL/SC etc must be made to work with dyntrans
+	x)  Redesign/rethink the delay slot mechanism used for e.g. MIPS,
+		so that it caches a translation (that is, an instruction
+		word and the instr_call it was translated to the last
+		time), so that it doesn't need to do slow
+		to_be_translated for each end of page?
+	x)  Program Counter statistics:
+		Per machine? What about SMP? All data to the same file?
+		A debugger command should be possible to use to enable/
+		disable statistics gathering.
+		Configuration file option!
+	x)  Breakpoints:
+		o) Physical vs virtual addresses!
+		o) 32-bit vs 64-bit sign extension for MIPS, and others?
+	x)  INVALIDATION should cause translations in _all_ cpus to be
+	    invalidated, e.g. on a write to a write-protected page
+	    (containing code)
+	x)  16-bit encodings? (MIPS16, ARM Thumb, etc)
+	x)  Lots of other stuff: see src/cpus/README_DYNTRANS
+	x)  Native code generation backends... think carefully about this.
+
+Better CD Image file support:
+	x)  Support CD formats that contain more than 1 track, e.g.
+	    CDI files (?). These can then contain a mixture of e.g. sound
+	    and data tracks, and booting from an ISO filesystem path
+	    would boot from [by default] the first data track.
+	    (This would make sense for e.g. Dreamcast CD images, or
+	    possibly other live-CD formats.)
+
+Networking:
+[Obsoleted; the new framework will need a much better net implementation. This
+section is kept here, so that the same mistakes may be avoided in the rewrite.]
+	x)  Redesign of the networking subsystem, at least the NAT translation
+		part. The current way of allowing raw ethernet frames to be
+		transfered to/from the emulator via UDP should probably be
+		extended to allow the frames to be transmitted other ways as
+		well.
+	x)  Also adding support for connecting ttys (either to xterms, or to
+		pipes/sockets etc, or even to PPP->NAT or SLIP->NAT :-).
+	x)  Documentation updates (!) are very important, making it easier to
+		use the (already existing) network emulation features.
+	x)  Fix performance problems caused by only allowing a
+	    single TCP packet to be unacked.
+	x)  Don't hardcode offsets into packets!
+	x)  Test with lower than 100 max tcp/udp connections,
+	    to make sure that reuse works!
+	x)  Make OpenBSD work better as a guest OS!
+	x)  DHCP? Debian doesn't actually send DHCP packets, even
+		though it claims to? So it is hard to test.
+	x)  Multiple networks per emulation, and let different
+	    NICs in machines connect to different networks.
+	x)  Support VDE (vde.sf.net)? Easiest/cleanest (before a
+	    redesign of the network framework has been done) is
+	    probably to connect it using the current (udp) solution.
+	x)  Allow SLIP connections, possibly PPP, in addition to
+	    ethernet?
+
+Documentation:
+	x)  Update the documentation regarding the testmachine interrupts.
+	x)  Note about sandboxing/security:
+		Not all emulated instructions fail in the way they would
+		do on real hardware (e.g. a userspace program writing to
+		a system register might work in GXemul, but it would
+		fail on real hardware).  Sandbox = contain from the
+		host OS. But the emulated programs will run "less
+		securely".
+	x)  Rewrite the section about experimental devices, after the
+	    framebuffer acceleration has been implemented, and demos
+	    written. (Symbolic names instead of numbers; example
+	    use cases, etc. Mention demo files that use the various
+	    features?)
+	x)  "a very simple linear framebuffer device (for graphics output)"
+	    under "which machines does gxemul emulate" ==> better
+	    description?
+
+The Device subsystem:
+	x)  allow devices to be moved and/or changed in size (down to a
+	    minimum size, etc, or up to a max size); if there is a collision,
+	    return false. It is up to the caller to handle this situation!
+	x)  NOTE: Translations must be invalidated, both for
+	    registering new devices, and for moving existing ones.
+	    cpu->invalidate translation caches, for all CPUs that
+	    are connected to a specific memory.
+
+PCI:
+[Obsoleted; the new framework will need a much better bus implementation. This
+section is kept here, so that the same mistakes may be avoided in the rewrite.]
+	x)  Pretty much everything related to runtime configuration, device
+	    slots, interrupts, etc must be redesigned/cleaned up. The current
+	    code is very hardcoded and ugly.
+	o)  Allow cards to be added/removed during runtime more easily.
+	o)  Allow cards to be enabled/disabled (i/o ports, etc, like
+	    NetBSD needs for disk controller detection).
+	o)  Allow devices to be moved in memory during runtime.
+	o)  Interrupts per PCI slot, etc. (A-D).
+	o)  PCI interrupt controller logic... very hard to get right,
+	    because these differ a lot from one machine to the next.
+	x)  last write was ffffffff ==> fix this, it should be used
+	    together with a mask to get the correct bits. also, not ALL
+	    bits are size bits! (lowest 4 vs lowest 2?)
+	x)  add support for address fixups
+	x)  generalize the interrupt routing stuff (lines etc)
+
+Clocks and timers:
+	x)  Fix the PowerPC DECR interrupt speed! (MacPPC and PReP speed, etc.)
+	x)  DON'T HARDCODE 100 HZ IN cpu_mips_coproc.c!
+	x)  NetWinder timeofday is incorrect! Huh? grep -R for ta_rtc_read in
+	    NetBSD sources; it doesn't seem to be initialized _AT ALL_?!
+	x)  Cobalt TOD is incorrect!
+	x)  Go through all other machines, one by one, and fix them.
+
+ASC SCSI controller:
+	x)  NetBSD/arc 2.0 uses the ASC controller in a way which GXemul
+	    cannot yet handle. (NetBSD 1.6.2 works ok.) (Possibly a problem
+	    in NetBSD itself, http://mail-index.netbsd.org/source-changes/
+	    2005/11/06/0024.html suggests that.)
+	    NetBSD 4.x seems to work? :)
+
+File/disk/symbol handling:
+	o)  Make sure that disks can be added/removed during runtime!
+	    (Perhaps this needs a reasonably large re-write.)
+	o)  Remove some of the complexity in file format guessing, for
+		Ultrix kernels that are actually disk images?
+	o)  Remove temporary files (/tmp/gxemul.blahblah) if loading fails
+	    for some reason (unrecognized file, etc).
+	o)  Better handling of tape files	
+	o)  Read function argument count and types from binaries? (ELF?)
+	o)  Better demangling of C++ names. Note: GNU's C++ differs from e.g.
+	    Microsoft's C++, so multiple schemes must be possible. See
+	    URL at top of src/symbol_demangle.c for more info.
+
+Better framebuffer and X-windows functionality:
+[Obsoleted; the new framework will most likely use SDL. This section
+is kept here, so that the same mistakes may be avoided in the rewrite.]
+	o)  Do a complete rewrite of the framebuffer/console stuff, so that:
+		1)  It does not rely on X11 specifically.
+		2)  It is possible to interact with emulated framebuffers
+		    and consoles "remotely", e.g. via a web page which
+		    controls multiple virtualized machines.
+		3)  It is possible to run on (hypothetical) non-X11
+		    graphics systems.
+	o)  Generalize the update_x1y1x2y2 stuff to an extend-region()
+	    function...
+	o)  -Yx sometimes causes crashes.
+	o)  Simple device access to framebuffer_blockcopyfill() etc,
+	    and text output (using the built-in fonts), for dev_fb.
+	o)  CLEAN UP the ugly event code
+	o)  Mouse clicks can be "missed" in the current system; this is
+	    not good. They should be put on a stack of some kind.
+	o)  More 2D and 3D framebuffer acceleration.
+	o)  Non-resizable windows?  Or choose scaledown depending
+		on size (and center the image, with a black border).
+	o)  Different scaledown on different windows?
+	o)  Non-integral scale-up? (E.g. 640x480 -> 1024x768)
+	o)  Switch scaledown during runtime? (Ala CTRL-ALT-plus/minus)
+	o)  Bug reported by Elijah Rutschman on MacOS with weird
+	    keys (F5 = cursor down?).
+	o)  Keyboard and mouse events:
+		x)  Do this for more machines than just DECstation
+		x)  more X11 cursor keycodes
+		x)  Keys like CTRL, ALT, SHIFT do not get through
+		    by themselves (these are necessary for example
+		    to change the font of an xterm in X in the
+		    emulator)
+	o)  Generalize the framebuffer stuff by moving _ALL_ X11
+		specific code to a separate module.
+
+Release checklist:
+	Build on as many platforms as possible.
+	Install as many as possible of the Guest OSes in the documentation;
+		the documentation may need to be updated if there are
+		regressions. (This can take a whole day.)
+	Update the README file.
+	Update the RELEASE NOTES.
+	TODO updates (i.e. set goals for the _next_ release, if possible).
+	HISTORY (mention the release).
+	SVN branch/tag.
+	Send SVN dump to Sourceforge.
+	Tarball creation (make_release.sh)
+	Home page update: version numbers, architectures?
+	Home page News page update: new Release.
+	sync homepage to sourceforge
+	#GXemul on FreeNode (IRC): version number in topic
+	Sourceforge File Release (upload the tarball).
+	gxemul-users mail
+	Freshmeat
+	Wikipedia page (version number and date, possibly architectures update,
+		or description update).
+	Send mail to package maintainers (if they are not subscribed
+		to the mailing list(s))
+	If new arch:
+		Linux-MIPS wiki page
+		Ohloh description page
+		gavare.se main page
+
+-------------------------------------------------------------------------------
+</pre>
+</body>
+</html>
+

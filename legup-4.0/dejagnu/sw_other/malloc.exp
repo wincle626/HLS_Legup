@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd malloc
+set test "malloc"
+set expected {Result: 1368}
+
+run-test-sw $test $expected
+
+cd ..

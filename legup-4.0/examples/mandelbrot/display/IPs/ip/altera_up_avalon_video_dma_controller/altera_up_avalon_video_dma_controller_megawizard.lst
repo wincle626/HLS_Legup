@@ -1,0 +1,11 @@
+[University Program|Audio & Video|Video]
+DMA Controller = "%t" "%w/../../../../altera/common/lib/megawizard.pl" --wizard_file:"%w/altera_up_avalon_video_dma_controller_hw.tcl" --wizard:altera_up_avalon_video_dma_controller --early_gen:on %f %o %h
+<INFO>
+<QIP_FILE_ENABLED/>
+<ACCEPT_OTHER_CNX VALUE="ON"/>
+<LANGUAGES   AHDL="OFF" />
+<PINPLAN SUPPORTED="OFF"/>
+<ALIAS>DMA controller for video processing on DE-Series Boards</ALIAS>
+
+</INFO>
+

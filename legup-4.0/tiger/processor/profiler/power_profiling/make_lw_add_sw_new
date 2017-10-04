@@ -1,0 +1,63 @@
+#!/bin/bash
+
+NUM_INSTRS=100	# later can introduce loops
+
+# Instruction Classes
+ARITH_DSI="addiu,andi,ori,sll,slti,sltiu,sra,srl,xori"		# D = F(S,Imm)
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%.*}
+	OUT_NAME="$NAME"
+	
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+
+
+FILE=assembly/lw.add.sw.s
+echo -e "\t.text\n\t.globl\tmain\n\t.ent\tmain\nmain:" > $FILE
+
+for i in `seq 1 $NUM_INSTRS`; do
+	RAND1=`rand 1000000`
+	RAND2=`rand 1000000`
+	RAND3=`rand 1000000`
+	R1=`rand 20`
+	let "R1 += 5"
+	R2=`rand 20`
+	let "R2 += 5"
+	R3=`rand 20`
+	let "R3 += 5"
+	R4=`rand 20`
+	let "R4 += 5"
+	R5=`rand 20`
+	let "R5 += 5"
+	R=`rand 20`
+	let "R += 5"
+	echo -e "\tlw \$${R1}, ${RAND3}(\$${R})" >> $FILE
+	echo -e "\tlw \$${R2}, ${RAND4}(\$${R})" >> $FILE
+	echo -e "\tadd \$${R3}, \$${R1}, \$${R2}" >> $FILE
+	echo -e "\tsw \$${R3}, ${RAND5}(\$${R})" >> $FILE
+done
+
+echo -e "\tjr \$ra\n\t.end\tmain" >> $FILE
+
+assemble $FILE

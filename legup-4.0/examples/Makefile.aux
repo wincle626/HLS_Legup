@@ -1,0 +1,258 @@
+# File: Makefile.aux
+# This file is included my Makefile.common
+#
+# This file contains make targets that are:
+#  * old
+#  * infrequently used
+#  * purely for debugging purposes
+#  * gxemul targets
+#
+# Targets include:
+#
+# make gdp_parallelAPI
+# make gdb
+# make gdbloop
+# make gdb_hybrid
+# make valgrind
+# make cfg
+# make callgraph
+# make gantt
+# make %.pdf
+# make gantt.sty
+# make dot
+# make hierarchy
+# make benchmarkfiles
+# make benchmarkfiles2
+#
+# make gprof
+#	Run gprof on benchmark 10,000,000 times (not be feasible for JPEG)
+# make emul
+#	Simulate MIPS assembly on gxemul
+# make emulwatch
+#	Simulate MIPS assembly on gxemul with variable watch output
+# make emultest
+#	Simulate MIPS assembly to print final pc value and return value
+# make emultrace
+#	Simulate MIPS assembly and store the instruction trace
+# make functionslist
+#	generate a list of functions in the program
+
+
+gdb_parallelAPI:
+	gdb --args $(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-parallel-api $(NAME).prelto.2.bc
+
+# debug Legup with gdb. Just type 'run' in gdb to start.
+# Useful function to print out LLVM instructions:
+# (gdb) p I
+# $3 = (llvm::AllocaInst *) 0xb4478c4
+# (gdb) p I->dump()
+# %0 = alloca [20128 x i8], align 1
+gdb:
+	gdb -tui --args $(LLVM_HOME)llc $(LLC_FLAGS) -march=v $(NAME).bc -o $(VFILE)
+
+gdbloop:
+	gdb --args $(LLVM_HOME)opt $(OPT_FLAGS) -basicaa -loop-simplify -indvars2 -modulo-schedule $(NAME).postlto.bc
+
+gdb_hybrid:
+	export LEGUP_HYBRID_FLOW=1;\
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	gdb -tui --args $(LLVM_HOME)llc -legup-config=config.tcl -legup-config=parallelaccels.tcl $(LLC_FLAGS) -march=v $(NAME).hw.bc -o $(VFILE)
+
+valgrind:
+	valgrind $(LLVM_HOME)llc $(LLC_FLAGS) -march=v $(NAME).bc -o $(VFILE)
+
+cfg:
+	$(LLVM_HOME)opt -dot-cfg-only $(NAME).ll
+	dot -Tps -Gsize='7.5,10' -Gratio=auto -Gcenter=true cfg.main.dot > graph.ps
+
+callgraph:
+	$(LLVM_HOME)opt -dot-callgraph $(NAME).ll
+	dot -Tps -Gsize='7.5,10' -Gratio=auto -Gcenter=true callgraph.dot > callgraph.ps
+	evince callgraph.ps&
+
+
+
+TEXFILES := $(wildcard *.tex)
+PDFFILES := $(TEXFILES:.tex=.pdf)
+
+gantt: $(PDFFILES) 
+
+%.pdf: %.tex gantt.sty
+	pdflatex $<
+
+gantt.sty:
+	ln -s $(LEVEL)/gantt.sty
+
+
+DOTFILES := $(wildcard *.dot)
+PSFILES := $(DOTFILES:.dot=.ps)
+
+dot: $(PSFILES) 
+
+%.ps: %.dot
+	# landscape
+	dot -Tps -Gsize='10,7.5' -Grotate=90 -Gratio=auto -Gcenter=true  $< > $@
+	
+
+
+	
+# A very simple dependency check, any .h file change will ensure all .bc files will be recompiled
+# also, any .c file change will only ensure its corresponding .bc file will be recompiled
+# builds OBJS
+%.hw.bc: %.c *.h
+	# produces pre-link time optimization binary bitcode per source file
+	$(FRONT_END) $< -emit-llvm -c $(CFLAG) -o $@ -fno-vectorize -fno-slp-vectorize
+	# produces textual bitcode per bitcode file
+	$(LLVM_HOME)llvm-dis $@
+
+
+
+################################################################################
+# tiger profiling
+################################################################################
+	
+tiger_prof:
+	mipsel-unknown-elf-gcc $(LEVEL)/../tiger/tool_source/lib/wrap.c -o $(LEVEL)/../tiger/tool_source/lib/wrap.o -O3 -c -EL -I $(LEVEL)/../tiger/tool_source/lib/
+	mipsel-unknown-elf-objdump $(LEVEL)/../tiger/tool_source/lib/wrap.o -d > $(LEVEL)/../tiger/tool_source/lib/wrap.src
+	sed -i 's|[/]*int main(void)  __attribute__|//int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-link $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.bc -o $(NAME).bc
+	#$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LEVEL)/remove_attributes.sh $(NAME).ll
+	$(MIPS_LLC_DIR)/llc $(NAME).ll -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s	
+	
+	# Assemble .s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(MIPSI_PROG_START_ADDRESS) --defsym mem_size=$(MEMORY_SIZE) $(LEVEL)/../swtools/mips/lib/mips_startup.o $(LEVEL)/../tiger/tool_source/lib/wrap.o $(NAME).o $(LEVEL)/../tiger/tool_source/lib/utils.o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	
+	# Make profiling initialization files
+	perl $(PROF_LIB)/../profiling_tools/gen_flist.pl $(NAME).src
+	$(PROF_LIB)/perfect $(NUM_FUNCTIONS) < $(NAME).flist
+	mv phash.prof $(NAME).hash
+	rm phash.c
+	
+	# Use LEAP's hashing
+	$(LEVEL)/../tiger/linux_tools/elf2sdram $(NAME).elf $(ELF2SDRAM_PARAM) $(SIMFILE) -p $(NAME).hash $(NUM_FUNCTIONS)
+
+
+
+tigersim_prof: tiger_prof
+	# Setup profiler to use a) vanprof, b) functional simulation -- these can be changed by looking at 'legup/tiger/processor/tiger_mips/run_simulation'
+	sed -i 's|`define PROF_TYPE[^/]*|`define PROF_TYPE "v"|' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	
+	sed -i 's|`define N[^2][^/]*|`define N					$(NUM_FUNCTIONS) |' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	sed -i 's|`define N2[^/]*|`define N2					$(LOG_NUM_FUNCTIONS) |' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	sed -i 's|`include ".*sim_path.v"|`include "../sim_path.v"|' $(PROC_PROF_DIR)/../tiger_defines.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../tiger_defines.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../tiger_top.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../../profiler/van_prof.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../../profiler/SnoopP.v
+	
+	# Run simulation
+	cp $(SIMFILE) $(PROC_PROF_DIR)
+	cd $(PROC_PROF_DIR) && vsim -c -do "do sim_power_tiger.tcl 0 v 0"
+
+	# these files are parsed by benchmark.pl for the buildbot plots
+	cp -f $(PROC_PROF_DIR)/transcript transcript
+	
+	# Return profile data
+	$(PROF_LIB)/$(RESULTS_CONVERT) transcript $(NAME).flist $(NAME).flist_lab $(NAME).hash v $(NUM_FUNCTIONS) | tee $(NAME).sim_data
+
+gprof:
+	./$(NAME).gprof.out
+	gprof $(NAME).gprof.out > $(NAME).gprof.results
+	cat $(NAME).gprof.results | grep "^\[" | sed -r "s|[^ ]*[ ]*[^ ]*[ ]*([^ ]*)[^a-zA-Z]*([^ ]*).*|\2\t\1|" | grep -v "^main " | sed "s|main2|main|"  > $(NAME).gprof.summary
+	cat $(NAME).gprof.results | grep "^\[" | sed -r "s|[^ ]*[ ]*[^ ]*[ ]*([^ ]*)[ ]*([^ ]*)[^a-zA-Z]*([^ ]*).*|\3\t\1\t\2|" | grep -v "^main	" | sed "s|main2|main|" | gawk '{ sum = $$2 + $$3 }; { print $$1 "\t" sum }'  > $(NAME).gprof.hier.summary
+
+
+
+
+################################################################################
+# GXemul Emulation Targets
+################################################################################
+
+emul: $(FULLNAME).o
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(GXEMUL_MEM_START) --defsym mem_size=$(MEMORY_SIZE) $(FULLNAME).o $(LEVEL)/../tiger/tool_source/lib/$(PERF_COUNTER) -o $(FULLNAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -lsimuart -lmem
+	$(MIPS_PREFIX)objdump -d $(FULLNAME).elf > $(FULLNAME).emul.src
+	$(EXPECT) $(LEVEL)/lib/gxemul_simple.exp -E $(GXEMUL_OPT) -e R3000 $(FULLNAME).elf -p `$(MIPS_TOOLS)/find_ra.py $(FULLNAME).emul.src` -p 0xffffffff80000180 -q
+
+emultest: $(FULLNAME).o
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(GXEMUL_MEM_START) --defsym mem_size=$(MEMORY_SIZE) $(FULLNAME).o $(LEVEL)/../tiger/tool_source/lib/$(PERF_COUNTER) -o $(FULLNAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -lsimuart -lmem
+	$(MIPS_PREFIX)objdump -d $(FULLNAME).elf > $(FULLNAME).emul.src
+	$(EXPECT) $(LEVEL)/lib/gxemul.exp -E $(GXEMUL_OPT) -e R3000 $(FULLNAME).elf -p `$(MIPS_TOOLS)/find_ra.py $(FULLNAME).emul.src` -p 0xffffffff80000180 -q
+
+emultrace: tiger_prof
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(GXEMUL_MEM_START) --defsym mem_size=$(MEMORY_SIZE) $(NAME).o $(LEVEL)/../tiger/tool_source/lib/$(PERF_COUNTER) -o $(NAME).emul.elf -EL -L $(MIPS_LIB) -lgcc -lfloat -lsimuart -lmem
+	$(MIPS_PREFIX)objdump -d $(NAME).emul.elf > $(NAME).emul.src
+	$(PROF_LIB)/make_flist $(NAME).emul.elf
+	$(EXPECT) $(LEVEL)/lib/gxemul_simple.exp -E $(GXEMUL_OPT) -e R3000 $(NAME).emul.elf -c ninstr -c itrace -p `$(MIPS_TOOLS)/find_ra.py $(NAME).emul.src` -v -T -i > $(NAME).emul.trace
+	$(PROF_LIB)/../parse_trace $(NAME).emul.trace
+	$(PROF_LIB)/../count_instrs $(NAME).emul.asm_trace > $(NAME).emul.breakdown
+	$(PROF_LIB)/function_profile_trace $(NAME).emul.flist $(NAME).emul.flist_lab $(NAME).emul.pc_trace $(NAME).emul.elf > $(NAME).emul.instr_profile
+
+emulwatch: $(OBJS)
+	# compile on current machine
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).prelto.1.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.1.bc > $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llvm-dis $(NAME).flat.bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	# compile for gxemul
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	make emul > transcript
+	grep "Watch@" transcript | sed 's/Watch@//' > sim.txt
+	diff -q lli.txt sim.txt
+
+# end emul targets
+
+
+
+
+hierarchy: tiger_prof
+	$(PROF_LIB)/../createHierarchy $(NAME).src
+
+
+functionslist: 
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).prelto.bc
+#$(LLVM_HOME)llvm-ld -disable-inlining $(NAME).prelto.bc -b=$(NAME).bc
+	$(LLVM_HOME)opt -disable-inlining -std-link-opts $(NAME).prelto.bc -o $(NAME).bc
+
+	# generate a list of functions in the program
+	# creates file: functions.list
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-func-list < $(NAME).bc > $(NAME).list.bc
+	mv functions.list $(shell basename `pwd`).list
+
+
+
+################################################################################
+# benchmarking targets
+################################################################################
+
+# these files are parsed by benchmark.pl for the buildbot plots
+benchmarkfiles:
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_top.tan.summary top.tan.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_top.fit.summary top.fit.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_sim/transcript transcript
+
+benchmarkfiles2:
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_top.tan.summary top.tan.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_top.fit.summary top.fit.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_sim/transcript transcript
+
+# end benchmark files
+
+
+.PHONY: gprof emul emulwatch emultest emultrace functionslist
+

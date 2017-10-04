@@ -1,0 +1,343 @@
+#!/bin/bash
+
+# Instruction Classes
+ARITH_DST="add,addu,and,or,sllv,slt,sltu,srlv,sub,subu,xor"		# D = F(S,T)
+ARITH_DSI="addi,addiu,andi,ori,sll,slti,sltiu,sra,srl,xori"		# D = F(S,Imm)
+	DSI_IMM_SIZE="16,16,16,16,5,16,16,5,5,16"
+ARITH_LOHI="div,divu,mult,multu"								# HI/LO = F(S,T)
+MOVE="mfhi,mflo"												# $d = HI/LO
+MEM_OFFSET="lb,lw,sb,sw,lbu"									# load/store @ addr ($s+offset)
+MEM_IMM="lui"							 						# load from immediate
+BRA_OFFSET="bgez,bgezal,bgtz,blez,bltz,bltzal"					# if(s) goto pc+offset
+BRA_COMPARE="beq,bne"											# if F(s,t) goto pc+offset
+BRA_TARGET="j,jal"												# goto target
+BRA_REGISTER="jalr,jr"											# goto [$s]
+NOP="nop"														# nop
+
+
+
+NUM_INSTRS=100	# later can introduce loops
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+# Calculate hamming distance between two numbers ($1,$2 --> input numbers)
+function hamming() {
+	let "xor = $1 ^ $2"
+	ones=0;
+	
+	while [ $xor -gt 0 ]; do
+		let "ones += $xor & 0x1"
+		let "xor >>= 1"
+	done
+	
+	echo $ones
+}
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%%.*}
+	OUT_NAME="$NAME"
+	
+	# Find name so we don't overwrite previously created files
+	if [ -f $OUT_NAME.elf ]; then
+		IDX=1
+		while [ -f $OUT_NAME.$IDX.elf ]; do
+			let "IDX += 1"
+		done
+		OUT_NAME="$NAME.$IDX"
+	fi
+	
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	#rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+
+# Output assembly header ($1 --> filename.s)
+function write_header() {
+	echo -e "\t.text" > $1
+	echo -e "\t.globl	main" >> $1
+	echo -e "\t.ent	main" >> $1
+	echo -e "main:" >> $1
+}
+
+# Load constants into registers ($1 --> filename.s, $2... --> constants)
+function init_registers() {
+	curReg=10	# start at register 10 (arbitrary choice)
+	FILE=$1
+	shift
+	while [ $# -gt 0 ]; do
+		let "top=(($1>>16)&0xFFFF)"
+		let "bottom=($1&0xFFFF)"
+		if [ "$top" = "0" ]; then
+			echo -e "\tli \$$curReg, $bottom" >> $FILE
+		else
+			#LUI -- shifts imediate left 16 bits, bottom 16 bits are 0, stores to reg. then by using ori you can load bottom
+			echo -e "\tlui \$$curReg, $top" >> $FILE
+			echo -e "\tori \$$curReg, \$$curReg, $bottom" >> $FILE
+		fi
+		let "curReg += 1"
+		shift
+	done	
+}
+
+# Output assembly instruction X times ($1 --> filename.s, $2 --> repeat count, $3 --> instr, $4 --> dest? (0/1), $5 --> num. reg parameters, [opt]$6 --> immediate value, [opt]$7 --> offset)
+function write_instr() {
+	instr_line=""
+	instr_line="$instr_line \t$3 "
+	
+	#if there is a dest. reg, add it first
+	if [ "$4" = "1" ]; then
+		instr_line="$instr_line \$9,"
+	fi
+	
+	curReg=10	# start at register 10 (arbitrary choice)
+	if [ "$7" != "offset" ]; then
+		for j in `seq 1 $5`; do
+			instr_line="$instr_line \$$curReg,"
+			let "curReg += 1"
+		done
+		
+		if [ "$#" = "6" ]; then
+			instr_line="$instr_line $6,"
+		fi
+		
+		# remove trailing comma
+		instr_line=${instr_line%?}
+	else
+		instr_line="$instr_line $6(\$$curReg)"
+	fi
+		
+	for i in `seq 1 $2`; do	
+		echo -e "$instr_line\nnop\nnop\nnop\nnop" >> $1
+	done
+}
+
+# Output hamming distance to data section so it is viewable from elf src
+function write_hamming() {
+	echo -e "\t.type	hamming,@object" >> $1
+	echo -e "\t.section	.rodata,\"a\",@progbits" >> $1
+	echo -e "\t.globl hamming" >> $1
+	echo -e "hamming:" >> $1
+	echo -e "\t.word	$2" >> $1
+}
+
+# Output assembly footer ($1 --> filename.s)
+function write_footer() {
+	echo -e "\tjr \$ra" >> $1
+	echo -e "\n\t.end	main" >> $1
+}
+
+# Run timing simulation
+function timing_sim() {
+	echo 
+}
+
+# Create assembly for given instruction type, and assemble/link to elf ($1 --> instruction class, $2 --> dest? (0/1), $3 --> number of reg inputs, $4 --> immediates? (0/1, 2 means offset($s)), [opt]$5 --> max imm size
+function create_assembly() {
+	instr_list=${1//,/ }
+	max_list=${5//,/ }
+	max_list_arr=($(echo $max_list))
+	k=0;
+	
+	for op in $(echo $instr_list); do
+		echo -en "$op.. "
+		MAXVAL=2**16
+		random1=`rand $MAXVAL`
+		if [ "$4" = "1" -a "$5" != "" ]; then
+			MAXVAL=$((2**${max_list_arr[$k]}))
+		else
+			MAXVAL=2**16
+		fi
+		random2=`rand $MAXVAL`			
+
+		hamming_dist=`hamming $random1 $random2`
+		write_header "assembly/$op.s"
+		# Immediate
+		if [ "$4" = "1" ]; then
+			init_registers "assembly/$op.s" $random1
+			write_instr "assembly/$op.s" $NUM_INSTRS $op $2 $3 $random2
+		
+		# Memory offset (ie x = 12(y))
+		elif [ "$4" = "2" ]; then
+			init_registers "assembly/$op.s" $random1
+			write_instr "assembly/$op.s" $NUM_INSTRS $op $2 $3 $random2 "offset"
+		
+		# No Offset
+		else
+			init_registers "assembly/$op.s" $random1 $random2
+			write_instr "assembly/$op.s" $NUM_INSTRS $op $2 $3
+		fi			
+		write_footer "assembly/$op.s"
+		write_hamming "assembly/$op.s" $hamming_dist
+		
+		if [ "$op" = "div" -o "$op" = "divu" ]; then
+			sed -i "s|\tdiv[u]* |\t$op \$zero, |g" "assembly/$op.s"
+		fi
+		
+		assemble "assembly/$op.s"
+		let "k += 1"
+	done
+	echo 
+}
+
+# Create assembly for jump instruction types, and assemble/link to elf ($1 --> instruction class, $2 --> #conditions, $3 --> jump target type (0=offset, 1=target, 2=register)
+function create_jump_assembly() {
+	instr_list=${1//,/ }
+	for op in $(echo $instr_list); do
+		echo -en "$op.. "
+		
+		write_header "assembly/$op.s"
+		# Offset
+		if [ "$3" = "0" ]; then
+			offset=4			# always jump forward two instructions (ie to next operation) -- nop's auto-inserted and add 4 to this
+			random1=`rand 20`	# small so have chance of beq, bgez, blez
+			if [ "$2" = "1" ]; then
+				init_registers "assembly/$op.s" $random1
+			else
+				random2=`rand 20`
+				init_registers "assembly/$op.s" $random1 $random2
+			fi
+			write_instr "assembly/$op.s" $NUM_INSTRS $op 0 $2 $offset
+		
+		# Target
+		elif [ "$3" = "1" ]; then
+			target=0x800008
+			for i in `seq 1 $NUM_INSTRS`; do	
+				echo -e "\t$op $target" >> "assembly/$op.s"	# nop's auto-inserted
+				let "target += 8"
+			done
+		
+		# Register -- this will just keep looping on this instruction!
+		else
+			init_registers "assembly/$op.s" 0x800008
+			echo -e "\t$op \$10" >> "assembly/$op.s"	# nop's auto-inserted
+		fi
+		
+		write_footer "assembly/$op.s"
+		assemble "assembly/$op.s"		
+	done
+	echo 
+}
+
+# Check if instruction is contained in this group ($1 --> instruction class, $2 --> op)
+function instr_in_group() {
+	RET=`echo "$1," | grep "$2,"`
+	if [ "$RET" != "" ]; then
+		echo "1"
+	else
+		echo "0"
+	fi
+}
+
+# Create instruction of type 'op' multiple times ($1 --> op, [opt]$2 --> repeat factor, default = 1)
+function create_repeat_instr() {
+	# Find Repeat factor
+	REPEAT=$2
+	if [ "$REPEAT" = "" ]; then 
+		REPEAT="1"
+	fi
+	#Figure out which instruction class this belongs to
+	if   [ `instr_in_group $ARITH_DST $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 1 2 0;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $ARITH_DSI $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 1 1 1 $DSI_IMM_SIZE;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $ARITH_LOHI $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 0 2 0;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $MOVE $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 1 0 0;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $MEM_OFFSET $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 1 1 2;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $MEM_IMM $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 1 0 1;
+			let "REPEAT -= 1"
+		done
+		
+	elif [ `instr_in_group $BRA_OFFSET $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_jump_assembly $1 1 0;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $BRA_COMPARE $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_jump_assembly $1 2 0;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $BRA_TARGET $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_jump_assembly $1 0 1;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $BRA_REGISTER $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_jump_assembly $1 0 2;
+			let "REPEAT -= 1"
+		done
+	elif [ `instr_in_group $NOP $1` -eq 1 ]; then
+		while [ "$REPEAT" != "0" ]; do
+			create_assembly $1 0 0;
+			let "REPEAT -= 1"
+		done
+	else
+		echo "$1 Not Found!"
+	fi
+}
+
+if [ "$1" = "--all" ]; then
+	# Create all assembly files and compile to ELF	
+	create_assembly $ARITH_DST 1 2 0
+	create_assembly $ARITH_DSI 1 1 1 $DSI_IMM_SIZE
+	create_assembly $ARITH_LOHI 0 2 0
+	create_assembly $MOVE 1 0 0
+	create_assembly $MEM_OFFSET 1 1 2
+	create_assembly $MEM_IMM 1 0 1
+
+	#create_jump_assembly $BRA_OFFSET 1 0
+	create_jump_assembly $BRA_COMPARE 2 0
+	create_jump_assembly $BRA_TARGET 0 1
+	create_jump_assembly $BRA_REGISTER 0 2
+
+elif [ "$1" = "--help" -o "$1" = "" ]; then
+	echo "HELP MENU:"
+	echo "	./create_assembly --all         - create on assembly file for each instruction"
+	echo "	./create_assembly <op> <count>  - create 'count' assembly files for 'op' instruction"
+	echo "	./create_assembly --help        - display this message"
+	echo "  ./create_assembly --show-isa    - display the mips instruction set architecture"
+	
+elif [ "$1" = "--show-isa" ]; then
+	cat mips_isa
+	
+else
+	create_repeat_instr $1 $2
+fi
+
+

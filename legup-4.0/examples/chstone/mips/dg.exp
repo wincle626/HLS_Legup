@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/mips
+set test "mips"
+set expected {return_val=\s+9\s+}
+set gxexpected {reg: v0 = 0x0000000000000009}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

@@ -1,0 +1,56 @@
+# llvm
+Debug
+Release
+Output
+*.inc
+*.def
+log
+Release+Asserts
+config.log
+config.status
+
+# cloog
+cloog/libcloog*
+
+# legup
+examples/*/*.mif
+examples/*/*/*.mif
+*.ver
+examples/*/*.v
+examples/*/*/*.v
+*.bc
+*.ll
+examples/*/*.sdc
+examples/*/*/*.sdc
+examples/*/*.arm.o
+examples/*/*/*.arm.o
+examples/*/*.arm.s
+examples/*/*/*.arm.s
+examples/*/*.arm.src
+examples/*/*/*.arm.src
+examples/*/*.arm.elf
+examples/*/*/*.arm.elf
+*.dot
+wlft*
+*.pyc
+
+# quartus
+*.fit.*
+*.rpt
+*.summary
+main.*
+db
+incremental_db
+
+# modelsim
+transcript
+work
+vsim.wlf
+
+#gvim
+.*.swp
+
+# other
+a.out
+tags
+testrun.*

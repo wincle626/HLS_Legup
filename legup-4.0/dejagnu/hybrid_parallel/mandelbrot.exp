@@ -1,0 +1,41 @@
+load_lib legup.exp
+
+set hybridexpected {# Count: 12013}
+
+cd ../examples/parallel/single/mandelbrot
+set test "mandelbrot Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../openmp/mandelbrot
+set test "mandelbrot OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../pthreads/mandelbrot
+set test "mandelbrot Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/mandelbrot_pipeline
+set test "mandelbrot_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/mandelbrot_2
+set test "mandelbrot_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../mandelbrot_3
+set test "mandelbrot_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../mandelbrot_4
+set test "mandelbrot_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../mandelbrot_8_4
+set test "mandelbrot_8_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../mandelbrot_12_4
+set test "mandelbrot_12_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../

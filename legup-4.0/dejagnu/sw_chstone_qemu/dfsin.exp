@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/dfsin
+set test "dfsin"
+
+set expected {Result: 36}
+
+run-test-qemu $test $expected
+
+cd ../..

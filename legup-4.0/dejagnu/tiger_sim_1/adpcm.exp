@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/adpcm
+set test "adpcm"
+set expected {Result: 150}
+
+run-test-sw $test $expected
+
+cd ../..

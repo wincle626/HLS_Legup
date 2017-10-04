@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd memory_access_test
+set test "memory_access_test"
+
+set expected {Result: 32}
+run-test-qemu $test $expected
+
+cd ..

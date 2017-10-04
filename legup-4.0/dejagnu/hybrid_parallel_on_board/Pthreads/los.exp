@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+set hybridexpected {Sum: 2193}
+
+cd ../examples/parallel/pthreads/los
+set test "los Pthreads"
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../../

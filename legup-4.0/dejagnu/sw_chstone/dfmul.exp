@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/dfmul
+set test "dfmul"
+set expected {Result: 20}
+
+run-test-sw $test $expected
+
+cd ../..

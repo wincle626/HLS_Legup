@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/random_test_0
+set test "random_test_0"
+set expected {return_val=2147483648}
+
+run-test $test $expected
+
+cd ../..

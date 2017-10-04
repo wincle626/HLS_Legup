@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd backtracking_pipeline/adderchain
+set test "backtracking_pipeline/adderchain"
+set expected {return_val=\s+87301\s+.*Cycles:\s+194\s+}
+
+run-test $test $expected
+
+cd ../..

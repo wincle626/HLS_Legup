@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/dfadd
+set test "dfadd"
+set expected {Result: 46}
+
+run-test-sw $test $expected
+
+cd ../..

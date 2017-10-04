@@ -1,0 +1,12 @@
+To run the tests:
+    runtest
+
+If there are failures turn on the verbose flag:
+    runtest -v
+
+To run individual tests:
+    runtest sra/dg.exp 
+
+To run a full Quartus compile on chstone and dhrystone:
+    make benchmark
+

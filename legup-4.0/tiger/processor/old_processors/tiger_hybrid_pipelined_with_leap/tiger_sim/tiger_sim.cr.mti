@@ -1,0 +1,414 @@
+C:/altera/tiger/tiger_mips/tiger_fetch.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_fetch.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_fetch
+
+Top level modules:
+	tiger_fetch
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_mult.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_mult.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_mult
+
+Top level modules:
+	tiger_mult
+
+} {} {}} C:/altera/tiger/tiger_mips/cache.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/cache.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module Cache
+
+Top level modules:
+	Cache
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_div.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_div.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_div
+
+Top level modules:
+	tiger_div
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_execute.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_execute.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_execute
+
+Top level modules:
+	tiger_execute
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_top.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_top.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_top
+
+Top level modules:
+	tiger_top
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_tiger.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_tiger.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_tiger
+
+Top level modules:
+	tiger_tiger
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_ff.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_ff.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_ff
+-- Compiling module tiger_ff_compare
+
+Top level modules:
+	tiger_ff
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_decode.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_decode.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_decode
+
+Top level modules:
+	tiger_decode
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_shifter.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_shifter.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_shifter
+
+Top level modules:
+	tiger_shifter
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_branch.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_branch.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_branch
+
+Top level modules:
+	tiger_branch
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_stalllogic.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_stalllogic.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_stalllogic
+
+Top level modules:
+	tiger_stalllogic
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_decoder.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_decoder.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_decoder
+
+Top level modules:
+	tiger_decoder
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_multu.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_multu.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_multu
+
+Top level modules:
+	tiger_multu
+
+} {} {}} C:/altera/tiger/tiger_mips/HexLED.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/HexLED.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module HexLED
+-- Compiling module hex2leds
+
+Top level modules:
+	HexLED
+
+} {} {}} C:/altera/tiger/tiger_mips/cacheMem.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/cacheMem.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module cacheMem
+
+Top level modules:
+	cacheMem
+
+} {} {}} C:/altera/tiger/tiger_mips/FIFO.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/FIFO.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module FIFO
+
+Top level modules:
+	FIFO
+
+} {} {}} C:/altera/tiger/tiger_mips/VJT.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/VJT.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module VJT
+
+Top level modules:
+	VJT
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_alu.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_alu.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_alu
+
+Top level modules:
+	tiger_alu
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_memoryaccess.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_memoryaccess.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_memoryaccess
+
+Top level modules:
+	tiger_memoryaccess
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_writeback.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_writeback.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_writeback
+
+Top level modules:
+	tiger_writeback
+
+} {} {}} C:/altera/tiger/tiger_mips/VJT2.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/VJT2.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module VJT2
+
+Top level modules:
+	VJT2
+
+} {} {}} C:/altera/tiger/tiger_mips/vJTAGUart.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/vJTAGUart.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module vJTAGUart
+
+Top level modules:
+	vJTAGUart
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_debug.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_debug.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_debug
+
+Top level modules:
+	tiger_debug
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger_divu.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger_divu.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module tiger_divu
+
+Top level modules:
+	tiger_divu
+
+} {} {}} C:/altera/tiger/tiger_mips/tiger.v {1 {vlog -work work -nocovercells C:/altera/tiger/tiger_mips/tiger.v
+Model Technology ModelSim PE Student Edition vlog 6.5d Compiler 2009.11 Nov 19 2009
+-- Compiling module GreenLED_s1_arbitrator
+-- Compiling module HexLED_0_avalon_slave_0_arbitrator
+-- Compiling module RedLED_s1_arbitrator
+-- Compiling module onchip_mem_s1_arbitrator
+-- Compiling module rdv_fifo_for_tiger_top_0_dataMaster_to_sdram_s1_module
+-- Compiling module rdv_fifo_for_tiger_top_0_instructionMaster_to_sdram_s1_module
+-- Compiling module sdram_s1_arbitrator
+-- Compiling module tiger_top_0_debugSlave_arbitrator
+-- Compiling module tiger_top_0_dataMaster_arbitrator
+-- Compiling module tiger_top_0_instructionMaster_arbitrator
+-- Compiling module tigers_jtag_uart_controlSlave_arbitrator
+-- Compiling module tigers_jtag_uart_1_controlSlave_arbitrator
+-- Compiling module uart_0_s1_arbitrator
+-- Compiling module tiger_reset_clk_domain_synch_module
+-- Compiling module tiger
+-- Compiling module lcell
+-- Compiling module ALTERA_MF_MEMORY_INITIALIZATION
+-- Compiling module ALTERA_MF_HINT_EVALUATION
+-- Compiling module ALTERA_DEVICE_FAMILIES
+-- Compiling module dffp
+-- Compiling module pll_iobuf
+-- Compiling module stx_m_cntr
+-- Compiling module stx_n_cntr
+-- Compiling module stx_scale_cntr
+-- Compiling module MF_pll_reg
+-- Compiling module MF_stratix_pll
+-- Compiling module arm_m_cntr
+-- Compiling module arm_n_cntr
+-- Compiling module arm_scale_cntr
+-- Compiling module MF_stratixii_pll
+-- Compiling module ttn_m_cntr
+-- Compiling module ttn_n_cntr
+-- Compiling module ttn_scale_cntr
+-- Compiling module MF_stratixiii_pll
+-- Compiling module cda_m_cntr
+-- Compiling module cda_n_cntr
+-- Compiling module cda_scale_cntr
+-- Compiling module MF_cycloneiii_pll
+-- Compiling module altpll
+-- Compiling module altlvds_rx
+-- Compiling module stratix_lvds_rx
+-- Compiling module stratixgx_dpa_lvds_rx
+-- Compiling module stratixii_lvds_rx
+-- Compiling module flexible_lvds_rx
+-- Compiling module stratixiii_lvds_rx
+-- Compiling module stratixiii_lvds_rx_channel
+-- Compiling module stratixiii_lvds_rx_dpa
+-- Compiling module altlvds_tx
+-- Compiling module stratix_tx_outclk
+-- Compiling module stratixii_tx_outclk
+-- Compiling module flexible_lvds_tx
+-- Compiling module dcfifo_dffpipe
+-- Compiling module dcfifo_fefifo
+-- Compiling module dcfifo_async
+-- Compiling module dcfifo_sync
+-- Compiling module dcfifo_low_latency
+-- Compiling module dcfifo_mixed_widths
+-- Compiling module dcfifo
+-- Compiling module altaccumulate
+-- Compiling module altmult_accum
+-- Compiling module altmult_add
+-- Compiling module altfp_mult
+-- Compiling module altsqrt
+-- Compiling module altclklock
+-- Compiling module altddio_in
+-- Compiling module altddio_out
+-- Compiling module altddio_bidir
+-- Compiling module altcam
+-- Compiling module altdpram
+-- Compiling module altsyncram
+-- Compiling module alt3pram
+-- Compiling module altqpram
+-- Compiling module parallel_add
+-- Compiling module scfifo
+-- Compiling module altshift_taps
+-- Compiling module a_graycounter
+-- Compiling module altsquare
+-- Compiling module altdq_dqs
+-- Compiling module altera_std_synchronizer
+-- Compiling module altera_std_synchronizer_bundle
+-- Compiling module alt_cal
+-- Compiling module signal_gen
+-- Compiling module jtag_tap_controller
+-- Compiling module dummy_hub
+-- Compiling module sld_virtual_jtag
+-- Compiling module sld_signaltap
+-- Compiling module altstratixii_oct
+-- Compiling module altparallel_flash_loader
+-- Compiling module altserial_flash_loader
+-- Compiling module altsource_probe
+-- Compiling module LPM_MEMORY_INITIALIZATION
+-- Compiling module LPM_HINT_EVALUATION
+-- Compiling module LPM_DEVICE_FAMILIES
+-- Compiling module lpm_constant
+-- Compiling module lpm_inv
+-- Compiling module lpm_and
+-- Compiling module lpm_or
+-- Compiling module lpm_xor
+-- Compiling module lpm_bustri
+-- Compiling module lpm_mux
+-- Compiling module lpm_decode
+-- Compiling module lpm_clshift
+-- Compiling module lpm_add_sub
+-- Compiling module lpm_compare
+-- Compiling module lpm_mult
+-- Compiling module lpm_divide
+-- Compiling module lpm_abs
+-- Compiling module lpm_counter
+-- Compiling module lpm_latch
+-- Compiling module lpm_ff
+-- Compiling module lpm_shiftreg
+-- Compiling module lpm_ram_dq
+-- Compiling module lpm_ram_dp
+-- Compiling module lpm_ram_io
+-- Compiling module lpm_rom
+-- Compiling module lpm_fifo
+-- Compiling module lpm_fifo_dc_dffpipe
+-- Compiling module lpm_fifo_dc_fefifo
+-- Compiling module lpm_fifo_dc_async
+-- Compiling module lpm_fifo_dc
+-- Compiling module lpm_inpad
+-- Compiling module lpm_outpad
+-- Compiling module lpm_bipad
+-- Compiling module oper_add
+-- Compiling module oper_addsub
+-- Compiling module mux21
+-- Compiling module io_buf_tri
+-- Compiling module io_buf_opdrn
+-- Compiling module oper_mult
+-- Compiling module tri_bus
+-- Compiling module oper_div
+-- Compiling module oper_mod
+-- Compiling module oper_left_shift
+-- Compiling module oper_right_shift
+-- Compiling module oper_rotate_left
+-- Compiling module oper_rotate_right
+-- Compiling module oper_less_than
+-- Compiling module oper_mux
+-- Compiling module oper_selector
+-- Compiling module oper_decoder
+-- Compiling module oper_bus_mux
+-- Compiling module oper_latch
+-- Compiling module tiger_top_0
+-- Compiling module tigers_jtag_uart_1
+-- Compiling module HexLED_0
+-- Compiling module tigers_jtag_uart
+-- Compiling module RedLED
+-- Compiling module sdram_input_efifo_module
+-- Compiling module sdram
+-- Compiling module sdram_test_component_ram_module
+-- Compiling module sdram_test_component
+-- Compiling module uart_0_log_module
+-- Compiling module uart_0_tx
+-- Compiling module uart_0_rx_stimulus_source_character_source_rom_module
+-- Compiling module uart_0_rx_stimulus_source
+-- Compiling module uart_0_rx
+-- Compiling module uart_0_regs
+-- Compiling module uart_0
+-- Compiling module onchip_mem
+-- Compiling module GreenLED
+-- Compiling module test_bench
+
+Top level modules:
+	lcell
+	altpll
+	altlvds_rx
+	altlvds_tx
+	dcfifo
+	altaccumulate
+	altmult_accum
+	altmult_add
+	altfp_mult
+	altsqrt
+	altddio_bidir
+	altcam
+	altdpram
+	alt3pram
+	altqpram
+	parallel_add
+	scfifo
+	altshift_taps
+	a_graycounter
+	altsquare
+	altdq_dqs
+	altera_std_synchronizer_bundle
+	alt_cal
+	sld_virtual_jtag
+	sld_signaltap
+	altstratixii_oct
+	altparallel_flash_loader
+	altserial_flash_loader
+	altsource_probe
+	lpm_constant
+	lpm_inv
+	lpm_and
+	lpm_or
+	lpm_xor
+	lpm_bustri
+	lpm_compare
+	lpm_abs
+	lpm_counter
+	lpm_latch
+	lpm_ff
+	lpm_shiftreg
+	lpm_ram_dq
+	lpm_ram_dp
+	lpm_ram_io
+	lpm_rom
+	lpm_fifo
+	lpm_fifo_dc
+	lpm_inpad
+	lpm_outpad
+	lpm_bipad
+	oper_add
+	oper_addsub
+	mux21
+	io_buf_tri
+	io_buf_opdrn
+	oper_mult
+	tri_bus
+	oper_div
+	oper_mod
+	oper_left_shift
+	oper_right_shift
+	oper_rotate_left
+	oper_rotate_right
+	oper_less_than
+	oper_mux
+	oper_selector
+	oper_decoder
+	oper_bus_mux
+	oper_latch
+	test_bench
+
+} {} {}}

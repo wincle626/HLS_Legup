@@ -1,0 +1,512 @@
+# File: Makefile.ancillary
+# This file is included by Makefile.common
+#
+# This file contains make targets that should not to be called by the end user.
+# This targets do the bulk of the work required by the primary make targets in
+# the Makefile.common. This files contains two types of targets: 1) Secondary
+# Targets: those called by the primary targets; 2) Helper Targets: those called
+# by the secondary targets.
+#
+# Secondary targets include:
+#
+# qII_project
+#   Copies the quartus II project files (.qpf, .qsf, .v, .sdc and .qsys) for the
+#   choosen board.
+#
+
+################################################################################
+#  Splits the benchmark into both software/hardware as specified in the
+# config.tcl file.
+
+
+################################################################################
+##############################  Common Targets  ################################
+################################################################################
+
+################################################################################
+# Create the output directory
+create_output_directory: 
+	mkdir -p $(OUTPUT_PATH)
+	mkdir -p $(OUTPUT_PATH)/ip
+
+prevent_the_following_comments_from_being_included_in_create_output_directory:
+################################################################################
+# Front end passes common to all flows
+# Should it be dependent on .h files? Currently, breaks because adpcm does not
+# have a .h file
+# $(FULLNAME).bc: $(NAME).c *.h
+#$(FULLNAME).bc: $(NAME).c $(HEADERS)
+	# BF: 2015-03-14 Commenting out loop labels as it is not working for sw-only
+	# annotate loop labels
+	#$(LEVEL)/mark_labels.pl $(NAME).c > $(FULLNAME)_labeled.c
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	#$(FRONT_END) $(FULLNAME)_labeled.c -emit-llvm -c $(CFLAG) $(CLANG_FLAG) -o $(FULLNAME).bc -I $(LEVEL)/../tiger/tool_source/lib
+#	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) $(CLANG_FLAG) -o $(FULLNAME).bc -I $(LEVEL)/../tiger/tool_source/lib
+
+$(FULLNAME).bc: create_output_directory $(FEOBJS)
+	# linking may produce llvm mem-family intrinsics
+	$(LLVM_HOME)llvm-link $(LDFLAG) $(FEOBJS) -o $(FULLNAME).bc
+
+
+%.fe.bc: %.c $(HEADERS)
+	# produces pre-link time optimization binary bitcode per source file
+	$(FRONT_END) $< -emit-llvm -c $(CFLAG) $(CLANG_FLAG) -o $@ -I $(LEVEL)/../tiger/tool_source/lib
+
+################################################################################
+##################  Hardware/Software Partitioning Targets  ####################
+################################################################################
+
+################################################################################
+# Partition the benchmark for hardware only execution
+partition_code_for_hw_only: $(FULLNAME).hw.parted.bc
+
+$(FULLNAME).hw.parted.bc: $(FULLNAME).bc
+	cp $(FULLNAME).bc $(FULLNAME).hw.parted.bc
+
+################################################################################
+# Partition the benchmark for software only execution
+partition_code_for_sw_only: $(FULLNAME).sw.parted.bc
+
+$(FULLNAME).sw.parted.bc: $(FULLNAME).bc
+	cp $(FULLNAME).bc $(FULLNAME).sw.parted.bc
+
+################################################################################
+# Partition the benchmark for hybrid execution
+#partition_code: $(FULLNAME).bc
+partition_code: \
+	$(FULLNAME).bc \
+	hybridFrontend \
+	customVerilogPass \
+	hybridHwOnlyPass \
+	hybridSwOnlyPass
+
+# Should be merged with the partition_code target
+partition_code_parallel: \
+	hybridOmpFrontend \
+	customVerilogPass \
+	hybridHwOnlyPass \
+	hybridSwOnlyPass
+
+
+
+################################################################################
+#############################  Software Targets  ###############################
+################################################################################
+
+################################################################################
+# Compile the software to machine code
+$(FULLNAME).sw.bc:
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(FULLNAME).sw.parted.bc -o $(FULLNAME).sw.prelto.1.bc
+	$(LLVM_HOME)opt -std-link-opts $(FULLNAME).sw.prelto.1.bc -o $(FULLNAME).sw.prelto.bc
+	$(LLVM_HOME)llvm-link $(LDFLAG) $(FULLNAME).sw.prelto.bc $(LEVEL)/lib/llvm/liblegup.bc $(LEVEL)/lib/llvm/liblegupParallel.bc $(LEVEL)/lib/llvm/libm.bc -o $(FULLNAME).sw.2.bc
+	$(LLVM_HOME)opt -std-link-opts $(FULLNAME).sw.2.bc -o $(FULLNAME).sw.bc
+	$(LLVM_HOME)llvm-dis $(FULLNAME).sw.bc
+
+# produce the assembly code for the MIPS32 architecture
+$(FULLNAME).MIPS32.s: $(FULLNAME).sw.bc
+	$(LLVM_HOME)llc $(FULLNAME).sw.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips32 -o $(FULLNAME).MIPS32.s -mno-ldc1-sdc1 -soft-float -disable-mips-delay-filler 
+
+# produce the ELF for the MIPS I architecture
+$(FULLNAME).MIPSI.elf: $(FULLNAME).sw.bc
+	$(LLVM_HOME)llvm-dis $(FULLNAME).sw.bc
+	$(LEVEL)/remove_attributes.sh $(FULLNAME).sw.ll
+	$(MIPS_LLC_DIR)/llc $(FULLNAME).sw.ll -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(FULLNAME).MIPSI.s	
+	$(MIPS_PREFIX)as $(FULLNAME).MIPSI.s -mips1 -mabi=32 -o $(FULLNAME).MIPSI.o -EL
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(MEMORY_BASE_ADDRESS) --defsym mem_size=$(MEMORY_SIZE) $(LEVEL)/../swtools/mips/lib/mips_startup.o $(FULLNAME).MIPSI.o $(LEVEL)/../tiger/tool_source/lib/$(PERF_COUNTER) -o $(FULLNAME).MIPSI.elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(FULLNAME).MIPSI.elf > $(FULLNAME).MIPSI.src
+	cp $(FULLNAME).MIPSI.src $(NAME).src
+
+# produce the ELF for the processor architecture in the selected project
+$(FULLNAME).elf : $(FULLNAME).$(PROC_ARCH).elf
+	cp $(FULLNAME).$(PROC_ARCH).elf $(FULLNAME).elf
+
+#produce MIPS ELF and $(SIMFILE) for simulation
+SWMIPSbinUtils:
+	#mips target
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+#$(MIPS_PREFIX)as $(NAME).s -mips32 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(LEVEL)/../swtools/mips/prog_link.ld --defsym mem_start_addr=$(MEMORY_BASE_ADDRESS) --defsym mem_size=$(MEMORY_SIZE) $(LEVEL)/../swtools/mips/lib/mips_startup.o $(NAME).o $(LEVEL)/../tiger/tool_source/lib/$(PERF_COUNTER) -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	$(MIPS_TOOLS)/elf2sdram.py $(ELF2SDRAM_PARAM) $(NAME).elf $(SIMFILE)
+#	mv $(SIMFILE) ./tiger/
+#	mv cache_parameters.v $(PWD)/tiger/
+
+
+
+
+################################################################################
+#############################  Hardware Targets  ###############################
+################################################################################
+
+################################################################################
+#compile HW IR to Verilog backend for hybrid
+HWVerilogbackend:
+	$(LLVM_HOME)llvm-dis $(NAME).hw.bc
+#$(LLVM_HOME)opt $(OPT_FLAGS) -disable-inlining -internalize-public-api-list=$(ACCELS) -std-link-opts $(NAME).hw.bc -o $(NAME).hw.11.bc
+	$(LLVM_HOME)opt -internalize-public-api-list=$(ACCELS) -internalize -instcombine -globaldce -adce -inline $(NAME).hw.bc -o $(NAME).hw.11.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.11.bc
+	export LEGUP_HYBRID_FLOW=1;\
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+#	export LEGUP_NUM_MEM_PORTS=1;\
+#	export LEGUP_DUAL_PORT_BINDING=0;\
+	$(LLVM_HOME)llc -legup-config=config.tcl -legup-config=parallelaccels.tcl $(LLC_FLAGS) -march=v $(NAME).hw.11.bc -o $(VFILE)
+	#only copy the .mif files if it exists
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} cp {} ./$(OUTPUT_PATH)
+
+HWWatchVerilogbackend:
+	export LEGUP_HYBRID_FLOW=1;\
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+#	export LEGUP_NUM_MEM_PORTS=1;\
+#	export LEGUP_DUAL_PORT_BINDING=0;\
+	$(LLVM_HOME)llc -legup-config=config.tcl -legup-config=parallelaccels.tcl $(LLC_FLAGS) -march=v $(NAME).hw.watch.bc -o $(VFILE)
+	#only copy the .mif files if it exists
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} cp {} ./$(OUTPUT_PATH)
+
+################################################################################
+# Add component to the system
+addHWToSystem:
+	mkdir -p $(OUTPUT_PATH)/ip
+#	cp tiger/aes.v $(OUTPUT_PATH)/ip/.
+	mv $(NAME).v $(OUTPUT_PATH)/ip/
+#	cp tiger/aes_main_hw.tcl $(OUTPUT_PATH)/ip/.
+	mv *_hw.tcl $(OUTPUT_PATH)/ip/.
+	cd $(OUTPUT_PATH)/ && qsys-script --script=legup_qsys.tcl || [ $$? -eq 4 ]
+
+
+
+
+################################################################################
+##############################  System Targets  ################################
+################################################################################
+
+
+################################################################################
+# Setup the local Quartus II project
+#
+# GUP:
+# OTs: p:
+qII_project: \
+    $(OUTPUT_PATH)/top.qpf \
+    $(OUTPUT_PATH)/top.qsf \
+    $(OUTPUT_PATH)/top.v \
+    $(OUTPUT_PATH)/top.sdc \
+    $(OUTPUT_PATH)/legup_system.qsys \
+	$(OUTPUT_PATH)/legup_system.sopcinfo \
+    $(OUTPUT_PATH)/legup_components.ipx
+
+# copy qpf file
+$(OUTPUT_PATH)/top.qpf: \
+    $(LEVEL)/$(PROJECT_SOURCE_DIR)/top.qpf
+	cp $? $@
+
+# copy qsf file
+$(OUTPUT_PATH)/top.qsf: \
+    $(LEVEL)/$(PROJECT_SOURCE_DIR)/top.qsf
+	cp $? $@
+
+# copy v file
+$(OUTPUT_PATH)/top.v: \
+    $(LEVEL)/$(PROJECT_SOURCE_DIR)/top.v
+	cp $? $@
+
+# create sdc file
+$(OUTPUT_PATH)/top.sdc:
+ifeq ($(MULTICYCLE_CONSTRAINTS),1)
+	# create an sdc file with a 2ns clock period
+	echo "create_clock -period 2 -name clk [get_ports clk]" > $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 1 -name clk2x [get_ports clk2x]" >> $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 2 -name OSC_50_BANK2 [get_ports OSC_50_BANK2]" >> $(OUTPUT_PATH)/top.sdc
+	echo "derive_pll_clocks" >> $(OUTPUT_PATH)/top.sdc
+	echo "derive_clock_uncertainty" >> $(OUTPUT_PATH)/top.sdc
+	# create an sdc file with a 1ns clock period and multi-cycle constraints
+	@cp llvm_prof_multicycle_constraints.sdc llvm_prof_multicycle_constraints_no_through_constraints.sdc 2>/dev/null ||:
+	python $(LEVEL)/multi_cycle_remove_through_constraints.py llvm_prof_multicycle_constraints.sdc llvm_prof_multicycle_constraints_no_through_constraints.sdc src_dst_pairs_with_through_constraints.txt pairs_whose_through_constraints_must_be_removed.txt
+	echo '# From llvm_prof_multicycle_constraints.sdc:' >> $(OUTPUT_PATH)/top.sdc
+	# If a llvm_prof_multicycle_constraints.sdc file exists, concatenate
+	# its contents to the .sdc file as well
+	@cat llvm_prof_multicycle_constraints_no_through_constraints.sdc >> $(OUTPUT_PATH)/top.sdc 2>/dev/null ||:
+	# Finally, run a script to fix incorrect signal names
+else
+	# create an sdc file with a 1ns clock period
+	echo "create_clock -period 2 -name clk [get_ports clk]" > $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 1 -name clk2x [get_ports clk2x]" >> $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 2 -name OSC_50_BANK2 [get_ports OSC_50_BANK2]" >> $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 20 -name CLOCK_50 [get_ports CLOCK_50]" >> $(OUTPUT_PATH)/top.sdc
+	echo "create_clock -period 10MHz {altera_reserved_tck}" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_clock_groups -asynchronous -group {altera_reserved_tck}" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_input_delay -clock {altera_reserved_tck} 20 [get_ports altera_reserved_tdi]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_input_delay -clock {altera_reserved_tck} 20 [get_ports altera_reserved_tms]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_output_delay -clock {altera_reserved_tck} 20 [get_ports altera_reserved_tdo]" >> $(OUTPUT_PATH)/top.sdc
+
+	echo "derive_pll_clocks" >> $(OUTPUT_PATH)/top.sdc
+	echo "derive_clock_uncertainty" >> $(OUTPUT_PATH)/top.sdc
+endif
+
+ifeq ($(TIMING_ANALYSIS_DATAPATH_ONLY),1)
+	# Add false path constraints to non-data paths
+	echo "" >> $(OUTPUT_PATH)/top.sdc
+	echo "# Adding False Path Constraints" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*memory_controller*}] -to [get_registers {*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*}] -to [get_registers {*memory_controller*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*cur_state*}] -to [get_registers {*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*}] -to [get_registers {*cur_state*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*ram*}] -to [get_registers {*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*}] -to [get_registers {*ram*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*DFF*}] -to [get_registers {*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*}] -to [get_registers {*DFF*}]" >> $(OUTPUT_PATH)/top.sdc
+	echo "set_false_path -from [get_registers {*_phi_temp*}] -to [get_registers {*}]" >> $(OUTPUT_PATH)/top.sdc
+endif
+
+# copy qsys file
+$(OUTPUT_PATH)/legup_system.qsys: \
+    $(LEVEL)/$(PROJECT_SOURCE_DIR)/legup_system.qsys
+	cp $? $@
+
+# Setting the .qsys file as phony so that it is copied every time. The 
+# addHWToSystem target has errors if it is run a second time on the same .qsys 
+# file.
+.PHONY: $(OUTPUT_PATH)/legup_system.qsys
+
+# copy generated qsys files
+# They are required for the software only flow. The other flows will re-generate
+# these files.
+$(OUTPUT_PATH)/legup_system.sopcinfo: \
+    $(LEVEL)/$(PROJECT_SOURCE_DIR)/legup_system.sopcinfo
+	cp $? $@
+	cp -r $(LEVEL)/$(PROJECT_SOURCE_DIR)/legup_system $(OUTPUT_PATH)/.
+
+
+# copy the ipx file
+# The ipx lists all legup's ip component for use in Qsys
+$(OUTPUT_PATH)/legup_components.ipx: \
+    $(LEVEL)/../boards/legup_components.ipx
+	cp $? $@
+
+
+################################################################################
+# Generate the LegUp System
+#
+# GUP:
+# OTs:
+
+gen_legup_system: gen_legup_system.$(PROC_ARCH)
+
+gen_legup_system.MIPSI:
+	cd $(OUTPUT_PATH)/ && qsys-generate ./legup_system.qsys --synthesis=VERILOG --testbench=SIMPLE --testbench-simulation=VERILOG
+
+gen_legup_system.ARMA9:
+	#
+	# Target: $@
+	cd $(OUTPUT_PATH)/ && time qsys-generate ./legup_system.qsys --synthesis=VERILOG
+	# Set AMBA AXI signals so that ACP accesses are coherent
+	$(LEVEL)/set_axi_signals.sh $(OUTPUT_PATH)/legup_system/synthesis/legup_system.v
+
+
+
+
+################################################################################
+############################  Simulation Targets  ##############################
+################################################################################
+
+SIM_DIR = legup_system/testbench/legup_system_tb/simulation
+
+
+################################################################################
+# Runs the simulation of the system
+simulation: $(OUTPUT_PATH)/${SIM_DIR}/run_sim_nowave.tcl common_simulation_files
+#	cp sdram.dat $(OUTPUT_PATH)/${SIM_DIR}/altera_sdram_partner_module.dat
+#	cp $(VERILOG_LIBS) $(OUTPUT_PATH)/${SIM_DIR}/submodules
+#	#cp tiger/*.mif $(OUTPUT_PATH)/${SIM_DIR}
+#	#only copy the .mif files if it exists
+#	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} cp {} ./$(OUTPUT_PATH)/${SIM_DIR}
+#	if [ "$@" = "simulation" ]; then
+	cd $(OUTPUT_PATH)/${SIM_DIR} && vsim -c -do "source run_sim_nowave.tcl; quit;"
+#	fi
+#	if [ "$@" = "simulation_with_wave" ]; then \
+		cd $(OUTPUT_PATH)/${SIM_DIR} && vsim -do "source run_sim_wave.tcl;" \
+	fi
+#	cp -f ./tiger/transcript transcript
+
+simulation_with_wave: $(OUTPUT_PATH)/${SIM_DIR}/run_sim_wave.tcl common_simulation_files
+#	cp sdram.dat $(OUTPUT_PATH)/${SIM_DIR}/altera_sdram_partner_module.dat
+#	cp $(VERILOG_LIBS) $(OUTPUT_PATH)/${SIM_DIR}/submodules
+#	cp *.mif $(OUTPUT_PATH)/${SIM_DIR}
+	cd $(OUTPUT_PATH)/${SIM_DIR} && vsim -do "source run_sim_wave.tcl;"
+
+$(OUTPUT_PATH)/${SIM_DIR}/run_sim_nowave.tcl: $(LEVEL)/scripts/simulation/run_sim_nowave.tcl
+	cp $? $@
+
+$(OUTPUT_PATH)/${SIM_DIR}/run_sim_wave.tcl:	\
+    $(LEVEL)/scripts/simulation/run_sim_wave.tcl
+	cp $? $@
+
+common_simulation_files:
+	# Currently only MIPS I can be simulated
+	$(MIPS_TOOLS)/elf2sdram.py $(ELF2SDRAM_PARAM) $(FULLNAME).MIPSI.elf $(OUTPUT_PATH)/${SIM_DIR}/$(MEMORY_SIM_INIT_FILE_NAME)
+	#cp sdram.dat $(OUTPUT_PATH)/${SIM_DIR}/altera_sdram_partner_module.dat
+	#cp altera_sdram_partner_module.dat $(OUTPUT_PATH)/${SIM_DIR}/
+	cp $(VERILOG_LIBS) $(OUTPUT_PATH)/${SIM_DIR}/submodules
+	cp $(SYSTEMVERILOG_LIBS) $(OUTPUT_PATH)/${SIM_DIR}/submodules
+	#cp tiger/*.mif $(OUTPUT_PATH)/${SIM_DIR}
+	# Copy and run the setup_sim.sh script if one exists for this project
+	-cp $(LEVEL)/$(PROJECT_SOURCE_DIR)/scripts/setup_sim.sh $(OUTPUT_PATH)/. || true
+	-cd $(OUTPUT_PATH) && ./setup_sim.sh || true
+	#only copy the .mif files if any exists
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} cp {} ./$(OUTPUT_PATH)/${SIM_DIR}
+
+
+################################################################################
+#############################  On-Board Targets  ###############################
+################################################################################
+
+run_on_board.MIPSI:
+	# Generate the memory initialization file
+	$(MIPS_TOOLS)/elf2sdram.py $(ELF2SDRAM_PARAM) $(FULLNAME).MIPSI.elf $(OUTPUT_PATH)/$(MEMORY_SIM_INIT_FILE_NAME)
+	# Copy over system console script
+	cp $(LEVEL)/scripts/on_board/run_on_board_mipsI.tcl $(OUTPUT_PATH)/.
+	# Run system-console to download the program and run it
+	cd $(OUTPUT_PATH) && system-console --script="run_on_board_mipsI.tcl" $(MEMORY_SIM_INIT_FILE_NAME)
+
+################################################################################
+#############################  Profiling Targets  ##############################
+################################################################################
+
+gen_hash_for_profiler:
+	#############################################
+	##   Make profiling initialization files   ##
+	#############################################
+	perl $(PROF_TOOLS)/gen_flist.pl $(FULLNAME).$(PROC_ARCH).src
+	$(PROF_TOOLS)/perfect `perl $(PROF_TOOLS)/get_N_N2.pl N $(FULLNAME).$(PROC_ARCH).src` < $(FULLNAME).$(PROC_ARCH).flist
+	mv phash.prof $(FULLNAME).hash
+	gcc phash.c -m32 -o phash
+	./phash > $(FULLNAME).hash_lookup.log
+	rm phash.c phash
+
+modify_system_to_enable_profiling:
+	sed -i "s/.*\`define PROFILER_ON .*/\`define PROFILER_ON 1'b1/" $(OUTPUT_PATH)/${SIM_DIR}/submodules/leap_sim_controller.v
+	sed -i "s/.*\`define PROFILER_ON .*/\`define PROFILER_ON 1'b1/" $(OUTPUT_PATH)/${SIM_DIR}/submodules/LeapTop.v
+	perl $(PROF_TOOLS)/modify_hash_params_for_sim.pl $(OUTPUT_PATH)/${SIM_DIR}/submodules/leap_sim_controller.v $(FULLNAME).hash
+	sed -i "s/parameter CNT_INC_OPTION =.*/parameter CNT_INC_OPTION = 32\'b$(CNT_INC),/"  $(OUTPUT_PATH)/${SIM_DIR}/submodules/leap_sim_controller.v
+	sed -i "s/parameter DO_HIER_OPTION =.*/parameter DO_HIER_OPTION = 32\'b$(DO_HIER),/"  $(OUTPUT_PATH)/${SIM_DIR}/submodules/leap_sim_controller.v
+
+collect_sim_profiling_results:
+	cp -f $(OUTPUT_PATH)/${SIM_DIR}/*.log $(OUTPUT_PATH)/.
+ifdef SHOW_PERCENTAGE
+	perl $(PROF_TOOLS)/hash_result.pl $(FULLNAME).hash_lookup.log $(FULLNAME).MIPSI.src $(OUTPUT_PATH)/profiling_result.log SHOW_PERCENTAGE > $(FULLNAME).sim.profiling.rpt
+else
+	perl $(PROF_TOOLS)/hash_result.pl $(FULLNAME).hash_lookup.log $(FULLNAME).MIPSI.src $(OUTPUT_PATH)/profiling_result.log > $(FULLNAME).sim.profiling.rpt
+endif
+	cat $(FULLNAME).sim.profiling.rpt
+
+produce_ordered_profiling_results:
+	sed "s/^Address.*Hash-Func Number.*Count  //" $(FULLNAME).sim.profiling.rpt | sort -g | sed "s/.*, Function </</" | sed "s/>.*$$/>/" | sed ':a;N;$$!ba;s/\n//g'
+
+################################################################################
+############################  Unorganized Targets  #############################
+################################################################################
+
+################################################################################
+# dependancy checks
+# These checks determine if the SW or HW part need to be rebuilt
+
+$(FULLNAME).update_sw $(FULLNAME).update_hw:
+	@echo "File not found: $@"
+	@echo "Please run 'make', 'make sw', or 'make hybrid' first."
+	@exit 1
+
+touch_update_%:
+	#
+	# Target: $@
+	$(eval F := $(FULLNAME).$*.parted.bc)
+	@touch $F.prev
+	@if [ "`diff -q $F $F.prev`" ] ; then \
+		touch $(FULLNAME).update_$* ; \
+		echo -e "\033[33m$* changed!\033[0m" ; \
+	else \
+		echo -e "\033[32m$* is up to date.\033[0m" ; \
+	fi ;
+	@cp $F $F.prev
+
+
+################################################################################
+# Add dependancies
+# These dependancies ensure that the .elf/.v gets updated if and only if there
+# are changes to the corresponding LLVM IR.
+
+# The following work for the SW flow as-is.
+#$(FULLNAME).sw.bc: $(FULLNAME).update_sw
+#partition_code_for_sw_only: touch_update_sw
+
+# The following are for the HW and hybrid flows, and will require more work.
+# Should be easy once Blair finishes the Grand Unified Flow.
+#$(FULLNAME).hw.bc: $(FULLNAME).update_hw
+#partition_code_for_hw_only: touch_update_hw
+#partition_code: touch_update_hw touch_update_sw
+
+
+################################################################################
+# Misc. Hybrid Targets
+
+hybrid_compile: $(OUTPUT_PATH)/legup_system/synthesis/legup_system.qip
+	#
+	# Target: $@
+	cd $(OUTPUT_PATH) && time quartus_map top
+	cd $(OUTPUT_PATH) && time quartus_fit top
+	cd $(OUTPUT_PATH) && time quartus_asm top
+ifdef SKIP_TIMING
+else
+	# do timing analysis
+# copy project SDC settings
+#cp $(LEVEL)/$(PROJECT_SOURCE_DIR)/top.sdc $(OUTPUT_PATH)/top.sdc
+	cd $(OUTPUT_PATH) && time quartus_sta top
+	@echo -n -e "\nSlow 0C FMax: "
+	@grep -A6 "Slow.*0C Model Fmax" $(OUTPUT_PATH)/output_files/top.sta.rpt | grep system_pll | cut -d " " -f2-3
+	@echo
+	@grep "Critical Warning" $(OUTPUT_PATH)/output_files/top.sta.rpt || true
+	@echo
+endif
+
+
+################################################################################
+# Targets for programming the board
+
+# if an sof file does not exist, create a symbolic link to the one set_project
+# points to
+$(OUTPUT_PATH)/output_files/top.sof:
+	#
+	# Target: $@
+	@if [ ! -e $@ ] ; then \
+		if [ -e $(LEVEL)/$(PROJECT_SOURCE_DIR)/output_files/top.sof ] ; then \
+			mkdir -p $(OUTPUT_PATH)/output_files ; \
+			ln -sf ../../$(LEVEL)/$(PROJECT_SOURCE_DIR)/output_files/top.sof $@ ; \
+		else  \
+			echo -e "\033[31mERROR: Neither $@ nor" ; \
+			echo -e "$(LEVEL)/$(PROJECT_SOURCE_DIR)/output_files/top.sof exist!\033[0m" ; \
+			exit 1 ; \
+		fi ; \
+	fi ;
+
+# program the board with $(OUTPUT_PATH)/output_files/top.sof
+program_board: $(OUTPUT_PATH)/output_files/top.sof
+	#
+	# Target: $@
+	@if [ ! -s $^ ] ; then \
+		echo "$^ is an empty file!" ; \
+		echo "Run 'make hybrid_compile' for hybrid flow or remove it for pure-SW flow:" ; \
+		echo "rm -rf $^" ; \
+		exit 1 ; \
+	fi ;
+	quartus_pgm -c "$(JTAG_CABLE)" -m jtag -o  P\;"$^"@$(FPGA_PLACE_IN_JTAG_CHAIN)
+	@if [ -L $^ ] ; then \
+		echo -e "\033[33mWARNING: $^ is a symbolic link to:" ; \
+		echo -e "$(OUTPUT_PATH)/output_files/`readlink $^`" ; \
+		echo -e "OK for pure-SW flow.\033[0m" ; \
+	fi ;
+
+################################################################################
+
+run_on_board: run_on_board.$(PROC_ARCH)
+
+
+.PHONY : create_output_directory
+

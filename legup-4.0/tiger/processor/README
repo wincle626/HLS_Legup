@@ -1,0 +1,23 @@
+============================================
+===   Processor                          ===
+============================================
+
+This directory contains the verilog source code, Quartus projects, and ModelSim scripts used to synthesize and simulate the processor.
+Right now, only the bare-bones processor + sdram system has been created.  Add new systems here when available (ie accelerator systems).
+
+
+	
+--------------------------------------------
+Processor-Only: tiger_mips/
+--------------------------------------------
+- This is already setup to be synthesized and programmed to a DE2 development board with a CycloneII chip.  Load "tiger_top.qpf" to open project.
+	- To program executable, first synthesize and program this project to DE2
+	- Then, run "legup/tiger/windows_tools/tiger_tools/MIPS Communication Server.exe" and click connect
+	- Then, run "legup/tiger/windows_tools/run.bat" to program desired ELF file
+		- To create ELF file, use tools in 'legup/tiger/linux_tools' to compile C->assembly (using LLVM), and 'legup/tiger/windows_tools' to compile assembly->ELF
+	
+- To load modelsim project, either navigate to 'tiger_mips/tiger_sim/' in ModelSim, or click "Run in Simulator" from SOPC window
+	- use "elf2sdram" (in either 'legup/tiger/linux_tools' or 'legup/tiger/windows_tools') to create sdram.dat, which must be placed in 'tiger_mips/tiger_sim/'.
+		- This is the code to be simulated by the processor.
+	- in modelsim, type "do ../run_sim.tcl"
+		- errors may occur due to directory structure issues -- go to 'tiger_mips/tiger_defines.v' and change the definition of SIM_PATH to your path for 'tiger_mips/tiger_sim/'

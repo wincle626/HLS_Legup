@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Unsupported guest OSes</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Unsupported guest OSes</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="unsupported.html#mach">Mach/PMAX</a>
+  <li><a href="unsupported.html#declinuxredhat">Redhat Linux for DECstation</a>
+  <li><a href="unsupported.html#openbsdsgiinstall">OpenBSD/sgi</a>
+  <li><a href="unsupported.html#openbsdarcinstall">OpenBSD/arc 2.3</a>
+  <li><a href="unsupported.html#debiancats">Debian GNU/Linux for CATS</a>
+  <li><a href="unsupported.html#linux_malta">Linux/Malta</a> (variant 1)
+  <li><a href="unsupported.html#linux_malta2">Linux/Malta</a> (variant 2)
+  <li><a href="unsupported.html#linux_qemu_mips">Linux/QEMU_MIPS</a>
+  <li><a href="unsupported.html#windows_nt_mips">Windows NT/MIPS</a>
+  <li><a href="unsupported.html#netbsdplaystation2">NetBSD/playstation2</a>
+</ul>
+
+<p>NOTE: The guest operating systems listed on this page are here because
+they <i>do not work</i> well enough to be regarded as "stable"/supported.
+If they become stable, they'll be moved to <a href="guestoses.html">the guest OS
+page</a>.
+
+<p>This page contains instructions on how installation of guest OSes could
+<i>potentially</i> be done, once the emulation is stable/complete enough. In some
+cases, it contains notes about starting guest OSes that are not complete
+(i.e. just booting a kernel, not a full installation of a guest OS).
+
+<p>Also note that ALL modes on this page are
+<a href="guestoses.html#legacy"><font color="#dd2222"><b>legacy modes</b></font></a>.
+
+
+<p><hr>
+
+
+
+
+<p><br>
+<a name="mach"></a>
+<h3>Mach/PMAX:</h3>
+
+Read the following link if you want to know more about Mach in general:
+<a href="http://www-2.cs.cmu.edu/afs/cs/project/mach/public/www/mach.html">
+http://www-2.cs.cmu.edu/afs/cs/project/mach/public/www/mach.html</a>
+
+<p>
+<font color="#ff0000">NOTE: Mach for DECstation requires some files
+(called 'startup' and 'emulator') which I haven't been able to find
+on the web. Without these, Mach will not get very far. These
+installation instructions are preliminary.
+</font>
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20041018-mach_pmax.png"><img src="20041018-mach_pmax_small.png"></a>
+
+<p>
+The following steps should let you experiment with running Mach
+for DECstation in the emulator:
+
+<p>
+<ol>
+  <li>Download the pmax binary distribution for Mach 3.0:<pre>
+	<a href="http://lost-contact.mit.edu/afs/athena/user/d/a/daveg/Info/Links/Mach/src/release/pmax.tar.Z">http://lost-contact.mit.edu/afs/athena/user/d/a/</a>
+	    <a href="http://lost-contact.mit.edu/afs/athena/user/d/a/daveg/Info/Links/Mach/src/release/pmax.tar.Z">daveg/Info/Links/Mach/src/release/pmax.tar.Z</a>
+	7263343 bytes, md5 = f9d76c240a6e169921a1df99ad560cc0
+
+</pre>
+  <li>Extract the Mach kernel:<pre>
+        <b>tar xfvz pmax.tar.Z pmax_mach/special/mach.boot.MK83.STD+ANY</b>
+
+</pre>
+  <li>Create an empty disk image:<pre>
+	<b>dd if=/dev/zero of=disk.img bs=1 count=512 seek=400000000</b>
+
+</pre>
+  <li>Load the contents of pmax.tar.Z onto the disk image. This is
+	complicated, and should be described in more detail some time.
+	For now, use your imagination. (For example using OpenBSD/pmax:
+	<i>disklabel -E rz1; newfs -O /dev/rz1a;
+	mount /dev/rz1a /mnt; cd /mnt; download pmax.tar.Z using ftp;
+	tar xzvf pmax.tar.Z; mv pmax_mach/* .; rmdir pmax_mach;
+	mkdir mach_servers;
+	cd mach_servers;
+	cp ../etc/mach_init .;
+	cp ../tests/test_service startup;
+	dd if=/dev/zero of=paging_file bs=65536 count=400;
+	cd /; sync; umount /mnt</i>)
+	<p>
+  <li>Start the emulator with the following command:<pre>
+	<b>gxemul -c 'put w 0x800990e0, 0' -c 'put w 0x80099144, 0' \
+	    -c 'put w 0x8004aae8, 0' -e 3max -X -d disk.img \
+	    pmax_mach/special/mach.boot.MK83.STD+ANY</b>
+
+</pre>
+</ol>
+
+<p>Earlier versions of GXemul had a configure option to enable better 
+R3000 cache emulation, but since Mach was more or less the only thing that 
+used it, I removed it. Today's version of GXemul can thus not boot 
+mach.boot.MK83.STD+ANY straight off, it has to be patched to skip the 
+cache detection.
+
+<p>The -c commands above patch the kernel to get past the cache detection.
+Thanks to Artur Bujdoso for these values.
+
+<p>TODO: Better instructions on how to create the old-style UFS disk 
+image.
+
+
+
+
+
+
+
+<p><br>
+<a name="declinuxredhat"></a>
+<h3>Redhat Linux for DECstation:</h3>
+
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20041129-redhat_mips.png"><img src="20041129-redhat_mips_small.png"></a>
+
+<p>
+The following steps should let you run Redhat Linux for DECstation in GXemul:
+
+<p>
+<ol>
+  <li>Download a kernel. David Muse' Debian-install kernel works fine:<pre>
+	<a href="http://www.firstworks.com/mips-linux-2.4.31/vmlinux-2.4.31">http://www.firstworks.com/mips-linux-2.4.31/vmlinux-2.4.31</a>
+
+</pre>
+  <li>Download a root filesystem tree:<pre>
+	<a href="ftp://ftp.linux-mips.org/pub/linux/mips/mipsel-linux/root/mipsel-root-20011216.tgz">ftp://ftp.linux-mips.org/pub/linux/mips/mipsel-linux/root/mipsel-root-20011216.tgz</a>
+	19486676 bytes, md5 = 5bcb725c90209479cd7ead8ad0c4a414
+
+</pre>
+  <li>Create a disk image which will contain the Redhat filesystem:<pre>
+	<b>dd if=/dev/zero of=redhat_mips.img bs=1024 count=1 seek=2000000</b>
+
+</pre>
+<!--
+dd if=/dev/zero of=/dev/stdout bs=1024 count=200 >> mipsel-root-20011216.tgz
+gxemul -XY2 -e3max -d redhat_mips.img -d mipsel-root-20011216.tgz vmlinux-2.4.31
+In the three dialogs, choose English, United States, and Continue.
+Then choose Execute a shell.
+tar xfvz /dev/scsi/host0/bus0/target1/lun0/disc sbin/mke2fs sbin/fdisk
+fdisk
+-->
+  <li>This is the tricky part: on redhat_mips.img, you need to create an MS-DOS
+	(!) partition table, and then an ext2 partition. This is what Linux
+	will then see as /dev/sda1.
+	<p>I recommend you run fdisk and mke2fs and untar the archive from within
+	Debian/DECstation or <a href="#debiancats">Debian/CATS</a> running
+	inside the emulator. (Alternatively, if you are on a Linux host,
+	you could use a loopback mount, or similar. This might require
+	root access. See e.g.
+	<a href="http://www.mega-tokyo.com/osfaq2/index.php/Disk%20Images%20Under%20Linux">http://www.mega-tokyo.com/osfaq2/index.php/Disk%20Images%20Under%20Linux</a>.)
+	<p>
+	In order to actually boot the system you need to modify /etc/fstab.
+	Change<pre>
+	/dev/root               /               nfs     defaults        1 1
+	#/dev/sdc1              /               ext2    defaults        1 1
+	none                    /proc           proc    defaults        0 0
+	none                    /dev/pts        devpts  mode=0622       0 0
+
+</pre>to<pre>
+	#/dev/root              /               nfs     defaults        1 1
+	/dev/sda1               /               ext2    defaults        1 1
+	none                    /proc           proc    defaults        0 0
+	none                    /dev/pts        devpts  mode=0622       0 0
+
+</pre>(Note sda1 instead of sdc1.)
+</ol>
+
+<p>To boot Redhat linux from the disk image, use the following command line:<pre>
+	<b>gxemul -X -e3max -o "root=/dev/sda1 ro" -d redhat_mips.img vmlinux-2.4.31</b>
+
+</pre>
+If you need to boot into single user mode, change options to
+<tt><b>-o "root=/dev/sda1 rw init=/bin/sh"</b></tt>.
+
+
+
+
+
+
+
+
+
+
+<p><br>
+<a name="openbsdsgiinstall"></a>
+<h3>OpenBSD/sgi:</h3>
+
+<a href="http://www.openbsd.org/sgi.html">OpenBSD/sgi</a>
+can (almost) run in GXemul on an emulated O2 (SGI-IP32) with root on nfs.
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20050617-openbsd-sgi.png"><img src="20050617-openbsd-sgi_small.png"></a>
+
+<p><font color="#ff0000">NOTE: I haven't succeeded all the way with
+this yet, and this shows/triggers many bugs in the emulator, but some of
+it works.</font>
+
+<p>GXemul does not yet emulate the AHC PCI SCSI controller in the O2. (I have 
+mailed Adaptec several times, asking for documentation, but never received 
+any reply.) OpenBSD/sgi can still run in the emulator, as long as it doesn't
+use SCSI. For a simple test with the ramdisk (install) kernel, try dowloading<pre>
+	<a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/">ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi</a>/<a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/bsd.rd">bsd.rd</a>
+
+</pre>and run <b><tt>gxemul -xeo2 bsd.rd</tt></b>.
+
+<p>It might also be possible to netboot. Another emulated machine must 
+then be used as the nfs root server, and the emulated O2 machine must boot 
+as a <a href="http://www.openbsd.org/cgi-bin/man.cgi?query=diskless&amp;manpath=OpenBSD+Current&amp;format=html">diskless</a>
+client. Performing this setup is quite time consuming, but necessary:
+
+<p>
+<ol>
+  <li>First of all, the "<tt>nfs server</tt>" machine must be set up.
+	This needs to have a 800 MB <tt>/tftpboot</tt> partition.
+	<a href="#netbsdpmaxinstall">Install NetBSD/pmax 3.1 from CDROM</a>.
+	(Don't forget to add the extra partition!)
+  <p>
+  <li>Configure the nfs server machine to act as an nfs server.
+	Start up the emulated DECstation:<pre>
+	<b>gxemul -e 3max -d nbsd_pmax.img</b>
+</pre>and enter the following commands as <tt>root</tt>
+	inside the emulator:
+<table border="0"><tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td><pre>
+<b>echo hostname=server &gt;&gt; /etc/rc.conf
+echo ifconfig_le0=\"inet 10.0.0.2\" &gt;&gt; /etc/rc.conf
+echo nameserver 10.0.0.254 &gt;&gt; /etc/resolv.conf
+echo 10.0.0.254 &gt; /etc/mygate
+echo /tftpboot -maproot=root 10.0.0.1 &gt; /etc/exports
+echo rpcbind=YES &gt;&gt; /etc/rc.conf
+echo nfs_server=YES &gt;&gt; /etc/rc.conf
+echo mountd=YES &gt;&gt; /etc/rc.conf
+echo bootparamd=YES &gt;&gt; /etc/rc.conf
+printf "client root=10.0.0.2:/tftpboot \\\n swap=10.0.0.2:/tftpboot/swap\n" &gt; /etc/bootparams
+echo "10:20:30:00:00:10 client" &gt; /etc/ethers
+echo 10.0.0.1 client &gt; /etc/hosts
+reboot</b>
+</pre></td></tr></table>
+  <li>Start the DECstation emulation again, and enter the following
+	commands to download the OpenBSD/sgi distribution:<br>(NOTE: This
+	takes quite some time, even if you have a fast network connection.)
+<table border="0"><tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td><pre>
+<b>cd /tftpboot; ftp -i ftp.se.openbsd.org</b>
+(log in as anonymous...)
+<b>cd pub/OpenBSD/4.0/sgi
+mget b*tgz c*tgz e* g* m*
+quit
+sh
+for a in *.tgz; do echo $a; tar zxfp $a; done
+echo 10.0.0.2:/tftpboot / nfs rw 0 0 &gt; /tftpboot/etc/fstab
+rm *.tgz
+dd if=/dev/zero of=swap bs=1024 count=32768
+halt</b>
+</pre></td></tr></table>
+  <li>Download the OpenBSD/sgi GENERIC and RAMDISK kernels:<pre>
+	<a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/bsd">ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/bsd</a>
+	<a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/bsd.rd">ftp://ftp.se.openbsd.org/pub/OpenBSD/4.0/sgi/bsd.rd</a>
+
+</pre>
+  <li>Create a configuration file called <tt>config_client</tt>:
+<table border="0"><tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td><pre>
+<font color="#2020cf">!  Configuration file for running OpenBSD/sgi diskless with
+!  a NetBSD/pmax machine as the nfs server.
+!
+!  This config file is for the client.</font>
+
+<b>net(
+	add_remote("localhost:12444")   </b>! the server<b>
+	local_port(12445)               </b>! the client<b>
+)
+
+machine(
+	name("client machine")
+	serial_nr(1)
+
+        type("sgi")
+        subtype("o2")
+
+        </b>! load("bsd")<b>
+        load("bsd.rd")
+)
+</b>
+</pre></td></tr></table>
+	... and another configuration file for the server,
+	<tt>config_server</tt>:
+<table border="0"><tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td><pre>
+<b>net(
+	local_port(12444)               </b>! the server<b>
+	add_remote("localhost:12445")   </b>! the client<b>
+)
+
+machine(
+	name("nfs server")
+	serial_nr(2)
+
+        type("dec")
+        subtype("5000/200")
+
+        disk("nbsd_pmax.img")
+)
+</b>
+</pre></td></tr></table>
+  <li>Boot the "<tt>nfs server</tt>" and the OpenBSD/sgi
+	"<tt>client machine</tt>" as two separate emulator instances:<pre>
+	in one xterm:
+	<b>gxemul @config_server</b>
+
+	and then, in another xterm:
+	<b>gxemul @config_client</b>
+
+</pre>
+  <li>In the OpenBSD/sgi window, choose "<tt>s</tt>" (for Shell), and type:
+<table border="0"><tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td><pre>
+<b>ifconfig mec0 10.0.0.1; route add default 10.0.0.254
+mount -v 10.0.0.2:/tftpboot /mnt
+cd /mnt/dev; ./MAKEDEV all; cd /; umount /mnt
+halt</b>
+</pre></td></tr></table>
+	You might want to log in as <tt>root</tt> on the server machine, and
+	run <tt>tcpdump -lnvv</tt> or similar, to see that what the client
+	machine actually does on the network. The <tt>MAKEDEV</tt> script
+	takes almost forever, so be patient.
+</ol>
+
+
+<p><font color="#ff0000">NOTE: Everything up to this point should work. 
+However, the next step (in gray) doesn't actually work:</font>
+
+<p><font color="#888888">Once everything has been set up correctly, change
+<tt>bsd.rd</tt> in <tt>config_client</tt> to just <tt>bsd</tt> (the GENERIC
+kernel). It should now be possible to boot OpenBSD/sgi using the NetBSD/pmax 
+nfs server. (When asked for "<tt>root device :</tt>" on the OpenBSD machine, 
+enter <tt><b>mec0</b></tt>.)</font>
+
+<p><font color="#ff0000">But it doesn't work. Probably because GXemul's
+implementation of the mec (ethernet card used in the O2) is too much of
+a quick hack. For now, use the <tt>bsd.rd</tt> kernel, and (at every
+boot) type:</font><pre>
+	<b>s</b>  (for Shell)
+	<b>ifconfig mec0 10.0.0.1; route add default 10.0.0.254</b>
+	<b>mount -v 10.0.0.2:/tftpboot /mnt</b>
+	<b>cd /mnt; usr/sbin/chroot .</b>
+	<b>sh etc/rc</b>
+</pre>
+
+<p><font color="#ff0000">This will not cause OpenBSD to be booted 
+normally, but at least a few basic things will work.
+By the way, the emulator performs so poorly, that you will have time to 
+fetch several cups of coffee for each of the steps above.</font>
+
+
+
+
+
+
+
+
+
+<p><br>
+<a name="openbsdarcinstall"></a>
+<h3>OpenBSD/arc:</h3>
+
+It is (almost) possible to install and run OpenBSD/arc on an emulated Acer 
+PICA-61 in the emulator.
+
+<p><font color="#e00000">Earlier, I had this guest OS listed as
+officially working in the emulator, but for several reasons, it has 
+been moved down here to the "informative-but-not-really-working" 
+section.</font>
+
+<p>
+<ul>
+  <li>The last OpenBSD/arc release was 2.3. This means that it is very
+	old, it would not give a fair picture of what OpenBSD is (if you
+	are just looking to find out what it is like), and it is not
+	worth experimenting with it. See
+	<a href="http://www.openbsd.org/arc.html">http://www.openbsd.org/arc.html</a>
+	for more information.
+  <li>OpenBSD/arc was (if I understood things correctly) never really 
+	stable, even on real hardare. Problems with too small an interrupt
+	stack. Bugs are triggered in the emulator that have to do with
+	issues such as this.
+</ul>
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20041024-openbsd-arc-installed.gif"><img src="20041024-openbsd-arc-installed_small.gif"></a>
+
+<p>
+<font color="#e00000">Currently, I don't test for every release whether
+or not OpenBSD/arc can be installed. Releases prior to 0.3.7
+(but probably <i>not</i> 0.3.7) should work. Anyway, here are the 
+old installation instructions:</font>
+
+<p>To install OpenBSD/arc onto an emulated harddisk image, follow these
+instructions:
+
+<p>
+<ol>
+  <li>Create an empty harddisk image, which will be the root disk
+	that OpenBSD installs itself onto:<pre>
+	<b>dd if=/dev/zero of=obsd_arc.img bs=1024 count=1 seek=700000</b>
+
+</pre>
+  <li>Download the entire arc directory from the ftp server: (approx. 75 MB)<pre>
+	<b>wget -np -l 0 -r <a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/2.3/arc/">ftp://ftp.se.openbsd.org/pub/OpenBSD/2.3/arc/</a></b>
+
+</pre>
+
+  <li>You now need to make an ISO image of the entire directory you downloaded.
+	(I recommend using <tt>mkisofs</tt> for that purpose. If you don't
+	already have <tt>mkisofs</tt> installed on your system, you need
+	to install it in order to do this.)<pre>
+	<b>mkisofs -o openbsd_arc_2.3.iso ftp.se.openbsd.org/pub/OpenBSD/</b>
+
+</pre>
+  <li>Start the emulator using this command line:<pre>
+	<b>gxemul -e pica -X -d obsd_arc.img -d b:openbsd_arc_2.3.iso -j 2.3/arc/bsd.rd</b>
+
+</pre>
+	and proceed like you would do if you were installing OpenBSD
+	on a real Acer PICA-61. (Answer 'no' when asked if you want to
+	configure networking, and then install from CD-ROM.)
+</ol>
+
+<p>
+Once the install has finished, the following command should let you 
+boot from the harddisk image:
+<p>
+<pre>
+	<b>gxemul -X -e pica -d obsd_arc.img ftp.se.openbsd.org/pub/OpenBSD/2.3/arc/bsd</b>
+
+</pre>
+
+The system is very sensitive to (I think) kernel stack overflow, so it 
+crashes easily. If I remember correctly from mailing lists, this also 
+happened on real hardware.
+
+
+
+
+
+
+
+
+
+<p><br>
+<a name="debiancats"></a>
+<h3>Debian GNU/Linux for CATS:</h3>
+
+Debian GNU/Linux for CATS (ARM) could <i>theoretically</i> run in GXemul,
+however:
+
+<ul>
+  <li>The DEC 21143 NIC is not emulated well enough for Linux to accept it.
+  <li>Development of Debian for CATS seems to have died? The latest
+	install kernel is quite old.
+</ul>
+
+<p><font color="#ff0000">IT DOES <b>NOT</b> WORK YET!</font>
+
+<p>The following installation instructions would theoretically work:
+
+<p>
+<ol>
+  <li>Create an empty harddisk image, which will be the root disk
+	that Debian installs itself onto:<pre>
+	<b>dd if=/dev/zero of=debian_cats.img bs=1024 count=1 seek=3300000</b>
+
+</pre>
+  <li>Download the tftpboot install kernel:<pre>
+	<a href="http://ftp.debian.org/debian/dists/oldstable/main/disks-arm/current/cats/tftpboot.img">http://ftp.debian.org/debian/dists/oldstable/main/disks-arm/current/cats/tftpboot.img</a>
+
+</pre>
+  <li>Start the installation using the following command line:<pre>
+	<b>gxemul -XEcats -d debian_cats.img tftpboot.img</b>
+
+</pre>
+</ol>
+
+<p>It doesn't work, though, because the NIC isn't working well enough.
+
+<p>The only use of Debian/CATS in the emulator right now is as a way to
+manipulate Linux disk images, if you are on a non-Linux host. By choosing
+"Execute a shell" in the installer's menu, you can have access to tools such as
+fdisk and mke2fs, which are useful for creating Linux paritions on disk images.
+
+
+
+
+
+
+
+<p><br>
+<a name="linux_malta"></a>
+<h3>Linux/Malta (variant 1):</h3>
+
+<p>The Malta emulation mode is best suited for running <a 
+href="guestoses.html#netbsdevbmipsinstall">NetBSD/evbmips</a>, however, it is possible 
+to experiment with Linux/Malta as well.
+
+<p>The general idea behind Linux/Malta seems to be that the end user 
+always compiles his/her own kernel, applies patches, downloads 
+userland separately, etc. For that reason, Linux/Malta support in the 
+emulator is not tested for every release (sometimes it works, sometimes it 
+doesn't work), and these instructions are kind of "fuzzy".
+
+<p><ol start="1">
+  <li>Create an empty harddisk image, which will be the root disk
+	that Linux/Malta will be installed onto:<pre>
+	<b>dd if=/dev/zero of=linux.img bs=1024 count=1 seek=5000000</b>
+
+</pre>
+  <li>Download a MIPS root filesystem tree:<pre>
+	<a href="ftp://ftp.linux-mips.org/pub/linux/mips/mipsel-linux/root/mipsel-root-20011216.tgz">ftp://ftp.linux-mips.org/pub/linux/mips/mipsel-linux/root/mipsel-root-20011216.tgz</a>
+	19486676 bytes, md5 = 5bcb725c90209479cd7ead8ad0c4a414
+
+</pre>
+	This is an old Redhat tree from 2001, but it seems to almost work.
+  <p>
+  <li>Download one precompiled Malta kernel, with ramdisk,
+	and one without ramdisk (which will be used later on
+	when booting from disk):<pre>
+	TODO
+
+</pre>
+  <li>Start the emulator with the ramdisk kernel, create a MS-DOS style
+	MBR on the disk, create the filesystem, and extract the
+	userland files:<pre>
+	<b>gunzip vmlinux_2.*
+	gunzip mipsel-root-20011216.tar
+	gxemul -xemalta -d linux.img -d mipsel-root-20011216.tar vmlinux_2.4.33.2-ide-pci-ramdisk.elf</b>
+	Inside GXemul: Log in as root and execute the following commands:
+	<b>fdisk /dev/hda</b>
+	(enter suitable commands, e.g. <b>n, p, 1, 1, 9921, w</b>)
+	<b>mkfs /dev/hda1
+	mount /dev/hda1 /mnt
+	cd /mnt; tar -xf /dev/hdb; cd ..
+	umount /mnt; sync; reboot</b>
+
+</pre>
+</ol>
+
+<p>It should now be possible to boot from the disk image, using the 
+following command:
+
+<p><pre>
+<b>	gxemul -xemalta -d linux.img -o "root=/dev/hda1 rw" vmlinux_2.6.18-rc4-ide-pci-novty.elf</b>
+</pre>
+
+<p>There's a slight problem with this specific Redhat tree, so when you 
+see the message "Configuring kernel parameters:  [  OK  ]", press CTRL-C 
+once.
+
+
+
+
+
+
+<p><br>
+<a name="linux_malta2"></a>
+<h3>Linux/Malta (variant 2):</h3>
+
+<p>The Malta emulation mode is best suited for running <a 
+href="guestoses.html#netbsdevbmipsinstall">NetBSD/evbmips</a>, however, it is possible 
+to experiment with Linux/Malta as well.
+
+<p>It is also possible to experiment with much newer Linux userland, compared
+to the Linux/Malta variant 1 above, by using a kernel and disk image from
+<a href="http://people.debian.org/~aurel32/qemu/mipsel/">http://people.debian.org/~aurel32/qemu/mipsel/</a>.
+
+<font color="#ff0000">THIS DOES <b>NOT</b> WORK YET!</font>
+
+<p><ol start="1">
+  <li>Download the Malta kernel and disk image:<pre>
+	wget <a href="http://people.debian.org/~aurel32/qemu/mipsel/vmlinux-2.6.26-1-4kc-malta">http://people.debian.org/~aurel32/qemu/mipsel/vmlinux-2.6.26-1-4kc-malta</a>
+	wget <a href="http://people.debian.org/~aurel32/qemu/mipsel/debian_lenny_mipsel_small.qcow.gz">http://people.debian.org/~aurel32/qemu/mipsel/debian_lenny_mipsel_small.qcow.gz</a> (142 MB)
+
+</pre>
+  <li>The disk image is both compressed and in QEMU format, so we need to extract it:<pre>
+	gunzip debian_lenny_mipsel_small.qcow.gz
+	qemu-img convert -f qcow -O raw debian_lenny_mipsel_small.qcow debian_lenny_mipsel_small.raw
+
+</pre>
+	(<tt>qemu-img</tt> actually requires that you have QEMU installed.)
+</ol>
+
+<p>It should now be possible to boot from the disk image, using the 
+following command:
+
+<p><pre>
+<b>	gxemul -e malta -d debian_lenny_mipsel_small.raw -o "root=/dev/hda1 console=ttyS0" vmlinux-2.6.26-1-4kc-malta</b>
+</pre>
+
+NOTE: <font color="#ff0000">IT DOES <b>NOT</b> WORK YET!</font>
+
+
+
+
+
+<p><br>
+<a name="linux_qemu_mips"></a>
+<h3>Linux/QEMU_MIPS:</h3>
+
+I've added a machine mode which emulates the MIPS machine mode used 
+in Fabrice Bellard's <a href="http://www.nongnu.org/qemu/">QEMU</a>.
+Starting with QEMU 0.9.0, there are other MIPS modes in QEMU (i.e. Malta); 
+the QEMU_MIPS mode in GXemul refers to the old QEMU-specific MIPS machine.
+
+<p>The following steps should let you boot into the Linux/QEMU_MIPS
+kernel, in way similar to the <tt>run-qemu</tt> script:
+
+<p>
+<ol>
+  <li>Download the archive from
+	<a href="http://wiki.qemu.org/Download">http://wiki.qemu.org/Download</a> and extract it:<pre>
+	<b>wget <a href="http://wiki.qemu.org/download/mips-test-0.2.tar.gz">http://wiki.qemu.org/download/mips-test-0.2.tar.gz</a>
+	tar zxvf mips-test-0.2.tar.gz</b>
+
+</pre>
+  <li>Start GXemul using the following command line:<pre>
+	<b>gxemul -E qemu_mips -x -M 128 -o 'console=ttyS0
+		rd_start=0x80800000 rd_size=10000000 init=/bin/sh'
+		0x80800000:mips-test/initrd.gz mips-test/vmlinux-2.6.18-3-qemu</b>
+
+</pre>
+</ol>
+
+
+
+
+
+
+
+
+<p><br>
+<a name="windows_nt_mips"></a>
+<h3>Windows NT/MIPS:</h3>
+
+Old versions of Windows NT could run on MIPS hardware, e.g.
+the PICA 61. It is theoretically possible that the emulation provided by
+GXemul some day could be stable/complete enough to emulate
+such hardware well enough to fool Windows NT into thinking
+that it is running on a real machine.
+<font color="#ff0000">IT DOES <b>NOT</b> WORK YET!</font>
+
+<p>Installation steps similar to these would be required to install
+Windows NT onto a disk image:
+
+<ol>
+	<li>Put a "Windows NT 4.0 for MIPS" CDROM (or similar) into
+		your CDROM drive. (On FreeBSD systems, it is
+		usually called <tt>/dev/cd0c</tt> or similar. Change
+		that to whatever the CDROM is called on your system,
+		or the name of a raw .iso image. I have tried this
+		with the Swedish version, but it might work with
+		other versions too.)
+	<p>
+	<li>Create an empty harddisk image, which will be the disk image
+		that you will install Windows NT onto:<pre>
+	<b><tt>dd if=/dev/zero of=winnt_test.img bs=1024 count=1 seek=999000</tt></b>
+
+</pre>
+	<li>Run the ARC installer, to partition the disk image:<pre>
+	<b><tt>gxemul -X -e pica -d winnt_test.img -d bc6:/dev/cd0c -j MIPS\\ARCINST</tt></b>
+</pre>
+	Note that <tt>ARCINST</tt> <i>almost</i> works, but not quite.
+	<p>
+	<li>Run the SETUP program:<pre>
+	<b><tt>gxemul -X -e pica -d winnt_test.img -d bc6:/dev/cd0c -j MIPS\\SETUPLDR</tt></b>
+</pre>
+</ol>
+
+<p><tt>SETUPLDR</tt> manages to load some drivers from the cdrom,
+but then it crashes because of incomplete emulation of some hardware devices.
+
+
+
+
+
+<p><br>
+<a name="netbsdplaystation2"></a>
+<h3>NetBSD/playstation2:</h3>
+
+<p>This doesn't work, and the <a href="http://www.netbsd.org/ports/playstation2/">playstation2 port of NetBSD</a> is dead at the time of writing this.
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20100205-netbsd-playstation2.png"><img src="20100205-netbsd-playstation2-small.png"></a>
+
+<p>To attempt to run the latest snapshot (from 2002):
+<ol>
+	<li>Download <a href="ftp://ftp.netbsd.org/pub/NetBSD/arch/playstation2/snapshot/20020327/binary/kernel/netbsd-GENERIC.gz">ftp://ftp.netbsd.org/pub/NetBSD/arch/playstation2/snapshot/20020327/binary/kernel/netbsd-GENERIC.gz</a> and run<pre>
+	<b>gxemul -X -E playstation2 netbsd-GENERIC.gz</b>
+</pre>
+</ol>
+
+<p>Supplying a disk image with <tt>-d</tt> almost works. Then it hangs, waiting for
+keyboard input from a keyboard which doesn't exist.
+
+
+
+
+
+
+
+</p>
+
+<p><br>
+<hr>
+
+</body>
+</html>

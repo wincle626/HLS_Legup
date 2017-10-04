@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/determinant
+set test "determinant"
+set expected {return_val=\s+32\s+}
+
+run-test $test $expected
+
+cd ../..

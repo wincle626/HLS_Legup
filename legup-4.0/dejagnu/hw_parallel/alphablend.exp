@@ -1,0 +1,12 @@
+load_lib legup.exp
+
+set expected {# sum:\s+376250\s+}
+
+cd ../examples/parallel/single/alphablend
+
+cd ../../pthreads/alphablend
+
+set test "alphablend Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/sha
+set test "sha"
+set expected {Result: 5}
+
+run-test-sw $test $expected
+
+cd ../..

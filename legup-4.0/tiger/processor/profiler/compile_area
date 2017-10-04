@@ -1,0 +1,78 @@
+#!/bin/bash
+
+CW_LIST="16 32 64"
+N_LIST="16 32 64 128 256"
+
+PROF_TYPES="v"
+PROF_METHODS="i c s"
+
+REPORT_FILE=report_hier.txt
+
+echo -e "\n\n---------------------------------------------" >> $REPORT_FILE
+echo -e "`date`\n" >> $REPORT_FILE
+
+for PROF_TYPE in ${PROF_TYPES}; do
+	echo -e "PROF_TYPE = $PROF_TYPE" | tee -a $REPORT_FILE
+	for PROF_METHOD in ${PROF_METHODS}; do
+		echo -e "PROF_METHOD = $PROF_METHOD" | tee -a $REPORT_FILE
+		for CW in ${CW_LIST}; do
+			echo -e "CW = $CW" | tee -a $REPORT_FILE
+			for N in ${N_LIST}; do
+				N2=`echo "l($N)/l(2)" | bc -l | grep -o "^[^\.]*"`
+
+				# set up profiler parameters (CW & N)
+				sed -i -r "s|(define N[^2][ \t]*)[^ \t]*|\1${N}|" prof_defines.v
+				sed -i -r "s|(define N2[ \t]*)[^ \t]*|\1${N2}|" prof_defines.v
+				sed -i -r "s|(define ICW[ \t]*)[^ \t]*|\1${CW}|" prof_defines.v
+				sed -i -r "s|(define CCW[ \t]*)[^ \t]*|\1${CW}|" prof_defines.v
+				sed -i -r "s|(define SCW[ \t]*)[^ \t]*|\1${CW}|" prof_defines.v
+				if [ "$CW" = "64" ]; then
+					sed -i -r "s|[/]*(\`define CW64.*)|\1|" prof_defines.v
+				else
+					sed -i -r "s|[/]*(\`define CW64.*)|//\1|" prof_defines.v
+				fi
+				
+				# set up profiler scheme
+				sed -i -r "s|(define PROF_TYPE[^\"]*\")[^\"]*(.*)|\1${PROF_TYPE}\2 |" prof_defines.v
+				sed -i -r "s|(define PROF_METHOD[^\"]*\")[^\"]*(.*)|\1${PROF_METHOD}\2 |" prof_defines.v
+
+				# make profilers point to prof_defines properly
+				#sed -i 's|`include ".*prof_defines.v"|`include "prof_defines.v"|' van_prof.v
+				#sed -i 's|`include ".*prof_defines.v"|`include "prof_defines.v"|' SnoopP.v
+
+				# set up profiler.qsf to use correct profiler
+				#sed -i "s|VERILOG_FILE.*$|VERILOG_FILE ${PROF_NAME}.v|" profiler.qsf
+				#sed -i "s|VERILOG_FILE.*$|TOP_LEVEL_ENTITY ${PROF_NAME}|" profiler.qsf
+
+				# synthesize
+				quartus_sh --flow compile profiler
+
+				# parse all relevant data (freq, LEs, mem bits, registers, dsp's)
+				FMAX=`find profiler.tan.summary | xargs grep -i "Actual Time.* MHz"`
+				FMAX=${FMAX//\([a-zA-Z0-9. =]*/}
+				FMAX=${FMAX//[^0-9\.]/}
+
+				LEs=`find profiler.fit.summary | xargs grep -i -o "Total logic elements[^/]*"`
+				LEs=${LEs//[^0-9,]/}
+
+				MEM=`find profiler.fit.summary | xargs grep -i -o "Total memory bits[^/]*"`
+				MEM=${MEM//[^0-9,]/}
+
+				REG=`find profiler.fit.summary | xargs grep -i -o "Total registers[^/]*"`
+				REG=${REG//[^0-9,]/}
+
+				# Store report data
+				echo -e "\tN = $N" | tee -a $REPORT_FILE
+				echo -e "\tMax Frequency (MHz):\t$FMAX" | tee -a $REPORT_FILE
+				echo -e "\tTotal Area (# LEs): \t$LEs" | tee -a $REPORT_FILE
+				echo -e "\tTotal Mem. Bits:    \t$MEM" | tee -a $REPORT_FILE
+				echo -e "\tTotal Registers:    \t$REG\n" | tee -a $REPORT_FILE
+				exit
+			done
+		done
+	done
+done
+
+
+
+	

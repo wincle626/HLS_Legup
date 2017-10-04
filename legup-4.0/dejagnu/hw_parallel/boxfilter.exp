@@ -1,0 +1,15 @@
+load_lib legup.exp
+
+set expected {# RESULT:\s+PASS\s+}
+
+cd ../examples/parallel/openmp/boxfilter
+
+set test "boxfilter OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/boxfilter
+
+set test "boxfilter Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

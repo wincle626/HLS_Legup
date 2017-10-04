@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/mips
+set test "mips"
+
+set expected {Result: 9}
+
+run-test-qemu $test $expected
+
+cd ../..

@@ -1,0 +1,11 @@
+[University Program]
+Clock Signals for Cyclone III and IV DE-series Board Peripherals = "%t" "%w/../../altera/common/lib/megawizard.pl" --wizard_file:"%w/altera_up_altpll_hw.tcl" --wizard:altera_up_altpll --early_gen:on %f %o %h
+<INFO>
+<QIP_FILE_ENABLED/>
+<ACCEPT_OTHER_CNX VALUE="ON"/>
+<LANGUAGES   AHDL="OFF" />
+<PINPLAN SUPPORTED="OFF"/>
+<ALIAS>UP ALTPLL v13.1</ALIAS>
+
+</INFO>
+

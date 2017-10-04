@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd div_const
+set test "div_const"
+set expected {Result: 36431}
+
+run-test-qemu $test $expected
+
+cd ..

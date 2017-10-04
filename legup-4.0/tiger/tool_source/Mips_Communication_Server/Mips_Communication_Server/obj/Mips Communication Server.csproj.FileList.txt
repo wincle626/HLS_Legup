@@ -1,0 +1,9 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Mips_Communication_Server.LogWindow.resources
+obj\Debug\Mips_Communication_Server.MainForm.resources
+obj\Debug\Mips_Communication_Server.Properties.Resources.resources
+obj\Debug\Mips Communication Server.csproj.GenerateResource.Cache
+bin\Debug\Mips Communication Server.exe
+bin\Debug\Mips Communication Server.pdb
+obj\Debug\Mips Communication Server.exe
+obj\Debug\Mips Communication Server.pdb

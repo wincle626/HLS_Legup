@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd sra
+set test "sra"
+set expected {Result: 100}
+
+run-test-qemu $test $expected
+
+cd ..

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd multicycle_scheduling_bug
+set test "multicycle_scheduling_bug"
+set expected {return_val=\s+22\s+}
+
+run-test $test $expected
+
+cd ..

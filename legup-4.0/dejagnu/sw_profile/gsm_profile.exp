@@ -1,0 +1,21 @@
+load_lib legup.exp
+
+cd chstone/gsm
+set test "gsm_sw_profile"
+# $benchmark_name.sim.profiling.rpt will be verified.
+set benchmark_name "gsm"
+# Expected ascending order of function sizes.
+append expected_function_size_order "<Transformation_to_Log_Area_Ratios>"
+append expected_function_size_order "<Quantization_and_coding>"
+append expected_function_size_order "<gsm_mult_r>"
+append expected_function_size_order "<Reflection_coefficients>"
+append expected_function_size_order "<Autocorrelation>"
+append expected_function_size_order "<Gsm_LPC_Analysis>"
+append expected_function_size_order "<main>"
+# Ignore gsm_abs, gsm_add, gsm_div and some other small functions since
+# their order vary b/w DE2 & DE4.
+run-test-hw-profiler $test $benchmark_name $expected_function_size_order 1 0 1 \
+                     "<legup_memset_2>" "<legup_memset_4>" \
+                     "<legup_start_counter>" "<legup_stop_counter>" \
+                     "<gsm_abs>" "<gsm_add>" "<gsm_div>" "<gsm_norm>" "<gsm_mult>"
+cd ../..

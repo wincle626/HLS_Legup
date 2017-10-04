@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../examples/chstone_hybrid/dhrystone/
+set test "dhrystone"
+
+set hybridexpected {Result: 19}
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../../examples

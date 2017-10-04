@@ -1,0 +1,188 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 560 456)
+	(text "tiger" (rect 268 -1 284 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 440 20 452)(font "Arial" ))
+	(port
+		(pt 0 72)
+		(input)
+		(text "reset_n" (rect 0 0 30 12)(font "Arial" (font_size 8)))
+		(text "reset_n" (rect 4 61 46 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 240 72)(line_width 1))
+	)
+	(port
+		(pt 0 280)
+		(input)
+		(text "clk" (rect 0 0 10 12)(font "Arial" (font_size 8)))
+		(text "clk" (rect 4 269 22 280)(font "Arial" (font_size 8)))
+		(line (pt 0 280)(pt 240 280)(line_width 1))
+	)
+	(port
+		(pt 0 320)
+		(input)
+		(text "rxd_to_the_uart_0" (rect 0 0 75 12)(font "Arial" (font_size 8)))
+		(text "rxd_to_the_uart_0" (rect 4 309 106 320)(font "Arial" (font_size 8)))
+		(line (pt 0 320)(pt 240 320)(line_width 1))
+	)
+	(port
+		(pt 0 408)
+		(input)
+		(text "coe_debug_select_to_the_tiger_top_0[2..0]" (rect 0 0 173 12)(font "Arial" (font_size 8)))
+		(text "coe_debug_select_to_the_tiger_top_0[2..0]" (rect 4 397 250 408)(font "Arial" (font_size 8)))
+		(line (pt 0 408)(pt 240 408)(line_width 3))
+	)
+	(port
+		(pt 0 112)
+		(output)
+		(text "zs_addr_from_the_sdram[11..0]" (rect 0 0 129 12)(font "Arial" (font_size 8)))
+		(text "zs_addr_from_the_sdram[11..0]" (rect 4 101 178 112)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 240 112)(line_width 3))
+	)
+	(port
+		(pt 0 128)
+		(output)
+		(text "zs_ba_from_the_sdram[1..0]" (rect 0 0 117 12)(font "Arial" (font_size 8)))
+		(text "zs_ba_from_the_sdram[1..0]" (rect 4 117 160 128)(font "Arial" (font_size 8)))
+		(line (pt 0 128)(pt 240 128)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(output)
+		(text "zs_cas_n_from_the_sdram" (rect 0 0 114 12)(font "Arial" (font_size 8)))
+		(text "zs_cas_n_from_the_sdram" (rect 4 133 142 144)(font "Arial" (font_size 8)))
+		(line (pt 0 144)(pt 240 144)(line_width 1))
+	)
+	(port
+		(pt 0 160)
+		(output)
+		(text "zs_cke_from_the_sdram" (rect 0 0 103 12)(font "Arial" (font_size 8)))
+		(text "zs_cke_from_the_sdram" (rect 4 149 130 160)(font "Arial" (font_size 8)))
+		(line (pt 0 160)(pt 240 160)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(output)
+		(text "zs_cs_n_from_the_sdram" (rect 0 0 109 12)(font "Arial" (font_size 8)))
+		(text "zs_cs_n_from_the_sdram" (rect 4 165 136 176)(font "Arial" (font_size 8)))
+		(line (pt 0 176)(pt 240 176)(line_width 1))
+	)
+	(port
+		(pt 0 208)
+		(output)
+		(text "zs_dqm_from_the_sdram[1..0]" (rect 0 0 126 12)(font "Arial" (font_size 8)))
+		(text "zs_dqm_from_the_sdram[1..0]" (rect 4 197 166 208)(font "Arial" (font_size 8)))
+		(line (pt 0 208)(pt 240 208)(line_width 3))
+	)
+	(port
+		(pt 0 224)
+		(output)
+		(text "zs_ras_n_from_the_sdram" (rect 0 0 113 12)(font "Arial" (font_size 8)))
+		(text "zs_ras_n_from_the_sdram" (rect 4 213 142 224)(font "Arial" (font_size 8)))
+		(line (pt 0 224)(pt 240 224)(line_width 1))
+	)
+	(port
+		(pt 0 240)
+		(output)
+		(text "zs_we_n_from_the_sdram" (rect 0 0 110 12)(font "Arial" (font_size 8)))
+		(text "zs_we_n_from_the_sdram" (rect 4 229 136 240)(font "Arial" (font_size 8)))
+		(line (pt 0 240)(pt 240 240)(line_width 1))
+	)
+	(port
+		(pt 0 336)
+		(output)
+		(text "txd_from_the_uart_0" (rect 0 0 87 12)(font "Arial" (font_size 8)))
+		(text "txd_from_the_uart_0" (rect 4 325 118 336)(font "Arial" (font_size 8)))
+		(line (pt 0 336)(pt 240 336)(line_width 1))
+	)
+	(port
+		(pt 0 376)
+		(output)
+		(text "coe_exe_start_from_the_tiger_top_0" (rect 0 0 152 12)(font "Arial" (font_size 8)))
+		(text "coe_exe_start_from_the_tiger_top_0" (rect 4 365 208 376)(font "Arial" (font_size 8)))
+		(line (pt 0 376)(pt 240 376)(line_width 1))
+	)
+	(port
+		(pt 0 392)
+		(output)
+		(text "coe_exe_end_from_the_tiger_top_0" (rect 0 0 148 12)(font "Arial" (font_size 8)))
+		(text "coe_exe_end_from_the_tiger_top_0" (rect 4 381 196 392)(font "Arial" (font_size 8)))
+		(line (pt 0 392)(pt 240 392)(line_width 1))
+	)
+	(port
+		(pt 0 424)
+		(output)
+		(text "coe_debug_lights_from_the_tiger_top_0[17..0]" (rect 0 0 186 12)(font "Arial" (font_size 8)))
+		(text "coe_debug_lights_from_the_tiger_top_0[17..0]" (rect 4 413 268 424)(font "Arial" (font_size 8)))
+		(line (pt 0 424)(pt 240 424)(line_width 3))
+	)
+	(port
+		(pt 0 192)
+		(bidir)
+		(text "zs_dq_to_and_from_the_sdram[15..0]" (rect 0 0 155 12)(font "Arial" (font_size 8)))
+		(text "zs_dq_to_and_from_the_sdram[15..0]" (rect 4 181 208 192)(font "Arial" (font_size 8)))
+		(line (pt 0 192)(pt 240 192)(line_width 3))
+	)
+	(drawing
+		(text "clk_clk_in_reset" (rect 145 43 386 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 245 67 532 144)(font "Arial" (color 0 0 0)))
+		(text "sdram_wire" (rect 171 83 402 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "addr" (rect 245 107 514 224)(font "Arial" (color 0 0 0)))
+		(text "ba" (rect 245 123 502 256)(font "Arial" (color 0 0 0)))
+		(text "cas_n" (rect 245 139 520 288)(font "Arial" (color 0 0 0)))
+		(text "cke" (rect 245 155 508 320)(font "Arial" (color 0 0 0)))
+		(text "cs_n" (rect 245 171 514 352)(font "Arial" (color 0 0 0)))
+		(text "dq" (rect 245 187 502 384)(font "Arial" (color 0 0 0)))
+		(text "dqm" (rect 245 203 508 416)(font "Arial" (color 0 0 0)))
+		(text "ras_n" (rect 245 219 520 448)(font "Arial" (color 0 0 0)))
+		(text "we_n" (rect 245 235 514 480)(font "Arial" (color 0 0 0)))
+		(text "clk_clk_in" (rect 183 251 426 515)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 245 275 508 560)(font "Arial" (color 0 0 0)))
+		(text "uart_0_external_connection" (rect 80 291 316 595)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "rxd" (rect 245 315 508 640)(font "Arial" (color 0 0 0)))
+		(text "txd" (rect 245 331 508 672)(font "Arial" (color 0 0 0)))
+		(text "tiger_top_0_conduit_end_0" (rect 81 347 312 707)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "exe_start" (rect 245 371 544 752)(font "Arial" (color 0 0 0)))
+		(text "exe_end" (rect 245 387 532 784)(font "Arial" (color 0 0 0)))
+		(text "debug_select" (rect 245 403 562 816)(font "Arial" (color 0 0 0)))
+		(text "debug_lights" (rect 245 419 562 848)(font "Arial" (color 0 0 0)))
+		(text " tiger " (rect 538 440 1118 890)(font "Arial" ))
+		(line (pt 241 52)(pt 241 76)(line_width 1))
+		(line (pt 242 52)(pt 242 76)(line_width 1))
+		(line (pt 241 92)(pt 241 244)(line_width 1))
+		(line (pt 242 92)(pt 242 244)(line_width 1))
+		(line (pt 241 260)(pt 241 284)(line_width 1))
+		(line (pt 242 260)(pt 242 284)(line_width 1))
+		(line (pt 241 300)(pt 241 340)(line_width 1))
+		(line (pt 242 300)(pt 242 340)(line_width 1))
+		(line (pt 241 356)(pt 241 428)(line_width 1))
+		(line (pt 242 356)(pt 242 428)(line_width 1))
+		(line (pt 240 32)(pt 320 32)(line_width 1))
+		(line (pt 320 32)(pt 320 440)(line_width 1))
+		(line (pt 240 440)(pt 320 440)(line_width 1))
+		(line (pt 240 32)(pt 240 440)(line_width 1))
+		(line (pt 0 0)(pt 560 0)(line_width 1))
+		(line (pt 560 0)(pt 560 456)(line_width 1))
+		(line (pt 0 456)(pt 560 456)(line_width 1))
+		(line (pt 0 0)(pt 0 456)(line_width 1))
+	)
+)

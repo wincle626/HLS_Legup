@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <systemtable filter="All">
+  <columns>
+   <connections preferredWidth="127" />
+   <irq preferredWidth="34" />
+   <inputclock preferredWidth="57" />
+   <name preferredWidth="222" />
+   <export visible="0" />
+  </columns>
+ </systemtable>
+ <clocktable>
+  <columns>
+   <clockname preferredWidth="310" />
+   <clocksource preferredWidth="307" />
+   <frequency preferredWidth="302" />
+   <pipeline visible="0" preferredWidth="58" />
+  </columns>
+ </clocktable>
+ <window width="1628" height="903" x="171" y="83" />
+ <library
+   expandedCategories="Library,Library/Memories and Memory Controllers/SDRAM,Library/Memories and Memory Controllers,Library/Memories and Memory Controllers/On-Chip,Library/Bridges and Adapters/Memory Mapped,Library/Bridges and Adapters,Library/Peripherals/Debug and Performance,Library/Peripherals,Library/Bridges and Adapters/Streaming,Project" />
+ <debug showDebugMenu="0" />
+</preferences>

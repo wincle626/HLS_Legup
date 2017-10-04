@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#need to run once first to get functions list
+make generate-wrapper
+
+sed -i '/llvm./d' functions.list
+sed -i '/main/d' functions.list
+sed -i '/perf_get_total_time/d' functions.list
+sed -i '/mprintf/d' functions.list
+sed -i '/START_COUNTER/d' functions.list
+sed -i '/printf/d' functions.list
+sed -i '/STOP_COUNTER/d' functions.list
+sed -i '/OUTPUT_COUNTER/d' functions.list
+sed -i '/exit/d' functions.list
+
+N=0
+
+echo "Benchmark =" `pwd`
+cat functions.list | while read LINE ; do
+	N=$((N+1))
+	#echo "Line $N = $LINE"
+	echo "Accelerator Function = $LINE"
+	echo "set_accelerator_function \"$LINE\"" > config.tcl
+	make hybrid
+	sed -i '/llvm./d' functions.list
+	sed -i '/main/d' functions.list
+	sed -i '/perf_get_total_time/d' functions.list
+	sed -i '/mprintf/d' functions.list
+	sed -i '/START_COUNTER/d' functions.list
+	sed -i '/printf/d' functions.list
+	sed -i '/STOP_COUNTER/d' functions.list
+	sed -i '/OUTPUT_COUNTER/d' functions.list
+	sed -i '/exit/d' functions.list
+done

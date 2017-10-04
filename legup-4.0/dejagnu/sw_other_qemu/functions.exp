@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd functions
+set test "functions"
+set expected {Result: 40}
+
+run-test-qemu $test $expected
+
+cd ..

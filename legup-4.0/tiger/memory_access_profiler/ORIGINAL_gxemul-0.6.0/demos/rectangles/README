@@ -1,0 +1,69 @@
+Alpha
+-----
+alpha-unknown-elf-gcc -I../../src/include/testmachine -g rectangles.c -O2 -c -o rectangles_alpha.o
+alpha-unknown-elf-ld -Ttext 0x10000 -e f rectangles_alpha.o -o rectangles_alpha
+file rectangles_alpha
+../../gxemul -X -E testalpha rectangles_alpha
+
+
+ARM
+---
+arm-unknown-elf-gcc -I../../src/include/testmachine -g rectangles.c -O2 -c -o rectangles_arm.o
+arm-unknown-elf-ld -e f rectangles_arm.o -o rectangles_arm
+file rectangles_arm
+../../gxemul -X -E testarm rectangles_arm
+
+
+M32R
+----
+m32r-elf-gcc -I../../src/include/testmachine -g rectangles.c -O2 -c -o rectangles_m32r.o
+m32r-elf-ld -e f rectangles_m32r.o -o rectangles_m32r
+file rectangles_m32r
+../../gxemul -X -E testm32r rectangles_m32r
+
+
+MIPS (64-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -DMIPS rectangles.c -O2 -mips4 -mabi=64 -c -o rectangles_mips.o
+mips64-unknown-elf-ld -Ttext 0xa800000000030000 -e f rectangles_mips.o -o rectangles_mips --oformat=elf64-bigmips
+file rectangles_mips
+../../gxemul -X -E testmips rectangles_mips
+
+
+MIPS (32-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -DMIPS rectangles.c -O2 -mips1 -mabi=32 -c -o rectangles_mips32.o
+mips64-unknown-elf-ld -Ttext 0x80030000 -e f rectangles_mips32.o -o rectangles_mips32
+file rectangles_mips32
+../../gxemul -X -E testmips -C 4Kc rectangles_mips32
+
+
+PPC (64-bit)
+------------
+TODO
+
+
+PPC (32-bit)
+------------
+ppc-unknown-elf-gcc -I../../src/include/testmachine -g rectangles.c -O2 -c -o rectangles_ppc.o
+ppc-unknown-elf-ld -e f rectangles_ppc.o -o rectangles_ppc
+file rectangles_ppc
+../../gxemul -X -E testppc -C PPC750 rectangles_ppc
+
+
+SH (32-bit)
+-----------
+
+sh64-superh-elf-gcc -m5-compact -I../../src/include/testmachine -g rectangles.c -c -o rectangles_sh.o
+sh64-superh-elf-ld -mshelf32 -e _f rectangles_sh.o -o rectangles_sh
+file rectangles_sh
+../../gxemul -X -E testsh rectangles_sh
+
+
+SPARC (64-bit)
+--------------
+sparc64-unknown-elf-gcc -I../../src/include/testmachine -g rectangles.c -O2 -c -o rectangles_sparc.o
+sparc64-unknown-elf-ld -e f rectangles_sparc.o -o rectangles_sparc
+file rectangles_sparc
+../../gxemul -X -E testsparc rectangles_sparc
+

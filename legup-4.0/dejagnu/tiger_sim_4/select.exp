@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd select
+set test "select"
+set expected {Result: 15}
+
+run-test-sw $test $expected
+
+cd ..

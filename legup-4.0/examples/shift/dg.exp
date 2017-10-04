@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd shift
+set test "shift"
+set expected {return_val=\s+496\s+}
+set gxexpected {reg: v0 = 0x00000000000001f0}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

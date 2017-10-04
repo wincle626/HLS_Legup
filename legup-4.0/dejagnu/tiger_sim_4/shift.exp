@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd shift
+set test "shift"
+set expected {Result: 496}
+
+run-test-sw $test $expected
+
+cd ..

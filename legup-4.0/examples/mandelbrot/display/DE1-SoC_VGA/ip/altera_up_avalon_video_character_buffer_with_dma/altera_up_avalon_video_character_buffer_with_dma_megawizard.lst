@@ -1,0 +1,11 @@
+[University Program|Audio & Video|Video]
+Character Buffer for VGA Display = "%t" "%w/../../../../altera/common/lib/megawizard.pl" --wizard_file:"%w/altera_up_avalon_video_character_buffer_with_dma_hw.tcl" --wizard:altera_up_avalon_video_character_buffer_with_dma --early_gen:on %f %o %h
+<INFO>
+<QIP_FILE_ENABLED/>
+<ACCEPT_OTHER_CNX VALUE="ON"/>
+<LANGUAGES   AHDL="OFF" />
+<PINPLAN SUPPORTED="OFF"/>
+<ALIAS>A buffer for ascii characters to be displayed on a VGA/LCD Screen</ALIAS>
+
+</INFO>
+

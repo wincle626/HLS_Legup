@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd array
+set test "array"
+set expected {return_val=\s+156\s+}
+set gxexpected {reg: v0 = 0x000000000000009c}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

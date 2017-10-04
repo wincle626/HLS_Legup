@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/adpcm
+set test "adpcm"
+set expected {return_val=\s+150\s+}
+set gxexpected {reg: v0 = 0x0000000000000096}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

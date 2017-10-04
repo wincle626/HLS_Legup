@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../examples/chstone_hybrid/sha/
+set test "sha"
+
+set hybridexpected {# Result: 5}
+run-test-hybrid $test $hybridexpected
+
+cd ../../../examples

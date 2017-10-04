@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/matrixmultiply
+set test "matrixmultiply"
+set expected {return_val=\s*3130872896\s+}
+set gxexpected {reg: v0 = 0xffffffffba9d5440}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

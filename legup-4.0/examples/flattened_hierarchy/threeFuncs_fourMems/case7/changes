@@ -1,0 +1,7 @@
+Same as case6, but hacked the Verilog to create two separate ports for funcA, so that there can be 4 memory accesses at the same time
+(This was done by localizing memB and memC to funcA, then changing the verilog to put it at the top level). 
+This allowed to completely remove the memory controller, since there is a dedicated port for each RAM hence 
+no steering logic is needed. Now there are just two RAMs at top-level, with an OR gate for the address, write_enable, and data signals. 
+
+This is also functionally correct. The Fmax drops quite a bit because LOCAL RAMs have a 1 cycle latency (which can easily be fixed).
+Area reduction is pretty big, which is encouraging. 

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+BENCH_PATH="/nfs/eecg/homes/meng/aldhamma/legup/examples/chstone"
+
+# $1 --> benchmark folder name, $2 benchmark file name
+function parse_benchmark() {
+	#if [ -f ${BENCH_PATH}/$1/transcript ]; then
+	#	if [ -f ${BENCH_PATH}/$1/$2.flist ]; then
+			g++ ~/legup/tiger/tool_source/Profiling/convertPowerResults.cpp -o ~/legup/tiger/tool_source/Profiling/convertPowerResults -O3
+			~/legup/tiger/tool_source/Profiling/convertPowerResults ${BENCH_PATH}/$1/transcript ${BENCH_PATH}/$1/$2.flist ${BENCH_PATH}/$1/$2.flist_lab ${BENCH_PATH}/$1/$2.hash v 64 power_database
+	#	else
+	#		echo "File2 (${BENCH_PATH}/$1/$2.flist) doesn't exist!"
+	#	fi
+	#else
+	#	echo "File1 (${BENCH_PATH}/$1/transcript) doesn't exist!"
+	#fi
+}
+
+# Help Menu
+if [ "$1" = "--help" -o "$1" = "" ]; then
+	echo "..."
+	
+# Get all data
+elif [ "$1" = "--all" ]; then
+	parse_benchmark aes aes
+	parse_benchmark adpcm adpcm
+	parse_benchmark blowfish bf
+	parse_benchmark dfadd dfadd
+	parse_benchmark dfdiv dfdiv
+	parse_benchmark dfmul dfmul
+	parse_benchmark dfsin dfsin
+	parse_benchmark gsm gsm
+	parse_benchmark jpeg main
+	parse_benchmark mips mips
+	parse_benchmark motion mpeg2
+	parse_benchmark sha sha_driver
+	parse_benchmark ../dhrystone dhry
+	
+
+# Get specific benchmark
+else
+	parse_benchmark $1 $2
+
+fi

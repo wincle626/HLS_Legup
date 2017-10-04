@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd sra
+set test "sra"
+set expected {return_val=\s+100\s+}
+set gxexpected {reg: v0 = 0x0000000000000064}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

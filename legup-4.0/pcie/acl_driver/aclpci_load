@@ -1,0 +1,39 @@
+#!/bin/bash
+# Load Altera OpenCL PCIe driver and create file handle for the board
+# MUST BE RUN AS ROOT
+
+module="aclpci_drv"
+device="de4"
+mode="666"
+
+
+# invoke insmod with all arguments we got
+# and use a pathname, as insmod doesn't look in . by default
+/sbin/insmod ./$module.ko
+if [ $? != 0 ]; then
+  echo 
+  echo "Need root or sudo priviliges to load the driver."
+  exit 1
+fi
+
+# retrieve major number
+major=$(grep de4 /proc/devices | sed 's/ .*//')
+if [ "$major" == "" ]; then
+  echo "Can't find the device!"
+  echo "Make sure:"
+  echo "  1. Altera OpenCL Accelerator board is plugged into PCIe slot."
+  echo "  2a. The board either has a default OpenCL image in its flash, or"
+  echo "  2b. If it's the first time using the board after power up, load"
+  echo "      SOF using quartus_pgm and reboot the machine."
+  echo "See documentation for the details."
+  echo "Remeber that you can use 'reprogram' command to change SOFs once the"
+  echo "board is recognized as a PCIe device and this driver is loaded."
+  echo "To see if the Altera Accelerator board is recognized as a PCIe device"
+  echo "run '/sbin/lspci | grep altera'."
+  exit 1
+fi
+
+rm -f /dev/${device}
+mknod -m $mode /dev/${device} c $major 0
+
+

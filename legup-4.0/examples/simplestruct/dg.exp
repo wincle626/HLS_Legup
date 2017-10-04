@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd simplestruct
+set test "simplestruct"
+set expected {return_val=\s+24\s+}
+
+run-test $test $expected
+
+cd ..

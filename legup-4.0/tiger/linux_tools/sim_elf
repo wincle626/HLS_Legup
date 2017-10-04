@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Get usable filenames
+FILENAME=${1##*/}
+BASENAME=${FILENAME%%.*}
+
+# Run code through simulator, using "find_ra" to add a breakpoint at the return statement of the main function (to avoid crashing simulator)
+# 	-> Flags: -p <addr>  (add breakpoint)
+#			  -c <instr> (execute <instr> when simulator starts -- ninstr outputs the # instrs executed on exit)
+#			  -v		 (verbose debug messages)
+#			  -T		 (halt on non-existant memory accesses)
+#			  -V		 (startup in single-step debugger mode -- not using this right now)
+mipsel-unknown-elf-objdump -d ${BASENAME}.elf > ${BASENAME}.src
+~/GXemul/gxemul-0.6.0/gxemul -E oldtestmips -e R3000 ${BASENAME}.elf -p `./find_ra ${BASENAME}.src` -c ninstr -v -T $2

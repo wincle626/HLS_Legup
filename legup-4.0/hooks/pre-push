@@ -1,0 +1,90 @@
+#!/bin/bash
+#
+#
+# This pre-push git hook checks to make sure 'make check' has been run since the
+# last commit was made.
+#
+# It allows you to force the push without running 'make check' if you want.
+#
+# An exit value of 0 allows the push to proceed, any other value will cause the
+# push to fail.
+#
+# Author: Bain Syrowik
+# Email:  bain.syrowik@mail.utoronto.ca
+# Date:   December 6, 2014
+# 
+
+
+# Turn on colors by setting 'use_colors = True'
+use_colors="False"
+
+if [ "$use_colors" = "True" ] ; then
+    red="\033[31m"
+    green="\033[32m"
+    yellow="\033[33m"
+    blue="\033[34m"
+    clear_="\033[0m"
+else
+    red=""
+    green=""
+    yellow=""
+    blue=""
+    clear_=""
+fi
+
+# if up to date with remote, we don't need to do anything, so just exit
+read first_commit_to_push
+if [ "$first_commit_to_push" = "" ] ; then
+	exit 0
+fi
+
+
+# get time of last git commit
+last_commit_time=`git --no-pager log -1 --format=%ct`
+
+# if testrun.log exists then get time it was last modified
+if [ -f examples/testrun.log ] ; then
+	testrun_log_time=`stat -c %Y examples/testrun.log`
+else
+	# otherwise default to 0 (and therefore prompt user)
+	testrun_log_time=0
+fi
+
+# if the last commit was more recent than the last run of testrun.log then
+# prompt user to see how they want to proceed
+if [ "$last_commit_time" -gt "$testrun_log_time" ] ; then
+	echo "WARNING: You haven't run 'make check' since your last commit."
+	echo "Select one of the following options:"
+	echo -e "[${green}R${clear_}]un 'make check' and abort push"
+	echo -e "[${green}F${clear_}]orce push"
+	echo -e "[${green}Q${clear_}]uit"
+	
+	# get single character from /dev/tty (since stdin comes from git)
+	read -n 1 -s char < /dev/tty
+
+	# user selected R
+	# run make check and abort commit
+	if [ "$char" = 'r' ] || [ "$char" = 'R' ] ; then
+		echo
+		cd "examples" ; make check # run make check
+		exit 1 # do not allow push
+
+	# user selected F
+	elif [ "$char" = 'f' ] || [ "$char" = 'F' ] ; then
+		echo -n "Are you sure you want to force the push without running 'make "
+		echo -e "check' first?\n[Y/n] "
+		read -n 1 -s confirm < /dev/tty
+		if [ "$confirm" = 'y' ] || [ "$confirm" = 'Y' ] ; then
+			exit 0 # allow push
+		fi
+	fi
+
+	# any other character
+	echo "Abort push."
+	exit 1 # do not allow push
+fi
+
+# 'make check' was run more recently than last commit
+exit 0
+
+# EOF

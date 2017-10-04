@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element SDRAM_my_partner
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element legup_system_inst
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element legup_system_inst_clk_bfm
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element legup_system_inst_reset_bfm
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element legup_system_inst_uart_wire_bfm
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP2C35F672C6" />
+ <parameter name="deviceFamily" value="Cyclone II" />
+ <parameter name="deviceSpeedGrade" value="Unknown" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="1" />
+ <parameter name="timeStamp" value="1426988070591" />
+ <parameter name="useTestBenchNamingPattern" value="true" />
+ <instanceScript></instanceScript>
+ <module
+   kind="legup_system"
+   version="1.0"
+   enabled="1"
+   name="legup_system_inst">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID" value="legup_system" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+  <parameter name="AUTO_DEVICE" value="EP2C35F672C6" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+ </module>
+ <module
+   kind="altera_avalon_clock_source"
+   version="13.0"
+   enabled="1"
+   name="legup_system_inst_clk_bfm">
+  <parameter name="CLOCK_RATE" value="50000000" />
+  <parameter name="CLOCK_UNIT" value="1" />
+ </module>
+ <module
+   kind="altera_avalon_reset_source"
+   version="13.0"
+   enabled="1"
+   name="legup_system_inst_reset_bfm">
+  <parameter name="ASSERT_HIGH_RESET" value="0" />
+  <parameter name="INITIAL_RESET_CYCLES" value="50" />
+ </module>
+ <module
+   kind="altera_conduit_bfm"
+   version="13.0"
+   enabled="1"
+   name="legup_system_inst_uart_wire_bfm">
+  <parameter name="CLOCKED_SIGNAL" value="false" />
+  <parameter name="ENABLE_RESET" value="false" />
+  <parameter name="SIGNAL_ROLES" value="rxd,txd" />
+  <parameter name="SIGNAL_WIDTHS" value="1,1" />
+  <parameter name="SIGNAL_DIRECTIONS" value="output,input" />
+ </module>
+ <module
+   kind="altera_sdram_partner_module"
+   version="11.0"
+   enabled="1"
+   name="SDRAM_my_partner">
+  <parameter name="SDRAM_DATA_WIDTH" value="16" />
+  <parameter name="SDRAM_BANK_WIDTH" value="2" />
+  <parameter name="SDRAM_NUM_CHIPSELECTS" value="1" />
+  <parameter name="CAS_LATENCY" value="3" />
+  <parameter name="SDRAM_COL_WIDTH" value="8" />
+  <parameter name="SDRAM_ROW_WIDTH" value="12" />
+  <parameter name="CONTR_NAME" value="legup_system_SDRAM" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+ </module>
+ <connection
+   kind="clock"
+   version="13.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst.clk" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst_reset_bfm.clk" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="legup_system_inst_reset_bfm.reset"
+   end="legup_system_inst.reset" />
+ <connection
+   kind="conduit"
+   version="13.0"
+   start="legup_system_inst_uart_wire_bfm.conduit"
+   end="legup_system_inst.uart_wire">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="13.0"
+   start="SDRAM_my_partner.conduit"
+   end="legup_system_inst.sdram_wire">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="clock"
+   version="13.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="SDRAM_my_partner.clk" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

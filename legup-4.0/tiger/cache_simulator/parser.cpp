@@ -1,0 +1,86 @@
+/*
+    Takes in the raw modelsim output containing the memory accesses, and parses it into 2 files:
+    the instruction cache accesses and the data cache accesses.
+    
+    These output files are then used with cache_sim
+    
+    written by Kevin Nam
+*/
+
+
+#include <fstream>
+#include <iostream>
+
+using namespace std;
+
+// Usage: argv[1] should be input file (raw modelsim output), argv[2] and argv[3] should be output files.
+int main(int argc,char* argv[]){
+
+    if (argc < 4){
+        cout<<"Parser: Error: Too few arguments. Usage: ./parser <input file> <data addrs file> <instruction addrs file>"<<endl;
+        return -1;
+    }
+    if (argc > 4){
+        cout<<"Parser: Error: Too many arguments. Usage: ./parser <input file> <data addrs file> <instruction addrs file>"<<endl;
+        return -1;
+    }
+
+    cout<<"Parser input: "<<argv[1]<<"."<<endl<<"Parser output (data addresses): "<<argv[2]<<endl<<"Parser output (instruction addresses): "<<argv[3]<<endl;
+
+
+    ifstream inputFile;
+    ofstream outputFileData;
+    ofstream outputFileIns;
+
+    inputFile.open(argv[1]);
+    outputFileData.open(argv[2]);
+    outputFileIns.open(argv[3]);
+
+    bool insideBrackets = false;
+    char current;
+    char insORdata;
+    cout<<"Parsing..."<<endl;
+    int count = 0;
+
+    while (inputFile.eof() != true){
+        current = (char)inputFile.get();
+
+        if (insideBrackets == true){
+            if (current == ']'){
+                if (insORdata == 'd')
+                    outputFileData.put('\n');
+                else
+                    outputFileIns.put('\n');
+                insideBrackets = false;
+                count = 0;
+            } else if (count >= 1){
+                if (insORdata == 'd')
+                    outputFileData.put(current);
+                else
+                    outputFileIns.put(current);
+            } else {
+                count++;
+            }
+        } else if (current == '['){
+            if ((char) inputFile.peek() == 'd'){
+                insORdata = 'd';
+                insideBrackets = true;
+            }
+            if ((char) inputFile.peek() == 'i' ){
+                insORdata = 'i';
+                insideBrackets = true;
+            }
+        }
+
+
+    }
+
+    cout<<"Parsing complete."<<endl;
+
+    inputFile.close();
+    outputFileData.close();
+    outputFileIns.close();
+
+    return 0;
+
+}

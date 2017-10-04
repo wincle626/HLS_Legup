@@ -1,0 +1,45 @@
+load_lib legup.exp
+
+set hybridexpected {# Sum: 578900}
+
+cd ../examples/parallel/single/dividers
+set test "dividers Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/dividers
+set test "dividers Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/dividers_pipeline
+set test "dividers_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/dividers_2
+set test "dividers_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_3
+set test "dividers_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_4
+set test "dividers_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_8_4
+set test "dividers_8_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_12_4
+set test "dividers_12_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_16_4
+set test "dividers_16_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../dividers_20_4
+set test "dividers_20_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../

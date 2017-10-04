@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd unaligned
+set test "unaligned"
+set expected {Error: memory address not aligned to ram word size!}
+
+run-test-modelsim-error $test $expected
+
+cd ..

@@ -1,0 +1,48 @@
+============================================
+===   Linux Tools                        ===
+============================================
+
+compile_to_assembly <file.c>:
+	- uses LLVM to compile desired C file to a MIPS assembly file
+	- outputs as <file>.s in current directory
+
+compile_chstone_to_assembly:
+	- runs each of the CHStone benchmarks through compile_to_assembly
+	- assumes path to chstone benchmarks is: ../../examples/chstone/  (ie current repository structure)
+	- renames main.c in jpeg to jpeg.c for easier use
+
+elf2sdram <file.elf> <sdram.dat>:
+	- performs an object dump on the input elf file and parses this file to create an sdram initialization file for modelsim simulations
+	- source code (elf2sdram.cpp) located in: legup/tiger/tool_source/
+	- for use with modelsim, output file must be named "sdram.dat" and place in: legup/tiger/processor/tiger_mips/tiger_sim/
+	
+find_ra <file.src>:
+	- finds the PC address of the return instruction in main()
+	- input is object dump of the elf file, which can be obtained from: "mipsel-unknown-elf-objdump -d file.elf > file.src"
+	- useful for adding breakpoints in simulator from the commandline (simulator crashes if it returns from main since no OS to return to)
+	- source code (find_ra.cpp) located in: legup/tiger/tool_source/
+	
+hack_jt <file.s>:
+	- fixes jump tables on LLVM MIPS assembly output
+
+sim_elf <file.elf>:
+	- simulates execution of file.elf in GXemul
+	
+sim+diff <file.c>:
+	- compiles & runs file.c with gcc, pipes output to file
+	- assumes in current directory there exists <file.elf>
+	- simulates this file in GXemul, pipes output to file
+	- diffs the two output files to help facilitate debugging
+	
+Makefile
+	- all: compiles find_ra, hack_jt and elf2sdram executables
+	- clean: deletes generated files
+
+--------------------------------------------
+Library Code: lib/
+--------------------------------------------
+*.a 				- compiled C library code, compiled with mipsel-unknown-elf-gcc and archived with mipsel-unknown-elf-ar
+prog_link.ld			- used to tell linker where to place code sections of assembly file into elf
+prog_link_sim.ld		- like previous file, but for gxemul simulation
+tiger_top_sdram.sof		- working copy of tiger_top quartus project, ready to program to board instead of resynthesizing, etc.
+serial.tcl			- used to communicate with processor through JTAG UART

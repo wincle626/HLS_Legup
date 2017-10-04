@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+   }
+   element SDRAM_my_partner
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element legup_system_inst
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element legup_system_inst_clk_bfm
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element legup_system_inst_leap_debug_port_bfm
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element legup_system_inst_leap_profiling_signals_bfm
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element legup_system_inst_reset_bfm
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="5CSEMA5F31C6" />
+ <parameter name="deviceFamily" value="Cyclone V" />
+ <parameter name="deviceSpeedGrade" value="6" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="legup_system" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="true" />
+ <instanceScript></instanceScript>
+ <module
+   name="SDRAM_my_partner"
+   kind="altera_sdram_partner_module"
+   version="11.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="CAS_LATENCY" value="3" />
+  <parameter name="CONTR_NAME" value="legup_system_SDRAM" />
+  <parameter name="SDRAM_BANK_WIDTH" value="2" />
+  <parameter name="SDRAM_COL_WIDTH" value="10" />
+  <parameter name="SDRAM_DATA_WIDTH" value="16" />
+  <parameter name="SDRAM_NUM_CHIPSELECTS" value="1" />
+  <parameter name="SDRAM_ROW_WIDTH" value="13" />
+ </module>
+ <module
+   name="legup_system_inst"
+   kind="legup_system"
+   version="1.0"
+   enabled="1">
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID" value="legup_system" />
+ </module>
+ <module
+   name="legup_system_inst_clk_bfm"
+   kind="altera_avalon_clock_source"
+   version="15.0"
+   enabled="1">
+  <parameter name="CLOCK_RATE" value="50000000" />
+  <parameter name="CLOCK_UNIT" value="1" />
+ </module>
+ <module
+   name="legup_system_inst_leap_debug_port_bfm"
+   kind="altera_conduit_bfm"
+   version="15.0"
+   enabled="1">
+  <parameter name="CLOCKED_SIGNAL" value="true" />
+  <parameter name="ENABLE_RESET" value="true" />
+  <parameter name="SIGNAL_DIRECTIONS" value="output,input" />
+  <parameter name="SIGNAL_ROLES" value="select,lights" />
+  <parameter name="SIGNAL_WIDTHS" value="3,18" />
+ </module>
+ <module
+   name="legup_system_inst_leap_profiling_signals_bfm"
+   kind="altera_conduit_bfm"
+   version="15.0"
+   enabled="1">
+  <parameter name="CLOCKED_SIGNAL" value="true" />
+  <parameter name="ENABLE_RESET" value="true" />
+  <parameter name="SIGNAL_DIRECTIONS" value="input,input" />
+  <parameter name="SIGNAL_ROLES" value="start,end" />
+  <parameter name="SIGNAL_WIDTHS" value="1,1" />
+ </module>
+ <module
+   name="legup_system_inst_reset_bfm"
+   kind="altera_avalon_reset_source"
+   version="15.0"
+   enabled="1">
+  <parameter name="ASSERT_HIGH_RESET" value="0" />
+  <parameter name="INITIAL_RESET_CYCLES" value="50" />
+ </module>
+ <connection
+   kind="clock"
+   version="15.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst_reset_bfm.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst_leap_debug_port_bfm.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="legup_system_inst_leap_profiling_signals_bfm.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="legup_system_inst_clk_bfm.clk"
+   end="SDRAM_my_partner.clk" />
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="legup_system_inst_leap_debug_port_bfm.conduit"
+   end="legup_system_inst.leap_debug_port">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="legup_system_inst_leap_profiling_signals_bfm.conduit"
+   end="legup_system_inst.leap_profiling_signals">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="conduit"
+   version="15.0"
+   start="SDRAM_my_partner.conduit"
+   end="legup_system_inst.sdram_wire">
+  <parameter name="endPort" value="" />
+  <parameter name="endPortLSB" value="0" />
+  <parameter name="startPort" value="" />
+  <parameter name="startPortLSB" value="0" />
+  <parameter name="width" value="0" />
+ </connection>
+ <connection
+   kind="reset"
+   version="15.0"
+   start="legup_system_inst_reset_bfm.reset"
+   end="legup_system_inst.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="legup_system_inst_reset_bfm.reset"
+   end="legup_system_inst_leap_debug_port_bfm.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="legup_system_inst_reset_bfm.reset"
+   end="legup_system_inst_leap_profiling_signals_bfm.reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

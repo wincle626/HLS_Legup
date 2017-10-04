@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd dividers
+set test "dividers"
+set expected {return_val=\s+577\s+}
+set gxexpected {reg: v0 = 0x0000000000000241}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

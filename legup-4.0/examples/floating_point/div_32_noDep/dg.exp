@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/div_32_noDep
+set test "div_32_noDep"
+set expected {return_val=\s+12\s+}
+
+run-test $test $expected
+
+cd ../..

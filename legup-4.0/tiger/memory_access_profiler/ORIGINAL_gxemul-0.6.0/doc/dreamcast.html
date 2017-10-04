@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Dreamcast emulation</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Dreamcast emulation</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2006-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#intro">Introduction</a>
+  <li><a href="#netbsd_generic_md">NetBSD/dreamcast GENERIC_MD</a>
+  <li><a href="#netbsd_live_cd">NetBSD/dreamcast Live CD</a>
+  <li><a href="#linux_live_cd">Linux/dreamcast Live CD</a>
+</ul>
+
+
+
+
+
+
+<p><br>
+<a name="intro"></a>
+<h3>Introduction:</h3>
+
+<p>[Note: This is a <a href="guestoses.html#legacy"><font color="#dd2222"><b>LEGACY MODE</b></font></a>.]
+
+<p>This page contains information about the <a 
+href="http://en.wikipedia.org/wiki/Dreamcast">Dreamcast</a> emulation mode 
+in GXemul. It's not a very long page, but I thought it would be best to 
+gather everything Dreamcast-specific in one place.
+
+<p>My main goal with Dreamcast emulation is to let <a 
+href="http://www.netbsd.org/ports/dreamcast/">NetBSD/dreamcast</a> run, 
+similar to how it runs on a real machine. I am also experimenting with 
+other programs, such as Linux and simple demo programs that use
+<a href="http://gamedev.allusion.net/softprj/kos/">KOS</a>, and 
+<a href="http://mc.pp.se/dc/sw.html">Marcus Comstedt's tutorial programs</a>.
+These sometimes work to a certain degree.
+
+<p>Games (especially commercial games) are very unlikely to run.
+
+
+
+
+
+<p><br>
+<a name="netbsd_generic_md"></a>
+<h3>NetBSD/dreamcast GENERIC_MD:</h3>
+
+<p>It is possible to run <a 
+href="http://www.netbsd.org/ports/dreamcast/">NetBSD/dreamcast</a> in 
+GXemul. A NetBSD ramdisk kernel can reach userland, however, no network
+interface is emulated yet, so root-on-nfs is not possible.
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20061029-netbsd-dreamcast.png"><img src="20061029-netbsd-dreamcast_small.png"></a>
+&nbsp;&nbsp;&nbsp;
+<a href="20061104-netbsd-dreamcast-real.jpg"><img src="20061104-netbsd-dreamcast-real_small.png"></a>
+
+<p>(The photo on the right shows NetBSD/dreamcast running both on a real 
+Dreamcast, and in the emulator.)
+
+<p>Download the 4.0 kernel here:<pre>
+	<a href="ftp://ftp.netbsd.org/pub/NetBSD/NetBSD-4.0/dreamcast/binary/kernel/netbsd-GENERIC_MD.gz">ftp://ftp.netbsd.org/pub/NetBSD/NetBSD-4.0/dreamcast/binary/kernel/netbsd-GENERIC_MD.gz</a>
+</pre>
+
+<p>Start NetBSD/dreamcast using the following command line:<pre>
+	<b>gxemul -XEdreamcast netbsd-GENERIC_MD.gz</b>
+
+</pre>
+
+
+
+
+
+
+
+
+
+<p><br>
+<a name="netbsd_live_cd"></a>
+<h3>NetBSD/dreamcast Live CD:</h3>
+
+<p>According to <a href="http://mail-index.netbsd.org/port-dreamcast/2005/04/25/0000.html">http://mail-index.netbsd.org/port-dreamcast/2005/04/25/0000.html</a>,
+Rui Paulo has made available a NetBSD/dreamcast Live CD. It can run in
+GXemul:
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20070128-netbsd-dreamcast-livecd-1.png"><img src="20070128-netbsd-dreamcast-livecd-1_small.png"></a>
+&nbsp;&nbsp;&nbsp;
+<a href="20070128-netbsd-dreamcast-livecd-2.png"><img src="20070128-netbsd-dreamcast-livecd-2_small.png"></a>
+
+<p>The image is available here:<pre>
+	<a href="http://netbsd.student.utwente.nl/rpaulo/">http://netbsd.student.utwente.nl/rpaulo/</a>
+</pre>
+
+<p><font color="#ff0000">NOTE (February 2007):</font>
+The ISO image seems to have been removed from the server,
+but you should be able to create one from scratch using
+instructions available at various locations on the Internet.
+
+
+<p>Only the ISO9660 filesystem image is needed:<pre>
+	<a href="http://netbsd.student.utwente.nl/rpaulo/livecd.raw.bz2">http://netbsd.student.utwente.nl/rpaulo/livecd.raw.bz2</a>
+</pre>
+
+Uncompress the CD image (using bunzip2), and type the following command 
+to attempt to boot directly from the image:<pre>
+	<b>gxemul -XEdreamcast -d co23965696:livecd.raw</b>
+</pre>
+
+(The <tt><b>c</b></tt> disk image option is necessary to treat the raw
+file as a CDROM image, and the <tt><b>o</b></tt> part is needed because
+the ISO9660 filesystem in the image is offset by 11702 sectors, i.e. 2048
+bytes each.)
+
+<p>At the <b><tt>root device:</tt></b> prompt, type 
+<b><tt>gdrom0</tt></b>. For <b><tt>dump device</tt></b>,
+<b><tt>file system</tt></b>, and <b><tt>init path</tt></b>, just press 
+Enter.
+
+
+
+
+
+
+
+<p><br>
+<a name="linux_live_cd"></a>
+<h3>Linux/dreamcast Live CD:</h3>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="20070308-linux-dreamcast-1.png"><img src="20070308-linux-dreamcast-1_small.png"></a>
+&nbsp;&nbsp;&nbsp;
+<a href="20070308-linux-dreamcast-2.png"><img src="20070308-linux-dreamcast-2_small.png"></a>
+
+<p>A Linux/dreamcast Live CD ISO image can be found here:<pre>
+	<a href="http://ftp.riken.go.jp/pub/misc/Japan/m17n.org/super-h/CD-R/lc2000.iso">http://ftp.riken.go.jp/pub/misc/Japan/m17n.org/super-h/CD-R/lc2000.iso</a>
+</pre>
+
+Once you have downloaded the ISO image, type the following command to 
+boot directly from the image:<pre>
+	<b>gxemul -XEdreamcast -d o23965696:lc2000.iso</b>
+</pre>
+
+<p>(It seems that this specific iso image was built using instructions
+from <a href="http://www.anytux.org/doc.php?doc_id=1">http://www.anytux.org/doc.php?doc_id=1</a>.)
+
+
+
+
+
+
+
+
+<p><br>
+
+
+
+</body>
+</html>
+

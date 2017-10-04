@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd memory_access_test
+set test "memory_access_test"
+
+set expected {return_val=\s+32\s+}
+set gxexpected {reg: v0 = 0x0000000000000020}
+
+run-test-full $test $expected $gxexpected
+
+cd ..

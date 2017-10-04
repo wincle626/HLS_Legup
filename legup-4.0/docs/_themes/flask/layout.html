@@ -1,0 +1,114 @@
+{%- extends "basic/layout.html" %}
+{%- block extrahead %}
+  {{ super() }}
+  {% if theme_touch_icon %}
+  <link rel="apple-touch-icon" href="{{ pathto('_static/' ~ theme_touch_icon, 1) }}" />
+  {% endif %}
+  <link media="only screen and (max-device-width: 480px)" href="{{
+    pathto('_static/small_flask.css', 1) }}" type= "text/css" rel="stylesheet" />
+{% endblock %}
+{%- block relbar2 %}{% endblock %}
+{% block header %}
+  {{ super() }}
+  {% if pagename == 'index' %}
+  <div class=indexwrapper>
+  {% endif %}
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> 
+  <script type="text/javascript" src="/releases.js"></script> 
+  <script type="text/javascript" src="/docs.js"></script> 
+  <script type="text/javascript" src="/analytics.js"></script> 
+  
+
+  <style type="text/css">
+  .badge {
+    position: fixed;
+    display: inline-block;
+    top: 5px;
+    height: 45px;
+
+    color: #555555;
+    font-size: 36px;
+    font-family: Georgia,Times,"Times New Roman",serif;
+    text-decoration: none;
+
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  }
+
+  #version_menu {
+    position: fixed;
+    display: none;
+    top: 12px;
+    right: 130px;
+    list-style-type: none;
+    margin: 0;
+  }
+  .footer_popout:hover #version_menu {
+    display: block;
+  }
+  #version_menu li {
+    display: block;
+    float: right;
+  }
+  #version_menu li a {
+    display: block;
+    padding: 6px 10px 4px 10px;
+    margin: 7px 7px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    height: 20px;
+    line-height: 17px;
+    text-decoration: none;
+    color: #fff;
+    background: #8ca1af;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 1px 1px #465158;
+    -moz-box-shadow: 0 1px 1px #465158;
+    -webkit-box-shadow: 0 1px 1px #465158;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  #version_menu li a:hover {
+    text-decoration: none;
+    background-color: #697983;
+    box-shadow: 0 1px 0px #465158;
+    -moz-box-shadow: 0 1px 0px #465158;
+    -webkit-box-shadow: 0 1px 0px #465158;
+  }
+  .badge.rtd {
+    width: 110px;
+    padding: 5px;
+    padding-left: 10px;
+    right: 5px;
+    background: none repeat scroll 0 0 #E4F2FD;
+    border: 1px solid #C6D9E9;
+    text-decoration: none;
+    color: #555555;
+  }
+
+</style>
+<div class="rtd_doc_footer">
+  <div class="footer_popout">
+    <a href="http://legup.org" class="badge rtd">LegUp</a>
+    <ul id="version_menu">
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
+{%- block footer %}
+  <div class="footer">
+    &copy; Copyright {{ copyright }}.
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+  </div>
+
+  {% if pagename == 'index' %}
+  </div>
+  {% endif %}
+{%- endblock %}

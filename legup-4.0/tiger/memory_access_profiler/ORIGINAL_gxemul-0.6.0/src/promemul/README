@@ -1,0 +1,16 @@
+$Id: README,v 1.2 2007-02-21 17:05:05 debug Exp $
+
+(P)ROM and BIOS emulation in GXemul:
+------------------------------------
+
+The general philosophy that applies to PROM/BIOS emulation is that no raw 
+binary dumps of real ROMs should be included in GXemul. It is nicer to 
+emulate in software only those parts of a machine's ROM or BIOS that are
+actually necessary to boot an operating system.
+
+This directory contains software emulation of various PROMs and BIOSes.
+
+(Note: Running actual PROM dumps is also possible, and of course has
+several advantages over software simulated PROM call handling. That
+is what GXemul's -Q command line option is for.)
+

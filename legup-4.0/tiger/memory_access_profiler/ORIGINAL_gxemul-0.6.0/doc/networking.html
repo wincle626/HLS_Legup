@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Networking</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Networking</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#intro">Introduction</a>
+  <li><a href="#multihost">Network across multiple hosts</a>
+  <li><a href="#direct_example_1">Direct-access example 1: udp_snoop</a>
+</ul>
+
+
+
+
+
+
+
+<p><br>
+<a name="intro"></a>
+<h3>Introduction:</h3>
+
+GXemul's current networking layer supports two modes:
+
+<p><ol>
+  <li>A NAT-like layer, which allows guest OSes to access the outside
+	internet world (IPv4 only, so far). When only one machine is being 
+	emulated, the following default values apply to the guest OS:<pre>
+	IPv4 address:			10.0.0.1
+	Netmask:			255.0.0.0
+	Gateway / default route:	10.0.0.254
+	Nameserver:			10.0.0.254
+</pre>To the outside world, it will seem as if the host is doing all the
+	networking, since the emulator is just a normal user process
+	on the host.
+  <p>
+  <li>A direct-access layer, allowing external tools to read/write raw
+	ethernet packages from/to the emulator.
+</ol>
+
+<p><i>NOTE:</i> Both these modes have problems. The NAT-like layer is very 
+"hackish" and was only meant as a proof-of-concept, to see if networking 
+like this would work with e.g. NetBSD as a guest OS. (If you are 
+interested in the technical details, and the reasons why NAT networking is 
+implemented this way, you might want to read the <a 
+href="technical.html#net"> networking section in the technical 
+documentation</a>.) Because of the obvious limitations with the NAT 
+approach, I have also included support for direct packet access, but this 
+is not designed for security or anything like that.
+
+<p><font color="#ff0000">Use the networking features at your own risk. 
+</font>
+
+
+<p>The emulated machine must have a NIC (network interface card). Not all
+machines have this. At the moment, the following NICs are more or less
+working:
+
+<ul>
+  <li><tt><b>dec21143</b></tt>, Digital's 21143 PCI NIC (known as <tt>dc</tt>
+	in OpenBSD, or <tt>tlp</tt> in NetBSD)
+  <li><tt><b>ether</b></tt>, the "fake" experimental ethernet device
+	(documented <a href="experiments.html#expdevices_ether">here</a>)
+  <li><tt><b>le</b></tt>, <a href="http://en.wikipedia.org/wiki/TURBOchannel">Turbochannel</a>
+	Lance Ethernet, as used in DECstation 5000/200 ("3max")
+  <li><tt><b>mec</b></tt>, the SGI O2's ethernet controller
+</ul>
+
+<p>It is not possible to simply attach any of the supported NICs into any
+of the supported emulated machines. Some machines, for example, have a 
+specific NIC in them, others may have a PCI bus where a PCI NIC can be 
+used. This is very much machine-dependent.
+
+<p>If you are impatient, and simply want to try out networking in GXemul,
+I would recommend trying out an ftp install of <a
+href="guestoses.html#netbsdpmaxinstall">NetBSD/pmax</a>.
+
+
+
+
+
+
+
+<p><br>
+<a name="multihost"></a>
+<h3>Network across multiple hosts:</h3>
+
+<p>The way to emulate a network of multiple emulated machines, whether 
+they are actually running on the same physical host, or on multiple hosts, 
+is to use <a href="configfiles.html">configuration files</a>, and the
+"direct-access" method of networking.
+
+<p>Although it <i>is</i> possible to have more than one machine per 
+configuration file, I strongly recommend against it. Please use one 
+configuration file for one emulated machine.
+
+<p>Here is a simple example:
+
+<p><table border="0" width="100%"><tr><td width="40">&nbsp;</td>
+<td><pre>
+<font color="#2020cf">!  Configuration file for a
+!  "client" machine, netbooting
+!  of another machine.</font>
+
+<b>net(</b>
+	<b>local_port(15000)</b>
+	<b>add_remote(<font color="#ff003f">"localhost:15001"</font>)</b>
+<b>)</b>
+<b>machine(</b>
+	<b>name(<font color="#ff003f">"client machine"</font>)</b>
+	<b>serial_nr(1)</b>	<font color="#2020cf">!  10.0.0.1</font>
+
+	<b>type(<font color="#ff003f">"sgi"</font>)</b>
+	<b>subtype(<font color="#ff003f">"o2"</font>)</b>
+        <b>load(<font color="#ff003f">"netbsd-GENERIC32_IP3x.gz"</font>)</b>
+<b>)</b>
+</pre></td><td width="20">&nbsp;</td><td><pre>
+<font color="#2020cf">!  Configuration file for the
+!  "server" machine.</font>
+
+<b>net(</b>
+	<b>local_port(15001)</b>
+	<b>add_remote(<font color="#ff003f">"localhost:15000"</font>)</b>
+<b>)</b>
+<b>machine(</b>
+	<b>name(<font color="#ff003f">"nfs server"</font>)</b>
+	<b>serial_nr(2)</b>	<font color="#2020cf">!  10.0.0.2</font>
+
+        <b>type(<font color="#ff003f">"dec"</font>)</b>
+        <b>subtype(<font color="#ff003f">"3max"</font>)</b>
+        <b>disk(<font color="#ff003f">"nbsd_pmax.img"</font>)</b>
+<b>)</b>
+</pre></td><td width="20">&nbsp;</td></tr></table>
+
+<p>This example creates a network using the default settings (10.0.0.0/8), 
+but it also uses the direct-access networking mode to allow the network 
+to be connected to other emulator instances. <tt>local_port(15000)</tt> 
+means that anything coming in to UDP port 15000 on the host is added to 
+the network. All ethernet packets on the network are also sent out to all 
+other connected machines (those added with <tt>add_remote()</tt>).
+
+<p>As you can see in the example, this is a configuration file for
+netbooting a NetBSD/sgimips diskless machine, with a NetBSD/pmax machine
+acting as the nfs server. Note that the nfs server has ports 15000 and 
+15001 reversed, compared to the client!
+
+<p>"<tt>localhost</tt>" can be changed to the Internet hostname of a 
+remote machine, to run the simulation across a physical network.
+
+<p><font color="#ff0000"><b>NOTE:</b> There is no error checking or
+security checking of any kind. All UDP packets arriving at the input port
+are added to the emulated ethernet. This is not very good of course; use 
+this feature at your own risk.</font>
+
+
+
+
+
+<p><br>
+<a name="direct_example_1"></a>
+<h3>Direct-access example 1: udp_snoop:</h3>
+
+The most basic example of how the simple direct-access system works is a small 
+program in the <tt>experiments/</tt> directory, <tt>udp_snoop</tt>, which simply 
+dumps incoming UDP packets to the terminal, in hex and ASCII.
+
+<p>The easiest way to test the example is to download a <a href="ftp://ftp.netbsd.org/pub/NetBSD/NetBSD-3.1/pmax/binary/kernel/netbsd-INSTALL.gz">
+NetBSD/pmax INSTALL kernel</a>, and start the emulator with a configuration file 
+looking something like this:
+
+<pre>
+	net(
+	    add_remote("localhost:12300")
+	)
+
+	machine(
+	    subtype(3max)
+	    load("netbsd-INSTALL.gz")
+	)
+</pre>
+
+<p>In addition to the machine section, you can see that there is also a 
+<tt>net()</tt> section. It defaults to emulating a 10.0.0.0/8 IPv4 NATed
+network, but there is also an additional "raw output", to UDP port 12300.
+
+<p>Now, do the following:
+<ul>
+  <li>Start the emulator with the configuration file, i.e.
+	<tt><b>gxemul @testconfig</b></tt>.
+  <li>Start <tt><b>udp_snoop 12300</b></tt> in another terminal.
+  <li>Inside emulated NetBSD/pmax, type <tt><b>ifconfig le0 10.0.0.1</b></tt>.
+</ul>
+
+<p>This should be enough to see broadcast messages from the guest OS which 
+are not directed to the gateway. It might look like this:
+
+<pre>
+	$ ./udp_snoop 12300
+	 ff ff ff ff ff ff 10 20 30 00 00 10 08 06 00 01  ....... 0.......
+	 08 00 06 04 00 01 10 20 30 00 00 10 0a 00 00 02  ....... 0.......
+	 00 00 00 00 00 00 0a 00 00 02 00 00 00 00 00 00  ................
+	 00 00 00 00 00 00 00 00 00 00 00 00              ............
+
+	 33 33 ff 00 00 10 10 20 30 00 00 10 86 dd 60 00  33..... 0.....`.
+	 00 00 00 20 00 01 00 00 00 00 00 00 00 00 00 00  ... ............
+	 00 00 00 00 00 00 ff 02 00 00 00 00 00 00 00 00  ................
+	 00 01 ff 00 00 10 3a 00 01 00 05 02 00 00 83 00  ......:.........
+	 80 83 00 00 00 00 ff 02 00 00 00 00 00 00 00 00  ................
+	 00 01 ff 00 00 10                                ......
+	...
+</pre>
+
+
+
+
+</p>
+
+</body>
+</html>
+
+

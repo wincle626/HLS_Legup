@@ -1,0 +1,44 @@
+Emulated (ethernet / internet) network support.
+
+NOTE:  This is just an ugly hack, and just barely enough to get some
+       Internet networking up and running for the guest OS.
+
+TODO:
+	o)  TCP: fin/ack stuff, and connection time-outs and
+	    connection refused (reset on connect?), resend
+	    data to the guest OS if no ack has arrived for
+	    some time (? buffers?)
+		http://www.tcpipguide.com/free/t_TCPConnectionTermination-2.htm
+	o)  remove the netbsd-specific options in the tcp header (?)
+	o)  Outgoing UDP packet fragment support.
+	o)  IPv6  (outgoing, incoming, and the nameserver/gateway)
+	o)  Incoming connections
+
+(TODO 2: The following comments are old! Fix this.)
+
+The emulated NIC has a MAC address of (for example) 10:20:30:00:00:10.
+From the emulated environment, the only other machine existing on the
+network is a "gateway" or "firewall", which has an address of
+60:50:40:30:20:10. This module (net.c) contains the emulation of that
+gateway. It works like a NAT firewall, but emulated in userland software.
+
+The gateway uses IPv4 address 10.0.0.254, the guest OS (inside the
+emulator) could use any 10.x.x.x address, except 10.0.0.254. A suitable
+choice is, for example 10.0.0.1.
+
+
+	|------------------  a network  --------------------------------|
+		^               ^				^
+		|               |				|
+	    a NIC connected    another NIC                the gateway
+	    to the network					|
+								v
+							     outside
+							      world
+
+The gateway isn't connected as a NIC, but is an "implicit" machine on the
+network.
+
+(See http://www.sinclair.org.au/keith/networking/vendor.html for a list
+of ethernet MAC assignments.)
+

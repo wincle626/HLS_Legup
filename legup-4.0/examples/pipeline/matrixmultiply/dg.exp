@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd pipeline/matrixmultiply
+set test "pipeline/matrixmultiply"
+set expected {return_val=\s+962122000\s+.*Cycles:\s+10043\s+}
+set gxexpected {reg: v0 = 0x000000003958d110}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

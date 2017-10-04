@@ -1,0 +1,30 @@
+load_lib legup.exp
+
+set hybridexpected {# Sum: 17690187}
+
+cd ../examples/parallel/single/divstore
+set test "divstore Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/divstore
+set test "divstore Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/divstore_pipeline
+set test "divstore_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/divstore_2
+set test "divstore_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../divstore_3
+set test "divstore_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../divstore_4
+set test "divstore_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../
+

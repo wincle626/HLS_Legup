@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/dfsin
+set test "dfsin"
+set expected {return_val=\s+36\s+}
+set gxexpected {reg: v0 = 0x0000000000000024}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

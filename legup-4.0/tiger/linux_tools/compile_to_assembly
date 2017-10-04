@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+	echo "Incorrect usage.  Expected: compile_to_assembly <file.c>"
+else
+	FILENAME=${1##*/}
+	BASENAME=${FILENAME%%.*}
+	INCLUDEPATH="../tool_source/lib"
+
+	LLVM_OPT="-O1 -mllvm -disable-llvm-optzns" #"-O0 -g" #
+	O2_PASSES="-domtree -domfrontier -globalopt -globaldce -ipconstprop -deadargelim -instcombine -basiccg -functionattrs -inline -simplify-libcalls -instcombine -jump-threading -domtree -domfrontier -instcombine -break-crit-edges -tailcallelim -reassociate -domtree -loops -loopsimplify -domfrontier -lcssa -loop-rotate -lcssa -loop-unswitch -instcombine -scalar-evolution -lcssa -iv-users -indvars -loop-deletion -lcssa -loop-unroll -instcombine -memdep -memcpyopt -sccp -instcombine -break-crit-edges -domtree -memdep -dse -adce -strip-dead-prototypes -print-used-types -deadtypeelim -constmerge"
+	
+	echo "Filename = $BASENAME"
+	
+	# Using Jason's LLVM (2.7)
+	#llvm-gcc $1 ${LLVM_OPT} -emit-llvm -c -o ${BASENAME}.bc -I ${INCLUDEPATH}
+	#/janders/a/a0/janders/LLVM27/llvm-2.7/Release/bin/opt ${BASENAME}.bc -o ${BASENAME}.bc ${O2_PASSES}
+	#/janders/a/a0/janders/LLVM27/llvm-2.7/Release/bin/llc ${BASENAME}.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -f -o ${BASENAME}.s
+	
+	#Using Legup's LLVM (2.6)
+	llvm-gcc $1 ${LLVM_OPT} -emit-llvm -c -o ${BASENAME}${EXT}.bc -I ${INCLUDEPATH}
+	opt ${BASENAME}.bc -o ${BASENAME}${EXT}.bc ${O2_PASSES}
+	llc ${BASENAME}.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -f -o ${BASENAME}.s
+fi

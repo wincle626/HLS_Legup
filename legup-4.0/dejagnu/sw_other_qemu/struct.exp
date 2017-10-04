@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd struct
+set test "struct"
+set expected {Result: 372}
+
+run-test-qemu $test $expected
+
+cd ..

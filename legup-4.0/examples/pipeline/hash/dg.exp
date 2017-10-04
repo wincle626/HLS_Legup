@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/hash
+set test "pipeline/hash"
+set expected {return_val=\s+91\s+.*Cycles:\s+645\s+}
+
+run-test $test $expected
+
+cd ../..

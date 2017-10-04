@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/gaussblur
+set test "gaussblur"
+set expected {return_val=\s+1931186\s+}
+set gxexpected {reg: v0 = 0x00000000001d77b2}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

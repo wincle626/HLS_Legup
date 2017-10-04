@@ -1,0 +1,13 @@
+load_lib legup.exp
+
+set hybridexpected {# Result: 60799800}
+
+cd ../examples/parallel/openmp/dotproduct
+set test "dotproduct OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../pthreads/dotproduct
+set test "dotproduct Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../../

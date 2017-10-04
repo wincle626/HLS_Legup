@@ -1,0 +1,43 @@
+load_lib legup.exp
+
+set expected {# Sum =\s+25\s+}
+set hybridexpected {# Sum = 25}
+
+cd ../examples/parallel/single/primestore
+set test "primestore Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/primestore
+set test "primestore Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "primestore Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/primestore_pipeline
+set test "primestore_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "primestore_pipeline Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/primestore_2
+set test "primestore_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "primestore_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../primestore_3
+set test "primestore_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "primestore_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../primestore_4
+set test "primestore_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "primestore_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../
+

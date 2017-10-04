@@ -1,0 +1,15 @@
+#
+#  Makefile for GXemul include files
+#
+
+all: ppc_spr_strings.h
+
+ppc_spr_strings.h: make_ppc_spr_strings
+	grep '#define.SPR_' thirdparty/ppc_spr.h |cut -d _ -f 2- | ./make_ppc_spr_strings > ppc_spr_strings.h
+
+clean:
+	rm -f *core ppc_spr_strings.h make_ppc_spr_strings
+
+clean_all: clean
+	rm -f Makefile
+

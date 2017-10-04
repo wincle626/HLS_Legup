@@ -1,0 +1,20 @@
+load_lib legup.exp
+
+set expected {# Result:\s+5\s+}
+set hybridexpected {# Result: 5}
+
+cd ../examples/parallel/openmp/histogram
+set test "histogram OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+set test "histogram OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/histogram
+set test "histogram Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "histogram Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

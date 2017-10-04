@@ -1,0 +1,9 @@
+This serial divider implementation is based on the one described
+in Section 10.2.4 of Stephen Brown and Zvonko Vranesic, "Fundamentals of
+Digital Logic with Verilog Design", McGaw-Hill, 2003.
+
+See the comments in SerialDivider.v for details.
+
+To run the testbench:
+    cd testbench
+    make

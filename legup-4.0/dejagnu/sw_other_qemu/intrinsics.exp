@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd intrinsics
+set test "intrinsics"
+set expected {Result: 50529027}
+
+run-test-qemu $test $expected
+
+cd ..

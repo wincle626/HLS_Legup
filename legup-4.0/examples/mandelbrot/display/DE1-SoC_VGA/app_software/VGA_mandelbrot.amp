@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<altera_monitor_program_project version="1.0">
+    <architecture>ARM Cortex-A9</architecture>
+    <system>
+        <system_info filepath="true">../Computer_System.sopcinfo</system_info>
+        <system_sof filepath="true">../DE1_SoC_VGA.sof</system_sof>
+        <system_jdi filepath="true"/>
+        <cable>DE-SoC [1-1.3]</cable>
+        <processor>Arm_A9_HPS_arm_a9_0</processor>
+        <terminal>Semihosting</terminal>
+    </system>
+    <program>
+        <type>C Program</type>
+        <source_files>
+            <source_file filepath="true">mandelbrot.c</source_file>
+        </source_files>
+        <options>
+            <compiler_flags>-O3</compiler_flags>
+            <emulate_unimpl_instructions>false</emulate_unimpl_instructions>
+            <use_small_c_library>false</use_small_c_library>
+        </options>
+        <linker_sections>
+            <linker_section name=".text">
+                <memory_device>ARM_DDR3_SDRAM.axi_slave</memory_device>
+                <base_address>0x00000000</base_address>
+                <end_address>0x3FFFFFFB</end_address>
+                <required_section/>
+            </linker_section>
+            <linker_section name=".stack">
+                <memory_device>ARM_DDR3_SDRAM.axi_slave</memory_device>
+                <base_address>0x3FFFFFFC</base_address>
+                <end_address>0x3FFFFFFF</end_address>
+                <required_section/>
+            </linker_section>
+        </linker_sections>
+    </program>
+</altera_monitor_program_project>

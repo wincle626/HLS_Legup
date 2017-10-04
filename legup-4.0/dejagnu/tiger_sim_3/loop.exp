@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd loop
+set test "loop"
+set expected {Result: 496}
+
+run-test-sw $test $expected
+
+cd ..

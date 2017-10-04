@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/waitrequest
+set test "pipeline/waitrequest"
+set expected {return_val=\s+1127\s+}
+
+run-test $test $expected
+
+cd ../..

@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd array
+set test "array"
+
+set expected {Result: 156}
+
+run-test-on-board $test $expected
+
+cd ..

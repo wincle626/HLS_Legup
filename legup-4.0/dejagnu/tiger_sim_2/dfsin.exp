@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/dfsin
+set test "dfsin"
+set expected {Result: 36}
+
+run-test-sw $test $expected
+
+cd ../..

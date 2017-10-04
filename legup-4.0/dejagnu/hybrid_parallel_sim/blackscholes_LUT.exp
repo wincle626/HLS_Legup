@@ -1,0 +1,35 @@
+load_lib legup.exp
+
+set expected {# sum =\s+11159\s+}
+set hybridexpected {# sum = 11159}
+
+cd ../examples/parallel/single/blackscholes_LUT
+set test "blackscholes Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/blackscholes_LUT
+set test "blackscholes Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "blackscholes Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/blackscholes_LUT_2
+set test "blackscholes_2 Pthreads+Openmp"
+run-test-hybridparallel-once $test $hybridexpected
+set test "blackscholes_2 Pthreads+Openmp_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../blackscholes_LUT_3
+set test "blackscholes_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "blackscholes_3 Pthreads+Openmp_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../blackscholes_LUT_4
+set test "blackscholes_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "blackscholes_4 Pthreads+Openmp_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

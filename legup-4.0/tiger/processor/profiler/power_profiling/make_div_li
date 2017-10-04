@@ -1,0 +1,60 @@
+#!/bin/bash
+
+NUM_INSTRS=500	# later can introduce loops
+
+# Instruction Classes
+ARITH_LOHI="div,divu,mult,multu"								# HI/LO = F(S,T)
+
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%.*}
+	OUT_NAME="$NAME"
+	
+	# Find name so we don't overwrite previously created files
+	if [ -f $OUT_NAME.elf ]; then
+		IDX=1
+		while [ -f $OUT_NAME.$IDX.elf ]; do
+			let "IDX += 1"
+		done
+		OUT_NAME="$NAME.$IDX"
+	fi
+	
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	#rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+
+if [ "1" = "1" ]; then
+	sed "s|add \$9, \$10, \$11|divu \$zero, \$10, \$11|g" assembly/add.li.s > assembly/div.li.s
+	assemble assembly/div.li.s
+	sed "s|add \$9, \$10, \$11|divu \$zero, \$10, \$11|g" assembly/add.li.s > assembly/divu.li.s
+	assemble assembly/divu.li.s
+	sed "s|add \$9, \$10, \$11|mult \$10, \$11|g" assembly/add.li.s > assembly/mult.li.s
+	assemble assembly/mult.li.s
+	sed "s|add \$9, \$10, \$11|multu \$10, \$11|g" assembly/add.li.s > assembly/multu.li.s
+	assemble assembly/multu.li.s
+
+	cp assembly/li.add.src assembly/li.div.src
+	cp assembly/li.add.s assembly/li.div.s
+	cp assembly/li.add.elf assembly/li.div.elf
+	cp assembly/li.add.sdram.dat assembly/li.div.sdram.dat
+	exit
+fi

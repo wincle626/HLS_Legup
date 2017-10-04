@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/chstone/mips
+set test "mips"
+
+set pcieexpected {#\s+avm_mem_readdata:\s+fffffff7ffffffef\n#\s+avm_mem_readdata:\s+0000000300000000\n#\s+avm_mem_readdata:\s+0000000b00000005\n#\s+avm_mem_readdata:\s+0000002600000016\n#\s+avm_mem_readdata:\s+xxxxxxxx00000263\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../../examples

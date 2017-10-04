@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/if-conv-simple
+set test "pipeline/if-conv-simple"
+set expected {return_val=4294967211\s+.*Cycles:\s+67\s+}
+
+run-test $test $expected
+
+cd ../..

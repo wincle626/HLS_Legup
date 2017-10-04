@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd llist
+set test "llist"
+set expected {return_val=\s+4831\s+}
+set gxexpected {reg: v0 = 0x00000000000012df}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

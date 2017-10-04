@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/chstone/aes
+set test "aes"
+
+set pcieexpected {#\s+avm_mem_readdata:\s+0000002500000039\n#\s+avm_mem_readdata:\s+0000001d00000084\n#\s+avm_mem_readdata:\s+000000dc00000002\n#\s+avm_mem_readdata:\s+000000fb00000009\n#\s+avm_mem_readdata:\s+00000011000000dc\n#\s+avm_mem_readdata:\s+0000009700000085\n#\s+avm_mem_readdata:\s+0000006a00000019\n#\s+avm_mem_readdata:\s+000000320000000b\n#\s+avm_mem_readdata:\s+00c9479c001d5db0\n#\s+avm_mem_readdata:\s+000000bfbf895714\n#\s+avm_mem_readdata:\s+001de6900000000e\n#\s+avm_mem_readdata:\s+f63d4e2eb779de0c\n#\s+avm_mem_readdata:\s+0000000400000000\n#\s+avm_mem_readdata:\s+0000000000c988f8\n#\s+avm_mem_readdata:\s+0000000100000000\n#\s+avm_mem_readdata:\s+b779de480000088e\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../../examples

@@ -1,0 +1,13 @@
+load_lib legup.exp
+
+set expected {# Result:\s+55000\s+}
+set hybridexpected {# Result: 55000}
+
+cd ../examples/parallel/openmp/atomic
+set test "atomic OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+set test "atomic OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

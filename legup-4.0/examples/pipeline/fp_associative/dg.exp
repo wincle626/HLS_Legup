@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/fp_associative
+set test "pipeline/fp_associative"
+set expected {return_val=\s+265\s+.*Cycles:\s+387\s+}
+
+run-test $test $expected
+
+cd ../..

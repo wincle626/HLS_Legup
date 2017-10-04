@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd loadstore
+set test "loadstore"
+set expected {return_val=\s+4\s+}
+
+run-test $test $expected
+
+cd ..

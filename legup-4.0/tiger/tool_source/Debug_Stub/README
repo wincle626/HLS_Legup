@@ -1,0 +1,20 @@
+This is the source for the debugging stub that is used for debugging support and bootloading.  It is used in 
+conjunction with the MIPS Communication Server on the PC side which translates the GDB remote debugging protocol 
+into a simpler cleaner version that is passed over the JTAG UART to the debuging stub.
+
+To build simply run the build script in cygwin.  In order to use the new debug stub in a system take the ROM.mif 
+file produced and use it as the initialisation file for the memory block that will contain the stub.  You may 
+need to convert it to a .hex file first (just open it up in Quartus and save as .hex).  When you've changed the 
+debug stub memory file you can use the updated version by running Processing->Update Memory Initialization File 
+followed by Processing->Start->Assembler.  Then when you program the board the latest version of the file will 
+be used.
+
+The debugging stub must be the first thing that is executed, in the default version of the processor the PC 
+starts at 0, hence the debugging stub should be put into a memory block which starts at address 0.  Futhermore 
+the debugging stub implements an exception handler which is located at an offset 0xA00 from the start.  The 
+default location for the exception handler is at 0xA00, so if you wish to put the debug stub at somewhere other 
+than 0, or change the exception handler address you'll want to relocate the debugging stub (take a look at the 
+linker script).  Futhermore if you want your own custom exception handler you'll need to integrate it in with the 
+current debug stub exception handler.  The current exception handler has any exception caused by a break or a 
+syscall handled by jumping into the debug stub, if an interrupt with an irq number of 0 occurs it also jumps to 
+the debug stub, any other hardware interrupts are ignored and it just jumps back to the EPC.

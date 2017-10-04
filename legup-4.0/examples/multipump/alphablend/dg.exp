@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/alphablend
+set test "alphablend"
+set expected {return_val=\s+376250\s+}
+set gxexpected {reg: v0 = 0x000000000005bdba}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

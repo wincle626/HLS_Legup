@@ -1,0 +1,28 @@
+#Core: ddr2_phy - Instance: tiger_sopc|the_ddr2|ddr2_controller_phy_inst|ddr2_phy_inst
+#Path, Setup Margin, Hold Margin
+"Address Command (Slow 900mV 85C Model)",0.545,0.578
+"DQS vs CK (Slow 900mV 85C Model)",0.301,0.350
+"Half Rate Address/Command (Slow 900mV 85C Model)",2.376,1.128
+"Phy (Slow 900mV 85C Model)",-0.483,0.085
+"Phy Reset (Slow 900mV 85C Model)",1.160,0.477
+"Read Capture (Slow 900mV 85C Model)",0.197,0.185
+"Read Resync (All Conditions)",0.523,0.562
+"Write (Slow 900mV 85C Model)",0.100,0.100
+ 
+"Address Command (Slow 900mV 0C Model)",0.600,0.576
+"DQS vs CK (Slow 900mV 0C Model)",0.333,0.377
+"Half Rate Address/Command (Slow 900mV 0C Model)",2.476,1.086
+"Phy (Slow 900mV 0C Model)",-0.187,0.052
+"Phy Reset (Slow 900mV 0C Model)",1.347,0.463
+"Read Capture (Slow 900mV 0C Model)",0.193,0.184
+"Read Resync (All Conditions)",0.524,0.563
+"Write (Slow 900mV 0C Model)",0.118,0.097
+ 
+"Address Command (Fast 900mV 0C Model)",0.806,0.515
+"DQS vs CK (Fast 900mV 0C Model)",0.395,0.426
+"Half Rate Address/Command (Fast 900mV 0C Model)",2.873,0.865
+"Phy (Fast 900mV 0C Model)",0.781,0.073
+"Phy Reset (Fast 900mV 0C Model)",2.687,0.265
+"Read Capture (Fast 900mV 0C Model)",0.191,0.248
+"Read Resync (All Conditions)",0.540,0.579
+"Write (Fast 900mV 0C Model)",0.149,0.160

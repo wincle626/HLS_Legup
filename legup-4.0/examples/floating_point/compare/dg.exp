@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/compare
+set test "compare"
+set expected {return_val=\s+863\s+}
+
+run-test $test $expected
+
+cd ../..

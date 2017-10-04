@@ -1,0 +1,35 @@
+load_lib legup.exp
+
+set expected {# Result:\s+56060\s+}
+set hybridexpected {# Result: 56060}
+
+cd ../examples/parallel/single/mcml_simple
+set test "mcml Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/mcml_simple
+set test "mcml Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "mcml Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/mcml_simple_2
+set test "mcml_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "mcml_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../mcml_simple_3
+set test "mcml_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "mcml_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../mcml_simple_4
+set test "mcml_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "mcml_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

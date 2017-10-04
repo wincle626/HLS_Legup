@@ -1,0 +1,25 @@
+#
+#  Makefile for GXemul src/main/commands
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(CPEDANTIC) $(INCLUDE2)
+LIBS=$(OTHERLIBS)
+
+OBJS=AddComponentCommand.o BackwardStepCommand.o CloseCommand.o \
+	ContinueBackwardsCommand.o ContinueCommand.o CopyComponentCommand.o \
+	HelpCommand.o \
+	LoadCommand.o ListComponentsCommand.o MoveComponentCommand.o \
+	PauseCommand.o \
+	QuitCommand.o RemoveComponentCommand.o ResetCommand.o \
+	SaveCommand.o StatusCommand.o StepCommand.o VersionCommand.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+clean:
+	rm -f $(OBJS)
+
+clean_all: clean
+	rm -f Makefile
+

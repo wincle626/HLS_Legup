@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd select
+set test "select"
+set expected {return_val=\s+15\s+}
+set gxexpected {reg: v0 = 0x000000000000000f}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

@@ -1,0 +1,6 @@
+# config.tcl - LegUp configuration file
+
+puts "export NO_INLINE=1"
+# set_accelerator_function "function"
+#   mark "function" to be accelerated. Can be used multiple times.
+set_accelerator_function "main"

@@ -1,0 +1,101 @@
+bus_isa.cc  Generic ISA bus framework
+bus_pci.cc  Generic PCI bus framework
+dev_8253.cc  Intel 8253/8254 Programmable Interval Timer
+dev_8259.cc  Intel 8259 Programmable Interrupt Controller
+dev_adb.cc  Apple Desktop Bus (ADB) controller
+dev_ahc.cc  Adaptec AHC SCSI controller
+dev_algor.cc  Algor P5064 misc. stuff
+dev_asc.cc  NCR53C9X "ASC" SCSI controller
+dev_bebox.cc  BeBox motherboard registers and interrupt controller
+dev_bt431.cc  Brooktree BT431, used by TURBOchannel graphics cards
+dev_bt455.cc  Brooktree BT455, used by TURBOchannel graphics cards
+dev_bt459.cc  Brooktree BT459, used by TURBOchannel graphics cards
+dev_clmpcc.cc  Cirrus Logic 4-Channel Communications Controller (CD2400/CD2401)
+dev_colorplanemask.cc  Color plane mask, used in the DECstation 3100 machine
+dev_cons.cc  A simple console device, for the test machines
+dev_cpc700.cc  IBM CPC700 bridge (PCI and interrupt controller)
+dev_dc7085.cc  DC7085 serial controller, used in some DECstation models
+dev_dec21030.cc  DEC 21030 "TGA" graphics card
+dev_dec21143.cc  DEC 21143 "Tulip" ethernet controller
+dev_dec5800.cc  DECsystem 58x0 devices
+dev_dec_ioasic.cc  IOASIC device used in the DECstation "3MIN" and "3MAX" machines
+dev_disk.cc  A simple disk controller device, for the test machines
+dev_dreamcast_asic.cc  Dreamcast-specific ASIC
+dev_dreamcast_g2.cc  Dreamcast G2 bus
+dev_dreamcast_gdrom.cc  Dreamcast GD-ROM
+dev_dreamcast_maple.cc  Dreamcast Maple bus controller
+dev_dreamcast_rtc.cc  Dreamcast Real-Time Clock
+dev_eagle.cc  Motorola MPC105 "Eagle" host bridge
+dev_ether.cc  A simple ethernet controller, for the test machines
+dev_fb.cc  Generic framebuffer device
+dev_fbctrl.cc  Framebuffer controller device (control's dev_fb in test machines)
+dev_fdc.cc  PC-style floppy controller
+dev_footbridge.cc  DC21285 "Footbridge" controller; used in Netwinder and Cats
+dev_gc.cc  Grand Central Interrupt controller (used by MacPPC)
+dev_gt.cc  Galileo Technology GT-64xxx PCI controller
+dev_hammerhead.cc  Hammerhead controller, for the secondary CPU on MacPPC machines
+dev_i80321.cc  Intel i80321 (ARM) core functionality
+dev_igsfb.cc  Integraphics Systems "igsfb" Framebuffer graphics card
+dev_iq80321_7seg.cc  IQ80321 LED device
+dev_irqc.cc  Generic IRQ controller for the test machines
+dev_jazz.cc  Microsoft Jazz-related stuff (Acer PICA-61, etc)
+dev_kn01.cc  DEC KN01 ("PMAX", DECstation type 1) control register and VDAC
+dev_kn02.cc  DEC KN02 mainbus (TurboChannel interrupt controller)
+dev_kn220.cc  DEC KN220 (DECsystem 5500) devices
+dev_kn230.cc  DEC KN230 (MIPSMATE 5100) stuff
+dev_le.cc  LANCE ethernet, as used in DECstations
+dev_lpt.cc  LPT (parallel printer) controller
+dev_m8820x.cc  M88200/M88204 CMMU (Cache/Memory Management Unit)
+dev_malta_lcd.cc  Malta (evbmips) LCD display
+dev_mb8696x.cc  Fujitsu MB8696x Ethernet interface (used in the Dreamcast)
+dev_mc146818.cc  MC146818 real-time clock
+dev_mk48txx.cc  Mostek MK48Txx Real Time Clock
+dev_mp.cc  Generic Multi-processor controller for the test machines
+dev_mvme187.cc  MVME187-specific devices and control registers
+dev_ns16550.cc  NS16550 serial controller
+dev_ohci.cc  USB Open Host Controller Interface
+dev_osiop.cc  NCR 53C710 SCSI I/O Processor (SIOP)
+dev_pcc2.cc  Peripheral Channel Controller (PCC2) bus (used in MVME machines)
+dev_pccmos.cc  PC CMOS/RTC device (ISA ports 0x70 and 0x71)
+dev_pcic.cc  Intel 82365SL PC Card Interface Controller
+dev_pckbc.cc  8042 PC keyboard controller (+ 8242WB Keyboard/Mouse controller)
+dev_pmagja.cc  TURBOchannel PMAG-JA graphics card
+dev_pmppc.cc  Artesyn PM/PPC motherboard registers
+dev_prep.cc  PReP machine mainbus (ISA bus + interrupt controller)
+dev_ps2_ether.cc  PlayStation 2 ethernet (smap and emac3)
+dev_ps2_gif.cc  PlayStation 2 "gif" graphics device
+dev_ps2_gs.cc  PlayStation 2 graphics system
+dev_ps2_spd.cc  PlayStation 2 SPD harddisk controller
+dev_ps2_stuff.cc  PlayStation 2 misc stuff (timer, DMA, interrupts, ...)
+dev_pvr.cc  PowerVR CLX2 (graphics controller used in the Dreamcast)
+dev_px.cc  TURBOchannel Pixelstamp graphics card
+dev_ram.cc  A generic RAM (memory) device
+dev_random.cc  A device which returns random data for reads, discards all writes
+dev_rs5c313.cc  RICOH RS5C313 Real Time Clock
+dev_rtc.cc  A generic Real-Time Clock device, for the test machines
+dev_rtl8139c.cc  Realtek 8139 ethernet controller
+dev_scc.cc  Serial controller used in some DECsystem and SGI machines
+dev_sfb.cc  SFB TURBOchannel framebuffer (graphics card)
+dev_sgi_gbe.cc  SGI "gbe", graphics controller + framebuffer
+dev_sgi_ip19.cc  SGI IP19 (and IP25) stuff
+dev_sgi_ip20.cc  SGI IP20 stuff
+dev_sgi_ip22.cc  SGI IP22 stuff
+dev_sgi_ip30.cc  SGI IP30 stuff
+dev_sgi_ip32.cc  SGI IP32 stuff (CRIME, MACE, MACEPCI, mec, ust, mte)
+dev_sgi_mardigras.cc  MardiGras graphics controller on SGI IP30 (Octane)
+dev_sh4.cc  SH4-specific memory mapped registers (0xf0000000 - 0xffffffff)
+dev_sii.cc  SII SCSI controller, used in some DECstation systems
+dev_sn.cc  National Semiconductor SONIC ("sn") DP83932 ethernet controller
+dev_ssc.cc  System Support Chip serial controller
+dev_turbochannel.cc  TURBOchannel bus framework, used in DECstation machines
+dev_uninorth.cc  Uni-North PCI controller (used by MacPPC machines)
+dev_unreadable.cc  A simple device which returns an error for all reads/writes
+dev_v3.cc  V3 Semiconductor PCI controller
+dev_vga.cc  VGA framebuffer device (charcell and graphics modes)
+dev_vme.cc  VME bus
+dev_vr41xx.cc  VR41xx (VR4122 and VR4131) misc functions
+dev_wdc.cc  Standard "wdc" IDE controller
+dev_z8530.cc  Zilog Z8530 "zs" serial controller
+dev_zero.cc  A simple device which returns zero for reads, discards all writes
+device.cc  Device registry framework
+lk201.cc  LK201 keyboard and mouse, used by the dc7085 and scc controllers

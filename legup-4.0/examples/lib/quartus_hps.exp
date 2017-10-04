@@ -1,0 +1,182 @@
+#!/usr/bin/expect
+
+################################################################################
+#
+# This script does three things:
+#  1) Starts the JTAG UART terminal
+#  2) Starts quartus_hps and programs the board
+#  3) Sends the continue signal to the quartus_hps GDB server to run the program
+#
+################################################################################
+
+# eg. adpcm, main, mips, bf
+set benchmark_name [lindex [split [lindex [split [lindex $argv end] .] 0] =] 1]
+
+set output_file_name "$benchmark_name.jtag_uart.txt"
+set jtag_uart_script_name "jtag_uart_terminal.sh"
+set port_number 2499
+
+
+# needed so jtag uart terminal can find libjtag_atlantic.so
+#set lib_path [file normalize [file dirname [exec which quartus] ]/../linux]
+
+
+################################################################################
+
+
+# set the timeout to 1 min
+set timeout 60
+
+# use a separate bash script to launch the jtag uart terminal because we want to
+# pipe the output to a separate file, and we cannot do that directly with spawn.
+# The script should be in the same directory as this file.
+set term [file dirname [file normalize [info script]]]/$jtag_uart_script_name
+
+# Pre-run the jtag uart.  This has two functions:
+#  1) flush any old output from the jtag uart
+#  2) program the fpga if it has not yet been programmed
+spawn $term
+expect {
+	# Connection successful -> Wait 100 ms to drain buffer, then kill it
+	"connected" {
+		after 100
+		send \003
+		# wait for terminal to exit
+		interact
+	}
+	# Can talk to FPGA, but no JTAG core on it -> attempt to program FPGA
+	"There are no JTAG UARTs available" {
+		# show output and wait for it to finish
+		after 100
+		puts "No JTAG cores found on device."
+		puts "Attempting to program FPGA now.\n"
+
+		# preserve this spawn_id
+		set term_id $spawn_id
+		# Program the FPGA
+		spawn make program_board
+
+		# get pass/fail
+		expect {
+			"cable not detected" {
+				exit 1
+			}
+			"success" {
+				after 100
+			}
+		}
+		# revert spawn_id
+		set spawn_id $term_id
+	}
+	# No JTAG found -> board may not be plugged in or powered on
+	#"You do not have any JTAG cables on your system"
+	"There are no JTAG cables available" {
+		interact
+		puts "\nexpect: JTAG UART fail.  Is the board on?\n"
+		exit 1
+	}
+	# Another JTAG terminal is open
+	"other application" {
+		interact
+		puts "\nexpect: Another JTAG UART terminal is open.\n"
+		exit 1
+	}
+	default {
+		interact
+		exit 1
+	}
+}
+
+
+# start a fresh jtag uart terminal
+set outfile [pwd]/$output_file_name
+spawn $term $outfile
+expect {
+	"connected" {
+		after 100
+		# save the jtag uart terminal spawn_id
+		set term_id $spawn_id
+		expect "terminate"
+	}
+	# Another JTAG terminal is open
+	"other application" {
+		interact
+		puts "\nexpect: Another JTAG UART terminal is open.\n"
+		exit 1
+	}
+	# If not connected, shut down.  Something is wrong.
+	default {
+		interact
+		puts "\nNot Connected!\n"
+		exit 1
+	}
+}
+
+
+# Launch quartus_hps with the specified command line args.
+# This programs the board and runs the program
+eval spawn quartus_hps $argv
+
+# Wait for the GDB server to start
+expect {
+	"Starting GDB Server." {
+		# After 50 ms ...
+		after 50
+
+		# Open a TCP connection to the GDB server and send the continue packet
+		set handle [socket localhost $port_number]
+		puts $handle "\$c#63"
+		close $handle
+
+		# Wait for quartus_hps to finish before exiting
+		interact
+	}
+	# if there is an error, exit gracefully
+	"Error: Fail to find the hardware" {
+		interact
+		puts "\nexpect: programming failure. Is the board on?\n"
+		set spawn_id $term_id
+		send \003
+		exit 1
+	}
+	# if there is an error, exit gracefully
+	"Error: Failed to startup hardware" {
+		interact
+		puts "\nexpect: programming failure. Is another process accessing "
+		puts "the hardware?\n"
+		set spawn_id $term_id
+		send \003
+		exit 1
+	}
+}
+
+
+# if the term_id exists, switch back to JTAG terminal and get output
+if [info exists term_id] {
+	# set the spawn_id back to the jtag uart terminal id
+	set spawn_id $term_id
+
+	# Color the program output 31->red 32->green 33->yellow 34->blue 35->purple
+	set color 33
+	puts "\nProgram Output:\n\033\[${color}m"
+
+	# Print any buffered output, then return control to script after 2s
+	expect {
+		"DONE" {
+			# Send Ctrl-C to quit terminal
+			send \003
+		}
+		timeout {
+			# Send Ctrl-C to quit terminal
+			send \003
+		}
+	}
+
+} else {
+	puts "\nSee other JTAG terminal for output\n"
+}
+
+puts "\033\[0m"
+
+exit 0
+

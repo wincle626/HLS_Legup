@@ -1,0 +1,930 @@
+main:
+main:
+  %4=c
+  %5=0
+main:
+  %8=b
+  %10=1
+main:
+  %4=b
+  %5=0
+main:
+  %8=a
+  %10=3
+main:
+  %4=a
+  %5=0
+main:
+  %8=9
+  %10=5
+main:
+  %4=9
+  %5=0
+main:
+  %8=8
+  %10=3
+main:
+  %4=8
+  %5=0
+main:
+  %8=7
+  %10=2
+main:
+  %4=7
+  %5=0
+main:
+  %8=6
+  %10=5
+main:
+  %4=6
+  %5=0
+main:
+  %8=5
+  %10=3
+main:
+  %4=5
+  %5=0
+main:
+  %8=4
+  %10=5
+main:
+  %4=4
+  %5=0
+main:
+  %8=3
+  %10=3
+main:
+  %4=3
+  %5=0
+main:
+  %8=2
+  %10=5
+main:
+  %4=2
+  %5=0
+main:
+  %8=1
+  %10=
+main:
+  %4=1
+  %5=0
+main:
+  %8=0
+  %10=
+main:
+  %4=0
+  %5=1
+main:legup_memcpy_1.exit
+main:
+  %15=c
+  %16=0
+main:
+  %19=b
+  %21=
+main:
+  %15=b
+  %16=0
+main:
+  %19=a
+  %21=
+main:
+  %15=a
+  %16=0
+main:
+  %19=9
+  %21=
+main:
+  %15=9
+  %16=0
+main:
+  %19=8
+  %21=
+main:
+  %15=8
+  %16=0
+main:
+  %19=7
+  %21=
+main:
+  %15=7
+  %16=0
+main:
+  %19=6
+  %21=
+main:
+  %15=6
+  %16=0
+main:
+  %19=5
+  %21=
+main:
+  %15=5
+  %16=0
+main:
+  %19=4
+  %21=
+main:
+  %15=4
+  %16=0
+main:
+  %19=3
+  %21=
+main:
+  %15=3
+  %16=0
+main:
+  %19=2
+  %21=
+main:
+  %15=2
+  %16=0
+main:
+  %19=1
+  %21=2
+main:
+  %15=1
+  %16=0
+main:
+  %19=0
+  %21=
+main:
+  %15=0
+  %16=1
+main:legup_memcpy_2.exit
+main:
+  %26=c
+  %27=0
+main:
+  %30=b
+  %32=
+main:
+  %26=b
+  %27=0
+main:
+  %30=a
+  %32=
+main:
+  %26=a
+  %27=0
+main:
+  %30=9
+  %32=
+main:
+  %26=9
+  %27=0
+main:
+  %30=8
+  %32=
+main:
+  %26=8
+  %27=0
+main:
+  %30=7
+  %32=
+main:
+  %26=7
+  %27=0
+main:
+  %30=6
+  %32=
+main:
+  %26=6
+  %27=0
+main:
+  %30=5
+  %32=
+main:
+  %26=5
+  %27=0
+main:
+  %30=4
+  %32=
+main:
+  %26=4
+  %27=0
+main:
+  %30=3
+  %32=
+main:
+  %26=3
+  %27=0
+main:
+  %30=2
+  %32=
+main:
+  %26=2
+  %27=0
+main:
+  %30=1
+  %32=2
+main:
+  %26=1
+  %27=0
+main:
+  %30=0
+  %32=
+main:
+  %26=0
+  %27=1
+main:legup_memcpy_4.exit
+main:
+  %37=c
+  %38=0
+main:
+  %41=b
+  %43=1
+main:
+  %37=b
+  %38=0
+main:
+  %41=a
+  %43=3
+main:
+  %37=a
+  %38=0
+main:
+  %41=9
+  %43=5
+main:
+  %37=9
+  %38=0
+main:
+  %41=8
+  %43=3
+main:
+  %37=8
+  %38=0
+main:
+  %41=7
+  %43=2
+main:
+  %37=7
+  %38=0
+main:
+  %41=6
+  %43=5
+main:
+  %37=6
+  %38=0
+main:
+  %41=5
+  %43=3
+main:
+  %37=5
+  %38=0
+main:
+  %41=4
+  %43=5
+main:
+  %37=4
+  %38=0
+main:
+  %41=3
+  %43=3
+main:
+  %37=3
+  %38=0
+main:
+  %41=2
+  %43=5
+main:
+  %37=2
+  %38=0
+main:
+  %41=1
+  %43=
+main:
+  %37=1
+  %38=0
+main:
+  %41=0
+  %43=
+main:
+  %37=0
+  %38=1
+main:legup_memcpy_8.exit
+  %46=1
+  %sum.02.i=0
+  %i.01.i=0
+  %47=
+  %49=
+  %50=1
+  %52=1
+  %53=0
+  %54=
+  %55=0
+  %56=1
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=3
+main:legup_memcpy_8.exit
+  %46=3
+  %sum.02.i=0
+  %i.01.i=1
+  %47=
+  %49=
+  %50=3
+  %52=3
+  %53=0
+  %54=
+  %55=0
+  %56=2
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=5
+main:legup_memcpy_8.exit
+  %46=5
+  %sum.02.i=0
+  %i.01.i=2
+  %47=
+  %49=
+  %50=5
+  %52=5
+  %53=0
+  %54=
+  %55=0
+  %56=3
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=3
+main:legup_memcpy_8.exit
+  %46=3
+  %sum.02.i=0
+  %i.01.i=3
+  %47=
+  %49=
+  %50=3
+  %52=3
+  %53=0
+  %54=
+  %55=0
+  %56=4
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=2
+main:legup_memcpy_8.exit
+  %46=2
+  %sum.02.i=0
+  %i.01.i=4
+  %47=
+  %49=
+  %50=2
+  %52=2
+  %53=0
+  %54=
+  %55=0
+  %56=5
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=5
+main:legup_memcpy_8.exit
+  %46=5
+  %sum.02.i=0
+  %i.01.i=5
+  %47=
+  %49=
+  %50=5
+  %52=5
+  %53=0
+  %54=
+  %55=0
+  %56=6
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=3
+main:legup_memcpy_8.exit
+  %46=3
+  %sum.02.i=0
+  %i.01.i=6
+  %47=
+  %49=
+  %50=3
+  %52=3
+  %53=0
+  %54=
+  %55=0
+  %56=7
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=5
+main:legup_memcpy_8.exit
+  %46=5
+  %sum.02.i=0
+  %i.01.i=7
+  %47=
+  %49=
+  %50=5
+  %52=5
+  %53=0
+  %54=
+  %55=0
+  %56=8
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=3
+main:legup_memcpy_8.exit
+  %46=3
+  %sum.02.i=0
+  %i.01.i=8
+  %47=
+  %49=
+  %50=3
+  %52=3
+  %53=0
+  %54=
+  %55=0
+  %56=9
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=5
+main:legup_memcpy_8.exit
+  %46=5
+  %sum.02.i=0
+  %i.01.i=9
+  %47=
+  %49=
+  %50=5
+  %52=5
+  %53=0
+  %54=
+  %55=0
+  %56=a
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=
+main:legup_memcpy_8.exit
+  %46=
+  %sum.02.i=0
+  %i.01.i=a
+  %47=2
+  %49=2
+  %50=
+  %52=
+  %53=0
+  %54=2
+  %55=0
+  %56=b
+  %exitcond11=0
+main:._crit_edge12
+  %.pre=
+main:legup_memcpy_8.exit
+  %46=
+  %sum.02.i=0
+  %i.01.i=b
+  %47=
+  %49=
+  %50=
+  %52=
+  %53=
+  %54=
+  %55=
+  %56=c
+  %exitcond11=1
+main:arr_sum.exit
+main:
+  %61=c
+  %62=0
+main:
+  %65=b
+  %66=0
+main:
+  %61=b
+  %62=0
+main:
+  %65=a
+  %66=0
+main:
+  %61=a
+  %62=0
+main:
+  %65=9
+  %66=0
+main:
+  %61=9
+  %62=0
+main:
+  %65=8
+  %66=0
+main:
+  %61=8
+  %62=0
+main:
+  %65=7
+  %66=0
+main:
+  %61=7
+  %62=0
+main:
+  %65=6
+  %66=0
+main:
+  %61=6
+  %62=0
+main:
+  %65=5
+  %66=0
+main:
+  %61=5
+  %62=0
+main:
+  %65=4
+  %66=0
+main:
+  %61=4
+  %62=0
+main:
+  %65=3
+  %66=0
+main:
+  %61=3
+  %62=0
+main:
+  %65=2
+  %66=0
+main:
+  %61=2
+  %62=0
+main:
+  %65=1
+  %66=0
+main:
+  %61=1
+  %62=0
+main:
+  %65=0
+  %66=0
+main:
+  %61=0
+  %62=1
+main:legup_memset_1.exit
+  %69=c
+  %70=0
+main:
+  %73=b
+main:legup_memset_1.exit
+  %69=b
+  %70=0
+main:
+  %73=a
+main:legup_memset_1.exit
+  %69=a
+  %70=0
+main:
+  %73=9
+main:legup_memset_1.exit
+  %69=9
+  %70=0
+main:
+  %73=8
+main:legup_memset_1.exit
+  %69=8
+  %70=0
+main:
+  %73=7
+main:legup_memset_1.exit
+  %69=7
+  %70=0
+main:
+  %73=6
+main:legup_memset_1.exit
+  %69=6
+  %70=0
+main:
+  %73=5
+main:legup_memset_1.exit
+  %69=5
+  %70=0
+main:
+  %73=4
+main:legup_memset_1.exit
+  %69=4
+  %70=0
+main:
+  %73=3
+main:legup_memset_1.exit
+  %69=3
+  %70=0
+main:
+  %73=2
+main:legup_memset_1.exit
+  %69=2
+  %70=0
+main:
+  %73=1
+main:legup_memset_1.exit
+  %69=1
+  %70=0
+main:
+  %73=0
+main:legup_memset_1.exit
+  %69=0
+  %70=1
+main:legup_memset_2.exit
+  %76=c
+  %77=0
+main:
+  %80=b
+main:legup_memset_2.exit
+  %76=b
+  %77=0
+main:
+  %80=a
+main:legup_memset_2.exit
+  %76=a
+  %77=0
+main:
+  %80=9
+main:legup_memset_2.exit
+  %76=9
+  %77=0
+main:
+  %80=8
+main:legup_memset_2.exit
+  %76=8
+  %77=0
+main:
+  %80=7
+main:legup_memset_2.exit
+  %76=7
+  %77=0
+main:
+  %80=6
+main:legup_memset_2.exit
+  %76=6
+  %77=0
+main:
+  %80=5
+main:legup_memset_2.exit
+  %76=5
+  %77=0
+main:
+  %80=4
+main:legup_memset_2.exit
+  %76=4
+  %77=0
+main:
+  %80=3
+main:legup_memset_2.exit
+  %76=3
+  %77=0
+main:
+  %80=2
+main:legup_memset_2.exit
+  %76=2
+  %77=0
+main:
+  %80=1
+main:legup_memset_2.exit
+  %76=1
+  %77=0
+main:
+  %80=0
+main:legup_memset_2.exit
+  %76=0
+  %77=1
+main:legup_memset_4.exit
+  %83=c
+  %84=0
+main:
+  %87=b
+main:legup_memset_4.exit
+  %83=b
+  %84=0
+main:
+  %87=a
+main:legup_memset_4.exit
+  %83=a
+  %84=0
+main:
+  %87=9
+main:legup_memset_4.exit
+  %83=9
+  %84=0
+main:
+  %87=8
+main:legup_memset_4.exit
+  %83=8
+  %84=0
+main:
+  %87=7
+main:legup_memset_4.exit
+  %83=7
+  %84=0
+main:
+  %87=6
+main:legup_memset_4.exit
+  %83=6
+  %84=0
+main:
+  %87=5
+main:legup_memset_4.exit
+  %83=5
+  %84=0
+main:
+  %87=4
+main:legup_memset_4.exit
+  %83=4
+  %84=0
+main:
+  %87=3
+main:legup_memset_4.exit
+  %83=3
+  %84=0
+main:
+  %87=2
+main:legup_memset_4.exit
+  %83=2
+  %84=0
+main:
+  %87=1
+main:legup_memset_4.exit
+  %83=1
+  %84=0
+main:
+  %87=0
+main:legup_memset_4.exit
+  %83=0
+  %84=1
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=0
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=1
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=1
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=2
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=2
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=3
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=3
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=4
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=4
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=5
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=5
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=6
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=6
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=7
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=7
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=8
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=8
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=9
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=9
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=a
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=a
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=b
+  %exitcond=0
+main:._crit_edge
+  %.pre13=0
+main:legup_memset_8.exit
+  %90=0
+  %sum.02.i1=0
+  %i.01.i2=b
+  %91=0
+  %93=0
+  %94=0
+  %96=0
+  %97=0
+  %98=0
+  %99=0
+  %100=c
+  %exitcond=1
+main:arr_sum.exit8
+  %103=
+  %105=1
+main:
+main:

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd dhrystone
+set test "dhrystone"
+set expected {Result: 19}
+
+run-test-sw $test $expected
+
+cd ..

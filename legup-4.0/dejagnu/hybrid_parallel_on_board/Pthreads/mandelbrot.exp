@@ -1,0 +1,13 @@
+load_lib legup.exp
+
+set hybridexpected {Count: 12013}
+
+cd ../examples/parallel/pthreads/mandelbrot
+set test "mandelbrot Pthreads"
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../pthreads/mandelbrot_pipeline
+set test "mandelbrot_pipeline Pthreads"
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../../

@@ -1,0 +1,768 @@
+
+---------------------------------------------
+Fri Oct 15 12:41:49 EDT 2010
+
+CW = 16
+	N = 16
+	Max Frequency (MHz):	104.30
+	Total Area (# LEs): 	1,077
+	Total Mem. Bits:    	4,352
+	Total Registers:    	368
+
+	N = 32
+	Max Frequency (MHz):	106.77
+	Total Area (# LEs): 	1,095
+	Total Mem. Bits:    	4,608
+	Total Registers:    	380
+
+	N = 64
+	Max Frequency (MHz):	102.49
+	Total Area (# LEs): 	1,141
+	Total Mem. Bits:    	5,120
+	Total Registers:    	393
+
+	N = 128
+	Max Frequency (MHz):	103.63
+	Total Area (# LEs): 	1,174
+	Total Mem. Bits:    	6,144
+	Total Registers:    	405
+
+	N = 256
+	Max Frequency (MHz):	100.55
+	Total Area (# LEs): 	1,217
+	Total Mem. Bits:    	8,192
+	Total Registers:    	417
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	108.46
+	Total Area (# LEs): 	1,167
+	Total Mem. Bits:    	4,608
+	Total Registers:    	416
+
+	N = 32
+	Max Frequency (MHz):	106.81
+	Total Area (# LEs): 	1,185
+	Total Mem. Bits:    	5,120
+	Total Registers:    	428
+
+	N = 64
+	Max Frequency (MHz):	100.20
+	Total Area (# LEs): 	1,230
+	Total Mem. Bits:    	6,144
+	Total Registers:    	441
+
+	N = 128
+	Max Frequency (MHz):	101.65
+	Total Area (# LEs): 	1,263
+	Total Mem. Bits:    	8,192
+	Total Registers:    	453
+
+	N = 256
+	Max Frequency (MHz):	101.64
+	Total Area (# LEs): 	1,313
+	Total Mem. Bits:    	12,288
+	Total Registers:    	465
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	93.25
+	Total Area (# LEs): 	1,288
+	Total Mem. Bits:    	5,120
+	Total Registers:    	480
+
+	N = 32
+	Max Frequency (MHz):	93.21
+	Total Area (# LEs): 	1,309
+	Total Mem. Bits:    	6,144
+	Total Registers:    	492
+
+	N = 64
+	Max Frequency (MHz):	89.44
+	Total Area (# LEs): 	1,353
+	Total Mem. Bits:    	8,192
+	Total Registers:    	505
+
+	N = 128
+	Max Frequency (MHz):	93.21
+	Total Area (# LEs): 	1,395
+	Total Mem. Bits:    	12,288
+	Total Registers:    	517
+
+	N = 256
+	Max Frequency (MHz):	91.30
+	Total Area (# LEs): 	1,436
+	Total Mem. Bits:    	20,480
+	Total Registers:    	529
+
+
+---------------------------------------------
+Mon Dec 13 05:23:45 EST 2010
+
+PROF_TYPE = v
+PROF_METHOD = i
+CW = 16
+	N = 16
+	Max Frequency (MHz):	102.94
+	Total Area (# LEs): 	1,209
+	Total Mem. Bits:    	4,352
+	Total Registers:    	425
+
+	N = 32
+	Max Frequency (MHz):	94.00
+	Total Area (# LEs): 	1,236
+	Total Mem. Bits:    	4,608
+	Total Registers:    	438
+
+	N = 64
+	Max Frequency (MHz):	91.79
+	Total Area (# LEs): 	1,289
+	Total Mem. Bits:    	5,120
+	Total Registers:    	452
+
+	N = 128
+	Max Frequency (MHz):	94.22
+	Total Area (# LEs): 	1,330
+	Total Mem. Bits:    	6,144
+	Total Registers:    	465
+
+	N = 256
+	Max Frequency (MHz):	91.44
+	Total Area (# LEs): 	1,355
+	Total Mem. Bits:    	8,192
+	Total Registers:    	478
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	100.36
+	Total Area (# LEs): 	1,308
+	Total Mem. Bits:    	4,608
+	Total Registers:    	473
+
+	N = 32
+	Max Frequency (MHz):	100.09
+	Total Area (# LEs): 	1,336
+	Total Mem. Bits:    	5,120
+	Total Registers:    	486
+
+	N = 64
+	Max Frequency (MHz):	90.86
+	Total Area (# LEs): 	1,381
+	Total Mem. Bits:    	6,144
+	Total Registers:    	500
+
+	N = 128
+	Max Frequency (MHz):	89.82
+	Total Area (# LEs): 	1,413
+	Total Mem. Bits:    	8,192
+	Total Registers:    	513
+
+	N = 256
+	Max Frequency (MHz):	90.98
+	Total Area (# LEs): 	1,456
+	Total Mem. Bits:    	12,288
+	Total Registers:    	526
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	96.67
+	Total Area (# LEs): 	1,420
+	Total Mem. Bits:    	5,120
+	Total Registers:    	539
+
+	N = 32
+	Max Frequency (MHz):	95.29
+	Total Area (# LEs): 	1,465
+	Total Mem. Bits:    	6,144
+	Total Registers:    	552
+
+	N = 64
+	Max Frequency (MHz):	98.87
+	Total Area (# LEs): 	1,522
+	Total Mem. Bits:    	8,192
+	Total Registers:    	566
+
+	N = 128
+	Max Frequency (MHz):	93.66
+	Total Area (# LEs): 	1,546
+	Total Mem. Bits:    	12,288
+	Total Registers:    	579
+
+	N = 256
+	Max Frequency (MHz):	93.46
+	Total Area (# LEs): 	1,579
+	Total Mem. Bits:    	20,480
+	Total Registers:    	592
+
+PROF_METHOD = c
+CW = 16
+	N = 16
+	Max Frequency (MHz):	101.28
+	Total Area (# LEs): 	1,182
+	Total Mem. Bits:    	4,352
+	Total Registers:    	399
+
+	N = 32
+	Max Frequency (MHz):	95.25
+	Total Area (# LEs): 	1,205
+	Total Mem. Bits:    	4,608
+	Total Registers:    	412
+
+	N = 64
+	Max Frequency (MHz):	88.53
+	Total Area (# LEs): 	1,263
+	Total Mem. Bits:    	5,120
+	Total Registers:    	426
+
+	N = 128
+	Max Frequency (MHz):	94.42
+	Total Area (# LEs): 	1,296
+	Total Mem. Bits:    	6,144
+	Total Registers:    	439
+
+	N = 256
+	Max Frequency (MHz):	93.31
+	Total Area (# LEs): 	1,341
+	Total Mem. Bits:    	8,192
+	Total Registers:    	452
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	101.09
+	Total Area (# LEs): 	1,271
+	Total Mem. Bits:    	4,608
+	Total Registers:    	447
+
+	N = 32
+	Max Frequency (MHz):	95.59
+	Total Area (# LEs): 	1,312
+	Total Mem. Bits:    	5,120
+	Total Registers:    	460
+
+	N = 64
+	Max Frequency (MHz):	91.17
+	Total Area (# LEs): 	1,351
+	Total Mem. Bits:    	6,144
+	Total Registers:    	474
+
+	N = 128
+	Max Frequency (MHz):	93.28
+	Total Area (# LEs): 	1,391
+	Total Mem. Bits:    	8,192
+	Total Registers:    	487
+
+	N = 256
+	Max Frequency (MHz):	90.96
+	Total Area (# LEs): 	1,424
+	Total Mem. Bits:    	12,288
+	Total Registers:    	500
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	94.80
+	Total Area (# LEs): 	1,400
+	Total Mem. Bits:    	5,120
+	Total Registers:    	513
+
+	N = 32
+	Max Frequency (MHz):	98.67
+	Total Area (# LEs): 	1,438
+	Total Mem. Bits:    	6,144
+	Total Registers:    	526
+
+	N = 64
+	Max Frequency (MHz):	91.90
+	Total Area (# LEs): 	1,490
+	Total Mem. Bits:    	8,192
+	Total Registers:    	540
+
+	N = 128
+	Max Frequency (MHz):	88.43
+	Total Area (# LEs): 	1,513
+	Total Mem. Bits:    	12,288
+	Total Registers:    	553
+
+	N = 256
+	Max Frequency (MHz):	91.56
+	Total Area (# LEs): 	1,557
+	Total Mem. Bits:    	20,480
+	Total Registers:    	566
+
+PROF_METHOD = s
+CW = 16
+	N = 16
+	Max Frequency (MHz):	96.81
+	Total Area (# LEs): 	1,182
+	Total Mem. Bits:    	4,352
+	Total Registers:    	399
+
+	N = 32
+	Max Frequency (MHz):	96.83
+	Total Area (# LEs): 	1,216
+	Total Mem. Bits:    	4,608
+	Total Registers:    	412
+
+	N = 64
+	Max Frequency (MHz):	95.66
+	Total Area (# LEs): 	1,261
+	Total Mem. Bits:    	5,120
+	Total Registers:    	426
+
+	N = 128
+	Max Frequency (MHz):	95.92
+	Total Area (# LEs): 	1,306
+	Total Mem. Bits:    	6,144
+	Total Registers:    	439
+
+	N = 256
+	Max Frequency (MHz):	93.93
+	Total Area (# LEs): 	1,336
+	Total Mem. Bits:    	8,192
+	Total Registers:    	452
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	101.72
+	Total Area (# LEs): 	1,282
+	Total Mem. Bits:    	4,608
+	Total Registers:    	447
+
+	N = 32
+	Max Frequency (MHz):	100.29
+	Total Area (# LEs): 	1,318
+	Total Mem. Bits:    	5,120
+	Total Registers:    	460
+
+	N = 64
+	Max Frequency (MHz):	93.87
+	Total Area (# LEs): 	1,352
+	Total Mem. Bits:    	6,144
+	Total Registers:    	474
+
+	N = 128
+	Max Frequency (MHz):	97.03
+	Total Area (# LEs): 	1,398
+	Total Mem. Bits:    	8,192
+	Total Registers:    	487
+
+	N = 256
+	Max Frequency (MHz):	93.01
+	Total Area (# LEs): 	1,424
+	Total Mem. Bits:    	12,288
+	Total Registers:    	500
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	103.33
+	Total Area (# LEs): 	1,402
+	Total Mem. Bits:    	5,120
+	Total Registers:    	513
+
+	N = 32
+	Max Frequency (MHz):	95.01
+	Total Area (# LEs): 	1,456
+	Total Mem. Bits:    	6,144
+	Total Registers:    	526
+
+	N = 64
+	Max Frequency (MHz):	89.35
+	Total Area (# LEs): 	1,483
+	Total Mem. Bits:    	8,192
+	Total Registers:    	540
+
+	N = 128
+	Max Frequency (MHz):	92.32
+	Total Area (# LEs): 	1,511
+	Total Mem. Bits:    	12,288
+	Total Registers:    	553
+
+	N = 256
+	Max Frequency (MHz):	93.37
+	Total Area (# LEs): 	1,559
+	Total Mem. Bits:    	20,480
+	Total Registers:    	566
+
+
+
+
+---------------------------------------------
+Mon Dec 13 17:10:37 EST 2010
+
+PROF_TYPE = s
+PROF_METHOD = c
+CW = 16
+	N = 16
+	Max Frequency (MHz):	117.95
+	Total Area (# LEs): 	1,791
+	Total Mem. Bits:    	0
+	Total Registers:    	1226
+
+	N = 32
+	Max Frequency (MHz):	117.32
+	Total Area (# LEs): 	3,341
+	Total Mem. Bits:    	0
+	Total Registers:    	2319
+
+	N = 64
+	Max Frequency (MHz):	112.97
+	Total Area (# LEs): 	6,443
+	Total Mem. Bits:    	0
+	Total Registers:    	4500
+
+	N = 128
+	Max Frequency (MHz):	107.90
+	Total Area (# LEs): 	12,633
+	Total Mem. Bits:    	0
+	Total Registers:    	8857
+
+	N = 256
+	Max Frequency (MHz):	96.75
+	Total Area (# LEs): 	25,040
+	Total Mem. Bits:    	0
+	Total Registers:    	17566
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	101.55
+	Total Area (# LEs): 	2,488
+	Total Mem. Bits:    	0
+	Total Registers:    	1498
+
+	N = 32
+	Max Frequency (MHz):	99.54
+	Total Area (# LEs): 	4,715
+	Total Mem. Bits:    	0
+	Total Registers:    	2847
+
+	N = 64
+	Max Frequency (MHz):	96.08
+	Total Area (# LEs): 	9,186
+	Total Mem. Bits:    	0
+	Total Registers:    	5540
+
+	N = 128
+	Max Frequency (MHz):	90.12
+	Total Area (# LEs): 	18,107
+	Total Mem. Bits:    	0
+	Total Registers:    	10921
+
+	N = 256
+	Max Frequency (MHz):	85.57
+	Total Area (# LEs): 	35,975
+	Total Mem. Bits:    	0
+	Total Registers:    	21678
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	80.57
+	Total Area (# LEs): 	3,508
+	Total Mem. Bits:    	0
+	Total Registers:    	2010
+
+	N = 32
+	Max Frequency (MHz):	77.64
+	Total Area (# LEs): 	6,759
+	Total Mem. Bits:    	0
+	Total Registers:    	3871
+
+	N = 64
+	Max Frequency (MHz):	73.49
+	Total Area (# LEs): 	13,284
+	Total Mem. Bits:    	0
+	Total Registers:    	7588
+
+	N = 128
+	Max Frequency (MHz):	73.13
+	Total Area (# LEs): 	26,294
+	Total Mem. Bits:    	0
+	Total Registers:    	15017
+
+	N = 256
+	Max Frequency (MHz):	70.28
+	Total Area (# LEs): 	52,359
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+
+
+---------------------------------------------
+Mon Dec 13 19:53:42 EST 2010
+
+PROF_TYPE = s
+PROF_METHOD = s
+CW = 16
+	N = 16
+	Max Frequency (MHz):	116.32
+	Total Area (# LEs): 	1,793
+	Total Mem. Bits:    	0
+	Total Registers:    	1226
+
+	N = 32
+	Max Frequency (MHz):	118.95
+	Total Area (# LEs): 	3,342
+	Total Mem. Bits:    	0
+	Total Registers:    	2319
+
+	N = 64
+	Max Frequency (MHz):	114.23
+	Total Area (# LEs): 	6,444
+	Total Mem. Bits:    	0
+	Total Registers:    	4500
+
+	N = 128
+	Max Frequency (MHz):	108.77
+	Total Area (# LEs): 	12,638
+	Total Mem. Bits:    	0
+	Total Registers:    	8857
+
+	N = 256
+	Max Frequency (MHz):	100.56
+	Total Area (# LEs): 	25,039
+	Total Mem. Bits:    	0
+	Total Registers:    	17566
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	103.79
+	Total Area (# LEs): 	2,487
+	Total Mem. Bits:    	0
+	Total Registers:    	1498
+
+	N = 32
+	Max Frequency (MHz):	100.13
+	Total Area (# LEs): 	4,714
+	Total Mem. Bits:    	0
+	Total Registers:    	2847
+
+	N = 64
+	Max Frequency (MHz):	97.79
+	Total Area (# LEs): 	9,189
+	Total Mem. Bits:    	0
+	Total Registers:    	5540
+
+	N = 128
+	Max Frequency (MHz):	92.22
+	Total Area (# LEs): 	18,105
+	Total Mem. Bits:    	0
+	Total Registers:    	10921
+
+	N = 256
+	Max Frequency (MHz):	85.81
+	Total Area (# LEs): 	35,976
+	Total Mem. Bits:    	0
+	Total Registers:    	21678
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	80.43
+	Total Area (# LEs): 	3,513
+	Total Mem. Bits:    	0
+	Total Registers:    	2010
+
+	N = 32
+	Max Frequency (MHz):	76.78
+	Total Area (# LEs): 	6,762
+	Total Mem. Bits:    	0
+	Total Registers:    	3871
+
+	N = 64
+	Max Frequency (MHz):	76.46
+	Total Area (# LEs): 	13,283
+	Total Mem. Bits:    	0
+	Total Registers:    	7588
+
+	N = 128
+	Max Frequency (MHz):	72.94
+	Total Area (# LEs): 	26,297
+	Total Mem. Bits:    	0
+	Total Registers:    	15017
+
+	N = 256
+	Max Frequency (MHz):	71.15
+	Total Area (# LEs): 	52,358
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+
+
+---------------------------------------------
+Mon Dec 13 22:15:31 EST 2010
+
+PROF_TYPE = s
+PROF_METHOD = s
+CW = 16
+	N = 16
+	Max Frequency (MHz):	120.42
+	Total Area (# LEs): 	1,793
+	Total Mem. Bits:    	0
+	Total Registers:    	1226
+
+	N = 32
+	Max Frequency (MHz):	114.98
+	Total Area (# LEs): 	3,342
+	Total Mem. Bits:    	0
+	Total Registers:    	2319
+
+	N = 64
+	Max Frequency (MHz):	111.14
+	Total Area (# LEs): 	6,443
+	Total Mem. Bits:    	0
+	Total Registers:    	4500
+
+	N = 128
+	Max Frequency (MHz):	111.04
+	Total Area (# LEs): 	12,632
+	Total Mem. Bits:    	0
+	Total Registers:    	8857
+
+	N = 256
+	Max Frequency (MHz):	98.98
+	Total Area (# LEs): 	25,041
+	Total Mem. Bits:    	0
+	Total Registers:    	17566
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	102.21
+	Total Area (# LEs): 	2,485
+	Total Mem. Bits:    	0
+	Total Registers:    	1498
+
+	N = 32
+	Max Frequency (MHz):	99.05
+	Total Area (# LEs): 	4,716
+	Total Mem. Bits:    	0
+	Total Registers:    	2847
+
+	N = 64
+	Max Frequency (MHz):	96.67
+	Total Area (# LEs): 	9,185
+	Total Mem. Bits:    	0
+	Total Registers:    	5540
+
+	N = 128
+	Max Frequency (MHz):	92.64
+	Total Area (# LEs): 	18,103
+	Total Mem. Bits:    	0
+	Total Registers:    	10921
+
+	N = 256
+	Max Frequency (MHz):	83.77
+	Total Area (# LEs): 	35,976
+	Total Mem. Bits:    	0
+	Total Registers:    	21678
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	80.03
+	Total Area (# LEs): 	3,509
+	Total Mem. Bits:    	0
+	Total Registers:    	2010
+
+	N = 32
+	Max Frequency (MHz):	77.35
+	Total Area (# LEs): 	6,761
+	Total Mem. Bits:    	0
+	Total Registers:    	3871
+
+	N = 64
+	Max Frequency (MHz):	76.86
+	Total Area (# LEs): 	13,285
+	Total Mem. Bits:    	0
+	Total Registers:    	7588
+
+	N = 128
+	Max Frequency (MHz):	70.83
+	Total Area (# LEs): 	26,301
+	Total Mem. Bits:    	0
+	Total Registers:    	15017
+
+	N = 256
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+
+
+---------------------------------------------
+Thu Dec 16 09:03:20 EST 2010
+
+PROF_TYPE = v
+PROF_METHOD = i
+CW = 16
+	N = 16
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 32
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 64
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 128
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 256
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+CW = 32
+	N = 16
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 32
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 64
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 128
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 256
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+CW = 64
+	N = 16
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+	N = 32
+	Max Frequency (MHz):	68.56
+	Total Area (# LEs): 	52,360
+	Total Mem. Bits:    	0
+	Total Registers:    	29870
+
+

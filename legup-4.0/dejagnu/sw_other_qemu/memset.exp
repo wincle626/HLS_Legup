@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd memset
+set test "memset"
+set expected {Result: 400}
+
+run-test-qemu $test $expected
+
+cd ..

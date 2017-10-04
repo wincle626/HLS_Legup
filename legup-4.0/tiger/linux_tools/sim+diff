@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]
+then
+	echo "Incorrect usage.  Expected: compile <file.c>"
+else
+	# Get usable filenames
+	FILENAME=${1##*/}
+	BASENAME=${FILENAME%%.*}
+	CFILE=${1%%.*}.c
+		
+	# Run code through GCC, pipe output to file
+	echo ""
+	echo "    --> Running on x86"
+	gcc ${CFILE} -o ${BASENAME}.out
+	./${BASENAME}.out > exec.out
+
+	# Run code through simulator, using "find_ra" to add a breakpoint at the return statement of the main function (to avoid crashing simulator)
+	echo ""
+	echo "    --> Simulating"
+	mipsel-unknown-elf-objdump -D ${BASENAME}.elf > ${BASENAME}.src
+	~/GXemul/gxemul-0.6.0/gxemul -E oldtestmips -e R3000 ${BASENAME}.elf -p `./find_ra ${BASENAME}.src` -v -q > sim.out 2>&1
+
+	# Diff the outputs
+	echo ""
+	echo ""
+	echo "-------DIFF RESULTS--------"
+	diff -y -t -W195 exec.out sim.out
+	diff -y -t -W150 exec.out sim.out > sim.diff
+fi

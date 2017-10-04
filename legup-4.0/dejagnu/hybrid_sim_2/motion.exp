@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../examples/chstone_hybrid/motion/
+set test "motion"
+
+set hybridexpected {# Result: 12}
+run-test-hybrid $test $hybridexpected
+
+cd ../../../examples

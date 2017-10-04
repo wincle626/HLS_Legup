@@ -1,0 +1,48 @@
+1. Install Qt:
+on Ubuntu (tested):
+sudo apt-get install libqt4-dev
+
+2. Build the project
+cd gui/scheduleviewer
+qmake (this will generate the makefile)
+make (this will build the project)
+
+3. Run the program
+./scheduleviewer <scheduling report>
+
+To run program with a pipeline schedule:
+./scheduleviewr <scheduling report> -p <pipeline schedule report>
+
+The pipeline schedule report must comes with a scheduling report.
+You can navigate to a loop by clicking on the "start_<loop name>" basic block
+on the Explorer panel
+
+
+To enable call graphs and control flow graph support:
+
+1. install graphviz:
+
+   wget http://www.graphviz.org/pub/graphviz/ARCHIVE/graphviz-2.26.3.tar.gz
+
+   the latest version is graphviz-2.30, but both 2.28 and 2.30 have some bugs
+
+   after unzip and untar the file, go into the folder and type:
+
+   ./configure
+   make
+   sudo make install
+
+   This  will install graphviz library files in /usr/local or /usr
+
+2. Enable graphs in scheduleviewer.pro
+
+   In the legup/gui/scheduleviewer project folder, open scheduleviewer.pro
+   add display_graphs (or uncomment it if it's already there) after CONFIG+=
+
+3. make the project
+
+   run under the project folder:
+
+   qmake
+   make clean
+   make

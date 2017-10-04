@@ -1,0 +1,24 @@
+load_lib legup.exp
+
+set expected {# Sum:\s+2048\s+}
+
+cd ../examples/parallel/single/df
+
+cd ../../pthreads/df
+
+set test "df Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/df_2
+set test "df_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../df_3
+set test "df_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../df_4
+set test "df_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

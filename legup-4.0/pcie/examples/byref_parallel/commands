@@ -1,0 +1,13 @@
+function = ByRef
+# some dumb comment
+write 0x40000000 0x0000001a00000018
+write 0x40000008 0x0000001e0000001c
+ByRef 0 0x40000000 0x4
+ByRef 1 0x40000004 0x6
+ByRef 2 0x40000008 0x8
+ByRef 3 0x4000000c 0xa
+poll_complete 0
+poll_complete 1
+poll_complete 2
+poll_complete 3
+read 0x40000000 2

@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<MEGACORE title="ALTMEMPHY"  version="11.1"  build="198"  iptb_version="1.3.0 Build 259"  format_version="120" >
+ <NETLIST_SECTION class="altera.ipbu.flowbase.netlist.model.DDRPHYMVCModel"  active_core="ddr2_phy_alt_mem_phy" >
+  <STATIC_SECTION>
+   <PRIVATES>
+    <NAMESPACE name = "parameterization">
+     <PRIVATE name = "pipeline_commands" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "debug_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "export_debug_port" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "use_generated_memory_model" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "dedicated_memory_clk_phase_label" value="Dedicated memory clock phase:"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_clk_mhz" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "quartus_project_exists" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "local_if_drate" value="Half"  type="STRING"  enable="1" />
+     <PRIVATE name = "enable_v72_rsu" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "local_if_clk_mhz_label" value="200.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "new_variant" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_memtype" value="DDR2 SDRAM"  type="STRING"  enable="1" />
+     <PRIVATE name = "pll_ref_clk_mhz" value="200.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_clk_ps_label" value="(2500 ps)"  type="STRING"  enable="1" />
+     <PRIVATE name = "family" value="Stratix IV"  type="STRING"  enable="1" />
+     <PRIVATE name = "project_family" value="Stratix IV"  type="STRING"  enable="1" />
+     <PRIVATE name = "speed_grade" value="2"  type="STRING"  enable="1" />
+     <PRIVATE name = "dedicated_memory_clk_phase" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "pll_ref_clk_ps_label" value="(5000 ps)"  type="STRING"  enable="1" />
+     <PRIVATE name = "avalon_burst_length" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_clk_pair_count" value="2"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_cs_per_dimm" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "pre_latency_label" value="Fix read latency at:"  type="STRING"  enable="1" />
+     <PRIVATE name = "dedicated_memory_clk_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "mirror_addressing" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_bankaddr_width" value="3"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_9" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_rowaddr_width" value="14"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_dyn_deskew_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "post_latency_label" value="cycles (0 cycles=minimum latency, non-deterministic)"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_dm_pins_en" value="Yes"  type="STRING"  enable="1" />
+     <PRIVATE name = "local_if_dwidth_label" value="256"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_7" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_8" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_preset" value="Custom (DE4_DDR2_800_1GB)"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_pchaddr_bit" value="10"  type="STRING"  enable="1" />
+     <PRIVATE name = "WIDTH_RATIO" value="4"  type="STRING"  enable="1" />
+     <PRIVATE name = "vendor" value="Micron"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_3" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_4" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "chip_or_dimm" value="Unbuffered DIMM"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_5" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_6" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_0" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_size" value="4"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_1" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_2" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_11" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_10" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_cs_width" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_preset_rlat" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_cs_per_rank" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "fast_simulation_en" value="SUPERFAST"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_15" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_14" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_dwidth" value="64"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_dq_per_dqs" value="8"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_coladdr_width" value="10"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_13" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "register_control_word_12" value="0000"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tiha_ps" value="375"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdsh_ck" value="0.2"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_trfc_ns" value="127.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tqh_ck" value="0.36"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tisa_ps" value="375"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdss_ck" value="0.2"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_trtp_ns" value="7.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_tinit_us" value="200.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_trcd_ns" value="15.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_twtr_ck" value="3"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_trrd_ns" value="7.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdqss_ck" value="0.25"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tqhs_ps" value="300"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdsa_ps" value="250"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tac_ps" value="400"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdha_ps" value="250"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_tras_ns" value="40.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_twr_ns" value="15.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdqsck_ps" value="350"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_trp_ns" value="15.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tdqsq_ps" value="200"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_tmrd_ns" value="5.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tfaw_ns" value="37.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_trefi_us" value="7.8"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_40_fmax" value="267.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_odt" value="50"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_WLH_percent" value="0.6"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_drv_str" value="Normal"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DH_percent" value="0.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "input_period" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_QH_percent" value="0.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_QHS_percent" value="0.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_30_fmax" value="267.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "ac_clk_select" value="dedicated"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DQSQ_percent" value="0.65"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DS_percent" value="0.6"  type="STRING"  enable="1" />
+     <PRIVATE name = "pll_reconfig_ports_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_btype" value="Sequential"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_IS_percent" value="0.7"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl" value="6.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DQSS_percent" value="0.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "export_bank_info" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DSS_percent" value="0.6"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_dll_en" value="Yes"  type="STRING"  enable="1" />
+     <PRIVATE name = "ac_phase" value="240"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_oct_en" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_60_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DSH_percent" value="0.6"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_if_dqsn_en" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "enable_mp_calibration" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_IH_percent" value="0.6"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_15_fmax" value="533.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "dll_external" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_bl" value="8"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_WLS_percent" value="0.7"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_50_fmax" value="334.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mp_DQSCK_percent" value="0.5"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_25_fmax" value="533.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_20_fmax" value="533.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_ecc_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_hrb_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "ref_clk_source" value="clk"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_powerdn_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "multicast_wr_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "auto_powerdn_cycles" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_self_refresh_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "shared_sys_clk_source" value="XX"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_latency" value="0"  type="STRING"  enable="1" />
+     <PRIVATE name = "tool_context" value="SOPC_BUILDER"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_addr_mapping" value="CHIP_BANK_ROW_COL"  type="STRING"  enable="1" />
+     <PRIVATE name = "burst_merge_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "user_refresh_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "qsys_mode" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "clk_source_sharing_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_lookahead_depth" value="4"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_autopch_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_dynamic_bank_allocation" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "local_if_type_avalon" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "csr_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_dynamic_bank_num" value="4"  type="STRING"  enable="1" />
+     <PRIVATE name = "ctl_auto_correct_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "auto_powerdn_en" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "phy_if_type_afi" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "controller_type" value="ddrx_ctl"  type="STRING"  enable="1" />
+     <PRIVATE name = "max_local_size" value="64"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_srtr" value="Normal"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_mpr_loc" value="Predefined Pattern"  type="STRING"  enable="1" />
+     <PRIVATE name = "dss_tinit_rst_us" value="200.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_90_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_rtt_wr" value="Dynamic ODT off"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_100_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_pasr" value="Full Array"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_asrm" value="Manual SR Reference (SRT)"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_mpr_oper" value="Predefined Pattern"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_80_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_drv_impedance" value="RZQ/7"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_rtt_nom" value="ODT Disabled"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_tcl_70_fmax" value="400.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_wtcl" value="5.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_dll_pch" value="Fast Exit"  type="STRING"  enable="1" />
+     <PRIVATE name = "mem_atcl" value="Disabled"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_settings_valid" value="true"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_IH" value="0.375"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_intra_DQS_group_skew" value="0.02"  type="STRING"  enable="1" />
+     <PRIVATE name = "isi_DQS" value="0.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "addr_cmd_slew_rate" value="1.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_tpd_inter_DIMM" value="0.05"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_addresscmd_CK_skew" value="0.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_DS_calculated" value="0.246"  type="STRING"  enable="1" />
+     <PRIVATE name = "isi_addresscmd_hold" value="0.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_IS" value="0.375"  type="STRING"  enable="1" />
+     <PRIVATE name = "restore_default_toggle" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "dqs_dqsn_slew_rate" value="4.35"  type="STRING"  enable="1" />
+     <PRIVATE name = "dq_slew_rate" value="1.39"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_inter_DQS_group_skew" value="0.02"  type="STRING"  enable="1" />
+     <PRIVATE name = "isi_addresscmd_setup" value="0.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_minCK_DQS_skew" value="-0.01"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_IS_calculated" value="0.375"  type="STRING"  enable="1" />
+     <PRIVATE name = "num_slots_or_devices" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_maxCK_DQS_skew" value="0.01"  type="STRING"  enable="1" />
+     <PRIVATE name = "board_skew_ps" value="20"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_DH" value="0.231"  type="STRING"  enable="1" />
+     <PRIVATE name = "ck_ckn_slew_rate" value="2.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "isi_DQ" value="0.0"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_IH_calculated" value="0.375"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_DH_calculated" value="0.231"  type="STRING"  enable="1" />
+     <PRIVATE name = "t_DS" value="0.246"  type="STRING"  enable="1" />
+     <PRIVATE name = "cfg_reorder_data" value="false"  type="STRING"  enable="1" />
+     <PRIVATE name = "cfg_data_reordering_type" value="INTER_BANK"  type="STRING"  enable="1" />
+     <PRIVATE name = "cfg_starve_limit" value="10"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "simgen">
+     <PRIVATE name = "use_alt_top" value="1"  type="STRING"  enable="1" />
+     <PRIVATE name = "alt_top" value="ddr2_phy_alt_mem_phy_seq_wrapper"  type="STRING"  enable="1" />
+     <PRIVATE name = "family" value="Stratix IV"  type="STRING"  enable="1" />
+     <PRIVATE name = "filename" value="ddr2_phy_alt_mem_phy_seq_wrapper.vo"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "simgen2">
+     <PRIVATE name = "family" value="Stratix IV"  type="STRING"  enable="1" />
+     <PRIVATE name = "command" value="--simgen_arbitrary_blackbox=+ddr2_phy_alt_mem_phy_seq_wrapper;+ddr2_phy_alt_mem_phy_reconfig;+ddr2_phy_alt_mem_phy_pll;+ddr2_phy_alt_mem_phy_delay --ini=simgen_tri_bus_opt=on"  type="STRING"  enable="1" />
+     <PRIVATE name = "parameter" value="SIMGEN_INITIALIZATION_FILE=/home/choijon5/legup/tiger/processor/tiger_DE4_test/ddr2_phy_simgen_init.txt"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "simgen_enable">
+     <PRIVATE name = "language" value="Verilog HDL"  type="STRING"  enable="1" />
+     <PRIVATE name = "enabled" value="1"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "qip">
+     <PRIVATE name = "gx_libs" value="1"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "greybox">
+     <PRIVATE name = "filename" value="ddr2_phy_syn.v"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "quartus_settings">
+     <PRIVATE name = "DEVICE" value="EP4SGX530KH40C2"  type="STRING"  enable="1" />
+     <PRIVATE name = "FAMILY" value="Stratix IV"  type="STRING"  enable="1" />
+    </NAMESPACE>
+    <NAMESPACE name = "serializer"/>
+   </PRIVATES>
+   <FILES/>
+   <PORTS/>
+   <LIBRARIES/>
+  </STATIC_SECTION>
+ </NETLIST_SECTION>
+</MEGACORE>

@@ -1,0 +1,19 @@
+#
+#  Makefile for GXemul src/ui/nullui
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(CPEDANTIC) $(INCLUDE2)
+LIBS=$(OTHERLIBS)
+
+OBJS=NullUI.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+

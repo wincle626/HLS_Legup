@@ -1,0 +1,330 @@
+#!/bin/bash
+
+# Algorithm
+# - go through each *.pow.rpt file
+# 	- grab instr. string, dyn power, operands, hamming distance, 
+# 	- add to variable containing this instr type
+# - for each instr type, output all results, max/min/amean/gmean power
+
+# Instruction Classes
+ARITH_DST="add,addu,and,or,sllv,slt,sltu,srlv,sub,subu,xor"		# D = F(S,T)
+ARITH_DSI="addi,addiu,andi,ori,sll,slti,sltiu,sra,srl,xori"		# D = F(S,Imm)
+	DSI_IMM_SIZE="16,16,16,16,5,16,16,5,5,16"
+ARITH_LOHI="div,divu,mult,multu"								# HI/LO = F(S,T)
+MOVE="mfhi,mflo"												# $d = HI/LO
+MEM_OFFSET="lb,lw,sb,sw,lbu"									# load/store @ addr ($s+offset)
+MEM_IMM="lui"							 						# load from immediate
+BRA_OFFSET="bgez,bgezal,bgtz,blez,bltz,bltzal"					# if(s) goto pc+offset
+BRA_COMPARE="beq,bne"											# if F(s,t) goto pc+offset
+BRA_TARGET="j,jal"												# goto target
+BRA_REGISTER="jalr,jr"											# goto [$s]
+NOP="nop"														# nop
+
+# Check if instruction is contained in this group ($1 --> instruction class, $2 --> op)
+function instr_in_group() {
+	RET=`echo ",$1," | grep ",$2,"`
+	if [ "$RET" != "" ]; then
+		echo "1"
+	else
+		echo "0"
+	fi
+}
+
+# Create instruction of type 'op' multiple times ($1 --> op)
+function find_instr_class() {
+	#Figure out which instruction class this belongs to
+	if   [ `instr_in_group $ARITH_DST $1` -eq 1 ]; then
+		echo "0 1 2 0";
+	elif [ `instr_in_group $ARITH_DSI $1` -eq 1 ]; then
+		echo "0 1 1 1";
+	elif [ `instr_in_group $ARITH_LOHI $1` -eq 1 ]; then
+		echo "0 0 2 0";
+	elif [ `instr_in_group $MOVE $1` -eq 1 ]; then
+		echo "0 0 0 0";
+	elif [ `instr_in_group $MEM_OFFSET $1` -eq 1 ]; then
+		echo "0 1 1 2";
+	elif [ `instr_in_group $MEM_IMM $1` -eq 1 ]; then
+		echo "0 1 0 1";
+	elif [ `instr_in_group $NOP $1` -eq 1 ]; then
+		echo "0 0 0 0";	
+		
+	elif [ `instr_in_group $BRA_OFFSET $1` -eq 1 ]; then
+		echo "1 1 0";
+	elif [ `instr_in_group $BRA_COMPARE $1` -eq 1 ]; then
+		echo "1 2 0";
+	elif [ `instr_in_group $BRA_TARGET $1` -eq 1 ]; then
+		echo "1 0 1";
+	elif [ `instr_in_group $BRA_REGISTER $1` -eq 1 ]; then
+		echo "1 0 2";
+	else
+		echo "Not Found!"
+	fi
+}
+	
+function parse_file() {
+
+	NAME=${f%.*pow.rpt}
+	OP=${NAME##*/}
+	OP=${OP%.*}
+	
+	# Get instruction string (ie 'add t1, t2, t3')
+	INSTR=`grep -v "$OP\." ${NAME}.src | grep -o "$OP.*" --max-count=1`
+
+	# Get dynamic power
+	PWR=`grep -o "Core Dynamic Thermal Power Dissipation.*" ${NAME}.pow.rpt | tr -d '[;a-zA-Z]' | tr -d [:space:]`
+
+	# Get power & energy per instruction
+	if [ "$PWR" == "" ]; then
+		PWR="--"
+		ENERGY="--"
+	else
+		START_TIME=`grep -o "Simulation Time Range[^-]*" ${NAME}.pow.rpt | tr -d '[a-zA-Z:]' | tr -d '[:space:]'`
+		END_TIME=`grep "Simulation Time Range[^-]*" ${NAME}.pow.rpt | grep -o "\-\-.*" | tr -d '[a-zA-Z \-\>]'`
+
+		START_PC=`grep "$OP" ${NAME}.src | grep "$OP\." -v --max-count=1 | awk '{ print $1 }' | grep -o '[^:]*' | tr '[:lower:]' '[:upper:]'` #`grep "[^a-zA-Z]$OP[^\.]" --max-count=1 ${NAME}.src | awk '{ print $1 }' | grep -o '[^:]*' | tr '[:lower:]' '[:upper:]'`
+		END_PC=`grep "jr.ra" ${NAME}.src | awk '{ print $1 }' | grep -o '[^:]*' | tr '[:lower:]' '[:upper:]'`
+		PC_DIFF=`echo "obase=A; ibase=16; ${END_PC}-${START_PC}-4" | bc -l`
+
+		ENERGY=`echo "scale=2; (${END_TIME}-${START_TIME})*${PWR}/($PC_DIFF/4)/1000" | bc -l`
+		ENERGY="${ENERGY}pJ"
+		PWR="${PWR}mW"
+	fi
+
+	# Get hamming distance of operands (if available)
+	HAMMING=`grep '<hamming>:.*' -A1 ${NAME}.src | grep -x '[^\<]*' | grep -o ':[ ]*[^ ]*' | tr -d '[ :]' | tr [:lower:] [:upper:]`
+	HAMMING=`echo "ibase=16; obase=A; $HAMMING" | bc -l`
+
+	# Get operands
+	TYPE=(`find_instr_class $OP`)
+	if [ "${TYPE[0]}" = "0" ]; then	# reg instr --> (# dest, # reg inputs, # imm (2 means offset))
+		# Get Registers
+		TOP=`grep '800000:' -A4 ${NAME}.src | grep -v "$OP" | egrep -o "(lui|li|ori).*"`
+		REG1=""
+		REG2=""
+		if [  "${TYPE[2]}" != "0" ]; then
+			REG1_UPPER=`echo $TOP | grep -o 'lui [^ ]*' | grep 't2'` 
+			REG1_UPPER=`echo ${REG1_UPPER##*,}` # | tr -d '0x'`
+			REG1_LOWER=`echo $TOP | egrep -o '(ori|li) [^ ]*' | grep 't2'`
+			REG1_LOWER=`echo ${REG1_LOWER##*,}` # | tr -d '0x'`
+			REG1="${REG1_UPPER}${REG1_LOWER##*0x}"
+
+			if [ "${TYPE[2]}" = "2" ]; then	
+				REG2_UPPER=`echo $TOP | grep -o 'lui [^ ]*' | grep 't3'` 
+				REG2_UPPER=`echo ${REG2_UPPER##*,}` # | tr -d '0x'`
+				REG2_LOWER=`echo $TOP | egrep -o '(ori|li) [^ ]*' | grep 't3'` # | ` 
+				REG2_LOWER=`echo ${REG2_LOWER##*,}` # | tr -d '0x'`
+				REG2="${REG2_UPPER}${REG2_LOWER##*0x}"
+			fi
+		fi
+		
+		# Get Immediates
+		IMM=""
+		if [ "${TYPE[3]}" != "0" ]; then
+			IMM=`echo ${INSTR##*,}`
+			if [ "${TYPE[3]}" = "2" ]; then
+				IMM=`echo ${IMM%(*}`
+			fi
+		fi
+		
+		# Create output line
+		OUTPUT="${NAME} [${INSTR}] Power=${PWR} Energy=${ENERGY}"
+		PWR=`echo $PWR | tr -d 'mW'`
+		ENERGY=`echo $ENERGY | tr -d 'pJ'`
+		FILE_OUTPUT="${NAME}\t${PWR}\t${ENERGY}"
+		if [ "$REG1" != "" ]; then
+			OUTPUT="${OUTPUT} Reg1=${REG1}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${REG1}"
+		fi
+		if [ "$REG2" != "" ]; then
+			OUTPUT="${OUTPUT} Reg2=${REG2}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${REG2}"
+		fi
+		if [ "$IMM" != "" ]; then
+			OUTPUT="${OUTPUT} Imm=${IMM}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${IMM}"
+		fi
+		if [ "$HAMMING" != "" ]; then
+			OUTPUT="${OUTPUT} Hamming=${HAMMING}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${HAMMING}"
+		fi
+	else							# branch --> (#conditions, jump target type (0=offset, 1=target, 2=register))
+		# Get Registers
+		TOP=`grep '800000:' -A4 ${NAME}.src | grep -v "$OP" | egrep -o "(lui|li|ori).*"`
+		COND1=""
+		COND2=""
+		if [  "${TYPE[1]}" != "0" ]; then
+			COND1_UPPER=`echo $TOP | grep -o 'lui [^ ]*' | grep 't2'` 
+			COND1_UPPER=`echo ${COND1_UPPER##*,}` # | tr -d '0x'`
+			COND1_LOWER=`echo $TOP | egrep -o '(ori|li) [^ ]*' | grep 't2'`
+			COND1_LOWER=`echo ${COND1_LOWER##*,}` # | tr -d '0x'`
+			COND1="${COND1_UPPER}${COND1_LOWER}"
+			echo "COND1: $COND1"
+
+			if [ "${TYPE[2]}" = "2" ]; then	
+				COND2_UPPER=`echo $TOP | grep -o 'lui [^ ]*' | grep 't3'` 
+				COND2_UPPER=`echo ${COND2_UPPER##*,}` # | tr -d '0x'`
+				COND2_LOWER=`echo $TOP | egrep -o '(ori|li) [^ ]*' | grep 't3'` # | ` 
+				COND2_LOWER=`echo ${COND2_LOWER##*,}` # | tr -d '0x'`
+				COND2="${COND2_UPPER}${COND2_LOWER}"
+				echo "COND2: $COND2"
+			fi
+		fi
+		
+		TARGET=""
+		if [ "${TYPE[2]}" = "1" ]; then
+			TARGET=`echo ${INSTR%%<*}`
+			TARGET=`echo ${TARGET##* }`
+		fi
+		
+		# Create output line
+		OUTPUT="${NAME} [${INSTR}] Power=${PWR} Energy=${ENERGY}"
+		PWR=`echo $PWR | tr -d 'mW'`
+		ENERGY=`echo $ENERGY | tr -d 'pJ'`
+		FILE_OUTPUT="${NAME}\t${PWR}\t${ENERGY}"
+		if [ "$COND1" != "" ]; then
+			OUTPUT="${OUTPUT}\tCond1=${COND1}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${COND1}"
+		fi
+		if [ "$COND2" != "" ]; then
+			OUTPUT="${OUTPUT}\tCond2={COND2}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${COND2}"
+		fi
+		if [ "$TARGET" != "" ]; then
+			OUTPUT="${OUTPUT}\tTarget=${TARGET}"
+			FILE_OUTPUT="${FILE_OUTPUT}\t${TARGET}"
+		fi
+	fi
+	echo -e $OUTPUT
+	echo -e $FILE_OUTPUT >> report.txt
+}
+
+# Count how many power reports for this instruction have been created ($1 --> op)
+function count_instr_reports() {
+	LIST=`ls -1 assembly/$1.*pow.rpt 2> NULL`
+	LIST=($LIST)
+	echo ${#LIST[@]}
+}
+
+# Exit properly (go to bottom of output, etc)
+function exitter() {
+	echo -ne "\033[100B"
+	exit
+}
+
+
+
+# Main
+if [ "$1" = "" -o "$1" = "--help" ]; then
+	echo "HELP MENU:"
+	echo "./gather_data <instr | --all> [--minimal]			- gather all data for either all instr types, or specific type"
+	
+else
+	clear
+	trap exitter INT
+	echo -e "FILE\tPOWER (mW)\t" > report.txt
+
+	if [ "$1" = "--all" ]; then	
+		INSTR_LIST=`echo "$ARITH_DST,$ARITH_DSI,$ARITH_LOHI,$MOVE,$MEM_OFFSET,$MEM_IMM,$BRA_OFFSET,$BRA_COMPARE,$BRA_TARGET,$BRA_REGISTER,$NOP" | tr ',' ' '`
+	else
+		INSTR_LIST=$1
+	fi
+
+	if [ "$1" = "--all" -a "$2" = "--minimal" ]; then	# initialize counts to only re-read numbers that have changed
+		echo -ne "\033[?25l"
+		INSTR_COUNT=0
+		while [ "$INSTR_COUNT" != "42" ]; do
+			INSTR_COUNTS[$INSTR_COUNT]=-1;
+			let "INSTR_COUNT += 1"
+		done
+		MINIMAL=1
+	fi
+	
+	LOOP=1
+	while [ "$LOOP" = "1" ]; do	# so that we can do dynamic updates on --all --minimal
+		LOOP=0
+		INSTR_COUNT=0
+		
+		for i in $INSTR_LIST; do
+			if [ "$MINIMAL" = "1" ]; then	# see if we need to re-calculate this entry
+				VAL=`count_instr_reports $i`;
+				#echo -n "VAL = $VAL, INSTR_COUNTS[$INSTR_COUNT] = ${INSTR_COUNTS[$INSTR_COUNT]}"
+				if [ "$VAL" = "${INSTR_COUNTS[$INSTR_COUNT]}" ]; then
+					echo -ne "\033[1B\033[80D" 	# move down one line and to beginning
+					
+					let "INSTR_COUNT += 1"
+					continue
+				else
+					echo -ne "\033[K"		# DELETE EXISTING LINE.... 
+				fi
+				INSTR_COUNTS[$INSTR_COUNT]=$VAL;
+				#echo -n " = ${INSTR_COUNTS[$INSTR_COUNT]}"
+			fi
+			FILES=`find assembly/*.pow.rpt | grep "[^a-zA-Z]$i\." | grep -v "^assembly/li"`
+			
+			DYN_TOTAL=0;
+			ENG_TOTAL=0;
+			DYN_LIST=""
+			ENG_LIST=""
+			COUNT=0;
+			for f in $FILES; do
+				RET=`parse_file $f`
+				if [ "$2" != "--minimal" ]; then
+					echo -e $RET | tr ' ' '\t'
+				fi
+				
+				DYN=`echo ${RET##*]}`
+				DYN=`echo ${DYN%%mW*} | tr -d [a-zA-Z=]`
+				DYN_LIST="$DYN_LIST $DYN"
+				DYN_TOTAL=`echo "scale=4; $DYN_TOTAL+$DYN" | bc -l`
+				
+				ENG=`echo ${RET##*mW}`
+				ENG=`echo ${ENG%%pJ*} | tr -d [a-zA-Z=]`
+				ENG_LIST="$ENG_LIST $ENG"
+				ENG_TOTAL=`echo "scale=4; $ENG_TOTAL+$ENG" | bc -l`
+				
+				let "COUNT += 1"
+			done
+			if [ "$COUNT" != "0" ]; then
+				# Find averages
+				DYN_AVG=`echo "scale=2; $DYN_TOTAL/$COUNT" | bc -l`
+				ENG_AVG=`echo "scale=2; $ENG_TOTAL/$COUNT" | bc -l`
+				
+				# Find Standard Deviations
+				if [ "$COUNT" != "1" ]; then
+					DYN_DEV=0;
+					for k in $DYN_LIST; do
+						DYN_DEV=`echo "scale=6; $DYN_DEV+($k-$DYN_AVG)*($k-$DYN_AVG)" | bc -l`
+					done
+					DYN_DEV=`echo "scale=2; sqrt($DYN_DEV/($COUNT-1))" | bc -l`
+					
+					ENG_DEV=0;
+					for k in $ENG_LIST; do
+						ENG_DEV=`echo "scale=6; $ENG_DEV+($k-$ENG_AVG)*($k-$ENG_AVG)" | bc -l`
+					done
+					ENG_DEV=`echo "scale=2; sqrt($ENG_DEV/($COUNT-1))" | bc -l`
+				else
+					DYN_DEV="0"
+					ENG_DEV="0"
+				fi
+				
+				if [ "$2" != "--minimal" ]; then
+					echo "---------------------------------"
+					echo -e "Count: $COUNT, Average Power: ${DYN_AVG}mW (Standard Deviation: ${DYN_DEV}), Average Energy: ${ENG_AVG}pJ (Standard Deviation: ${ENG_DEV})\n"
+				else
+					printf "%8s:  Average power is %5.2fmW (Standard Deviation: %5.2f), Average energy is %5.2fpJ (Standard Deviation: %5.2f) in %3d runs.\n" $i $DYN_AVG $DYN_DEV $ENG_AVG $ENG_DEV $COUNT
+					printf "%s\t%5.2f\t%5.2f\t%5.2f\t%5.2f\n" $i $DYN_AVG $DYN_DEV $ENG_AVG $ENG_DEV >> power_results_minimal2.txt
+				fi
+			elif [ "$2" == "--minimal" ]; then
+				printf "%8s:  No simulations run.\n" $i
+			fi
+			
+			let "INSTR_COUNT += 1"
+		done
+		
+		if [ "$MINIMAL" = "1" ]; then
+			LOOP=1;
+			sleep 20							# pause before re-iterating
+			echo -ne "\033[${INSTR_COUNT}A" 	# move up 42 lines 
+		fi
+	done
+fi

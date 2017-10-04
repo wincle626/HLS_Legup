@@ -1,0 +1,6 @@
+function = ByRef
+# some dumb comment
+write 0x40000000 0x18
+ByRef 0 0x40000000 0x4
+poll_complete 0 
+read 0x40000000 1

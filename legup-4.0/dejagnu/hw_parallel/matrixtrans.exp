@@ -1,0 +1,17 @@
+load_lib legup.exp
+
+set expected {# Result:\s+6144\s+}
+
+cd ../examples/parallel/openmp/matrixtrans
+
+
+set test "matrixtrans OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/matrixtrans
+
+
+set test "matrixtrans Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

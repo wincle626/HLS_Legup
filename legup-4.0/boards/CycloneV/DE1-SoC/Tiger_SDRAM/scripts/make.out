@@ -1,0 +1,4 @@
+cp ../../../../legup_components.ipx .
+cp ../../../../legup_components.ipx ../.
+#qsys-script --script=gen_legup_system.tcl &> o_gen_legup_system.txt 2>&1
+qsys-script --script=gen_legup_system.tcl

@@ -1,0 +1,47 @@
+#!/usr/bin/expect
+
+################################################################################
+#
+# qemu_arm.exp
+#
+# This script runs qemu-system-arm with the script argument and prints the 
+# return value 
+#
+################################################################################
+
+# set the QEMU audio driver to 'none'
+set ::env(QEMU_AUDIO_DRV) none
+
+# spawn the qemu process
+eval spawn qemu-system-arm $argv
+
+puts ""
+
+expect {
+	# The -legup-arm-add-suffix pass adds 'printf("DONE\n");' at the end of
+	# the main function. Expect this.
+	# TrDO: We may want to change this so that we
+	# run the simulation to a breakpoint (like gxemul.exp)
+	"DONE" {
+
+		# send Control-a x to exit qemu
+		send \001x
+
+		# show output and let qemu process finish
+		interact
+	}
+
+	timeout {
+		puts "QEMU timed out."
+		if [info exists expect_out(buffer)] {
+			puts "Output: $expect_out(buffer)"
+		} else {
+			puts "No output."
+		}
+	}
+
+	default { 
+		puts "QEMU Error:"
+		puts "$expect_out(buffer)"
+	}
+}

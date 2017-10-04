@@ -1,0 +1,36 @@
+#
+#  Makefile for GXemul src/components
+#
+
+all: do_special do_machines do_busses do_cpu do_memory
+
+do_busses:
+	cd busses; $(MAKE)
+
+do_cpu:
+	cd cpu; $(MAKE)
+
+do_special:
+	cd special; $(MAKE)
+
+do_machines:
+	cd machines; $(MAKE)
+
+do_memory:
+	cd memory; $(MAKE)
+
+clean:
+	cd busses; $(MAKE) clean
+	cd cpu; $(MAKE) clean
+	cd special; $(MAKE) clean
+	cd machines; $(MAKE) clean
+	cd memory; $(MAKE) clean
+
+clean_all: clean
+	cd busses; $(MAKE) clean_all
+	cd cpu; $(MAKE) clean_all
+	cd special; $(MAKE) clean_all
+	cd machines; $(MAKE) clean_all
+	cd memory; $(MAKE) clean_all
+	rm -f Makefile
+

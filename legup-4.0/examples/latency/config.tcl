@@ -1,0 +1,5 @@
+set_parameter LOCAL_RAMS 1
+
+set_operation_latency signed_add 1
+set_operation_latency signed_subtract 3
+set_operation_latency signed_multiply 10

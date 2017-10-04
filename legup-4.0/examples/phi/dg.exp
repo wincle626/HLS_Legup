@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd phi
+set test "phi"
+set expected {b=\s*0.*b=\s*1}
+
+run-test $test $expected
+
+cd ..

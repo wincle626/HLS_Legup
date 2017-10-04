@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/dfadd
+set test "dfadd"
+
+set expected {return_val=\s+46\s+}
+set gxexpected {reg: v0 = 0x000000000000002e}
+
+run-test-full $test $expected $gxexpected
+
+cd ../..

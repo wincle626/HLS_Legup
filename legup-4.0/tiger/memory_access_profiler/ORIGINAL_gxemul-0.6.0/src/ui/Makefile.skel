@@ -1,0 +1,24 @@
+#
+#  Makefile for GXemul src/ui
+#
+
+all: do_console do_nullui
+
+$(OBJS): Makefile
+
+do_console:
+	cd console; $(MAKE)
+
+do_nullui:
+	cd nullui; $(MAKE)
+
+clean:
+	cd console; $(MAKE) clean
+	cd nullui; $(MAKE) clean
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	cd console; $(MAKE) clean_all
+	cd nullui; $(MAKE) clean_all
+	rm -f Makefile
+

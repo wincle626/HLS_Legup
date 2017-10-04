@@ -1,0 +1,534 @@
+# this expect script is used to quickly test a set of benchmarks
+# used by make check which can be run in legup/examples directory
+# add any more important tests here that should be checked
+# before code check in
+
+load_lib legup.exp
+
+# ------------------------------------------------------------- #
+# Chstone (pure HW)
+
+cd chstone/aes
+set test "aes_purehw"
+set expected {return_val=\s+32\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/dfdiv
+set test "dfdiv_pure"
+set expected {return_val=\s+22\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/sha
+set test "sha_purehw"
+set expected {return_val=\s+5\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/motion
+set test "motion_purehw"
+set expected {return_val=\s+12\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/jpeg
+set test "jpeg_purehw"
+
+
+cd ../..
+
+cd chstone/adpcm
+set test "adpcm_purehw"
+set expected {return_val=\s+150\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/dfadd
+set test "dfadd_purehw"
+set expected {return_val=\s+46\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/dfsin
+set test "dfsin_purehw"
+set expected {return_val=\s+36\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/dfmul
+set test "dfmul_purehw"
+set expected {return_val=\s+20\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/gsm
+set test "gsm_purehw"
+set expected {return_val=\s+168\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/mips
+set test "mips_purehw"
+set expected {return_val=\s+9\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd chstone/blowfish
+set test "blowfish_purehw"
+set expected {return_val=\s+5200\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd dhrystone
+set test "dhrystone_purehw"
+set expected {return_val=\s+19\s+}
+
+run-test $test $expected
+
+cd ..
+
+cd pipeline/variable_bounds
+set test "pipeline/variable_bounds"
+set expected {return_val=\s+80\s+.*Cycles:\s+68\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/dependency
+set test "pipeline/dependency"
+set expected {return_val=\s+4950\s+.*Cycles:\s+128285\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/matrixmultiply
+set test "pipeline/matrixmultiply"
+set expected {return_val=\s+962122000\s+.*Cycles:\s+10043\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/correlation
+set test "pipeline/correlation"
+set expected {return_val=\s+1477\s+.*Cycles:\s+58286\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/associative
+set test "pipeline/associative"
+set expected {return_val=\s+265\s+.*Cycles:\s+15\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/float_add
+set test "pipeline/float_add"
+set expected {return_val=\s+76\s+.*Cycles:\s+303\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/accumulate
+set test "pipeline/accumulate"
+set expected {return_val=\s+4368\s+.*Cycles:\s+229\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/sum
+set test "pipeline/sum"
+set expected {return_val=\s+100\s+.*Cycles:\s+66\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/hash
+set test "pipeline/hash"
+set expected {return_val=\s+91\s+.*Cycles:\s+645\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/ignore-mem-deps
+set test "pipeline/ignore-mem-deps"
+
+set expected {return_val=\s+1477\s+.*Cycles:\s+23273\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/longchain
+set test "pipeline/longchain"
+set expected {return_val=\s+550\s+.*Cycles:\s+34\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/diffeq
+set test "pipeline/diffeq"
+set expected {return_val=\s*1461495984\s+.*Cycles:\s+57\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/fp_associative
+set test "pipeline/fp_associative"
+set expected {return_val=\s+265\s+.*Cycles:\s+387\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/two_loops
+set test "pipeline/two_loops"
+set expected {return_val=\s+147446496\s+.*Cycles:\s+72\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/simple
+set test "pipeline/simple"
+set expected {return_val=\s+36\s+.*Cycles:\s+68\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd backtracking_pipeline/adderchain
+set test "backtracking_pipeline/adderchain"
+set expected {return_val=\s+87301\s+.*Cycles:\s+194\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd backtracking_pipeline/complex
+set test "backtracking_pipeline/complex"
+set expected {return_val=\s*1633789795\s+.*Cycles:\s+380\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd backtracking_pipeline/faddtree
+set test "backtracking_pipeline/faddtree"
+set expected {return_val=\s+18160\s+.*Cycles:\s+1213\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd backtracking_pipeline/dividers
+set test "backtracking_pipeline/dividers"
+set expected {return_val=\s+108\s+.*Cycles:\s+153\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd backtracking_pipeline/multipliers
+set test "backtracking_pipeline/multipliers"
+set expected {return_val=\s+91\s+.*Cycles:\s+206\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd floating_point/determinant
+set test "determinant"
+set expected {return_val=\s+32\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd floating_point/array
+set test "array"
+set expected {return_val=\s+10\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd multipump/gaussblur
+set test "gaussblur"
+set expected {return_val=\s+1931186\s+}
+
+run-test $test $expected
+
+cd ../..
+
+cd pipeline/waitrequest
+set test "pipeline/waitrequest"
+set expected {return_val=\s+1127\s+}
+
+run-test $test $expected
+
+cd ../..
+
+# ------------------------------------------------------------- #
+# Chstone hybrids (Hybrid)
+
+# adpcm
+cd chstone_hybrid/adpcm/
+set test "adpcm"
+set hybridexpected {# Result: 150}
+run-test-hybrid-once $test $hybridexpected
+cd ../../
+
+# aes
+cd chstone_hybrid/aes/
+set test "aes"
+set hybridexpected {# Result: 32}
+run-test-hybrid-once $test $hybridexpected
+cd ../../
+
+# blowfish
+cd chstone_hybrid/blowfish/
+set test "blowfish"
+set hybridexpected {# Result: 5200}
+run-test-hybrid-once $test $hybridexpected
+cd ../../
+
+# dfsin
+cd chstone_hybrid/dfsin/
+set test "dfsin"
+set hybridexpected {# Result: 36}
+run-test-hybrid-once $test $hybridexpected
+cd ../../
+
+# gsm
+#cd chstone_hybrid/gsm/
+#set test "gsm"
+#set hybridexpected {# Result: 168}
+#run-test-hybrid-once $test $hybridexpected
+#cd ../../
+
+# ------------------------------------------------------------- #
+# Loop pipelining (pure HW)
+
+# ------------------------------------------------------------- #
+# Parallel cases (pure HW + Hybrid)
+
+# blackscholes
+#set expected {# sum =\s+11159\s+}
+#set hybridexpected {# sum = 11159}
+
+#cd parallel/single/blackscholes_LUT
+#set test "blackscholes Single"
+#run-test-hybrid-once $test $hybridexpected
+
+#cd ../../pthreads/blackscholes_LUT
+#set test "blackscholes Pthreads"
+#run-test-hybrid-once $test $hybridexpected
+
+#set test "blackscholes Pthreads_Pure_HW"
+#run-test-parallel-once $test $expected
+
+#cd ../../pthreads+openmp/blackscholes_LUT_2
+#set test "blackscholes_2 pthreads+openmp"
+#run-test-hybridparallel-once $test $hybridexpected
+#cd ../../../
+
+# barrier (barrier + lock)
+set expected {# Result:\s+4\s+}
+set hybridexpected {# Result: 4}
+
+cd parallel/pthreads/barrier
+set test "barrier Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "barrier Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+cd ../../../
+
+# dot product (memory intensive)
+set expected {# Result:\s+60799800\s+}
+set hybridexpected {# Result: 60799800}
+
+cd parallel/openmp/dotproduct
+set test "dotproduct OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+set test "dotproduct OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/dotproduct
+set test "dotproduct Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "dotproduct Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+cd ../../../
+
+# hash (multiple locks)
+set expected {# result =\s+4\s+}
+set hybridexpected {# result = 4}
+
+cd parallel/single/hash_mod
+set test "hash Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/hash_mod
+set test "hash Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "hash Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/hash_mod_pipeline
+set test "hash_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "hash_pipeline Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/hash_mod_2
+set test "hash_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+cd ../../../
+
+# mandelbrot (pthreads+openmp, pthread+loop pipelining)
+set expected {# Count:\s+12013\s+}
+set hybridexpected {# Count: 12013}
+
+cd parallel/single/mandelbrot
+set test "mandelbrot Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../openmp/mandelbrot
+set test "mandelbrot OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+set test "mandelbrot OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/mandelbrot
+set test "mandelbrot Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "mandelbrot Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/mandelbrot_pipeline
+set test "mandelbrot_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "mandelbrot_pipeline Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/mandelbrot_2
+set test "mandelbrot_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+cd ../../../
+# ------------------------------------------------------------- #
+# Pure SW
+
+# adpcm
+cd chstone/adpcm
+set test "adpcm"
+set swexpected {Result: 150}
+# last 2 number turns off NO_INLINE, NO_OPT flags
+run-test-sw-once $test $swexpected 0 0
+cd ../..
+
+# aes
+cd chstone/aes
+set test "aes"
+set swexpected {Result: 32}
+run-test-sw-once $test $swexpected 0 0
+cd ../..
+
+# blowfish
+cd chstone/blowfish
+set test "blowfish"
+set swexpected {Result: 5200}
+run-test-sw-once $test $swexpected 0 0
+cd ../..
+
+# dfadd
+cd chstone/dfadd
+set test "dfadd"
+set swexpected {Result: 46}
+run-test-sw-once $test $swexpected 0 0
+cd ../..
+
+# ------------------------------------------------------------- #
+
+# Debugger
+
+set examples_dir [pwd]
+
+cd debug/array
+set test "array"
+set expected {return_val=\s+156\s+}
+
+run-test $test $expected
+run-test-debugger-sim $test $examples_dir
+
+cd ../..
+
+
+cd debug/qsort
+set test "qsort"
+set expected {return_val=\s+19\s+}
+
+run-test $test $expected
+run-test-debugger-sim $test $examples_dir
+
+cd ../..
+
+cd debug/chstone/adpcm
+set test "adpcm"
+set expected {return_val=\s+150\s+}
+set gxexpected {reg: v0 = 0x0000000000000096}
+
+run-test $test $expected
+
+cd ../../..
+
+cd debug/O3/chstone/adpcm
+set test "adpcm"
+set expected {return_val=\s+150\s+}
+set gxexpected {reg: v0 = 0x0000000000000096}
+
+run-test $test $expected
+
+cd ../../../..

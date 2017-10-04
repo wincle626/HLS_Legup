@@ -1,0 +1,47 @@
+<internal_error>
+	<executable>quartus.exe</executable>
+	<sub_system>PJN</sub_system>
+	<file>/quartus/prj/pjn/pjn_f_tree.cpp</file>
+	<line>1157</line>
+	<callstack>
+	0x05f966f6: PRJ_PJN + 0x166f6 (?get_help_prefix@PJN_NAVIGATOR_WND@@UAI?AV?$basic_string@DU?$char_traits@D@_Dinkum_std@@V?$MEM_STL_ALLOCATOR@D@@@_Dinkum_std@@XZ + 0x6d96)
+	</callstack>
+	<error>drop_index == draginfo-&gt;index</error>
+	<date>Wed Mar 10 11:51:22 2010</date>
+	<version>Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition</version>
+	<full_error>drop_index == draginfo-&gt;index
+Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition </full_error>
+</internal_error>
+
+<internal_error>
+	<executable>quartus_cdb.exe</executable>
+	<sub_system>QATM</sub_system>
+	<file>/quartus/atm/qatm/qatm_mif_update.cpp</file>
+	<line>576</line>
+	<callstack>
+	0x0041e9b2: quartus_cdb + 0x1e9b2 (Dbm_Uninit + 0x1a6c2)
+	0x035e4ea6: db_cdb_mgr + 0x4ea6 (?get_voltage_at_pin@CDB_CHIP_DB_ENTRY@@QBI?AW4DEV_VOLTAGE_ENUM@@I@Z + 0x56)
+	</callstack>
+	<error>RAM/CAM MIF reconfig failed</error>
+	<date>Sat Apr 17 16:21:40 2010</date>
+	<version>Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition</version>
+	<full_error>RAM/CAM MIF reconfig failed
+Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition </full_error>
+</internal_error>
+
+<internal_error>
+	<executable>quartus_cdb.exe</executable>
+	<sub_system>QATM</sub_system>
+	<file>/quartus/atm/qatm/qatm_mif_update.cpp</file>
+	<line>576</line>
+	<callstack>
+	0x0041e9b2: quartus_cdb + 0x1e9b2 (Dbm_Uninit + 0x1a6c2)
+	0x035e4ea6: db_cdb_mgr + 0x4ea6 (?get_voltage_at_pin@CDB_CHIP_DB_ENTRY@@QBI?AW4DEV_VOLTAGE_ENUM@@I@Z + 0x56)
+	</callstack>
+	<error>RAM/CAM MIF reconfig failed</error>
+	<date>Sat Apr 17 16:22:04 2010</date>
+	<version>Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition</version>
+	<full_error>RAM/CAM MIF reconfig failed
+Quartus II Version 9.0 Build 235 06/17/2009 Service Pack 2 SJ Web Edition </full_error>
+</internal_error>
+

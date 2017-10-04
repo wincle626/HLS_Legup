@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd intrinsics
+set test "intrinsics"
+set expected {return_val=\s+50529027\s+}
+set gxexpected {reg: v0 = 0x0000000003030303}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

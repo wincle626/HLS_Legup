@@ -1,0 +1,22 @@
+#
+#  Makefile for GXemul src/console
+#
+#  This directory contains code that is related to console and framebuffer
+#  handling.
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(XINCLUDE) $(DINCLUDE)
+
+OBJS=console.o x11.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+

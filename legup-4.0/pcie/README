@@ -1,0 +1,35 @@
+PCIe via LegUp
+==============
+
+Contributors: Ahmed Kammoona, Bryce Long, and Victor Zhang
+
+This directory contains working code for a new hybrid flow that uses a hard processor (x86) connected to a DE4 FPGA. The communication is done via the PCIe interface protocol. Similar to LegUp's MIPS hybrid flow, the PCIe flow allows the user to specify functions to compile into hardware accelerators.
+
+Directory structure:
+
+  - acl_demo: currently unused Altera OpenCL front-end to use the PCIe device driver
+  - acl_driver: currently unused Altera OpenCL Linux PCIe device driver
+  - demo: front-end to use our device driver
+    - demo/demo is a utility to measure PCIe bandwidth and correctness
+    - demo/reprogram is a utility to help reprogram the FPGA without needing to restart the computer for the PCIe connection to work
+  - driver: Our Linux PCIe device driver, modified from the work at http://www.altera.com/education/univ/materials/boards/de4/unv-de4-board.html
+  - examples: examples of C programs that use the PCIe flow including all CHStone benchmarks a visual Mandelbrot set program
+    - Note: the Mandelbrot programs require OpenCV and OpenGL libraries to compile
+  - pcie_ddr_qsys_design: work in progress to enable off-chip memory support
+  - pcie_tutorial: the base hardware design for the PCIe flow
+  - shared_mem: a custom library to utilize FPGA memory and multiple hardware accelerators, which is linked into the software generated in the PCIe flow
+  - sim: an automatic testbench generator used by make pcieV and simulations of some modules
+
+Possible future work:
+
+  - Support off-chip memory to allow accelerators to access more memory (pcie_ddr_qsys_design is work in progress).
+    - Note: the memory allocator will need to be compiled with a heap size of 1GB instead of the current value
+  - Increase the PCIe bandwidth from ~6% to ~70%, as claimed by the Altera OpenCL driver. The Altera OpenCL driver may only work on 64-bit Linux and requires a base hardware design with a different PCIe configuration
+  - Support memory architecture parametrization, similar to the MIPS hybrid flow. Banked memories may also be an alternative method to reduce memory contention
+  - Improve the base design and compile settings for better multi-corner timing of large designs
+  - Comprehensive simulation and on-board regression tests for 32-bit and 64-bit machines
+  - Support pthread mutexes and barriers in hardware-accelerated code
+  - Minor:
+    - Let the user override the number of hardware accelerators or improve the automatic counting of hardware accelerators needed
+    - Have the automatic testbench generator support multiple accelerators (currently only supports one type of accelerators, though there may be multiple instances of it)
+    - Make the reprogramming more robust, or at least be able to detect when reprogramming will work

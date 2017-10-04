@@ -1,0 +1,64 @@
+Replace the compiler target name with the name on your system.
+
+
+Alpha
+-----
+alpha-unknown-elf-gcc -I../../src/include/testmachine -g hello.c -c -o hello_alpha.o
+alpha-unknown-elf-ld -Ttext 0x10000 -e f hello_alpha.o -o hello_alpha
+file hello_alpha
+../../gxemul -E testalpha hello_alpha
+
+
+ARM
+---
+arm-unknown-elf-gcc -I../../src/include/testmachine -g hello.c -c -o hello_arm.o
+arm-unknown-elf-ld -e f hello_arm.o -o hello_arm
+file hello_arm
+../../gxemul -E testarm hello_arm
+
+
+MIPS (64-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -DMIPS hello.c -mips4 -mabi=64 -c -o hello_mips.o
+mips64-unknown-elf-ld -Ttext 0xa800000000030000 -e f hello_mips.o -o hello_mips --oformat=elf64-bigmips
+file hello_mips
+../../gxemul -E testmips hello_mips
+
+
+MIPS (32-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -DMIPS hello.c -mips1 -mabi=32 -c -o hello_mips32.o
+mips64-unknown-elf-ld -Ttext 0x80030000 -e f hello_mips32.o -o hello_mips32
+file hello_mips32
+../../gxemul -E testmips -C R3000 hello_mips32
+
+
+PPC (64-bit)
+------------
+TODO
+
+
+PPC (32-bit)
+------------
+ppc-unknown-elf-gcc -I../../src/include/testmachine -g hello.c -c -o hello_ppc.o
+ppc-unknown-elf-ld -e f hello_ppc.o -o hello_ppc
+file hello_ppc
+../../gxemul -E testppc -C PPC750 hello_ppc
+
+
+SH (32-bit)
+-----------
+
+sh64-superh-elf-gcc -m5-compact -I../../src/include/testmachine -g hello.c -c -o hello_sh.o
+sh64-superh-elf-ld -mshelf32 -e _f hello_sh.o -o hello_sh
+file hello_sh
+../../gxemul -E testsh hello_sh
+
+
+SPARC (64-bit)
+--------------
+sparc64-unknown-elf-gcc -I../../src/include/testmachine -g hello.c -c -o hello_sparc.o
+sparc64-unknown-elf-ld -e f hello_sparc.o -o hello_sparc
+file hello_sparc
+../../gxemul -E testsparc hello_sparc
+

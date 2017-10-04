@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd qsort
+set test "qsort"
+set expected {return_val=\s+980\s+}
+set gxexpected {reg: v0 = 0x00000000000003d4}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

@@ -1,0 +1,6 @@
+#!/bin/bash
+#cleaning tiger processor directory
+
+rm -rf work db incremental_db
+rm vsim.wlf 
+rm *.txt

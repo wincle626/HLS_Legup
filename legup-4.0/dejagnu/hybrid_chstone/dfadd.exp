@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../examples/chstone_hybrid/dfadd/
+set test "dfadd"
+
+set hybridexpected {# Result: 46}
+run-test-hybrid $test $hybridexpected
+
+cd ../../../examples

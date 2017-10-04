@@ -1,0 +1,27 @@
+load_lib legup.exp
+
+set hybridexpected {Count: 12013}
+
+cd ../examples/parallel/pthreads+openmp/mandelbrot_2
+set test "mandelbrot_2 Pthreads+OpenMP"
+run-test-hybridparallel-once-on-board $test $hybridexpected
+
+cd ../mandelbrot_3
+set test "mandelbrot_3 Pthreads+OpenMP"
+run-test-hybridparallel-once-on-board $test $hybridexpected
+
+cd ../mandelbrot_4
+set test "mandelbrot_4 Pthreads+OpenMP"
+run-test-hybridparallel-once-on-board $test $hybridexpected
+
+# This configuration is too large to fit in CycloneV device on DE1-SoC or SoCKit
+#cd ../mandelbrot_8_4
+#set test "mandelbrot_8_4 Pthreads+OpenMP"
+#run-test-hybridparallel-once-on-board $test $hybridexpected
+
+# This configuration is too large to fit in CycloneV device on DE1-SoC or SoCKit
+#cd ../mandelbrot_12_4
+#set test "mandelbrot_12_4 Pthreads+OpenMP"
+#run-test-hybridparallel-once-on-board $test $hybridexpected
+
+cd ../../../

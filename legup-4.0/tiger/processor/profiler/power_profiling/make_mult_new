@@ -1,0 +1,96 @@
+#!/bin/bash
+
+NUM_INSTRS=100	# later can introduce loops
+
+# Instruction Classes
+ARITH_LOHI="div,divu,mult,multu"								# HI/LO = F(S,T)
+
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%.*}
+	OUT_NAME="$NAME"
+	
+	# Find name so we don't overwrite previously created files
+	if [ -f $OUT_NAME.elf ]; then
+		IDX=1
+		while [ -f $OUT_NAME.$IDX.elf ]; do
+			let "IDX += 1"
+		done
+		OUT_NAME="$NAME.$IDX"
+	fi
+	
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	#rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+
+
+FILE=assembly/mult.s
+echo -e "\t.text\n\t.globl\tmain\n\t.ent\tmain\nmain:" > $FILE
+
+RAND=`rand 1000000`
+echo -e "\tli \$9, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$10, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$11, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$12, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$13, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$14, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$15, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$16, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$17, ${RAND}" >> $FILE
+RAND=`rand 1000000`
+echo -e "\tli \$18, ${RAND}" >> $FILE
+
+for i in `seq 1 $NUM_INSTRS`; do
+	echo -e "\tmult \$9, \$10" >> $FILE
+	echo -e "\tmflo \$9" >> $FILE
+	echo -e "\tmult \$11, \$12" >> $FILE
+	echo -e "\tmflo \$11" >> $FILE
+	echo -e "\tmult \$13, \$14" >> $FILE
+	echo -e "\tmflo \$13" >> $FILE
+	echo -e "\tmult \$15, \$16" >> $FILE
+	echo -e "\tmflo \$15" >> $FILE
+	echo -e "\tmult \$17, \$18" >> $FILE
+	echo -e "\tmflo \$17" >> $FILE
+	
+	echo -e "\tmult \$9, \$10" >> $FILE
+	echo -e "\tmflo \$10" >> $FILE
+	echo -e "\tmult \$11, \$12" >> $FILE
+	echo -e "\tmflo \$12" >> $FILE
+	echo -e "\tmult \$13, \$14" >> $FILE
+	echo -e "\tmflo \$14" >> $FILE
+	echo -e "\tmult \$15, \$16" >> $FILE
+	echo -e "\tmflo \$16" >> $FILE
+	echo -e "\tmult \$17, \$18" >> $FILE
+	echo -e "\tmflo \$18" >> $FILE
+done
+
+echo -e "\tjr \$ra\n\t.end\tmain" >> $FILE
+
+assemble $FILE

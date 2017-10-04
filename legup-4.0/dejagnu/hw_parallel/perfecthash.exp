@@ -1,0 +1,15 @@
+load_lib legup.exp
+
+set expected {# Result:\s+24000\s+}
+
+cd ../examples/parallel/openmp/perfecthash
+
+set test "perfecthash OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/perfecthash
+
+set test "perfecthash Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

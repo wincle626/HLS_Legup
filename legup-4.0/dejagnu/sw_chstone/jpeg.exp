@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/jpeg
+set test "jpeg"
+set expected {Result: 21745}
+
+run-test-sw $test $expected
+
+cd ../..

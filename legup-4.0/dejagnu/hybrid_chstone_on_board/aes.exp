@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../examples/chstone_hybrid/aes/
+set test "aes"
+
+set hybridexpected {Result: 32}
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../../examples

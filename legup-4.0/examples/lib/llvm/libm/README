@@ -1,0 +1,5 @@
+These source files were copied from newlib-2.0.0, from newlib/libm, from math, complex and common. Some of the gamma functions are not included due to re-entrancy problems. The reentrant versions should be available here. Copyright files have also been copied from newlib.
+
+Compiler flags:
+-D _IEEE_LIBM            # Ignore errors, ie do not use matherr() or set errno 
+-D __IEEE_LITTLE_ENDIAN  # Needed for correctness

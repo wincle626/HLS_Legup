@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Experimenting with GXemul</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Experimenting with GXemul</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#hello">Hello world</a>
+  <li><a href="#expdevices">Experimental devices</a>
+</ul>
+
+
+
+
+
+
+<p><br>
+<a name="hello"></a>
+<h3>Hello world:</h3>
+
+<p>[ Note: This page is about the <font color="#dd2222"><b>LEGACY MODES</b></font> of GXemul. ]
+
+<p>You might want to use the emulator to develop programs on your own,
+not just run precompiled kernels such as NetBSD. To get started, I recommend
+that you do two things:
+
+<p>
+<ul>
+  <li>Build and install a cross-compiler for your chosen target,
+	e.g. <tt>mips64-unknown-elf</tt>.
+	<a href="http://gcc.gnu.org/">GCC</a> is usually a good compiler
+	choice, because it is portable and in wide-spread use.
+	(Other compilers should work too.)
+  <p>
+  <li>Compile the Hello World demo program for your chosen target, and run 
+	it in the emulator.
+</ul>
+
+<p>The Hello World demo program is included in the GXemul source
+code distribution, in the <a href="../demos/hello/"><tt>demos/hello/</tt></a>
+subdirectory. The README files in the demo directories have several 
+examples of how the demo programs can be built.
+
+<p>Once you have tried running the Hello World program from the command 
+line, e.g.<pre>
+	<b>gxemul -E oldtestmips hello_mips</b>
+</pre>
+you can experiment with adding one or more of the following command line 
+options:
+
+<p><ul>
+  <li><b><tt>-t</tt></b>, to show a function call trace,
+  <li><b><tt>-i</tt></b>, to show instruction disassembly (for each
+	executed instruction),
+  <li>and finally <b><tt>-V</tt></b> to start the emulator in a "paused"
+	state.
+</ul>
+
+<p>If you start the emulator in the paused state, or if you press CTRL-C 
+during normal execution, you will end up with a <tt><b>GXemul></b></tt> 
+prompt. This is the built-in debugger.
+
+<p>Using the built-in debugger, you can single step (<tt><b>s</b></tt>), 
+show the current contents of the emulated registers (<tt><b>r</b></tt>),
+turn on/off the function call trace mode (<tt><b>trace</b></tt>), or 
+continue at full speed (<tt><b>c</b></tt>). Typing <tt><b>quit</b></tt> 
+exits the emulator.
+
+<p>Hopefully this is enough to get you inspired. :-)
+
+
+
+
+
+
+<p><br>
+<a name="expdevices"></a>
+<h3>Experimental devices:</h3>
+
+The emulator has several modes where it doesn't emulate any real machine.
+It can either run in "bare" mode, where no devices are included by default
+(just the CPU), or in a "test" mode where some simple devices are 
+emulated.
+
+<p>The test machines (<tt>oldtestmips</tt>, <tt>testppc</tt>, etc) have the
+following experimental devices:
+
+<p>
+<center><table border="0" width="80%">
+
+  <tr>
+    <td align="left" valign="top" width="200">
+	<a name="expdevices_cons"><b><tt>cons</tt>:</b></a>
+	<p>A simple console device, for writing
+	characters to the controlling terminal
+	and receiving keypresses.
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_cons.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_cons.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x10000000</font>
+    </td>
+    <td align="left" valign="top" width="25">&nbsp;</td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00</tt></td>
+	    <td align="left" valign="top">
+		Read: <b><tt>getchar()</tt></b> (non-blocking; returns
+		<tt>0</tt> if no char was available)<br>
+		Write: <b><tt>putchar(ch)</tt></b></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x10</tt></td>
+	    <td align="left" valign="top">Read or write: <b><tt>halt()</tt></b><br>
+		(Useful for exiting the emulator.)</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_mp"><b><tt>mp</tt>:</b></a>
+	<p>This device controls the behaviour of CPUs in an emulated
+	multi-processor system.
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_mp.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_mp.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x11000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0000</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>whoami()</tt></b>.
+		Returns the id of the CPU doing the read.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0010</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>ncpus()</tt></b>.
+		Returns the number of CPUs in the system.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0020</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>startupcpu(i)</tt></b>.
+		Starts CPU i. It begins execution at the address
+		set by a write to startupaddr (see below).</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0030</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>startupaddr(addr)</tt></b>.
+		Sets the starting address for CPUs.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0040</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>pause_addr(addr)</tt></b>.
+		Sets the pause address. (NOTE: This is not
+		used anymore.)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0050</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>pause_cpu(i)</tt></b>.
+		Pauses all CPUs <i>except</i> CPU i.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0060</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>unpause_cpu(i)</tt></b>.
+		Unpauses CPU i.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0070</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>startupstack(addr)</tt></b>.
+		Sets the startup stack address. (CPUs started with
+		startupcpu() above will have their stack pointer
+		set to this value.)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0080</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>hardware_random()</tt></b>.
+		This produces a "random" number.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0090</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>memory()</tt></b>.
+		Returns the number of bytes of RAM in the system.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00a0</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>ipi_one((nr &lt;&lt; 16) + cpuid)</tt></b>.
+		Sends IPI <tt>nr</tt> to a specific CPU.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00b0</tt></td>
+	    <td align="left" valign="top">Write: <b><tt>ipi_many((nr &lt;&lt; 16) + cpuid)</tt></b>.
+		Sends IPI <tt>nr</tt> to all CPUs <i>except</i>
+		the specified one.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00c0</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>ipi_read()</tt></b>.
+		Returns the next pending IPI. 0 is returned if there is no 
+		pending IPI (so 0 shouldn't be used for valid IPIs).
+		Hardware int 6 is deasserted when the IPI queue is empty.
+	    <br>Write: <b><tt>ipi_flush()</tt></b>.
+		Clears the IPI queue, discarding any pending IPIs.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00d0</tt></td>
+	    <td align="left" valign="top">Read: <b><tt>ncycles()</tt></b>.
+		Returns approximately the number of cycles executed on
+		this CPU. Note: this value is not updated for every instruction,
+		so it cannot be used for small measurements.</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_fb"><b><tt>fb</tt>:</b></a>
+	<p>A simple linear framebuffer, for graphics output.
+	640 x 480 pixels, 3 bytes per pixel (red, green, blue, 8 bits each).
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_fb.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_fb.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x12000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x00000-</tt><br><tt>0xe0fff</tt></td>
+	    <td align="left" valign="top">Read: read pixel values.
+		<br>Write: write pixel values.</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_disk"><b><tt>disk</tt>:</b></a>
+	<p>Disk controller, which can read from and write
+	to emulated IDE disks. It does not use interrupts; read and
+	write operations finish instantaneously.
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_disk.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_disk.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x13000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0000</tt></td>
+	    <td align="left" valign="top">Write: Set the offset (in bytes) from the beginning
+		of the disk image. This offset will be used for the next read/write operation.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0008</tt></td>
+	    <td align="left" valign="top">Write: Set the high 32 
+		bits of the offset (in bytes). (*)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0010</tt></td>
+	    <td align="left" valign="top">Write: Select the IDE ID to be used in the next
+		read/write operation.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0020</tt></td>
+	    <td align="left" valign="top">Write: Start a read or write operation.
+		(Writing <tt>0</tt> means a Read operation, a <tt>1</tt> means a
+		Write operation.)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0030</tt></td>
+	    <td align="left" valign="top">Read: Get status of the last operation.
+		(Status 0 means failure, non-zero means success.)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4000-</tt><br><tt>0x41ff</tt>&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top">Read/Write: 512 bytes data buffer.</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_ether"><b><tt>ether</tt>:</b></a>
+	<p>A simple ethernet controller, enough to send
+	and receive packets on a simulated network.
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_ether.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_ether.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x14000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0000-</tt><br><tt>0x3fff</tt></td>
+	    <td align="left" valign="top">Read/write buffer for the packet to be sent/received.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4000</tt></td>
+	    <td align="left" valign="top">Read: status word, one or more of these:
+		<br><tt>0x01</tt>&nbsp;=&nbsp;something was received (because of
+		the last command)
+		<br><tt>0x02</tt>&nbsp;=&nbsp;more packets are available
+		<br><i>NOTE:</i> Whenever the status word is non-zero,
+			an interrupt is asserted. Reading the status word
+			clears it, and deasserts the interrupt.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4010</tt></td>
+	    <td align="left" valign="top">Read: get the Length of the received packet
+		<br>Write: set the Length of the next packet to transmit</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4020</tt></td>
+	    <td align="left" valign="top">Write: command:
+		<br><tt>0x00:</tt>&nbsp;receive a packet
+		<br><tt>0x01:</tt>&nbsp;send a packet</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4040</tt></td>
+	    <td align="left" valign="top">Write: an address, where the emulated
+	    	MAC address will be copied to.
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_rtc"><b><tt>rtc</tt>:</b></a>
+	<p>A Real-Time Clock, used to retrieve the current time
+	and to cause periodic interrupts.
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_rtc.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_rtc.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x15000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0000</tt></td>
+	    <td align="left" valign="top">Read or Write: Trigger a clock update (a gettimeofday() on the host).</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0010</tt></td>
+	    <td align="left" valign="top">Read: Seconds since 1st January 1970</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0020</tt></td>
+	    <td align="left" valign="top">Read: Microseconds</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0100</tt></td>
+	    <td align="left" valign="top">Read: Get the current
+		timer interrupt frequency.<br>Write: Set the timer
+		interrupt frequency. (Writing 0 disables the timer.)</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0110</tt></td>
+	    <td align="left" valign="top">Read or Write: Acknowledge
+		one timer interrupt. (Note that if multiple interrupts
+		are pending, only one is acknowledged.)</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+  <tr height="15">
+    <td height="15">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td align="left" valign="top">
+	<a name="expdevices_irqc"><b><tt>irqc</tt>:</b></a>
+	<p>An Interrupt Controller. (Note: Not used for the MIPS test machine.)
+	<p>Source code:&nbsp;&nbsp;<font color="#0000f0"><tt>src/devices/dev_irqc.c</tt></font>
+	<p>Include file:&nbsp;&nbsp;<font color="#0000f0"><tt>dev_irqc.h</tt></font>
+	<br>Default physical address:&nbsp&nbsp;<font color="#0000f0">0x16000000</font>
+    </td>
+    <td></td>
+    <td align="left" valign="top">
+	<table border="0">
+	  <tr>
+	    <td align="left" valign="top"><i><u>Offset:</u></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	    <td align="left" valign="top"><i><u>Effect:</u></i></td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x0</tt></td>
+	    <td align="left" valign="top">Read: IRQ status as a 32-bit word, one bit per interrupt source.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x4</tt></td>
+	    <td align="left" valign="top">Write: Mask one interrupt source. Value should be an integer 0..31.</td>
+	  </tr>
+	  <tr>
+	    <td align="left" valign="top"><tt>0x8</tt></td>
+	    <td align="left" valign="top">Write: Unmask one interrupt source. Value should be an integer 0..31.</td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+
+</table></center>
+
+<p>(*)  Note:  If the emulated architecture has the capability to write 64-bit
+words atomically, then writing to offset 0x0000 of the
+<tt>disk</tt> device should be enough to set the offset. For 32-bit
+architectures, the lowest 32 bits of the disk offset should first be 
+written to the register at offset 0x0000, and the top 32 bits should
+then be written to the register at offset 0x0008.
+
+<p>The include files for the test machine devices are found in
+<a href="../src/include/testmachine/"><tt>src/include/testmachine/</tt></a>.
+
+<p>While these devices may resemble real-world hardware, they are 
+intentionally made simpler to use. (An exception is the framebuffer;
+some machines actually have simple linear framebuffers like this.)
+
+<p>If the physical address is <tt>0x10000000</tt>, then for MIPS that
+means that it can be accessed at virtual address
+<tt>0xffffffffb0000000</tt>. (Actually it can be accessed at
+<tt>0xffffffff90000000</tt> too, but devices should usually be accessed in
+a non-cached manner.)
+
+<p>When using the ARM or PPC test machines, the addresses are
+<tt>0x10000000</tt>, <tt>0x11000000</tt> etc., so no need to add any
+virtual displacement.
+
+<p>The <tt>mp</tt>, <tt>disk</tt>, and <tt>ether</tt> devices are agnostic 
+when it comes to word-length. For example, when reading offset 
+<tt>0x0000</tt> of the <tt>mp</tt> device, you may use any kind of read 
+(an 8-bit read will work just as well as a 64-bit read, although the value 
+will be truncated to 8 bits in the first case). You can <i>not</i>, 
+however, read one byte from <tt>0x0000</tt> and one from <tt>0x0001</tt>, 
+and combine the result. The read from <tt>0x0001</tt> will be invalid.
+
+<p>The <tt>cons</tt> device should be accessed using 8-bit reads 
+and writes. Doing a getchar() (ie reading from offset <tt>0x00</tt>)  
+returns <tt>0</tt> if no character was available. Whenever a character is 
+available, the <tt>cons</tt> device' interrupt is asserted. When there are 
+no more available characters, the interrupt is deasserted. (Remember that 
+the interrupt has to be unmasked to be able to actually cause an 
+interrupt.)
+
+<p>IPIs (inter-processor interrupts) are controlled by the <tt>mp</tt> 
+device. Whenever an IPI is "sent" from a source to one or more target 
+CPUs, the interrupt is asserted on the target CPUs, and the IPI number is 
+added last in the IPI queue for each of the target CPUs. It is then up to 
+those CPUs to individually read from offset <tt>0x00c0</tt>, to figure out 
+what kind of IPI it was.
+
+
+
+<p>Interrupt mappings are as follows:
+
+<p><center>
+<table border="1">
+	<tr><td align="center">
+		<b><tt>oldtestmips</tt></b> (as native MIPS interrupts)
+	</td></tr>
+	<tr><td>
+		<table border="0">
+		<tr><td align="center">IRQ:</td><td>&nbsp;</td>
+			<td>Used for:</td></tr>
+		<tr><td align="center">7</td><td></td>
+			<td>MIPS count/compare interrupt</td></tr>
+		<tr><td align="center">6</td><td></td>
+			<td><tt>mp</tt> (inter-processor interrupts)</td></tr>
+		<tr><td align="center">4</td><td></td>
+			<td><tt>rtc</tt></td></tr>
+		<tr><td align="center">3</td><td></td>
+			<td><tt>ether</tt></td></tr>
+		<tr><td align="center">2</td><td></td>
+			<td><tt>cons</tt></td></tr>
+		</table>
+	</td></tr>
+</table>
+
+<p><table border="1">
+	<tr><td align="center">
+		<b><tt>testarm</tt> and others</b> (via the <tt>irqc</tt> device)
+	</td></tr>
+	<tr><td>
+		<table border="0">
+		<tr><td align="center">IRQ:</td><td>&nbsp;</td>
+			<td>Used for:</td></tr>
+		<tr><td align="center">6</td><td></td>
+			<td><tt>mp</tt> (inter-processor interrupts)</td></tr>
+		<tr><td align="center">4</td><td></td>
+			<td><tt>rtc</tt></td></tr>
+		<tr><td align="center">3</td><td></td>
+			<td><tt>ether</tt></td></tr>
+		<tr><td align="center">2</td><td></td>
+			<td><tt>cons</tt></td></tr>
+		</table>
+	</td></tr>
+</table>
+</center>
+
+
+
+<p><br>
+
+
+
+</p>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+#set_accelerator_function "cordic64"
+#set_accelerator_function "cordic48"
+#set_accelerator_function "cordic32"
+#set_accelerator_function "cordic816"
+#set_accelerator_function "cordic16"
+#set_accelerator_function "cordic8"

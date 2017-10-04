@@ -1,0 +1,179 @@
+#!/bin/sh
+
+BENCH_END="16#8000cc"
+TIMING_SIM=1
+
+function run_bench_power {
+	BENCHMARK=${1##*/}
+	NAME=$1
+	OP=${1%.*}
+
+	# Make sure the path is correct
+	if [ ! -f assembly/$1.sdram.dat ]; then
+		echo "Path: assembly/$1.sdram.dat Doesn't exist!";
+		exit;
+	fi
+	
+	# Copy the sdram.dat to this folder to use it
+	cp assembly/${NAME}.sdram.dat tiger_data_cache_on_avalon/simulation/sdram.dat
+	
+	# Find start/end of instructions to measure
+	echo "$OP, $NAME, $BENCHMARK"
+	START_PC=`grep "$OP" assembly/$NAME.src | grep "$OP\." -v --max-count=1 | awk '{ print $1 }' | grep -o '[^:]*' | tr '[:lower:]' '[:upper:]'`
+	START_PC=`echo "obase=16; ibase=16; $START_PC+4" | bc -l`
+	END_PC=`grep "jr.ra" assembly/$NAME.src | awk '{ print $1 }' | grep -o '[^:]*' | tr '[:lower:]' '[:upper:]'`
+	
+	# Mif's start at 0, not 0x800000
+	if [ "mif" = "!mif" ]; then
+		START_PC=`echo "obase=16; ibase=16; $START_PC-800000" | bc -l`	# not just 0 b/c not first instruction
+		END_PC=`echo "obase=16; ibase=16; $END_PC-800000" | bc -l`;
+		cp assembly/${NAME}.mif tiger_data_cache_on_avalon/ROM.mif
+		rm tiger_data_cache_on_avalon/ROM.ver
+		#quartus_cdb timing_sim -c timing_sim --update_mif
+		#quartus_asm --read_settings_files=on --write_settings_files=off timing_sim -c timing_sim;	# may not need to assemble b/c just want vo, not sof
+		#quartus_eda --simulation --read_settings_files=on --vcd_type=all --format=verilog --tool=modelsim --glitch_filtering=on --output_directory=simulation --vcd_tb_design_instance_name=/test_bench/DUT/timing_sim_inst/ timing_sim
+	fi
+
+	START_PC="16#$START_PC"
+	END_PC="16#$END_PC"
+	
+	START_PC="16#800000"
+	END_PC=$BENCH_END
+	echo "$START_PC --> $END_PC"
+
+	# Run the timing simulation
+	echo -e "\n\nSimulating..."
+	cd tiger_data_cache_on_avalon/simulation
+	if [ "$2" == "-recompile" ]; then
+		vsim -c -do "do sim_power_tiger.tcl $TIMING_SIM $START_PC $END_PC -recompile; exit;";
+	else
+	echo	vsim -c -do "do sim_power_tiger.tcl $TIMING_SIM $START_PC $END_PC; exit;";
+	fi
+	echo "Simulation Complete."
+
+	# Check the simulation completed -- exit otherwise
+	find transcript | xargs grep -ni -A200 "# --- STARTING EXEC" > transcript_temp
+	RESULT=`find transcript_temp | xargs grep -ni "# --- DONE EXEC "`
+	rm transcript_temp
+	if [ "$RESULT" != "" ]; then
+		echo -e "\n\nSimulation finished!\n"
+	else
+		echo -e "\n\nSimulation did not finish!"
+		#exit
+	fi
+	
+	# Find the time for start/end of execution (ie START_TIME, END_TIME) and setup to use as vcd range
+	START_TIME=`grep "STARTING EXEC" transcript | grep -o "[0-9]*"`
+	END_TIME=`grep "DONE EXEC" transcript | grep -o "[0-9]*"`
+	echo "$START_TIME --> $END_TIME"
+	
+	# Run PowerPlay ----- this needs to work with data cache (and later accelerators)
+	cd ..
+	if [ "$TIMING_SIM" = "1" ]; then
+		pwr_output="";
+		shopt -s nullglob
+		for f in simulation/*.vcd; do
+			if [ "$f" != "simulation/timing_sim.vcd" -a "$f" != "simulation/dump.vcd" ]; then
+				echo "f = $f"
+				cp $f simulation/timing_sim.vcd
+				quartus_pow --read_settings_files=on --write_settings_files=off timing_sim -c timing_sim.qsf --input_vcd=simulation/timing_sim.vcd --output_saf=simulation/timing_sim.saf --vcd_filter_glitches=on
+				if [ -f simulation/timing_sim.saf ]; then
+				echo	rm simulation/timing_sim.vcd
+				fi
+				
+				# Store Report and SAF
+				echo "Compressing vcd, moving files"
+				echo -e "\nSimulation Time Range: $START_TIME --> $END_TIME\n" >> timing_sim.pow.rpt
+				mv timing_sim.pow.rpt ../assembly/${NAME}.pow.rpt
+				mv simulation/timing_sim.saf ../assembly/${NAME}.saf
+				
+				# Check for high confidence
+				RESULT=`find timing_sim.pow.summary | xargs grep -ni "Power Estimation Confidence : High: user provided sufficient toggle rate data"`
+				if [ "$RESULT" != "" ]; then
+					echo -e "\n\nPower Estimation Confidence : High"
+				else
+					echo -e "\n\nPower Estimation Confidence NOT High. Error."
+					#exit
+				fi
+				
+				# Output total dynamic power
+				RESULT=`find *.pow.summary | xargs grep "Core Dynamic Thermal Power Dissipation" | tr -d '[:alpha:][:blank:]:'`
+				echo -e "Core Dynamic Thermal Power Dissipation : ${RESULT} mW\n"
+				pwr_output="${pwr_output}\n${f}: ${RESULT} mW"
+			fi
+		done
+		echo -e "$pwr_output"
+	fi
+	cd ..
+}
+
+function recompile_project {
+	cd tiger_data_cache_on_avalon
+	
+	# Make sure its running at ps timescale
+	sed -i "s|timescale.*|timescale 1ps / 1ps|g" *.v
+	sed -i "s|timescale.*|timescale 1ps / 1ps|g" simulation/*.v
+		
+	# Run project, including EDA Tools (create .vo)
+	echo -e "\n\nRunning quartus_sh"
+	quartus_sh --flow compile timing_sim
+	echo -e "\n\nRunning quartus_eda"
+	#quartus_eda --simulation --read_settings_files=on --vcd_type=all --format=verilog --tool=modelsim --glitch_filtering=on --output_directory=simulation --vcd_tb_design_instance_name=/test_bench/DUT/timing_sim_inst/ timing_sim
+	cd ..
+}
+
+# Find all files that have been assembled but not simulated ([opt]$1 --> limit to files of instr type)
+function find_next_file() {
+	if [ "$1" = "" ]; then
+		FILES=`find assembly/*.elf`
+	else
+		FILES=`find assembly/*.elf | grep $1`
+	fi
+
+	for f in $FILES; do
+		# Check if this elf file has a power report
+		name=${f%.*}
+		if [ ! -f "$name.pow.rpt" ]; then
+			echo "${name#*/}"
+			return
+		fi
+	done
+}
+
+
+
+
+if [ "$1" = "--all" ]; then
+	NEXT=`find_next_file $2`
+	while [ "$NEXT" != "" ]; do
+		echo -e "\n\nRunning $NEXT.\n\n"
+		run_bench_power $NEXT $2
+		NEXT=`find_next_file $2`
+	done
+	
+elif [ "$1" = "--recompile_vo" ]; then
+	recompile_project
+	
+elif [ "$1" = "--help" -o "$1" = "" ]; then
+	echo "HELP MENU:"
+	echo "./run_tiger_power --all [bench]			- run all files in assembly that don't have power results -- use only op type 'bench' if provided"
+	echo "./run_tiger_power <file> [-recompile]		- run <file>"
+	echo "./run_tiger_power --recompile_vo			- recompile quartus project and create .vo file for timing simulation"
+else
+	run_bench_power $1 $2
+fi
+
+
+# Algorithm:
+# - Two input types: --all or a specific elf
+# 	- all: loop through all *.elf files, check for corresponding .pow.rpt file (meaning its alreayd been run). if not, run it
+# - copy instr.#.sdram.dat to tiger/sim/sdram.dat
+### - extract ranges by grepping .src file for operation (ie first and last address that the actual operation is performed)
+# - run
+# - copy tiger.pow.rpt to instr.#.pow.rpt
+# - extract dynamic power from report, add to report.txt with hamming distance
+# - 
+# - 
+# - 
+# - 
+# - 

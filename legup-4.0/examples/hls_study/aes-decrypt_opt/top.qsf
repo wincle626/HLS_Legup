@@ -1,0 +1,370 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2013 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 13.1.0 Build 162 10/23/2013 SJ Full Version
+# Date created = 16:23:11  November 24, 2014
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		top_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Stratix V"
+set_global_assignment -name DEVICE 5SGXEA7N2F45C1
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 11.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:08:27  JULY 14, 2014"
+set_global_assignment -name LAST_QUARTUS_VERSION 13.1
+set_global_assignment -name SOURCE_FILE aes.v
+set_global_assignment -name SDC_FILE aes.sdc
+set_global_assignment -name TOP_LEVEL_ENTITY decrypt
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL TYPICAL
+set_global_assignment -name USE_CHECKSUM_AS_USERCODE ON
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN ON
+set_global_assignment -name CVP_MODE "SUBSEQUENT CORE RECONFIGURATION"
+set_global_assignment -name ENABLE_CVP_CONFDONE OFF
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name AUTO_GLOBAL_CLOCK OFF
+set_global_assignment -name AUTO_GLOBAL_REGISTER_CONTROLS OFF
+set_instance_assignment -name IO_STANDARD "1.5 V" -to Mem0_RefClk
+set_location_assignment PIN_R36 -to Mem0_RefClk
+set_instance_assignment -name IO_STANDARD "1.5 V" -to Mem1_RefClk
+set_location_assignment PIN_M8 -to Mem1_RefClk
+set_location_assignment PIN_P35 -to Mem0_Rzq
+set_location_assignment PIN_H9 -to Mem1_Rzq
+set_location_assignment PIN_AW35 -to config_clk
+set_instance_assignment -name IO_STANDARD "2.5 V" -to config_clk
+set_location_assignment PIN_J18 -to kernel_pll_refclk_clk
+set_instance_assignment -name IO_STANDARD "1.5 V" -to kernel_pll_refclk_clk
+set_location_assignment PIN_AK38 -to pcie_refclk
+set_instance_assignment -name IO_STANDARD HCSL -to pcie_refclk
+set_location_assignment PIN_BB43 -to hip_serial_rx_in0
+set_instance_assignment -name XCVR_RX_SD_OFF 5 -to hip_serial_rx_in0
+set_instance_assignment -name XCVR_RX_SD_ON 1 -to hip_serial_rx_in0
+set_instance_assignment -name XCVR_RX_COMMON_MODE_VOLTAGE VTT_0P70V -to hip_serial_rx_in0
+set_instance_assignment -name XCVR_RX_SD_THRESHOLD 4 -to hip_serial_rx_in0
+set_instance_assignment -name XCVR_VCCA_VOLTAGE 3_0V -to hip_serial_rx_in0
+set_location_assignment PIN_BA41 -to hip_serial_rx_in1
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_rx_in1
+set_instance_assignment -name INPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_rx_in1
+set_instance_assignment -name XCVR_RX_SD_OFF 5 -to hip_serial_rx_in1
+set_instance_assignment -name XCVR_RX_SD_ON 1 -to hip_serial_rx_in1
+set_instance_assignment -name XCVR_RX_COMMON_MODE_VOLTAGE VTT_0P70V -to hip_serial_rx_in1
+set_instance_assignment -name XCVR_RX_SD_THRESHOLD 4 -to hip_serial_rx_in1
+set_instance_assignment -name XCVR_VCCA_VOLTAGE 3_0V -to hip_serial_rx_in1
+set_location_assignment PIN_AW41 -to hip_serial_rx_in2
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_rx_in2
+set_instance_assignment -name INPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_rx_in2
+set_instance_assignment -name XCVR_RX_SD_OFF 5 -to hip_serial_rx_in2
+set_instance_assignment -name XCVR_RX_SD_ON 1 -to hip_serial_rx_in2
+set_instance_assignment -name XCVR_RX_COMMON_MODE_VOLTAGE VTT_0P70V -to hip_serial_rx_in2
+set_instance_assignment -name XCVR_RX_SD_THRESHOLD 4 -to hip_serial_rx_in2
+set_instance_assignment -name XCVR_VCCA_VOLTAGE 3_0V -to hip_serial_rx_in2
+set_location_assignment PIN_AY43 -to hip_serial_rx_in3
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_rx_in3
+set_instance_assignment -name INPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_rx_in3
+set_instance_assignment -name XCVR_RX_SD_OFF 5 -to hip_serial_rx_in3
+set_instance_assignment -name XCVR_RX_SD_ON 1 -to hip_serial_rx_in3
+set_instance_assignment -name XCVR_RX_COMMON_MODE_VOLTAGE VTT_0P70V -to hip_serial_rx_in3
+set_instance_assignment -name XCVR_RX_SD_THRESHOLD 4 -to hip_serial_rx_in3
+set_instance_assignment -name XCVR_VCCA_VOLTAGE 3_0V -to hip_serial_rx_in3
+set_location_assignment PIN_AY39 -to hip_serial_tx_out0
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_tx_out0
+set_instance_assignment -name OUTPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_tx_out0
+set_location_assignment PIN_AV39 -to hip_serial_tx_out1
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_tx_out1
+set_instance_assignment -name OUTPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_tx_out1
+set_location_assignment PIN_AT39 -to hip_serial_tx_out2
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_tx_out2
+set_instance_assignment -name OUTPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_tx_out2
+set_location_assignment PIN_AU41 -to hip_serial_tx_out3
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to hip_serial_tx_out3
+set_instance_assignment -name OUTPUT_TERMINATION "OCT 100 OHMS" -to hip_serial_tx_out3
+set_location_assignment PIN_AU33 -to perstl0_n
+set_instance_assignment -name IO_STANDARD "2.5 V" -to perstl0_n
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[5]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[6]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to leds[7]
+set_location_assignment PIN_AW37 -to leds[0]
+set_location_assignment PIN_AV37 -to leds[1]
+set_location_assignment PIN_BB36 -to leds[2]
+set_location_assignment PIN_BB39 -to leds[3]
+set_location_assignment PIN_AH15 -to leds[4]
+set_location_assignment PIN_AH13 -to leds[5]
+set_location_assignment PIN_AJ13 -to leds[6]
+set_location_assignment PIN_AJ14 -to leds[7]
+set_location_assignment PIN_M39 -to Mem0_Addr[0]
+set_location_assignment PIN_L35 -to Mem0_Addr[1]
+set_location_assignment PIN_N38 -to Mem0_Addr[2]
+set_location_assignment PIN_L36 -to Mem0_Addr[3]
+set_location_assignment PIN_H36 -to Mem0_Addr[4]
+set_location_assignment PIN_K29 -to Mem0_Addr[5]
+set_location_assignment PIN_D37 -to Mem0_Addr[6]
+set_location_assignment PIN_K35 -to Mem0_Addr[7]
+set_location_assignment PIN_K32 -to Mem0_Addr[8]
+set_location_assignment PIN_K37 -to Mem0_Addr[9]
+set_location_assignment PIN_M38 -to Mem0_Addr[10]
+set_location_assignment PIN_C37 -to Mem0_Addr[11]
+set_location_assignment PIN_K36 -to Mem0_Addr[12]
+set_location_assignment PIN_M33 -to Mem0_Addr[13]
+set_location_assignment PIN_K34 -to Mem0_Addr[14]
+set_location_assignment PIN_B38 -to Mem0_Addr[15]
+set_location_assignment PIN_M37 -to Mem0_Bank[0]
+set_location_assignment PIN_P39 -to Mem0_Bank[1]
+set_location_assignment PIN_J36 -to Mem0_Bank[2]
+set_location_assignment PIN_M36 -to Mem0_Cas_n
+set_location_assignment PIN_G37 -to Mem0_Ck
+set_location_assignment PIN_E36 -to Mem0_Cke
+set_location_assignment PIN_F36 -to Mem0_Ck_n
+set_location_assignment PIN_P36 -to Mem0_Cs_n
+set_location_assignment PIN_C36 -to Mem0_Dm[0]
+set_location_assignment PIN_E32 -to Mem0_Dm[1]
+set_location_assignment PIN_H34 -to Mem0_Dm[2]
+set_location_assignment PIN_L32 -to Mem0_Dm[3]
+set_location_assignment PIN_N32 -to Mem0_Dm[4]
+set_location_assignment PIN_W32 -to Mem0_Dm[5]
+set_location_assignment PIN_K30 -to Mem0_Dm[6]
+set_location_assignment PIN_T28 -to Mem0_Dm[7]
+set_location_assignment PIN_A35 -to Mem0_Dq[0]
+set_location_assignment PIN_A34 -to Mem0_Dq[1]
+set_location_assignment PIN_D36 -to Mem0_Dq[2]
+set_location_assignment PIN_C33 -to Mem0_Dq[3]
+set_location_assignment PIN_B32 -to Mem0_Dq[4]
+set_location_assignment PIN_D35 -to Mem0_Dq[5]
+set_location_assignment PIN_D33 -to Mem0_Dq[6]
+set_location_assignment PIN_E33 -to Mem0_Dq[7]
+set_location_assignment PIN_A32 -to Mem0_Dq[8]
+set_location_assignment PIN_A31 -to Mem0_Dq[9]
+set_location_assignment PIN_C30 -to Mem0_Dq[10]
+set_location_assignment PIN_D30 -to Mem0_Dq[11]
+set_location_assignment PIN_B29 -to Mem0_Dq[12]
+set_location_assignment PIN_E30 -to Mem0_Dq[13]
+set_location_assignment PIN_F31 -to Mem0_Dq[14]
+set_location_assignment PIN_G31 -to Mem0_Dq[15]
+set_location_assignment PIN_F35 -to Mem0_Dq[16]
+set_location_assignment PIN_G34 -to Mem0_Dq[17]
+set_location_assignment PIN_J33 -to Mem0_Dq[18]
+set_location_assignment PIN_J34 -to Mem0_Dq[19]
+set_location_assignment PIN_F34 -to Mem0_Dq[20]
+set_location_assignment PIN_E35 -to Mem0_Dq[21]
+set_location_assignment PIN_J31 -to Mem0_Dq[22]
+set_location_assignment PIN_K31 -to Mem0_Dq[23]
+set_location_assignment PIN_P34 -to Mem0_Dq[24]
+set_location_assignment PIN_R33 -to Mem0_Dq[25]
+set_location_assignment PIN_M34 -to Mem0_Dq[26]
+set_location_assignment PIN_L33 -to Mem0_Dq[27]
+set_location_assignment PIN_R34 -to Mem0_Dq[28]
+set_location_assignment PIN_T34 -to Mem0_Dq[29]
+set_location_assignment PIN_W34 -to Mem0_Dq[30]
+set_location_assignment PIN_V35 -to Mem0_Dq[31]
+set_location_assignment PIN_P33 -to Mem0_Dq[32]
+set_location_assignment PIN_P32 -to Mem0_Dq[33]
+set_location_assignment PIN_V33 -to Mem0_Dq[34]
+set_location_assignment PIN_V34 -to Mem0_Dq[35]
+set_location_assignment PIN_N31 -to Mem0_Dq[36]
+set_location_assignment PIN_M31 -to Mem0_Dq[37]
+set_location_assignment PIN_U32 -to Mem0_Dq[38]
+set_location_assignment PIN_U33 -to Mem0_Dq[39]
+set_location_assignment PIN_R31 -to Mem0_Dq[40]
+set_location_assignment PIN_W31 -to Mem0_Dq[41]
+set_location_assignment PIN_U30 -to Mem0_Dq[42]
+set_location_assignment PIN_P31 -to Mem0_Dq[43]
+set_location_assignment PIN_T31 -to Mem0_Dq[44]
+set_location_assignment PIN_Y32 -to Mem0_Dq[45]
+set_location_assignment PIN_T29 -to Mem0_Dq[46]
+set_location_assignment PIN_P30 -to Mem0_Dq[47]
+set_location_assignment PIN_H32 -to Mem0_Dq[48]
+set_location_assignment PIN_H31 -to Mem0_Dq[49]
+set_location_assignment PIN_L30 -to Mem0_Dq[50]
+set_location_assignment PIN_L29 -to Mem0_Dq[51]
+set_location_assignment PIN_F32 -to Mem0_Dq[52]
+set_location_assignment PIN_G32 -to Mem0_Dq[53]
+set_location_assignment PIN_M30 -to Mem0_Dq[54]
+set_location_assignment PIN_N29 -to Mem0_Dq[55]
+set_location_assignment PIN_U29 -to Mem0_Dq[56]
+set_location_assignment PIN_V28 -to Mem0_Dq[57]
+set_location_assignment PIN_Y28 -to Mem0_Dq[58]
+set_location_assignment PIN_W29 -to Mem0_Dq[59]
+set_location_assignment PIN_V30 -to Mem0_Dq[60]
+set_location_assignment PIN_V29 -to Mem0_Dq[61]
+set_location_assignment PIN_W28 -to Mem0_Dq[62]
+set_location_assignment PIN_Y27 -to Mem0_Dq[63]
+set_location_assignment PIN_C34 -to Mem0_Dqs[0]
+set_location_assignment PIN_C31 -to Mem0_Dqs[1]
+set_location_assignment PIN_H35 -to Mem0_Dqs[2]
+set_location_assignment PIN_U35 -to Mem0_Dqs[3]
+set_location_assignment PIN_T33 -to Mem0_Dqs[4]
+set_location_assignment PIN_T30 -to Mem0_Dqs[5]
+set_location_assignment PIN_J30 -to Mem0_Dqs[6]
+set_location_assignment PIN_Y30 -to Mem0_Dqs[7]
+set_location_assignment PIN_B34 -to Mem0_Dqs_n[0]
+set_location_assignment PIN_B31 -to Mem0_Dqs_n[1]
+set_location_assignment PIN_G35 -to Mem0_Dqs_n[2]
+set_location_assignment PIN_T35 -to Mem0_Dqs_n[3]
+set_location_assignment PIN_T32 -to Mem0_Dqs_n[4]
+set_location_assignment PIN_R30 -to Mem0_Dqs_n[5]
+set_location_assignment PIN_H30 -to Mem0_Dqs_n[6]
+set_location_assignment PIN_Y29 -to Mem0_Dqs_n[7]
+set_location_assignment PIN_V36 -to Mem0_Odt
+set_location_assignment PIN_P38 -to Mem0_Ras_n
+set_location_assignment PIN_H33 -to Mem0_Reset_n
+set_location_assignment PIN_N37 -to Mem0_We_n
+set_location_assignment PIN_G17 -to Mem1_Addr[0]
+set_location_assignment PIN_F17 -to Mem1_Addr[1]
+set_location_assignment PIN_N17 -to Mem1_Addr[2]
+set_location_assignment PIN_F19 -to Mem1_Addr[3]
+set_location_assignment PIN_N19 -to Mem1_Addr[4]
+set_location_assignment PIN_H16 -to Mem1_Addr[5]
+set_location_assignment PIN_M17 -to Mem1_Addr[6]
+set_location_assignment PIN_T18 -to Mem1_Addr[7]
+set_location_assignment PIN_H17 -to Mem1_Addr[8]
+set_location_assignment PIN_J19 -to Mem1_Addr[9]
+set_location_assignment PIN_C19 -to Mem1_Addr[10]
+set_location_assignment PIN_R18 -to Mem1_Addr[11]
+set_location_assignment PIN_K18 -to Mem1_Addr[12]
+set_location_assignment PIN_E18 -to Mem1_Addr[13]
+set_location_assignment PIN_T19 -to Mem1_Addr[14]
+set_location_assignment PIN_R19 -to Mem1_Addr[15]
+set_location_assignment PIN_C18 -to Mem1_Bank[0]
+set_location_assignment PIN_G19 -to Mem1_Bank[1]
+set_location_assignment PIN_M20 -to Mem1_Bank[2]
+set_location_assignment PIN_A17 -to Mem1_Cas_n
+set_location_assignment PIN_B16 -to Mem1_Ck
+set_location_assignment PIN_P17 -to Mem1_Cke
+set_location_assignment PIN_A16 -to Mem1_Ck_n
+set_location_assignment PIN_B19 -to Mem1_Cs_n
+set_location_assignment PIN_R15 -to Mem1_Dm[0]
+set_location_assignment PIN_K15 -to Mem1_Dm[1]
+set_location_assignment PIN_V12 -to Mem1_Dm[2]
+set_location_assignment PIN_G10 -to Mem1_Dm[3]
+set_location_assignment PIN_T12 -to Mem1_Dm[4]
+set_location_assignment PIN_C16 -to Mem1_Dm[5]
+set_location_assignment PIN_H15 -to Mem1_Dm[6]
+set_location_assignment PIN_B11 -to Mem1_Dm[7]
+set_location_assignment PIN_Y17 -to Mem1_Dq[0]
+set_location_assignment PIN_W17 -to Mem1_Dq[1]
+set_location_assignment PIN_V15 -to Mem1_Dq[2]
+set_location_assignment PIN_T15 -to Mem1_Dq[3]
+set_location_assignment PIN_V13 -to Mem1_Dq[4]
+set_location_assignment PIN_V16 -to Mem1_Dq[5]
+set_location_assignment PIN_W14 -to Mem1_Dq[6]
+set_location_assignment PIN_U15 -to Mem1_Dq[7]
+set_location_assignment PIN_T17 -to Mem1_Dq[8]
+set_location_assignment PIN_T16 -to Mem1_Dq[9]
+set_location_assignment PIN_R16 -to Mem1_Dq[10]
+set_location_assignment PIN_P16 -to Mem1_Dq[11]
+set_location_assignment PIN_N16 -to Mem1_Dq[12]
+set_location_assignment PIN_M15 -to Mem1_Dq[13]
+set_location_assignment PIN_M14 -to Mem1_Dq[14]
+set_location_assignment PIN_L14 -to Mem1_Dq[15]
+set_location_assignment PIN_T14 -to Mem1_Dq[16]
+set_location_assignment PIN_U14 -to Mem1_Dq[17]
+set_location_assignment PIN_U11 -to Mem1_Dq[18]
+set_location_assignment PIN_T13 -to Mem1_Dq[19]
+set_location_assignment PIN_U12 -to Mem1_Dq[20]
+set_location_assignment PIN_R13 -to Mem1_Dq[21]
+set_location_assignment PIN_P13 -to Mem1_Dq[22]
+set_location_assignment PIN_N13 -to Mem1_Dq[23]
+set_location_assignment PIN_K12 -to Mem1_Dq[24]
+set_location_assignment PIN_J12 -to Mem1_Dq[25]
+set_location_assignment PIN_J10 -to Mem1_Dq[26]
+set_location_assignment PIN_H12 -to Mem1_Dq[27]
+set_location_assignment PIN_N11 -to Mem1_Dq[28]
+set_location_assignment PIN_M11 -to Mem1_Dq[29]
+set_location_assignment PIN_H10 -to Mem1_Dq[30]
+set_location_assignment PIN_H11 -to Mem1_Dq[31]
+set_location_assignment PIN_T10 -to Mem1_Dq[32]
+set_location_assignment PIN_R10 -to Mem1_Dq[33]
+set_location_assignment PIN_M12 -to Mem1_Dq[34]
+set_location_assignment PIN_L12 -to Mem1_Dq[35]
+set_location_assignment PIN_V10 -to Mem1_Dq[36]
+set_location_assignment PIN_V9 -to Mem1_Dq[37]
+set_location_assignment PIN_R12 -to Mem1_Dq[38]
+set_location_assignment PIN_P12 -to Mem1_Dq[39]
+set_location_assignment PIN_D14 -to Mem1_Dq[40]
+set_location_assignment PIN_C13 -to Mem1_Dq[41]
+set_location_assignment PIN_B14 -to Mem1_Dq[42]
+set_location_assignment PIN_B13 -to Mem1_Dq[43]
+set_location_assignment PIN_E14 -to Mem1_Dq[44]
+set_location_assignment PIN_F14 -to Mem1_Dq[45]
+set_location_assignment PIN_A14 -to Mem1_Dq[46]
+set_location_assignment PIN_A13 -to Mem1_Dq[47]
+set_location_assignment PIN_K13 -to Mem1_Dq[48]
+set_location_assignment PIN_K16 -to Mem1_Dq[49]
+set_location_assignment PIN_H13 -to Mem1_Dq[50]
+set_location_assignment PIN_H14 -to Mem1_Dq[51]
+set_location_assignment PIN_J13 -to Mem1_Dq[52]
+set_location_assignment PIN_J16 -to Mem1_Dq[53]
+set_location_assignment PIN_G13 -to Mem1_Dq[54]
+set_location_assignment PIN_F13 -to Mem1_Dq[55]
+set_location_assignment PIN_D11 -to Mem1_Dq[56]
+set_location_assignment PIN_C10 -to Mem1_Dq[57]
+set_location_assignment PIN_A10 -to Mem1_Dq[58]
+set_location_assignment PIN_B10 -to Mem1_Dq[59]
+set_location_assignment PIN_G11 -to Mem1_Dq[60]
+set_location_assignment PIN_F11 -to Mem1_Dq[61]
+set_location_assignment PIN_E11 -to Mem1_Dq[62]
+set_location_assignment PIN_E12 -to Mem1_Dq[63]
+set_location_assignment PIN_Y16 -to Mem1_Dqs[0]
+set_location_assignment PIN_V17 -to Mem1_Dqs[1]
+set_location_assignment PIN_P14 -to Mem1_Dqs[2]
+set_location_assignment PIN_K11 -to Mem1_Dqs[3]
+set_location_assignment PIN_U9 -to Mem1_Dqs[4]
+set_location_assignment PIN_E15 -to Mem1_Dqs[5]
+set_location_assignment PIN_L15 -to Mem1_Dqs[6]
+set_location_assignment PIN_D12 -to Mem1_Dqs[7]
+set_location_assignment PIN_W16 -to Mem1_Dqs_n[0]
+set_location_assignment PIN_U17 -to Mem1_Dqs_n[1]
+set_location_assignment PIN_N14 -to Mem1_Dqs_n[2]
+set_location_assignment PIN_L11 -to Mem1_Dqs_n[3]
+set_location_assignment PIN_T9 -to Mem1_Dqs_n[4]
+set_location_assignment PIN_D15 -to Mem1_Dqs_n[5]
+set_location_assignment PIN_K14 -to Mem1_Dqs_n[6]
+set_location_assignment PIN_C12 -to Mem1_Dqs_n[7]
+set_location_assignment PIN_M18 -to Mem1_Odt
+set_location_assignment PIN_H19 -to Mem1_Ras_n
+set_location_assignment PIN_T20 -to Mem1_Reset_n
+set_location_assignment PIN_D18 -to Mem1_We_n
+
+source /home/acanis/legup/boards/common.qsf

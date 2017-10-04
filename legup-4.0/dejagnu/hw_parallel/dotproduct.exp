@@ -1,0 +1,15 @@
+load_lib legup.exp
+
+set expected {# Result:\s+60799800\s+}
+
+cd ../examples/parallel/openmp/dotproduct
+
+set test "dotproduct OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/dotproduct
+
+set test "dotproduct Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

@@ -1,0 +1,20 @@
+$Id: README,v 1.7 2006-02-09 22:40:27 debug Exp $
+
+dev_*:
+	Devices. (Please read 'Emulation of hardware devices' in
+	doc/technical.html for more information about these.)
+	Example: dev_wdc, the IDE/ATA[PI] harddisk controller.
+
+bus_isa.c:
+	ISA bus framework. This basically just registers the ISA legacy
+	devices that are common to all machines.
+
+bus_pci.c:
+	PCI bus framework, and some glue code for PCI devices. Example of
+	glue code would be PCI-IDE controllers, which are implemented using
+	dev_wdc plus some PCI configuration registers, which identifies the
+	specific controller (fake, but it usually works).
+
+other files:
+	Misc. stuff.
+

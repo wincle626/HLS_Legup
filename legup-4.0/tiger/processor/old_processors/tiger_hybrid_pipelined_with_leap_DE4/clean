@@ -1,0 +1,13 @@
+#!/bin/bash
+#cleaning tiger processor directory
+
+rm -rf work db incremental_db
+rm -f vsim.wlf 
+rm -f *.txt
+rm -f *.log
+rm -f transcript
+rm -f *.ver
+rm -f *~
+rm -f sdram.dat
+rm -f *.rpt *.pof *.sof
+rm -f *.summary *.smsg

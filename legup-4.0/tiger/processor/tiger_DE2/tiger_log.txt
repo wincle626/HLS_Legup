@@ -1,0 +1,124 @@
+Altera SOPC Builder Version 10.11 Build 197
+Copyright (c) 1999-2009 Altera Corporation.  All rights reserved.
+
+
+# 2011.07.13 23:27:42 (*) mk_custom_sdk starting
+# 2011.07.13 23:27:42 (*) Reading project /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger.ptf.
+
+# 2011.07.13 23:27:42 (*) Finding all CPUs
+
+# 2011.07.13 23:27:42 (*) Finding all peripherals
+
+# 2011.07.13 23:27:42 (*) Finding software components
+# 2011.07.13 23:27:42 (*) (Legacy SDK Generation Skipped)
+# 2011.07.13 23:27:42 (*) (All TCL Script Generation Skipped)
+# 2011.07.13 23:27:42 (*) (No Libraries Built)
+# 2011.07.13 23:27:42 (*) (Contents Generation Skipped)
+# 2011.07.13 23:27:42 (*) mk_custom_sdk finishing
+# 2011.07.13 23:27:42 (*) Starting generation for system: tiger.
+
+.
+.
+.
+...
+......
+
+# 2011.07.13 23:27:43 (*) Running Generator Program for sdram
+
+# 2011.07.13 23:27:44 (*) Running Generator Program for uart_0
+
+# 2011.07.13 23:27:44 (*) Running Generator Program for performance_counter_0
+
+# 2011.07.13 23:27:45 (*) Running Generator Program for onchip_mem
+
+# 2011.07.13 23:27:45 (*) Running Generator Program for tiger_burst_0
+
+# 2011.07.13 23:27:46 (*) Running Generator Program for tiger_burst_1
+
+# 2011.07.13 23:27:47 (*) Running Generator Program for tiger_burst_2
+
+# 2011.07.13 23:27:47 (*) Running Generator Program for tiger_burst_3
+
+# 2011.07.13 23:27:48 (*) Running Generator Program for tiger_burst_4
+
+# 2011.07.13 23:27:48 (*) Running Generator Program for tiger_burst_5
+
+# 2011.07.13 23:27:49 (*) Running Generator Program for tiger_burst_6
+
+# 2011.07.13 23:27:50 (*) Running Generator Program for tiger_burst_7
+
+.
+
+
+# 2011.07.13 23:27:51 (*) Running Test Generator Program for sdram
+
+# 2011.07.13 23:27:51 (*) Making arbitration and system (top) modules.
+
+# 2011.07.13 23:27:59 (*) Generating Quartus symbol for top level: tiger
+
+# 2011.07.13 23:27:59 (*) Symbol /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger.bsf already exists, no need to regenerate
+# 2011.07.13 23:27:59 (*) Creating command-line system-generation script: /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger_generation_script
+
+# 2011.07.13 23:27:59 (*) Running setup for HDL simulator: modelsim
+
+
+Building ModelSim Project
+
+Reading /home/choijon5/modeltech/tcl/vsim/pref.tcl 
+
+Reading /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/modelsim.tcl 
+/home/choijon5/altera/10.1/quartus//sopc_builder
+/home/choijon5/altera/10.1/quartus//linux/perl
+Sopc_Builder Directory: /home/choijon5/altera/10.1/quartus//sopc_builder 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+@@ 
+@@ setup_sim.do 
+@@ 
+@@ Defined aliases: 
+@@ 
+@@ s -- Load all design (HDL) files. 
+@@ re-vlog/re-vcom and re-vsim the design. 
+@@ 
+@@ s_cycloneiv -- For Modelsim SE, compile Cyclone IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixiv -- For Modelsim SE, compile Stratix IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixv -- For Modelsim SE, compile Stratix V models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ w -- Sets-up waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for display during 
+@@ simulation. This command opens a wave- 
+@@ window containing all such signals. 
+@@ 
+@@ l -- Sets-up list waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for listing during 
+@@ simulation. This command opens a list- 
+@@ window containing all such signals. 
+@@ 
+@@ h -- print this message 
+@@ 
+@@ 
+
+# 6.6d
+
+# do create_tiger_project.do 
+
+# Loading project tiger_sim
+
+# 2011.07.13 23:28:00 (*) Completed generation for system: tiger.
+# 2011.07.13 23:28:00 (*) THE FOLLOWING SYSTEM ITEMS HAVE BEEN GENERATED:
+  SOPC Builder database : /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger.ptf 
+  System HDL Model : /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger.v 
+  System Generation Script : /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger_generation_script 
+  HDL Simulation Directory : /home/choijon5/legup_lastest/legup/tiger/processor/tiger_DE2/tiger_sim/../tiger_sim 
+
+# 2011.07.13 23:28:00 (*) SUCCESS: SYSTEM GENERATION COMPLETED.
+
+
+Press 'Exit' to exit.

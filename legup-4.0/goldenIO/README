@@ -1,0 +1,51 @@
+To generate CHStone-like C file (test.c)
+	perl test.pl <signature file> <# of test cases>
+
+To generate C file with main with random inputs
+	perl genInput <signature file> <# of test cases>
+
+test.data is used for signature file in examples.
+
+
+Signature file
+	Format: <input type 1>--<input type 2>--.....<input type N>--<function name>--<output type>
+
+	Supports: 	Signed, Unsigned
+			short, int, long, long long
+			character, string (character array)
+			arrays
+
+
+	Options:	Arrays (Fixed size)
+			Specified by ":".
+			Ex. if the input is array of 10 integers, it will be "int:10"
+
+			Strings (char* type, length must be specified)
+			Specified by ":"
+			Ex. string of length 10 will be "char:10"
+
+			Input range
+			Range of the randomly input can be specified by using "<".  
+			If not used, limit specified at the top of genInput.pl will be used.
+			Ex1. "int<100" will randomly generate number between -100 to 100 for the variable.
+			Ex2. "unsigned int<100" will randomly generate number between 0 to 100 for the variable.
+
+			Constant Input
+			Input can be fixed to a constant by using "=".
+			Ex. "int=10" will always have 10 as the value of the variable.
+
+			Array and range or constant can be used at the same time, but array specification must come first.
+			Ex1. "int:10<50" Array of 10 integers with all values between -50 and 50
+			Ex2. "int:3=10" Array of 3 integers with all values as 10.
+
+
+	Restrictions:	Output must be numeric, returned by the function.
+			Arrays must be fixed size
+			"unsigned" must come first in data type
+			
+			
+
+
+
+
+

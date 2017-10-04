@@ -1,0 +1,1 @@
+This folder contains Altera SignalTap II files for use in debugging the debugger rtl.

@@ -1,0 +1,31 @@
+load_lib legup.exp
+
+set expected {# sum =\s+214\s+}
+
+cd ../examples/parallel/single/cordic
+
+cd ../../pthreads/cordic
+
+set test "cordic Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+set openmpexpected {# sum =\s+114\s+}
+
+cd ../../openmp/cordic
+
+set test "cordic OpenMP_Pure_HW"
+run-test-parallel-once $test $openmpexpected
+
+cd ../../pthreads+openmp/cordic_2
+set test "cordic_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../cordic_3
+set test "cordic_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../cordic_4
+set test "cordic_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

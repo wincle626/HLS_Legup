@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/chstone/dfmul
+set test "dfmul"
+
+set pcieexpected {# At t=\s+\d+ clk=1 finish=1 return_val=\s*18446744073709551615\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9223090561878065152\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9223372036854775807\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9218868437227405312\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*18446462598732840960\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9223372036854775807\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9218868437227405312\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*0\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9223372036854775808\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*0\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*9223372036854775808\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*4602678819172646912\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*4602678819172646912\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*4602678819172646912\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*4602678819172646912\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*13826050856027422720\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*13826050856027422720\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*13826050856027422720\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*13826050856027422720\n# At t=\s+\d+ clk=1 finish=1 return_val=\s*0\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../../examples

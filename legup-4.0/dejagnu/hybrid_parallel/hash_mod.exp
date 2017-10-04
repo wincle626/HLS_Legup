@@ -1,0 +1,29 @@
+load_lib legup.exp
+
+set hybridexpected {# result = 4}
+
+cd ../examples/parallel/single/hash_mod
+set test "hash Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/hash_mod
+set test "hash Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/hash_mod_pipeline
+set test "hash_pipeline Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/hash_mod_2
+set test "hash_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../hash_mod_3
+set test "hash_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../hash_mod_4
+set test "hash_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../

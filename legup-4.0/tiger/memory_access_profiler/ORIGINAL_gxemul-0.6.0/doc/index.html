@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul</h1>
+<p>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<h3>Contents:</h3>
+
+<p>
+<ul>
+  <li><a href="intro.html">Introduction</a>
+  <ul>
+    <li><a href="intro.html#overview">Overview</a>
+    <li><a href="intro.html#newvsold">New vs Old framework</a>
+    <li><a href="intro.html#free">Is GXemul Free software?</a>
+    <li><a href="intro.html#build">How to compile/build the emulator</a>
+    <li><a href="intro.html#run">How to run the emulator</a>
+    <li><a href="intro.html#cpus">Which processor architectures does GXemul emulate?</a>
+    <li><a href="intro.html#hosts">Which host architectures/platforms are supported?</a>
+    <li><a href="intro.html#accuracy">Emulation accuracy</a>
+    <li><a href="intro.html#emulmodes">Which machines does GXemul emulate?</a>
+  </ul>
+
+  <p>
+
+  <li><a href="framework.html">Description of the framework</a>
+	<!-- TODO: Sub chapters go here -->
+  <p>
+
+  <li><a href="machines.html">Machines</a> <small>(new framework)</small>
+
+  <p>
+
+  <li><a href="components.html">Components</a> <small>(new framework)</small>
+
+  <p>
+  
+  <li><a href="guestoses.html">Installing and running "guest OSes"</a>
+  <ul>
+    <li><a href="guestoses.html#generalnotes">General notes on running "guest OSes"</a>
+    <li><a href="guestoses.html#legacy">Legacy emulation modes</a>
+    <li><a href="guestoses.html#netbsdpmaxinstall">NetBSD/pmax</a>
+    <li><a href="guestoses.html#netbsdarcinstall">NetBSD/arc</a>
+    <li><a href="guestoses.html#netbsdhpcmipsinstall">NetBSD/hpcmips</a>
+    <li><a href="guestoses.html#netbsdcobaltinstall">NetBSD/cobalt</a>
+    <li><a href="guestoses.html#netbsdevbmipsinstall">NetBSD/evbmips</a>
+    <li><a href="guestoses.html#netbsdalgorinstall">NetBSD/algor</a>
+    <li><a href="guestoses.html#netbsdsgimips">NetBSD/sgimips</a>
+    <li><a href="guestoses.html#netbsdcatsinstall">NetBSD/cats</a>
+    <li><a href="guestoses.html#netbsdevbarminstall">NetBSD/evbarm</a>
+    <li><a href="guestoses.html#netbsdnetwinderinstall">NetBSD/netwinder</a>
+    <li><a href="guestoses.html#netbsdprepinstall">NetBSD/prep</a>
+    <li><a href="guestoses.html#netbsdmacppcinstall">NetBSD/macppc</a>
+    <li><a href="guestoses.html#netbsdpmppc">NetBSD/pmppc</a>
+    <li><a href="guestoses.html#netbsdlandiskinstall">NetBSD/landisk</a>
+    <li><a href="dreamcast.html#netbsd_generic_md">NetBSD/dreamcast</a>
+    <li><a href="dreamcast.html#linux_live_cd">Linux/dreamcast</a>
+    <li><a href="guestoses.html#openbsdpmaxinstall">OpenBSD/pmax</a> 
+    <li><a href="guestoses.html#openbsdcatsinstall">OpenBSD/cats</a>
+    <li><a href="guestoses.html#openbsdlandiskinstall">OpenBSD/landisk</a>
+    <li><a href="guestoses.html#openbsdmvme88kinstall">OpenBSD/mvme88k</a>
+    <li><a href="guestoses.html#helenos">HelenOS</a>
+    <li><a href="guestoses.html#ultrixinstall">Ultrix/RISC</a>   
+    <li><a href="guestoses.html#sprite">Sprite for DECstation</a>   
+    <li><a href="guestoses.html#declinux">Debian GNU/Linux for DECstation</a>
+  </ul>
+
+  <p>
+
+  <li><a href="experiments.html">Experimenting with GXemul</a>
+  <ul>
+    <li><a href="experiments.html#hello">Hello world</a>
+    <li><a href="experiments.html#expdevices">Experimental devices</a>
+  </ul>
+
+  <p>
+
+  <li><a href="configfiles.html">Configuration files</a>
+  <ul>
+    <li><a href="configfiles.html#intro">Introduction</a>
+    <li><a href="configfiles.html#config">Configuration file syntax</a>
+    <li><a href="configfiles.html#minimal">A minimal example</a>
+  </ul>
+
+  <p>
+
+  <li><a href="networking.html">Networking</a>
+  <ul>
+    <li><a href="networking.html#intro">Introduction</a>
+    <li><a href="networking.html#multihost">Network across multiple hosts</a>
+    <li><a href="networking.html#direct_example_1">Direct-access example 1: udp_snoop</a>
+  </ul>
+
+  <p>
+
+  <li><a href="dreamcast.html">Dreamcast emulation</a>
+  <ul>
+    <li><a href="dreamcast.html#intro">Introduction</a>
+    <li><a href="dreamcast.html#netbsd_generic_md">NetBSD/dreamcast GENERIC_MD</a>
+    <li><a href="dreamcast.html#netbsd_live_cd">NetBSD/dreamcast Live CD</a>
+    <li><a href="dreamcast.html#linux_live_cd">Linux/dreamcast Live CD</a>
+  </ul>
+
+  <p>
+
+  <li><a href="misc.html">Miscellaneous</a>
+  <ul>
+    <li><a href="misc.html#devel">Writing operating system code, or
+	developing firmware, using GXemul</a>
+    <li><a href="misc.html#compilercontruct">Using GXemul in compiler contruction courses</a>
+    <li><a href="misc.html#disk">How to start the emulator with a disk image</a>
+    <li><a href="misc.html#tape_images">How to start the emulator with tape images</a>
+    <li><a href="misc.html#disk_overlays">How to use disk image overlays</a>
+    <li><a href="misc.html#filexfer">Transfering files to/from the guest OS</a>
+    <li><a href="misc.html#largeimages">How to extract large gzipped disk images</a>
+    <li><a href="misc.html#promdump">Using a PROM dump from a real machine</a>
+  </ul>
+
+  <p>
+
+  <li><a href="translation.html">Dynamic Translation</a>
+  <ul>
+    <li><a href="translation.html#staticvsdynamic">Static vs. dynamic</a>
+    <li><a href="translation.html#ir">Executable Intermediate Representation</a>  
+    <li><a href="translation.html#performance">Performance</a>
+    <li><a href="translation.html#instrcomb">Instruction Combinations</a>
+    <li><a href="translation.html#native">Native Code Generation Back-ends</a>
+  </ul>
+
+  <p>
+
+  <li><a href="technical.html">Technical details</a>
+  <ul>
+    <li><a href="technical.html#speed">Speed and emulation modes</a>
+    <li><a href="technical.html#net">Networking</a>
+    <li><a href="technical.html#devices">Emulation of hardware devices</a>
+  </ul>
+
+  <p>
+
+  <li><a href="doxygen/html/index.html">Source code documentation (Doxygen)</a>
+
+  <p>
+  
+  <li><a href="RELEASE.html">Release notes</a>
+
+  <p>
+  
+  <li><a href="TODO.html">TODO list</a>
+
+</ul>
+
+
+
+
+<p><br>
+<a name="feedback"></a>
+<h3>Feedback:</h3>
+
+<p>If you have found a bug in GXemul, or if you have questions and you can't
+find the answers you seek in the documentation, then please send mail to one
+of the mailing lists:
+
+<ul>
+  <li><a href="https://sourceforge.net/mailarchive/forum.php?forum_name=gxemul-devel"><tt>gxemul-devel</tt></a>
+	for (technical) discussions about the development of GXemul
+  <li><a href="https://sourceforge.net/mailarchive/forum.php?forum_name=gxemul-users"><tt>gxemul-users</tt></a>
+	for general user questions
+</ul>
+
+<p>or ask in the IRC channel
+<tt>#GXemul</tt> on <a href="http://freenode.net/">FreeNode</a>.
+
+
+</p>
+
+</body>
+</html>

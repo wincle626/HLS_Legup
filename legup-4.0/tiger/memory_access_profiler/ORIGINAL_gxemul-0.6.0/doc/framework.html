@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Description of the framework</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Description of the framework</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2009-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#introduction">Introduction</a>
+  <li><a href="#components">Components</a>
+  <li><a href="#machinetemplates">Machine templates</a>
+</ul>
+
+
+
+<p><br>
+<a name="introduction"></a>
+<h3>Introduction:</h3>
+
+<p>GXemul 0.6.0 is a complete redesign, compared to the 0.4.x series.
+This chapter of the documentation describes the core concepts of the
+new framework.
+
+<p>(For various reasons, most of the old emulation modes are still included
+in the source code, and may be run by users, but the intention is to either
+rewrite them to use the new framework, or remove them.)
+
+<p>The new framework is written in C++ (whereas previous versions were
+written in C).
+
+
+
+
+<p><br>
+<a name="components"></a>
+<h3>Components:</h3>
+
+<p>The most important concept in the GXemul framework is that of the
+<a href="components.html"><i>component</i></a>. A component can have sub-components
+(children) and a parent, so the components make up a configuration tree:
+
+<p><center><img src="model.png"></center>
+
+<p>Component classes are registered in a <i>component registry</i>.
+
+<p>Each component in the emulation setup has a <i>path</i>, e.g.
+<tt>root.machine1.mainbus0.cpu0</tt> for the
+CPU in the right-most machine in the example above. Often, shorter paths can
+be used, such as <tt>machine1</tt> instead of <tt>root.machine1</tt>, if there
+is no ambiguity.
+
+<p>Each component has <i>state</i>, which is a collection of <i>variables</i>.
+For e.g. a CPU component, the state is usually a set of registers. Each component
+also has a set of <i>methods</i> which can be executed. A CPU may disassemble
+instructions using its <i>unassemble</i> method:
+
+<p><table border=0 width=100%><tr><td width=5%>&nbsp;</td><td><pre>
+GXemul> <b>root</b>
+  root
+  \-- machine0  [testmips]
+      \-- mainbus0
+          |-- ram0  (32 MB at offset 0)
+          |-- rom0  (16 MB at offset 0x1fc00000)
+          \-- cpu0  (5KE, 100 MHz)
+
+  accuracy = cycle
+  step     = 0
+GXemul> <b>cpu0.unassemble</b>
+&lt;f&gt;
+0xffffffff800100f8 &lt;- 27bdffd0   addiu   sp,sp,-48    
+0xffffffff800100fc    3c03cccc   lui     v1,0xcccc    
+0xffffffff80010100    3c028888   lui     v0,0x8888    
+0xffffffff80010104    8f8b8008   lw      t3,-32760(gp)
+0xffffffff80010108    8f8a8004   lw      t2,-32764(gp)
+0xffffffff8001010c    afb60028   sw      s6,40(sp)    
+0xffffffff80010110    afb50024   sw      s5,36(sp)    
+...
+</pre></td></tr></table>
+
+<p>When single-stepping, all state change is displayed. (In the old framework,
+it was up to individual device/component implementations to print debug
+messages.)
+
+<p><table border=0 width=100%><tr><td width=5%>&nbsp;</td><td><pre>
+GXemul&gt; <b>step</b>
+step 0: cpu0: &lt;f&gt;
+              0xffffffff800100f8    27bdffd0   addiu   sp,sp,-48
+        =&gt; cpu0.pc: 0xffffffff800100f8 -&gt; 0xffffffff800100fc
+        =&gt; cpu0.sp: 0xffffffffa0007f00 -&gt; 0xffffffffa0007ed0
+GXemul&gt; 
+step 1: cpu0: 0xffffffff800100fc    3c03cccc   lui   v1,0xcccc
+        =&gt; cpu0.pc: 0xffffffff800100fc -&gt; 0xffffffff80010100
+        =&gt; cpu0.v1: 0 -&gt; 0xffffffffcccc0000
+GXemul&gt; 
+</pre></td></tr></table>
+
+<p>The example above may not be that interesting, but imagine that the CPU
+reads from a device which has a zero-on-read status register. Then the
+output may look something like this: (this is a made-up example, for now)
+
+<p><table border=0 width=100%><tr><td width=5%>&nbsp;</td><td><pre>
+GXemul&gt; <b>step</b>
+step 2: cpu0: 0xffffffff800101f4    12345678   lw   t3,256(a1)
+        =&gt; cpu0.pc: 0xffffffff800101f4 -&gt; 0xffffffff800101f8
+        =&gt; cpu0.t3: 0 -&gt; 0x2200
+        =&gt; intcontroller.status: 0x2200 -&gt; 0
+GXemul&gt; 
+</pre></td></tr></table>
+
+<p>Components that have a <i>frequency</i> are executed in steps. Those that
+do not have a frequency only do things if triggered by some other means (i.e.
+another component). The components' relative frequencies determine how many
+steps they will run at a time. For example, if we have component A running at
+100 MHz, and component B running at 1 MHz, then in 100 steps A will be executing
+100 cycles and B only 1. The GXemul framework makes sure that the exact sequence
+of cycles is the same nomatter if the user is single-stepping, or running
+the simulation continuously.
+
+<p>The frequency mentioned above does not have anything at all to do with how
+fast a particular host executes the simulation. The frequencies are only relative
+to each other.
+
+<p>Is the new framework <i>cycle-accurate</i>? Both yes and no. The framework
+itself aims to be step/cycle accurate, but it is of course up to the
+implementation of individual components to also be cycle accurate. For example,
+the CPU components that are available out-of-the-box in GXemul do not
+try to simulate out-of-order execution, or pipe-line stalls, or other
+effects that happen in a real processor, so even though the aim is that the
+implementation should be cycle accurate, it does not simulate
+any <i>existing real-world</i> processor in a cycle-accurate manner.
+
+<p>(Is it theoretically <i>possible</i> to implement pipe-lined and/or
+out-of-order CPU models for GXemul's new framework? Maybe. But that has not been done.)
+
+
+
+<p><br>
+<a name="machinetemplates"></a>
+<h3>Machine templates:</h3>
+
+<p>Although the framework is generic enough to simulate/emulate many kinds of
+components, the focus is on emulating components found in electronic computers,
+such as processors, RAM, caches, graphics cards, etc. In most cases, these
+components are naturally contained in a <a href="machines.html"><i>machine</i></a>.
+
+<p>Before GXemul 0.6.0, machines were a special type of entity in the emulator,
+which held one or more CPUs of a particular architecture, e.g.
+<a href="http://en.wikipedia.org/wiki/MIPS_architecture">MIPS</a>. In fact,
+the entire machine was of that architecture. The machine also had hardcoded RAM.
+While this worked well, it was not generic enough to support some cases that
+occur in the real world:
+<ul>
+	<li>Processors of different architectures in the same machine. An
+		example of this is the <a href="http://en.wikipedia.org/wiki/Dreamcast">Dreamcast</a>,
+		which has an <a href="http://en.wikipedia.org/wiki/SuperH">SH4</a> main
+		CPU, and an <a href="http://en.wikipedia.org/wiki/ARM_architecture">ARM</a> CPU as a sound processor. Other examples
+		could be GPUs in modern workstations being considered as CPUs.
+	<li>Hardcoded RAM required hacks for those architectures that do not
+		have RAM at offset 0, for example some <a href="http://en.wikipedia.org/wiki/Silicon_Graphics">SGI</a> machines, or
+		the Dreamcast.
+</ul>
+
+<p>The 0.6.0 framework thus has a somewhat generalized view of what a machine
+is. Machines are simply <i>templates</i> for how components are configured.
+When adding such a template machine to the configuration tree, the result
+is a complete tree of components:
+<pre>
+	GXemul> add testmips 
+	GXemul> root 
+	  root
+	  \-- machine0  [testmips]
+	      \-- mainbus0
+	          |-- ram0  (32 MB at offset 0)
+	          |-- rom0  (16 MB at offset 0x1fc00000)
+	          \-- cpu0  (5KE, 100 MHz)
+</pre>
+Here, a <tt>testmips</tt> machine template was added to the <tt>root</tt>
+component. The name of the machine in the component tree is
+<tt>root.machine0</tt>. The tree dump shows that it was created using the
+<tt>testmips</tt> template.
+
+<p>The same machine configuration can be set up by hand as well:
+
+<pre>
+	GXemul> add machine root 
+	GXemul> add mainbus machine0 
+	GXemul> add ram mainbus0 
+	GXemul> ram0.memoryMappedSize = 0x2000000 
+	GXemul> add mips_cpu mainbus0 
+	GXemul> root 
+	  root
+	  \-- machine0
+	      \-- mainbus0
+	          |-- ram0  (32 MB at offset 0)
+	          \-- cpu0  (5KE, 100 MHz)
+</pre>
+
+<p>(Omitting <tt>rom0</tt> for brevity.)
+
+</body>
+</html>

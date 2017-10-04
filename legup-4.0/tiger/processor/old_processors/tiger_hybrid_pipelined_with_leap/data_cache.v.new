@@ -1,0 +1,1004 @@
+/*
+  This work by Simon Moore and Gregory Chadwick is licenced under the
+  Creative Commons Attribution-Non-Commercial-Share Alike 2.0
+  UK: England & Wales License.
+
+  To view a copy of this licence, visit:
+     http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+  or send a letter to:
+     Creative Commons,
+     171 Second Street,
+     Suite 300,
+     San Francisco,
+     California 94105,
+     USA.
+*/
+/*
+   Cache.v - Toplevel for direct mapped cache for use with the Tiger MIPS
+   processor.
+   
+   The cache is organised into blocks, each block contains several words,
+   A memory address is partitioned into a tag which is stored in the cache,
+   a cache address which is used to locate a particular block in the cache,
+   and a block word which is used to select a word from a block in the cache.
+   
+   [         tag            | cache address | block word | 0 0 ]
+   
+   The number of blocks in the cache and number of words per block
+   is parameterised.  2^blockSize is the block size in bytes,
+   2^cacheSize is the number of blocks in the cache, blockSizeBits
+   must give the block size in bits (so blockSizeBits = 2^blockSize * 8).
+   
+   When modifying blockSize there are two bits of code that must be altered.
+   The assignment of memReadDataWord, and the case statement where fetchWord
+   is written in the fetch state.
+   
+   When we lookup an address in the cache we use the cache address portion
+   of it to address the internal memory block to retrieve the cache entry,
+   we then compare the tag in the cache to the tag of the address, if
+   they match and the valid bit is set we have a cache hit, otherwise we
+   fetch the entire block from memory (read block number bytes from memory
+   starting from the address formed by the tag and cache address with 0s for
+   all lower bits).
+   
+   On a write we immediately start writing the data to memory (write through
+   cache behaviour) we also lookup the address in the cache, if we have a hit
+   we write the data to the cache as well, otherwise we don't bother.
+   
+   If the high bit of the address is set the cache is bypassed and data is
+   directly read from and written to the avalon bus.
+   
+   Written by Greg Chadwick, Summer 2007 
+*/
+
+`include "cache_parameters.v"
+
+module data_cache (
+	input csi_clockreset_clk,
+	input csi_clockreset_reset_n,
+
+	//Avalon Bus side signals
+
+	//Avalon-ST interface to send and receive data from tiger_top
+	output wire [7:0] aso_PROC_data,
+
+	input avs_CACHE0_begintransfer,
+	input avs_CACHE0_read,
+	input avs_CACHE0_write,
+	input [127:0]avs_CACHE0_writedata,
+	output wire [127:0]avs_CACHE0_readdata,
+	output wire avs_CACHE0_waitrequest,
+
+	`ifdef ACCELERATOR_PORT
+	input avs_CACHE1_begintransfer,
+	input avs_CACHE1_read,
+	input avs_CACHE1_write,
+	input [127:0]avs_CACHE1_writedata,
+	output wire [127:0]avs_CACHE1_readdata,
+	output wire avs_CACHE1_waitrequest,
+	
+	//Master inferface to talk to SDRAM for accelerators
+	output avm_dataMaster1_read,
+	output avm_dataMaster1_write,
+	output [31:0]avm_dataMaster1_address,
+	output [`SDRAM_WIDTH-1:0]avm_dataMaster1_writedata,
+	output [`BYTEEN_WIDTH-1:0]avm_dataMaster1_byteenable,
+	input [`SDRAM_WIDTH-1:0]avm_dataMaster1_readdata,
+	output avm_dataMaster1_beginbursttransfer,
+	output [`DBURSTCOUNTWIDTH-1:0]avm_dataMaster1_burstcount,	
+	input avm_dataMaster1_waitrequest,
+	input avm_dataMaster1_readdatavalid,
+	`endif
+
+	//Master interface to talk to SDRAM for processor
+	output avm_dataMaster0_read,
+	output avm_dataMaster0_write,
+	output [31:0]avm_dataMaster0_address,
+	output [`SDRAM_WIDTH-1:0]avm_dataMaster0_writedata,
+	output [`BYTEEN_WIDTH-1:0]avm_dataMaster0_byteenable,
+	input [`SDRAM_WIDTH-1:0]avm_dataMaster0_readdata,
+	output avm_dataMaster0_beginbursttransfer,
+	output [`DBURSTCOUNTWIDTH-1:0]avm_dataMaster0_burstcount,	
+	input avm_dataMaster0_waitrequest,
+	input avm_dataMaster0_readdatavalid
+
+);
+
+	//define cache parameters
+	localparam NumPorts = `NUM_DCACHE_PORTS;	
+	localparam cacheSize = `DCACHE_SIZE; //number of lines in cache 2^9 = 512 lines
+	localparam ways = `DWAYS;
+    localparam blockSize = `DBLOCKSIZE;
+
+	localparam blockSizeBits = 8*(2**blockSize); //total bits per line
+	localparam tagSizeBits = 31; //FIXING THIS TO 31 IN ORDER FOR THE RAM TO BE BYTE ADDRESSABLE
+	//if not using byteenable, localparam tagSizeBits = 32 - cacheSize - blockSize;
+	localparam burstCount = (2**blockSize)/`BURSTCOUNT_DIV; //number of burst to main memory
+	localparam wordWidth = 32; //bits in a word
+	localparam cachelineBytes = (2**blockSize)+4;
+	localparam sdramWidth = `SDRAM_WIDTH;
+	localparam byteEnWidth = `BYTEEN_WIDTH;
+
+	//define states
+	localparam stateIDLE = 3'b000;
+	localparam stateREAD = 3'b001;
+	localparam stateFETCH = 3'b010;
+	localparam stateWRITE = 3'b011;
+	localparam stateFLUSH = 3'b100;
+	localparam stateHOLD = 3'b101;
+
+	wire cacheHit [NumPorts - 1 : 0];
+	reg [ways - 1 : 0] cacheHit_ways [NumPorts - 1 : 0];
+	wire [cacheSize - 1 : 0]cacheAddress [NumPorts - 1 : 0];
+	wire [cacheSize - 1 : 0] cacheAddress_forSet [NumPorts - 1 : 0];
+	wire fetch_one_left [NumPorts - 1 : 0];
+	wire [tagSizeBits - 1 : 0]tag [NumPorts - 1 : 0];
+	wire [1 : 0]bytes [NumPorts - 1 : 0]; //lower 2 bits of address
+	wire [2 : 0]words [NumPorts - 1 : 0]; //upper 3 bits of address, selects which 32 bits to use out of 256 bits	
+
+	wire [wordWidth-1:0]memReadDataWord [NumPorts - 1 : 0];
+	
+	wire [ways - 1 : 0] cacheWrite [NumPorts - 1 : 0];
+	wire cacheWrite_ports [NumPorts - 1 : 0]; //indicates if write signal is asserted (for all sets) for this port
+	wire cacheClkEn;
+	wire [blockSizeBits + tagSizeBits : 0]cacheData [NumPorts - 1 : 0];
+	wire [blockSizeBits + tagSizeBits : 0]cacheQ [NumPorts - 1 : 0][ways - 1 : 0];
+	
+	wire [tagSizeBits - 1 : 0]cacheTag [NumPorts - 1 : 0][ways - 1 : 0]; //this is the current tag that will compared against to see if cache hit
+	wire validBit [NumPorts - 1 : 0][ways - 1 : 0];
+	wire [blockSizeBits - 1 : 0]cacheQData [NumPorts - 1 : 0];
+	
+	wire [blockSizeBits - 1 : 0]cacheWriteData [NumPorts - 1 : 0];
+	reg [blockSizeBits - 1 : 0]cacheWriteData_128 [NumPorts - 1 : 0];
+
+	reg [wordWidth-1 : 0]writeData [NumPorts - 1 : 0];
+	
+	wire [tagSizeBits - 1 : 0]savedTag [NumPorts - 1 : 0];
+	wire [blockSize - 3 : 0]savedBlockWord [NumPorts - 1 : 0];
+	wire [1 : 0]savedByte [NumPorts - 1 : 0];
+	
+	wire fetchDone [NumPorts - 1 : 0];
+	
+	//wire bypassCache [NumPorts - 1 : 0]; //should we bypass the cache for the current read/write operation?
+		
+	reg [31:0]address [NumPorts - 1 : 0];
+	reg [wordWidth-1:0]writeDataWord [NumPorts - 1 : 0];
+	
+//	reg [blockSizeBits - 33 : 0]fetchData [NumPorts - 1 : 0];
+	reg [blockSizeBits - (sdramWidth+1) : 0]fetchData [NumPorts - 1 : 0]; // 257 = size of avm_dataMaster_readdata + 1
+	reg [`DBURSTCOUNTWIDTH - 1 : 0]fetchWord [NumPorts - 1 : 0];
+	
+	reg [2:0]state [NumPorts - 1 : 0];
+	reg [1:0]state_64 [NumPorts - 1 : 0];
+	//reg [2:0]state_accel;
+	
+	reg savedMem16 [NumPorts - 1 : 0];
+	reg savedMem8 [NumPorts - 1 : 0];
+	
+	reg [cacheSize - 1 : 0]flushAddr [NumPorts - 1 : 0];
+		
+//////////////new cache signals///////////////
+	wire clk;
+	wire reset_n;
+
+	wire memRead [NumPorts - 1 : 0];
+	wire memWrite [NumPorts - 1 : 0];
+	reg memWrite_reg [NumPorts - 1 : 0];
+	wire [31:0]memAddress [NumPorts - 1 : 0];
+	wire [wordWidth-1:0]memWriteData [NumPorts - 1 : 0];
+	reg [wordWidth-1:0]memReadData [NumPorts - 1 : 0];
+	reg [wordWidth-1:0] memReadData_lo [NumPorts - 1 : 0];
+	reg [7:0] memReadData_8bits [NumPorts - 1 : 0];
+	reg [15:0] memReadData_16bits [NumPorts - 1 : 0];
+	wire flush [NumPorts - 1 : 0];
+
+	wire mem8 [NumPorts - 1 : 0];
+	wire mem16 [NumPorts - 1 : 0];
+	wire mem64 [NumPorts - 1 : 0];
+
+	wire canRead [NumPorts - 1 : 0];
+	wire canWrite [NumPorts - 1 : 0];
+	wire canFlush [NumPorts - 1 : 0];
+	wire stall [NumPorts - 1 : 0];
+/////////for accelerator ////////////////
+	reg stall_cpu_for_accel_reg [NumPorts - 1 : 0];
+	wire stall_cpu_nodly [NumPorts - 1 : 0];
+	wire stall_cpu [NumPorts - 1 : 0];
+	wire stall_cpu_from_accel [NumPorts - 1 : 0];
+	wire unstall_cpu_from_accel [NumPorts - 1 : 0];
+//////////////////////////////////////////////////
+////////for generate signals//////////////////////
+	wire CACHE_begintransfer [NumPorts - 1 : 0];
+	wire CACHE_read [NumPorts - 1 : 0];
+	wire CACHE_write [NumPorts - 1 : 0];
+	wire [127:0]CACHE_writedata [NumPorts - 1 : 0];
+	reg [127:0]CACHE_readdata [NumPorts - 1 : 0];
+	wire CACHE_waitrequest [NumPorts - 1 : 0];
+
+	reg dataMaster_read [NumPorts - 1 : 0];
+	reg dataMaster_write [NumPorts - 1 : 0];
+	reg [31:0] dataMaster_address [NumPorts - 1 : 0];
+	reg [sdramWidth-1:0] dataMaster_writedata [NumPorts - 1 : 0];
+	reg [byteEnWidth-1:0] dataMaster_byteenable [NumPorts - 1 : 0];
+	wire [sdramWidth-1:0] dataMaster_readdata [NumPorts - 1 : 0];
+	reg dataMaster_beginbursttransfer [NumPorts - 1 : 0];
+	reg [`DBURSTCOUNTWIDTH-1:0] dataMaster_burstcount [NumPorts - 1 : 0];	
+	wire dataMaster_waitrequest [NumPorts - 1 : 0];
+	wire dataMaster_readdatavalid [NumPorts - 1 : 0];
+
+	//Byte enable used for when writing into RAM
+	//first 4 bits are reserved for Tagbits
+	//there's 1 bit for each byte	
+	wire [cachelineBytes-1:0] cache_Byteenable [NumPorts - 1 : 0];
+	wire [30:0] cache_tagData [NumPorts - 1 : 0]; //this is the tag data that will be written into cache
+	reg [3:0] cache_word_Byteenable [NumPorts - 1 : 0];
+
+	reg [wordWidth-1:0] dataMaster_writedata_32 [NumPorts - 1 : 0];
+	reg	[3:0] dataMaster_byteenable_32 [NumPorts - 1 : 0];
+	wire isProc;
+
+	//wire [log2(ways) : 0]cacheAddress_match;
+	wire cacheAddress_match;
+	wire stallWrite_for_fetch [NumPorts - 1 : 0];
+	wire stallRead [NumPorts - 1 : 0];
+
+	// Registers to hold the First In line of each set (to facilitate FIFO policy)
+	reg [log2(ways)-1 : 0] writetoSet [2**cacheSize - 1 : 0];
+	reg [log2(ways)-1 : 0] writetoSet_reg [NumPorts - 1 : 0];
+	reg [log2(ways)-1 : 0] cacheHitWasIn [NumPorts - 1 : 0];
+
+	function integer log2;
+		input [wordWidth-1:0] value;
+		integer i;
+		begin
+		log2 = 0;
+		for(i = 0; 2**i < value; i = i + 1)
+			log2 = i + 1;
+		end
+	endfunction
+
+    genvar i, j;
+	integer k, l;
+//////////////////////////////////////////////////	
+	assign clk = csi_clockreset_clk;
+	assign reset_n = csi_clockreset_reset_n;
+
+	assign CACHE_begintransfer[0] =  avs_CACHE0_begintransfer;
+	assign CACHE_read[0] = avs_CACHE0_read;
+	assign CACHE_write[0] = avs_CACHE0_write;
+	assign CACHE_writedata[0] = avs_CACHE0_writedata;
+	assign avs_CACHE0_readdata = CACHE_readdata[0];
+
+	generate 
+		if (NumPorts > 1) begin
+			assign avs_CACHE0_waitrequest = CACHE_waitrequest[0] && !isProc;
+		end
+		else begin
+			assign avs_CACHE0_waitrequest = 1'b0;
+		end
+	endgenerate
+
+	assign avm_dataMaster0_read = dataMaster_read[0];
+	assign avm_dataMaster0_write = dataMaster_write[0];
+	assign avm_dataMaster0_address = dataMaster_address[0];
+	assign avm_dataMaster0_writedata = dataMaster_writedata[0];
+	assign avm_dataMaster0_byteenable = dataMaster_byteenable[0];
+	assign avm_dataMaster0_beginbursttransfer = dataMaster_beginbursttransfer[0];
+	assign avm_dataMaster0_burstcount = dataMaster_burstcount[0];
+	assign dataMaster_readdata[0] = avm_dataMaster0_readdata;
+	assign dataMaster_waitrequest[0] = avm_dataMaster0_waitrequest;
+	assign dataMaster_readdatavalid[0] = avm_dataMaster0_readdatavalid;
+
+	`ifdef ACCELERATOR_PORT //can't use generate if's, since it requires all signals inside to be defined (avm_dataMaster1_xxx)
+		assign avs_CACHE0_waitrequest = CACHE_waitrequest[0] && !isProc;
+
+		assign CACHE_begintransfer[1] =  avs_CACHE1_begintransfer;
+		assign CACHE_read[1] = avs_CACHE1_read;
+		assign CACHE_write[1] = avs_CACHE1_write;
+		assign CACHE_writedata[1] = avs_CACHE1_writedata;
+		assign avs_CACHE1_readdata = CACHE_readdata[1];
+		assign avs_CACHE1_waitrequest = CACHE_waitrequest[1];
+
+		assign avm_dataMaster1_read = dataMaster_read[1];
+		assign avm_dataMaster1_write = dataMaster_write[1];
+		assign avm_dataMaster1_address = dataMaster_address[1];
+		assign avm_dataMaster1_writedata = dataMaster_writedata[1];
+		assign avm_dataMaster1_byteenable = dataMaster_byteenable[1];
+		assign avm_dataMaster1_beginbursttransfer = dataMaster_beginbursttransfer[1];
+		assign avm_dataMaster1_burstcount = dataMaster_burstcount[1];
+		assign dataMaster_readdata[1] = avm_dataMaster1_readdata;
+		assign dataMaster_waitrequest[1] = avm_dataMaster1_waitrequest;
+		assign dataMaster_readdatavalid[1] = avm_dataMaster1_readdatavalid;
+		
+		assign isProc = avs_CACHE0_writedata[103];
+		assign aso_PROC_data[0] = stall_cpu[0] || stall_cpu[1];
+		assign aso_PROC_data[1] = canRead[0] && isProc;
+		assign aso_PROC_data[2] = canWrite[0] && isProc;
+		assign aso_PROC_data[3] = canFlush[0] && isProc;
+		assign aso_PROC_data[4] = stall[0] && isProc;
+		assign aso_PROC_data[5] = cacheHit[0] && isProc;
+
+		assign cacheAddress_match = (^cacheAddress[0] === 1'bX || ^cacheAddress[1] === 1'bX || (cacheAddress[0] != cacheAddress[1]))? 1'b0: 1'b1;
+		assign stallWrite_for_fetch[0] = cacheAddress_match && (state[1] == stateFETCH || state[1] == stateHOLD) && memWrite[0]; 
+		assign stallWrite_for_fetch[1] = cacheAddress_match && (state[0] == stateFETCH || state[0] == stateHOLD) && memWrite[1]; 
+		assign stallRead[0] = memRead[0] && (fetchDone[1] && cacheAddress_match);
+		assign stallRead[1] = memRead[1] && (fetchDone[0] && cacheAddress_match); 
+
+		//use both ports of RAM
+		generate 
+			for (i = 0; i < ways; i = i+1) begin : loop_instantiateRAM
+				dcacheMem dcacheMemIns(
+									.address_a(cacheAddress[0]),
+									.address_b(cacheAddress[1]),
+									.byteena_a(cache_Byteenable[0]),
+									.byteena_b(cache_Byteenable[1]),
+									.clock(clk),
+									.data_a(cacheData[0]),
+									.data_b(cacheData[1]),
+									//.enable(cacheClkEn),
+									.wren_a(cacheWrite[0][i]),
+									.wren_b(cacheWrite[1][i]),
+									.q_a(cacheQ[0][i]),
+									.q_b(cacheQ[1][i])
+									);	
+			end
+		endgenerate
+	`else
+		//if only processor port exists
+		//else begin
+		assign avs_CACHE0_waitrequest = 1'b0;
+	
+		assign aso_PROC_data[0] = stall_cpu[0];
+		assign aso_PROC_data[1] = canRead[0];
+		assign aso_PROC_data[2] = canWrite[0];
+		assign aso_PROC_data[3] = canFlush[0];
+		assign aso_PROC_data[4] = stall[0];
+		assign aso_PROC_data[5] = cacheHit[0];
+
+		assign stallWrite_for_fetch[0] = 1'b0;
+		assign stallRead[0] = 1'b0; 
+
+		//only use one port of RAM
+		generate 
+			for (i = 0; i < ways; i = i+1) begin : loop_instantiateRAM
+				dcacheMem dcacheMemIns(
+									.address_a(cacheAddress[0]),
+									.address_b(),
+									.byteena_a(cache_Byteenable[0]),
+									.byteena_b(),
+									.clock(clk),
+									.data_a(cacheData[0]),
+									.data_b(),
+									//.enable(cacheClkEn),
+									.wren_a(cacheWrite[0][i]),
+									.wren_b(),
+									.q_a(cacheQ[0][i]),
+									.q_b()
+									);		
+			end
+		endgenerate
+	`endif
+
+	assign cacheClkEn = 1'b1;
+	assign aso_PROC_data[7:6] = 0;
+
+	//writetoSet keeps track of which set cache should write to on next write
+	generate 
+		if (ways != 1) begin
+			//initialize to 0
+			initial begin
+			for (k=0; k<2**cacheSize; k=k+1)
+				writetoSet[k] = 0;
+			end
+
+			//increment by 1 every time
+			always @ (posedge clk) begin
+				for (k=0; k<NumPorts; k=k+1) begin
+					if (fetchDone[k]) begin
+						writetoSet[cacheAddress[k]] <= writetoSet[cacheAddress[k]] + 1;
+					end
+				end
+			end
+		end
+	endgenerate
+
+/*
+	reg [ways - 1 : 0] cacheWrite_temp;
+
+		always @(*)
+		begin
+			for (k=0; k<NumPorts; k=k+1) begin
+				for (l=0; l<ways; l=l+1) begin
+					cacheWrite_temp[l] = cacheWrite[k][l];
+				end
+			end
+		end*/
+	
+
+
+	//GENVAR I IS USED FOR EACH CACHE PORT
+	//INTEGER J IS USED FOR EACH SET (ASSOCIATIVITY)
+	/////////////////////////////////////////////////////////////
+    generate
+    for (i = 0 ; i < NumPorts ; i = i + 1)
+    begin : loop_cacheSignals
+
+
+		assign memRead[i] = CACHE_read[i];
+		assign memWrite[i] =  (!stall_cpu_from_accel[i] && !unstall_cpu_from_accel[i])? CACHE_write[i] : 1'b0;
+		assign memAddress[i] = (state_64[i] == 2)? CACHE_writedata[i][31:0] + 4 : CACHE_writedata[i][31:0];
+		//assign memAddress[i] = CACHE_write[i]? (state_64[i] == 2)? CACHE_writedata[i][31:0] + 4 : CACHE_writedata[i][31:0] : 32'd0;
+		assign memWriteData[i] = (state_64[i] == 2)? CACHE_writedata[i][95:64] : CACHE_writedata[i][63:32];
+
+		assign mem8[i] = CACHE_writedata[i][96];
+		assign mem16[i] = CACHE_writedata[i][97];
+		assign mem64[i] = CACHE_writedata[i][98];
+		assign flush[i] = CACHE_writedata[i][99];
+		assign stall_cpu_from_accel[i] = CACHE_writedata[i][100];
+		assign unstall_cpu_from_accel[i] = CACHE_writedata[i][101];
+
+		always @(*)
+		begin
+			case(mem64[i])
+				0: CACHE_readdata[i] = {96'd0, memReadData[i]};
+				1: CACHE_readdata[i] = {64'd0, memReadData[i],memReadData_lo[i]};
+				default: CACHE_readdata[i] = 128'dx;
+			endcase
+		end
+
+		assign CACHE_waitrequest[i] = state[i] == stateFETCH //while fetching from off-chip
+							|| state[i] == stateHOLD //before going into fetch state
+							|| (memRead[i] && CACHE_begintransfer[i]) //when accel first accesses cache
+							|| (memRead[i] && !cacheHit[i]) || (state[i] != stateREAD && memRead[i]) //if on a read, it's not a cache hit, and it's not in stateREAD
+							|| (memWrite[i] && state[i] != stateWRITE) //if on a write, it's not in stateWRITE
+							|| dataMaster_waitrequest[i] //if waitrequest is asserted from off-chip memory
+							//|| stallWrite_for_fetch[i]
+							|| state_64[i] == 1 || state_64[i] == 2; //for 64-bit accesses
+
+		////////PROCESSOR ONLY SIGNALS////////
+		assign stall[i] = state[i] == stateFETCH 
+	//		|| (memRead && avs_CACHE0_begintransfer)
+			|| (state[i] == stateFLUSH)
+			|| (flush[i] && !canFlush[i])
+			|| (state[i] == stateREAD && !cacheHit[i])
+		//	|| (state[i] == stateAVALON_READ && !dataMaster_readdatavalid[i])
+			|| (memWrite[i] && state[i] != stateIDLE) || (state[i] != stateIDLE && state[i] != stateREAD && memRead[i])
+			|| stallWrite_for_fetch[i]
+			|| (state[i] == stateHOLD);
+
+
+
+		//We can start a read in the idle state or the read state if we've had a cache hit
+		assign canRead[i] = state[i] == stateIDLE || (state[i] == stateREAD && cacheHit[i]);
+		//We can start a write in the idle state
+		assign canWrite[i] = state[i] == stateIDLE;
+		//We can start a flush in the idle state
+		assign canFlush[i] = state[i] == stateIDLE || (state[i] == stateREAD && cacheHit[i]);
+		////////PROCESSOR ONLY SIGNALS////////
+
+		assign tag[i] = memAddress[i][31 : cacheSize + blockSize];
+		assign bytes[i] = memAddress[i][1 : 0];
+		assign words[i] = memAddress[i][4 : 2];
+		assign savedTag[i] = address[i][31 : cacheSize + blockSize];
+		assign savedBlockWord[i] = address[i][blockSize  - 1 : 2];
+		assign savedByte[i] = address[i][1 : 0];
+
+		for (j=0; j<ways; j=j+1) begin : loop_cacheTagValidbit
+			assign cacheTag[i][j] = cacheQ[i][j][tagSizeBits : 1];
+			assign validBit[i][j] = (^cacheQ[i][j][0] === 1'bX || cacheQ[i][j][0] == 0) ? 1'b0 : 1'b1; 	//to take care of undefined case
+		end
+
+		//if not direct-mapped
+		if (ways != 1) begin
+			assign cacheQData[i] = cacheQ[i][cacheHitWasIn[i]][blockSizeBits + tagSizeBits : tagSizeBits + 1];
+			assign cacheAddress_forSet[i] = address[i][cacheSize + blockSize - 1 : blockSize];
+
+			always @(posedge clk)
+			begin
+				if (fetch_one_left[i])	
+				begin
+					writetoSet_reg[i] <= writetoSet[cacheAddress_forSet[i]];
+				end
+			end
+
+			for (j = 0; j < ways; j=j+1) begin : loop_cacheWrite
+				assign cacheWrite[i][j] = (fetchDone[i] && writetoSet_reg[i] == j) || (state[i] == stateWRITE && cacheHit[i] && cacheHitWasIn[i] == j);
+			end
+		end
+		//if direct-mapped
+		else begin
+			assign cacheQData[i] = cacheQ[i][0][blockSizeBits + tagSizeBits : tagSizeBits + 1];
+			assign cacheWrite[i][0] = fetchDone[i] || (state[i] == stateWRITE && cacheHit[i]);
+		end
+		
+		always @(posedge clk)
+		begin
+			memWrite_reg[i] <= memWrite[i];
+		end
+
+		//If we're in the fetch state, the data is valid and we've fetched
+		//all but the last word we've done the fetch
+		if (blockSize == 5) begin
+			assign fetchDone[i] = (state[i] == stateFETCH && dataMaster_readdatavalid[i] && fetchWord[i] == burstCount - 1);
+			assign fetch_one_left[i] = (state[i] == stateFETCH);
+		end 
+		else begin
+			assign fetchDone[i] = (state[i] == stateFETCH && dataMaster_readdatavalid[i]);
+			assign fetch_one_left[i] = (state[i] == stateFETCH && fetchWord[i] == burstCount - 2);
+		end
+
+		//If the fetched data from the cache has the valid bit set
+		//and the tag is the one we want we have a hit
+		//assign cacheHit[i] = validBit[i] && savedTag[i] == cacheTag[i];
+		if (ways != 1) begin
+			always @(*)
+			begin
+				for (k=0; k<ways; k=k+1) 
+				begin
+					cacheHit_ways[i][k] = (validBit[i][k] && savedTag[i] == cacheTag[i][k]);
+				end
+			end
+		    assign cacheHit[i] = |cacheHit_ways[i];
+
+			always @(*)
+			begin
+				cacheHitWasIn[i] = "X";
+				for (k=0; k<ways; k=k+1) 
+				begin
+					if (validBit[i][k] && savedTag[i] == cacheTag[i][k])
+						cacheHitWasIn[i] = k;
+				end
+			end
+		end
+		else begin
+		    assign cacheHit[i] = validBit[i][0] && savedTag[i] == cacheTag[i][0];
+		end
+
+		//cpu stalling logic for when stalling is enabled instead of polling
+		assign stall_cpu[i] = stall_cpu_for_accel_reg[i] || stall_cpu_nodly[i];
+
+
+		//cpu stalling logic for when stalling is enabled instead of polling
+		always @(posedge clk)
+		begin
+			if (!reset_n)
+				stall_cpu_for_accel_reg[i] <= 0;
+			else if (CACHE_write[i] && stall_cpu_from_accel[i])
+				stall_cpu_for_accel_reg[i] <= 1'b1;
+			else if (CACHE_write[i] && unstall_cpu_from_accel[i])
+				stall_cpu_for_accel_reg[i] <= 1'b0;
+		end
+
+		//for when processor is stalled during the execution of accelerator,
+		//when the accelerator begins execution it will send a stall signal on stall_cpu_from_accel
+		assign stall_cpu_nodly[i] = (CACHE_write[i] == 1'b1)? stall_cpu_from_accel[i]: 1'b0;
+	
+		//state machine for controlling 64 bit operations
+		//need to do two consecutive 32 bit reads or writes
+		always @(posedge clk, negedge reset_n)
+		begin
+			if(!reset_n)
+			begin
+				memReadData_lo[i] <= 0;
+			end
+			else if (state_64[i] == 1)
+			begin
+				memReadData_lo[i] <= memReadDataWord[i];
+			end
+		end
+
+		always @(posedge clk, negedge reset_n)
+		begin
+			if(!reset_n)
+			begin
+				state_64[i] <= 0;
+			end
+			else if (mem64[i])
+			begin
+				case(state_64[i])
+				0 : begin
+						//if first write or read
+						if (memWrite[i] || memRead[i])
+						begin
+							state_64[i] <= 1;
+						end
+					end
+				1 : begin
+						if (memRead[i])//if read
+						begin
+							if (cacheHit[i])
+							begin
+								state_64[i] <= 2;
+							end
+							else if (!dataMaster_waitrequest[i])
+							begin
+								//if done first write
+								state_64[i] <= 2;
+							end
+						end
+						else	//if write
+						begin
+							if (!dataMaster_waitrequest[i])
+							begin
+								//if done first write
+								state_64[i] <= 2;
+							end
+						end
+					end
+				2 : begin
+						//assert second address and data
+						//for extra state in between two consecutive operations
+						state_64[i] <= 3;
+					end
+				3 : begin
+						//if second write or read
+						if (memRead[i])//if read
+						begin
+							if (cacheHit[i])
+							begin
+								state_64[i] <= 0;
+							end
+							else if (!dataMaster_waitrequest[i])
+							begin
+								//if done first write
+								state_64[i] <= 0;
+							end
+						end
+						else	//if write
+						begin
+							if (!dataMaster_waitrequest[i])
+							begin
+								//if done first write
+								state_64[i] <= 0;
+							end
+						end
+					end
+				endcase
+			end
+		end
+
+		assign cacheAddress[i] = (fetchDone[i] || state[i] == stateWRITE)? address[i][cacheSize + blockSize - 1 : blockSize] : memAddress[i][cacheSize + blockSize - 1 : blockSize];
+
+		//this is needed to extend data to 31 bits
+		assign cache_tagData[i] = dataMaster_address[i][31 : cacheSize + blockSize];
+
+		if (blockSize == 5) begin
+			assign cacheData[i] =
+				(state[i] == stateWRITE) ?
+					{cacheWriteData[i], 31'd0, 1'b1} :
+					{dataMaster_readdata[i], cache_tagData[i], 1'b1};
+		end
+		else begin
+			assign cacheData[i] = 
+				(state[i] == stateWRITE) ? 
+					{cacheWriteData[i], 31'd0, 1'b1} :
+					{dataMaster_readdata[i], fetchData[i], cache_tagData[i], 1'b1};
+		end
+
+
+		//If we're reading or writing 8 or 16 bits rather than a full 32-bit word, we need to only write
+		//the bits we want to write in the word and keep the rest as they were
+		always @(*)
+		begin
+			if (savedMem8[i])
+			begin
+				case (savedByte[i])
+					2'b00: begin
+						   writeData[i] = {24'd0, writeDataWord[i][7 : 0]};
+			  			   cache_word_Byteenable[i] = 4'b0001;
+						   end
+					2'b01: begin
+						   writeData[i] = {16'd0, writeDataWord[i][7 : 0], 8'd0};
+			  			   cache_word_Byteenable[i] = 4'b0010;	
+						   end
+					2'b10: begin
+						   writeData[i] = {8'd0, writeDataWord[i][7 : 0], 16'd0};
+			  			   cache_word_Byteenable[i] = 4'b0100;	
+						   end
+					2'b11: begin
+						   writeData[i] = {writeDataWord[i][7 : 0], 24'b0};
+			  			   cache_word_Byteenable[i] = 4'b1000;		
+						   end
+					default : begin
+						   writeData[i] = 32'bx;
+			  			   cache_word_Byteenable[i] = 4'dx;		
+						   end
+				endcase
+			end
+			else if (savedMem16[i])
+			begin
+				case (savedByte[i][1])
+					1'b0: begin
+						  writeData[i] = {16'd0, writeDataWord[i][15 : 0]};
+						  cache_word_Byteenable[i] = 4'b0011;
+						  end
+					1'b1: begin
+						  writeData[i] = {writeDataWord[i][15 : 0], 16'd0};
+						  cache_word_Byteenable[i] = 4'b1100;
+						  end
+				default : begin
+						  writeData[i] = 32'bx;
+	 	    			  cache_word_Byteenable[i] = 4'dx;	
+						  end
+				endcase
+			end
+			else 
+			begin
+				writeData[i] = writeDataWord[i];
+	 		    cache_word_Byteenable[i] = 4'b1111;	
+			end
+		end
+
+		//could also do with shifts, or multiplexers as before
+		assign cacheWriteData[i] = writeData[i] << (savedBlockWord[i] * wordWidth);
+
+		//if cachewrite_ports[i] is asserted, it means port i of cache needs to be written.
+		assign cacheWrite_ports[i] = |cacheWrite[i];
+
+		assign cache_Byteenable[i] = fetchDone[i]? {cachelineBytes{1'b1}} : 
+								  cacheWrite_ports[i]? (cache_word_Byteenable[i] << (savedBlockWord[i]*4)) << 4 :    
+								  {cachelineBytes{1'b1}};
+
+		//Multiplexer to select which word of the cache block we want
+		//Mux is parameterized to change the size of cache line easily
+		mux_param # ( 
+			.N(wordWidth), //number of bits of output
+			.M(blockSizeBits/wordWidth), //number of N inputs
+			.S(log2(blockSizeBits/wordWidth))  //width of select lines
+		) mux_param_inst (
+			.D(cacheQData[i]),
+			.SEL(savedBlockWord[i]),
+			.Z(memReadDataWord[i])
+		);
+
+		//If mem8 or mem16 are asserted we only want part of the read word,
+		//if neither are asserted we want the entire word
+		always @(*)
+		begin
+			case (savedByte[i])
+				2'b00: memReadData_8bits[i] = memReadDataWord[i][7 : 0];
+				2'b01: memReadData_8bits[i] = memReadDataWord[i][15 : 8];
+				2'b10: memReadData_8bits[i] = memReadDataWord[i][23 : 16];
+				2'b11: memReadData_8bits[i] = memReadDataWord[i][31 : 24];
+				default: memReadData_8bits[i] = 8'dX;
+			endcase
+		end
+
+		always @(*)
+		begin
+			case (savedByte[i][1])
+				1'b0: memReadData_16bits[i] = memReadDataWord[i][15 : 0];
+				1'b1: memReadData_16bits[i] = memReadDataWord[i][31 : 16];
+				default: memReadData_16bits[i] = 16'dX;
+			endcase
+		end
+
+		//MAY HAVE TO CHANGE THIS??? TO SEQUENTIAL
+		//always @(posedge clk)
+		always @(*)
+		begin
+			if (savedMem8[i])
+				memReadData[i] = {24'd0, memReadData_8bits[i]};
+			else if (savedMem16[i])
+				memReadData[i] = {16'd0, memReadData_16bits[i]};
+			else
+				memReadData[i] = memReadDataWord[i];
+		end
+
+		always @(*)
+		begin
+			if (mem8[i])
+			begin
+				case (bytes[i])
+					2'b00: begin
+						   dataMaster_writedata_32[i] = {24'd0, memWriteData[i][7 : 0]};
+			  			   dataMaster_byteenable_32[i] = 4'b0001;
+						   end
+					2'b01: begin
+						   dataMaster_writedata_32[i] = {16'd0, memWriteData[i][7 : 0], 8'd0};
+			  			   dataMaster_byteenable_32[i] = 4'b0010;	
+						   end
+					2'b10: begin
+						   dataMaster_writedata_32[i] = {8'd0, memWriteData[i][7 : 0], 16'd0};
+			  			   dataMaster_byteenable_32[i] = 4'b0100;	
+						   end
+					2'b11: begin
+						   dataMaster_writedata_32[i] = {memWriteData[i][7 : 0], 24'b0};
+			  			   dataMaster_byteenable_32[i] = 4'b1000;		
+						   end
+					default : begin
+						   dataMaster_writedata_32[i] = 32'dx;
+			  			   dataMaster_byteenable_32[i] = 4'bxxxx;		
+						   end
+				endcase
+			end
+			else if (mem16[i])
+			begin
+				case (bytes[i][1])
+					1'b0: begin
+						  dataMaster_writedata_32[i] = {16'd0, memWriteData[i][15 : 0]};
+						  dataMaster_byteenable_32[i] = 4'b0011;
+						  end
+					1'b1: begin
+						  dataMaster_writedata_32[i] = {memWriteData[i][15 : 0], 16'd0};
+						  dataMaster_byteenable_32[i] = 4'b1100;
+						  end
+				default : begin
+						  dataMaster_writedata_32[i] = 32'dx;
+	 	    			  dataMaster_byteenable_32[i] = 4'bxxxx;	
+						  end
+				endcase
+			end
+			else 
+			begin
+				dataMaster_writedata_32[i] = memWriteData[i];
+	 		    dataMaster_byteenable_32[i] = 4'b1111;	
+			end
+		end
+
+
+		//state machine for cache controller
+		always @(posedge clk, negedge reset_n) begin
+			if(!reset_n) begin
+				state[i] <= stateIDLE;
+				dataMaster_read[i] <= 0;
+				dataMaster_write[i] <= 0;
+				address[i] <= 0;
+				dataMaster_burstcount[i] <= 0;
+				dataMaster_beginbursttransfer[i] <= 0;
+			end else begin
+				case(state[i])
+					stateIDLE: begin
+						dataMaster_burstcount[i] <= 1;
+						dataMaster_beginbursttransfer[i] <= 0;
+						fetchWord[i] <= 0;
+						if(memRead[i] && !stallRead[i]) begin //If we want a read start a read
+							state[i] <= stateREAD;
+							dataMaster_address[i] <= {tag[i], cacheAddress[i], {blockSize{1'b0}}};
+							dataMaster_byteenable[i] <= {byteEnWidth{1'b1}};
+					
+							address[i] <= memAddress[i];
+							savedMem8[i] <= mem8[i];
+							savedMem16[i] <= mem16[i];
+						end else if(memWrite[i] && !stallWrite_for_fetch[i]) begin //If we want a write start a write
+						//end else if(memWrite[i]) begin //If we want a write start a write
+							state[i] <= stateWRITE;
+							address[i] <= memAddress[i];
+							writeDataWord[i] <= memWriteData[i];
+				
+							savedMem8[i] <= mem8[i];
+							savedMem16[i] <= mem16[i];
+					
+							dataMaster_write[i] <= 1;
+							`ifdef DE2
+							dataMaster_writedata[i] <= dataMaster_writedata_32[i];
+							dataMaster_address[i] <= {memAddress[i][31:2], 2'b0};
+							`elsif DE4
+							dataMaster_writedata[i] <= dataMaster_writedata_32[i] << (words[i]*32);												
+							dataMaster_address[i] <= {memAddress[i][31:5], 5'b0};
+							`endif
+						end else if(flush[i]) begin
+							state[i] <= stateFLUSH;
+							flushAddr[i] <= 0;
+						end
+				
+						//If we're reading and bypassing the cache
+						//or performing a write we may need to set
+						//bytes enable to something other than
+						//reading/writing the entire word
+						//if((memRead[i] && bypassCache[i]) || memWrite[i]) begin
+						if(memWrite[i]) begin
+							//dataMaster_byteenable[i] <= dataMaster_byteenable_32[i];
+							dataMaster_byteenable[i] <= dataMaster_byteenable_32[i] << (words[i]*4) ;
+						end
+					end
+					stateREAD: begin
+						if (stallRead[i]) begin
+							state[i] <= stateIDLE;
+						end else begin
+							dataMaster_burstcount[i] <= 1'b1;
+							//If we've had a cache hit either go back to idle
+							//or if we want another read continue in the read state
+							//or if we want to flush go to the flush state
+							if(cacheHit[i]) begin 
+								if(flush[i]) begin
+									state[i] <= stateFLUSH;
+									flushAddr[i] <= 0;
+								//if write is asserted (this is for when write happens right after read)
+								end else if (memWrite[i] && !stallWrite_for_fetch[i]) begin
+								//end else if(memWrite[i]) begin //If we want a write start a write
+									state[i] <= stateWRITE;
+									address[i] <= memAddress[i];
+									writeDataWord[i] <= memWriteData[i][31:0];						
+									savedMem8[i] <= mem8[i];
+									savedMem16[i] <= mem16[i];
+									dataMaster_write[i] <= 1;
+									`ifdef DE2
+									dataMaster_address[i] <= {memAddress[i][31:2], 2'b0};
+									dataMaster_writedata[i] <= dataMaster_writedata_32[i];
+									dataMaster_byteenable[i] <= dataMaster_byteenable_32[i];
+									`elsif DE4
+									dataMaster_address[i] <= {memAddress[i][31:5], 5'b0};
+									//need to shift writedata and byteenable to the correct position
+									dataMaster_writedata[i] <= dataMaster_writedata_32[i] << (words[i]*32);									
+									dataMaster_byteenable[i] <= dataMaster_byteenable_32[i] << (words[i]*4);
+									`endif
+								//if read is deasserted
+								end else if(!memRead[i]) begin
+									state[i] <= stateIDLE; //go back to IDLE state
+								//if read is still asserted
+								end else begin
+									state[i] <= stateREAD; 
+									dataMaster_address[i] <= {tag[i], cacheAddress[i], {blockSize{1'b0}}};
+									dataMaster_byteenable[i] <= {byteEnWidth{1'b1}};
+
+									savedMem8[i] <= mem8[i];
+									savedMem16[i] <= mem16[i];
+						
+									address[i] <= memAddress[i];
+								end
+							//if cache miss
+							end else begin //fetch data from off-chip memory
+								state[i] <= stateHOLD;
+								dataMaster_read[i] <= 1;
+								dataMaster_burstcount[i] <= burstCount;
+								dataMaster_beginbursttransfer[i] <= 1;
+							end
+						end						
+					end
+					stateFETCH: begin	
+						//If we have valid data
+						if(dataMaster_readdatavalid[i]) begin
+							//store it in the fetchData register if it's not the last word
+							//(the last word is fed straight into the data register of the memory
+							// block)
+	
+							//storing fetched data in the correct positions (shift in every time)
+							//go through each fetchword
+							for (l=0; l<(blockSizeBits/sdramWidth)-1; l=l+1) begin
+								//if this is the fetchword we want
+								if (fetchWord[i] == l) begin
+									//copy all bits of DDR
+									for (k=0; k<sdramWidth; k=k+1) begin
+										fetchData[i][sdramWidth*l+k] <= dataMaster_readdata[i][k];
+									end
+								end
+							end
+					
+							fetchWord[i] <= fetchWord[i] + 1;
+
+							if(fetchWord[i] == burstCount - 1) begin
+									state[i] <= stateREAD;
+									fetchWord[i] <= 0;
+							end
+						end
+					end
+					stateHOLD: begin //extra state to begin fetch before it goes into stateFETCH
+						dataMaster_beginbursttransfer[i] <= 0;
+						if(!dataMaster_waitrequest[i]) begin
+							dataMaster_read[i] <= 0;
+							state[i] <= stateFETCH;
+						end
+					end
+					stateWRITE: begin	
+						//Once the memory write has completed either go back to idle
+						//and stop writing or continue with another write
+						if(!dataMaster_waitrequest[i]) begin
+							dataMaster_write[i] <= 0;
+							state[i] <= stateIDLE;
+						end
+					end
+					stateFLUSH: begin
+						flushAddr[i] <= flushAddr[i] + 1'b1;
+						if(flushAddr[i] == {cacheSize{1'b1}})
+							state[i] <= stateIDLE;
+					end
+				endcase
+			end
+		end 		      
+	end
+    endgenerate
+
+endmodule
+
+

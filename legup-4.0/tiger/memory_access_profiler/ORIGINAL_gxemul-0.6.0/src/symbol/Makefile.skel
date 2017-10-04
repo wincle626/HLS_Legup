@@ -1,0 +1,21 @@
+#
+#  Makefile for GXemul src/symbol
+#
+#  Symbol handling support.
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(DINCLUDE)
+
+OBJS=symbol.o symbol_demangle.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+

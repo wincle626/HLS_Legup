@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/dfdiv
+set test "dfdiv"
+
+set expected {Result: 22}
+
+run-test-qemu $test $expected
+
+cd ../..

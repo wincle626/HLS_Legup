@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+set expected {# Result:\s+4\s+}
+
+cd ../examples/parallel/pthreads/barrier
+
+set test "barrier Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd cpp
+set test "cpp"
+set expected {return_val=\s+6\s+}
+
+run-test $test $expected
+
+cd ..

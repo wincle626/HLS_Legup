@@ -1,0 +1,573 @@
+# This makefile is included by all example makefiles
+# Commands:
+# make
+# 	compile .c to .v
+# make watch
+#	compile and compare variable watch output with modelsim output
+# make v
+# 	compile and simulate with modelsim 
+# make p
+# 	setup quartus project (create .qsf and .qpf)
+# make q
+# 	run quartus_map
+# make f
+# 	full quartus compile
+# make s (TODO)
+# 	post-synthesis netlist simulation (simulation)
+# make hybrid
+#	compile designated function to hardware accelerator and generate the system
+# make hybridsim
+#	compile designated function to hardware accelerator and generate and simulate the system
+# make hybridwatch
+# 	compile and compare variable watch output with modelsim output for the hybrid flow
+# make functionslist
+#	generate a list of functions in the program
+# make tiger
+#	compile C to MIPS assembly
+# make tiger_prof
+#	compile C to MIPS assembly and generate necessary profiler parameters & wrapper
+# make tigersim
+#	Simulate MIPS assembly on Tiger MIPS soft processor
+# make tigersim_prof
+#	Simulate MIPS assembly on Tiger MIPS soft processor with profiling
+# make gprof
+#	Run gprof on benchmark 10,000,000 times (not be feasible for JPEG)
+# make emul
+#	Simulate MIPS assembly on gxemul
+# make emulwatch
+#	Simulate MIPS assembly on gxemul with variable watch output
+# make emultest
+#	Simulate MIPS assembly to print final pc value and return value
+# make emultrace
+#	Simulate MIPS assembly and store the instruction trace
+# make cleantiger
+#	clean up generated files from make tiger
+# make clean
+#	clean up non-Quartus generated files
+# make cleanall
+#	clean up all generated files
+
+# This makefile defines make all to work on multiple source files
+
+# Assume all .c files are independent source files
+ifndef SRCS
+	SRCS = $(shell ls *.c)
+endif
+
+# By default, name the output files by the directory name
+ifndef NAME
+	NAME = $(shell basename `pwd`)
+endif
+
+# Each .c file will be compiled to its own .bc file
+ifdef LINK
+	OBJS = $(SRCS:.c=.hw.bc)
+	TIGEROBJS = $(SRCS:.c=.sw.bc)
+endif
+
+include $(LEVEL)/Makefile.config
+
+# set $OVERRIDE if you'd like to change the 'all' target.
+# see phi/Makefile
+$(OVERRIDE)all: $(OBJS)
+ifndef LINK
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).prelto.1.bc
+	# linking may produce llvm mem-family intrinsics
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.1.bc -b=$(NAME).prelto.linked.bc
+else
+	# linking may produce llvm mem-family intrinsics
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(OBJS) -b=$(NAME).prelto.linked.bc
+endif
+	# performs intrinsic lowering so that the linker may be optimized
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.linked.bc > $(NAME).prelto.bc
+	# produces $(NAME).bc binary bitcode and a.out shell script: lli $(NAME).bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).bc
+	# produces textual bitcodes: $(NAME).prelto.1.ll $(NAME).prelto.ll $(NAME).ll
+ifndef LINK
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.1.bc
+endif
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.linked.bc
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	# produces verilog: $(NAME).v
+	$(LLVM_HOME)llc $(LLC_FLAGS) -march=v $(NAME).bc -o $(VFILE)
+
+# A very simple dependency check, any .h file change will ensure all .bc files will be recompiled
+# also, any .c file change will only ensure its corresponding .bc file will be recompiled
+%.hw.bc: %.c *.h
+	# produces pre-link time optimization binary bitcode per source file
+	$(FRONT_END) $< -emit-llvm -c $(CFLAG) -o $@
+	# produces textual bitcode per bitcode file
+	$(LLVM_HOME)llvm-dis $@
+
+tigercompile: $(TIGEROBJS)
+	# linking may produce llvm mem-family intrinsics
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(TIGEROBJS) -b=$(NAME).1.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	sed -i 's/^\tdiv\t/\tdiv\t\$$zero, /g' $(NAME).s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+
+%.sw.bc: %.c *.h
+	# produces pre-link time optimization binary bitcode per source file
+	$(FRONT_END) $< -emit-llvm -c $(CFLAG) -o $@ -I $(LEVEL)/../tiger/tool_source/lib
+
+watch: $(OBJS)
+ifndef LINK
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).prelto.1.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.1.bc -b=$(NAME).prelto.linked.bc
+else
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(OBJS) -b=$(NAME).prelto.linked.bc
+endif
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.linked.bc > $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+ifndef LINK
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.1.bc
+endif
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.linked.bc
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-dis $(NAME).flat.bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LLVM_HOME)llc $(LLC_FLAGS) -march=v $(NAME).bc -o $(VFILE)
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	make v > /dev/null
+	grep "Watch@" transcript | sed 's/^\# Watch@//' > sim.txt
+	diff -q lli.txt sim.txt
+
+v: $(VFILE)
+	$(VLIB)
+	vlog -v ${VERILOG_LIBS} $(VFILE)
+	vsim $(VSIMFLAG) -c -do "run 7000000000000000ns; exit;" work.main_tb
+
+p: $(VFILE)
+	# create an sdc file with a 1ns clock period
+	echo "create_clock -period 1 -name clk [get_ports clk]" > $(NAME).sdc
+	quartus_sh -t $(LEVEL)/setup_proj.tcl $(FAMILY) $(NAME)
+
+q: $(VFILE)
+	quartus_map top --source=$(VFILE) --family=$(FAMILY)
+
+f: $(VFILE)
+	quartus_sh --flow compile top
+
+tiger:
+ifndef LINK
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	#$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+else
+	make tigercompile
+endif
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o $(LEVEL)/../tiger/tool_source/lib/altera_avalon_performance_counter.o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	#$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat
+
+tiger_prof:
+	mipsel-unknown-elf-gcc $(LEVEL)/../tiger/tool_source/lib/wrap.c -o $(LEVEL)/../tiger/tool_source/lib/wrap.o -O3 -c -EL -I $(LEVEL)/../tiger/tool_source/lib/
+	mipsel-unknown-elf-objdump $(LEVEL)/../tiger/tool_source/lib/wrap.o -d > $(LEVEL)/../tiger/tool_source/lib/wrap.src
+	sed -i 's|[/]*int main(void)  __attribute__|//int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	
+	# Assemble .s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e wrap $(LEVEL)/../tiger/tool_source/lib/wrap.o $(NAME).o $(LEVEL)/../tiger/tool_source/lib/utils.o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	
+	# Make profiling initialization files
+	$(PROF_LIB)/make_flist $(NAME).elf
+	$(PROF_LIB)/perfect $(NUM_FUNCTIONS) < $(NAME).flist
+	mv phash.prof $(NAME).hash
+	rm phash.c
+	
+	# Use LEAP's hashing
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat -p $(NAME).hash $(NUM_FUNCTIONS)
+	
+	# Use SnoopP's ranges
+	#$(PROF_LIB)/make_frange $(NAME).elf $(NUM_FUNCTIONS)
+	#$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat -p $(NAME).flist_range $(NUM_FUNCTIONS) -SnoopP
+
+tigersim: tiger 
+	rm -rf $(PROC_DIR)/work
+	cp sdram.dat $(PROC_DIR)
+	cd $(PROC_DIR) && ./simulate
+	# these files are parsed by benchmark.pl for the buildbot plots
+	cp -f $(PROC_DIR)/transcript transcript
+
+tigersim_prof: tiger_prof
+	# Setup profiler to use a) vanprof, b) functional simulation -- these can be changed by looking at 'legup/tiger/processor/tiger_mips/run_simulation'
+	sed -i 's|`define PROF_TYPE[^/]*|`define PROF_TYPE "v"|' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	#sed -i 's|`define PROF_TYPE[^/]*|`define PROF_TYPE "s"|' $(PROC_PROF_DIR)/../../profiler/prof_defines.v	
+	
+	sed -i 's|`define N[^2][^/]*|`define N					$(NUM_FUNCTIONS) |' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	sed -i 's|`define N2[^/]*|`define N2					$(LOG_NUM_FUNCTIONS) |' $(PROC_PROF_DIR)/../../profiler/prof_defines.v
+	sed -i 's|`include ".*sim_path.v"|`include "../sim_path.v"|' $(PROC_PROF_DIR)/../tiger_defines.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../tiger_defines.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../tiger_top.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../../profiler/van_prof.v
+	sed -i 's|`include ".*prof_defines.v"|`include "../../profiler/prof_defines.v"|' $(PROC_PROF_DIR)/../../profiler/SnoopP.v
+	
+	# Run simulation
+	cp sdram.dat $(PROC_PROF_DIR)
+	cd $(PROC_PROF_DIR) && vsim -c -do "do sim_power_tiger.tcl 0 v 0"
+
+	# these files are parsed by benchmark.pl for the buildbot plots
+	cp -f $(PROC_PROF_DIR)/transcript transcript
+	
+	# Return profile data
+	$(PROF_LIB)/$(RESULTS_CONVERT) transcript $(NAME).flist $(NAME).flist_lab $(NAME).hash v $(NUM_FUNCTIONS) | tee $(NAME).sim_data
+	#cp $(NAME).sim_data  $(LEVEL)/chstone/vanprof_results/$(NAME).sim_data
+
+gprof:
+	#gcc $(NAME).c -O0 -pg -D"printf(...)=" -D"main=main() { int i; for (i=0; i<10000000; i++) main2(); return 0; } int main2" -o $(NAME).gprof.out
+	./$(NAME).gprof.out
+	gprof $(NAME).gprof.out > $(NAME).gprof.results
+	cat $(NAME).gprof.results | grep "^\[" | sed -r "s|[^ ]*[ ]*[^ ]*[ ]*([^ ]*)[^a-zA-Z]*([^ ]*).*|\2\t\1|" | grep -v "^main " | sed "s|main2|main|"  > $(NAME).gprof.summary
+	cat $(NAME).gprof.results | grep "^\[" | sed -r "s|[^ ]*[ ]*[^ ]*[ ]*([^ ]*)[ ]*([^ ]*)[^a-zA-Z]*([^ ]*).*|\3\t\1\t\2|" | grep -v "^main	" | sed "s|main2|main|" | gawk '{ sum = $$2 + $$3 }; { print $$1 "\t" sum }'  > $(NAME).gprof.hier.summary
+
+# these files are parsed by benchmark.pl for the buildbot plots
+benchmarkfiles:
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_top.tan.summary top.tan.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_top.fit.summary top.fit.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)/tiger_sim/transcript transcript
+
+benchmarkfiles2:
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_top.tan.summary top.tan.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_top.fit.summary top.fit.summary
+	cp -f $(HYBRID_DIR)/$(BASENAME)2/tiger_sim/transcript transcript
+
+hybridquartus:
+	cd $(HYBRID_DIR)/$(BASENAME) && quartus_sh --flow compile tiger_top
+
+hybrid2quartus:
+	cd $(HYBRID_DIR)/$(BASENAME)2 && quartus_sh --flow compile tiger_top
+
+emul: $(NAME).o
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link_sim.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart_el_sim -lmem_el_sim
+	$(MIPS_PREFIX)objdump -d $(NAME).elf > $(NAME).emul.src
+	gxemul -E $(GXEMUL_OPT) -e R3000 $(NAME).elf -p `$(MIPS_LIB)/../find_ra $(NAME).emul.src` -p 0xffffffff80000180 -q
+
+emultest: $(NAME).o
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link_sim.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart_el_sim -lmem_el_sim
+	$(MIPS_PREFIX)objdump -d $(NAME).elf > $(NAME).emul.src
+	$(EXPECT) $(LEVEL)/lib/gxemul.exp -E $(GXEMUL_OPT) -e R3000 $(NAME).elf -p `$(MIPS_LIB)/../find_ra $(NAME).emul.src` -p 0xffffffff80000180 -q
+	
+emultrace: tiger_prof
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link_sim.ld -e main $(NAME).o -o $(NAME).emul.elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart_el_sim -lmem_el_sim
+	$(MIPS_PREFIX)objdump -d $(NAME).emul.elf > $(NAME).emul.src
+	$(PROF_LIB)/make_flist $(NAME).emul.elf
+	#
+	# Need to type "quit" to end simulation
+	gxemul -E oldtestmips -e R3000 $(NAME).emul.elf -c ninstr -c itrace -p `$(MIPS_LIB)/../find_ra $(NAME).emul.src` -v -T -i > $(NAME).emul.trace
+	$(PROF_LIB)/../parse_trace $(NAME).emul.trace
+	$(PROF_LIB)/../count_instrs $(NAME).emul.asm_trace > $(NAME).emul.breakdown
+	$(PROF_LIB)/function_profile_trace $(NAME).emul.flist $(NAME).emul.flist_lab $(NAME).emul.pc_trace $(NAME).emul.elf > $(NAME).emul.instr_profile
+
+emulwatch: $(OBJS)
+	# compile on current machine
+	#$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).flat.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).prelto.1.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.1.bc > $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llvm-dis $(NAME).flat.bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	# compile for gxemul
+	#$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).flat.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+
+	# Please type "quit", then press enter
+	make emul > transcript
+	grep "Watch@" transcript | sed 's/Watch@//' > sim.txt
+	diff -q lli.txt sim.txt
+	
+tigerwatch: $(OBJS)
+	# compile on current machine
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).prelto.1.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.1.bc > $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llvm-dis $(NAME).flat.bc
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	# compile for tiger
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -o $(NAME).1.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).1.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)llc $(NAME).bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat
+	cp sdram.dat $(PROC_DIR)
+	cd $(PROC_DIR) && ./simulate > /dev/null
+	grep "Watch@" $(PROC_DIR)/transcript | sed 's/^\# Watch@//' > sim.txt
+	diff -q lli.txt sim.txt
+
+hierarchy: tiger_prof
+	$(PROF_LIB)/../createHierarchy $(NAME).src
+
+functionslist: $(OBJS)
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).prelto.bc
+
+	# generate a list of functions in the program
+	# creates file: functions.list
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-func-list < $(NAME).prelto.bc > $(NAME).prelto.sw.bc
+	mv functions.list $(shell basename `pwd`).list
+
+hybrid:
+	# delete tiger dir if it exists
+	if [ -d tiger ]; then \
+		rm -r tiger ;\
+	fi
+	# copy tiger processor
+	rm -rf $(HYBRID_PROC)/work
+	cp -r $(HYBRID_PROC) ./tiger
+	# if tiger_prof had edited uart.h, put it back to original
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).prelto.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.bc
+
+	# strips away non-accelerated functions
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-hw-only < $(NAME).prelto.bc > $(NAME).prelto.hw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.hw.bc
+	# replace accelerated functions with wrappers, generate tcl files to control SOPC builder, generate wave.do file for Modelsim 
+	# creates file: legup_wrappers.c, legup_sopc.tcl, _hw.tcl, t_wave.do
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-sw-only < $(NAME).prelto.bc > $(NAME).prelto.sw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).prelto.sw.bc
+	# compile generated C wrapper
+	$(FRONT_END) legup_wrappers.c -emit-llvm -c $(CFLAG) -o legup_wrappers.prelto.bc -I $(LEVEL)/../tiger/tool_source/lib
+	$(LLVM_HOME)llvm-dis legup_wrappers.prelto.bc
+
+	#SW part
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).prelto.sw.bc -o $(NAME).sw.lowered.bc
+	$(LLVM_HOME)llvm-ld -disable-inlining -disable-opt $(LDFLAG) $(NAME).sw.lowered.bc legup_wrappers.prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).sw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).sw.bc
+	$(LLVM_HOME)llc $(NAME).sw.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	#mips target
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat
+	mv sdram.dat ./tiger/
+	mv *_hw.tcl $(PWD)/tiger/
+
+	# HW part
+	# performs intrinsic lowering so that the linker may be optimized
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.hw.bc > $(NAME).hw.lowered.bc
+	# produces $(NAME).bc binary bitcode and a.out shell script: lli $(NAME).bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) $(NAME).hw.lowered.bc $(LEVEL)/lib/llvm/liblegup.a $(MIPS_LIB)/libuart.a -b=$(NAME).hw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.bc
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)llc -legup-config=config.tcl $(LLC_FLAGS) -march=v $(NAME).hw.bc -o $(VFILE)
+	cp $(NAME).v $(PWD)/tiger/
+	#only move .mif files if it exists 
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} mv {} ./tiger	
+	#Generate SOPC System // check for return value of 4 (success)
+	if [ "x$$DISPLAY" == "x" ]; then echo "DISPLAY not set. X11 required for sopc_builder"; exit 1; fi
+	sopc_builder --script=legup_sopc.tcl $(PWD)/tiger/tiger || [ $$? -eq 4 ]
+
+	#Generate path to modelsim.ini file in the modelsim directory
+	echo "others = $(MODEL_HOME)/modelsim.ini" > $(PWD)/tiger/modelsim.ini.in
+
+	#Move modelsim wave file into hybrid directory
+	mv t_wave.do $(PWD)/tiger
+
+#simulate the hybrid system
+hybridsim: hybrid
+	cd tiger; ./simulate
+
+hybridwatch:
+	# delete tiger dir if it exists
+	if [ -d tiger ]; then \
+		rm -r tiger ;\
+	fi
+	# copy tiger processor
+	cp -r $(HYBRID_PROC) ./tiger
+	# if tiger_prof had edited uart.h, put it back to original
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).prelto.bc -I $(LEVEL)/../tiger/tool_source/lib
+
+	# pass for watch 
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.bc > $(NAME).prelto.1.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).prelto.1.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+
+	# strips away non-accelerated functions
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-hw-only < $(NAME).prelto.bc > $(NAME).prelto.hw.bc
+
+	# replace accelerated functions with wrappers, generate tcl files to control SOPC builder, generate wave.do file for Modelsim 
+	# creates file: legup_wrappers.c, legup_sopc.tcl, _hw.tcl, t_wave.do
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-sw-only < $(NAME).prelto.bc > $(NAME).prelto.sw.bc
+	# compile generated C wrapper
+	$(FRONT_END) legup_wrappers.c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o legup_wrappers.prelto.bc 
+
+	#SW part
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).prelto.sw.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).prelto.bc legup_wrappers.prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).sw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).sw.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).sw.bc > $(NAME).sw.watch.bc
+	$(LLVM_HOME)llvm-dis $(NAME).sw.watch.bc
+	$(LLVM_HOME)llc $(NAME).sw.watch.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	#mips target
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat
+	mv sdram.dat ./tiger/
+	mv *_hw.tcl $(PWD)/tiger/
+
+	# HW part
+	# performs intrinsic lowering so that the linker may be optimized
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.hw.bc > $(NAME).hw.lowered.bc
+	# produces $(NAME).bc binary bitcode and a.out shell script: lli $(NAME).bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).hw.lowered.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).hw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).hw.bc > $(NAME).hw.watch.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.watch.bc
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)llc -legup-config=config.tcl $(LLC_FLAGS) -march=v $(NAME).hw.watch.bc -o $(VFILE)
+	cp $(NAME).v $(PWD)/tiger/
+	#only move .mif files if it exists 
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} mv {} ./tiger	
+
+	#Generate SOPC System // check for return value of 4 (success)
+	if [ "x$$DISPLAY" == "x" ]; then echo "DISPLAY not set. X11 required for sopc_builder"; exit 1; fi
+	sopc_builder --script=legup_sopc.tcl $(PWD)/tiger/tiger || [ $$? -eq 4 ]
+
+	#Generate path to modelsim.ini file in the modelsim directory
+	echo "others = $(MODEL_HOME)/modelsim.ini" > $(PWD)/tiger/modelsim.ini.in
+
+	#Move modelsim wave file into hybrid directory
+	mv t_wave.do $(PWD)/tiger
+
+	#simulate system
+	cd tiger; ./simulate
+
+	grep "Watch@" transcript | sed 's/^\# Watch@//' > sim.txt
+	-kdiff3 lli.txt tiger/sim.txt &
+
+
+hybridwatch_hw:
+	# delete tiger dir if it exists
+	if [ -d tiger ]; then \
+		rm -r tiger ;\
+	fi
+	# copy tiger processor
+	cp -r $(HYBRID_PROC) ./tiger
+	# if tiger_prof had edited uart.h, put it back to original
+	sed -i 's|[/]*int main(void)  __attribute__|int main(void)  __attribute__|' $(LEVEL)/../tiger/tool_source/lib/uart.h
+	# produces pre-link time optimization binary bitcode: $(NAME).prelto.bc
+	$(FRONT_END) $(NAME).c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o $(NAME).prelto.bc -I $(LEVEL)/../tiger/tool_source/lib
+
+	# pass for watch 
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.bc > $(NAME).prelto.1.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).prelto.1.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).flat.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).flat.bc > $(NAME).bc
+	$(LLVM_HOME)lli $(NAME).bc | grep "Watch@" | sed 's/Watch@//' > lli.txt
+	$(LLVM_HOME)llvm-dis $(NAME).bc
+
+	# strips away non-accelerated functions
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-hw-only < $(NAME).prelto.bc > $(NAME).prelto.hw.bc
+
+	# replace accelerated functions with wrappers, generate tcl files to control SOPC builder, generate wave.do file for Modelsim 
+	# creates file: legup_wrappers.c, legup_sopc.tcl, _hw.tcl, t_wave.do
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)opt -legup-config=config.tcl $(OPT_FLAGS) -legup-sw-only < $(NAME).prelto.bc > $(NAME).prelto.sw.bc
+	# compile generated C wrapper
+	$(FRONT_END) legup_wrappers.c -emit-llvm -c $(CFLAG) -mllvm -inline-threshold=-100 -o legup_wrappers.prelto.bc 
+
+	#SW part
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto $(NAME).prelto.sw.bc -o $(NAME).prelto.bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).prelto.bc legup_wrappers.prelto.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).sw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).sw.bc
+	$(LLVM_HOME)llc $(NAME).sw.bc -march=mipsel -relocation-model=static -mips-ssection-threshold=0 -mcpu=mips1 -o $(NAME).s
+	#mips target
+	$(MIPS_PREFIX)as $(NAME).s -mips1 -mabi=32 -o $(NAME).o -EL
+	$(MIPS_PREFIX)ld -T $(MIPS_LIB)/prog_link.ld -e main $(NAME).o -o $(NAME).elf -EL -L $(MIPS_LIB) -lgcc -lfloat -luart -lmem
+	$(MIPS_PREFIX)objdump -D $(NAME).elf > $(NAME).src
+	$(MIPS_LIB)/../elf2sdram $(NAME).elf sdram.dat
+	mv sdram.dat ./tiger/
+	mv *_hw.tcl $(PWD)/tiger/
+
+	# HW part
+	# performs intrinsic lowering so that the linker may be optimized
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-prelto < $(NAME).prelto.hw.bc > $(NAME).hw.lowered.bc
+	# produces $(NAME).bc binary bitcode and a.out shell script: lli $(NAME).bc
+	$(LLVM_HOME)llvm-ld $(LDFLAG) -disable-inlining -disable-opt $(NAME).hw.lowered.bc $(LEVEL)/lib/llvm/liblegup.a -b=$(NAME).hw.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.bc
+	$(LLVM_HOME)opt $(OPT_FLAGS) -legup-watch < $(NAME).hw.bc > $(NAME).hw.watch.bc
+	$(LLVM_HOME)llvm-dis $(NAME).hw.watch.bc
+	export LEGUP_ACCELERATOR_FILENAME=$(NAME); \
+	$(LLVM_HOME)llc -legup-config=config.tcl $(LLC_FLAGS) -march=v $(NAME).hw.watch.bc -o $(VFILE)
+	cp $(NAME).v $(PWD)/tiger/
+	#only move .mif files if it exists 
+	find . -maxdepth 1 -name "*.mif" -print0 | xargs -0 -I {} mv {} ./tiger	
+
+	#Generate SOPC System // check for return value of 4 (success)
+	if [ "x$$DISPLAY" == "x" ]; then echo "DISPLAY not set. X11 required for sopc_builder"; exit 1; fi
+	sopc_builder --script=legup_sopc.tcl $(PWD)/tiger/tiger || [ $$? -eq 4 ]
+
+	#Generate path to modelsim.ini file in the modelsim directory
+	echo "others = $(MODEL_HOME)/modelsim.ini" > $(PWD)/tiger/modelsim.ini.in
+
+	#Move modelsim wave file into hybrid directory
+	mv t_wave.do $(PWD)/tiger
+
+	#simulate system
+	cd tiger; ./simulate
+
+	grep "Watch@" transcript | sed 's/^\# Watch@//' > sim.txt
+	-kdiff3 lli.txt tiger/sim.txt &
+
+cleantiger:
+	rm -rf a.out *.bc *.dat *.dump *.elf *.o *.s *.src *.hash *.flist *.flist_lab *.emul.*
+	rm -rf $(PROC_DIR)/work
+	rm -rf $(PROC_DIR)/verilog_libs
+	
+clean: cleantiger
+	rm -rf *.ll *.mif $(VFILE) *.smsg *.ver lli.txt sim.txt *_hw.tcl legup_sopc.tcl legup_wrappers.c work transcript *.log functions.list t_wave.do
+	
+# be careful: removes Quartus and Modelsim files
+cleanall: clean
+	rm -rf db *.done incremental_db *.pin *.pof *.qpf *.qsf *.rpt *.smsg *.sof *.summary transcript *.wlf work tiger *.bc *.list *.txt
+	rm -rf $(PROC_DIR)/work
+	rm -rf $(PROC_DIR)/verilog_libs
+
+# dependency targets
+
+$(VFILE):
+	make all
+
+$(NAME).o:
+	make tiger
+
+sdram.dat:
+	make tiger
+
+.PHONY : $(OVERRIDE)all watch v p q f tiger tiger_prof tigersim tigersim_prof gprof emul emulwatch emultest emultrace cleantiger clean cleanall hierarchy hybrid functionslist hybridwatch hybridwatch_hw benchmarkfiles

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd latency
+set test "latency"
+set expected {return_val=\s+1975\s+.*Cycles:\s+184\s+}
+
+run-test $test $expected
+
+cd ..

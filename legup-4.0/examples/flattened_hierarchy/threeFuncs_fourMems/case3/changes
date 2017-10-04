@@ -1,0 +1,14 @@
+1. For a caller function, make the callee's start, arguments output reg ports
+make the callee's finish, return_val signals input ports
+
+2. Strip out all module instantiations, and instantiate them at top-level
+Create all necessary wires and connections between callers/callees
+
+3. In each caller function, in the call state that connects caller's 
+memory controller signals to callee's, remove all those since they will
+be connected at the top-level. However make sure that there is at least 
+one if assignment, such as 
+if (cur_state==LEGUP_0)
+    memory_controller_address_a = 0;
+otherwise, without any if statement, the signal will be undefined.
+

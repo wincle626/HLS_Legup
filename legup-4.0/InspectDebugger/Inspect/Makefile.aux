@@ -1,0 +1,34 @@
+#############################################################################
+# Makefile for building: InspectDebugger Python C++ API
+#############################################################################
+
+####### Compiler, tools and options
+WDEFINES		= -DPYTHON_WRAPPER
+WCXXFLAGS		= -fPIC -c
+WSOFLAGS		= -shared -Wl,--export-dynamic -Wl,-no-undefined
+WPYTHON_VERSION	= 3.4m
+WINCPATH		= -I/usr/include/python$(WPYTHON_VERSION) -I/usr/include -I. -I/usr/local/lib 
+WLIBS			= -L/usr/lib/x86_64-linux-gnu -lboost_python-py33 -lpython$(WPYTHON_VERSION) -lpthread
+WCOMPLIBS		= -L. -lTCPClient -lUtility
+####### Output
+
+python_so: TCPClient_so Utility_so ModelsimStarter_so formMain_so
+
+TCPClient_so:
+	$(CXX) $(WINCPATH) $(WCXXFLAGS) $(WDEFINES) TCPClient.cpp -o pTCPClient.o
+	$(CXX) $(WSOFLAGS) pTCPClient.o $(WLIBS) -o libTCPClient.so
+
+Utility_so:
+	$(CXX) $(WINCPATH) $(WCXXFLAGS) $(WDEFINES) Utility.cpp -o pUtility.o
+	$(CXX) $(WSOFLAGS) pUtility.o $(WLIBS) -o libUtility.so
+
+ModelsimStarter_so:
+	$(CXX) $(WINCPATH) $(WCXXFLAGS) $(WDEFINES) ModelsimStarter.cpp -o pModelsimStarter.o
+	$(CXX) $(WSOFLAGS) pModelsimStarter.o $(WLIBS) $(WCOMPLIBS) -o ModelsimStarter.so
+
+formMain_so:
+	$(CXX) $(WINCPATH) $(WCXXFLAGS) $(WDEFINES) formMain.cpp -o pformMain.o
+	$(CXX) $(WSOFLAGS) pformMain.o $(WLIBS) $(WCOMPLIBS) -o formMain.so
+
+clean_so:
+	rm *.so

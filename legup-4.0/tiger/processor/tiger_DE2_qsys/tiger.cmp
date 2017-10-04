@@ -1,0 +1,22 @@
+	component tiger is
+		port (
+			reset_n                               : in    std_logic                     := 'X';             -- reset_n
+			zs_addr_from_the_sdram                : out   std_logic_vector(11 downto 0);                    -- addr
+			zs_ba_from_the_sdram                  : out   std_logic_vector(1 downto 0);                     -- ba
+			zs_cas_n_from_the_sdram               : out   std_logic;                                        -- cas_n
+			zs_cke_from_the_sdram                 : out   std_logic;                                        -- cke
+			zs_cs_n_from_the_sdram                : out   std_logic;                                        -- cs_n
+			zs_dq_to_and_from_the_sdram           : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
+			zs_dqm_from_the_sdram                 : out   std_logic_vector(1 downto 0);                     -- dqm
+			zs_ras_n_from_the_sdram               : out   std_logic;                                        -- ras_n
+			zs_we_n_from_the_sdram                : out   std_logic;                                        -- we_n
+			clk                                   : in    std_logic                     := 'X';             -- clk
+			rxd_to_the_uart_0                     : in    std_logic                     := 'X';             -- rxd
+			txd_from_the_uart_0                   : out   std_logic;                                        -- txd
+			coe_exe_start_from_the_tiger_top_0    : out   std_logic;                                        -- exe_start
+			coe_exe_end_from_the_tiger_top_0      : out   std_logic;                                        -- exe_end
+			coe_debug_select_to_the_tiger_top_0   : in    std_logic_vector(2 downto 0)  := (others => 'X'); -- debug_select
+			coe_debug_lights_from_the_tiger_top_0 : out   std_logic_vector(17 downto 0)                     -- debug_lights
+		);
+	end component tiger;
+

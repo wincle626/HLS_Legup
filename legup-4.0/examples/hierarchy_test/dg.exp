@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd hierarchy_test
+set test "hierarchy_test"
+set expected {return_val=\s+40\s+}
+set gxexpected {reg: v0 = 0x0000000000000028}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

@@ -1,0 +1,77 @@
+============================================
+===   Tool Source Code                   ===
+============================================
+
+This directory contains the source code for many of the tools used in the compilation/translation/programming of the Tiger processor.  All are written in C/C++/C#.
+
+elf2sdram.cpp:
+	- performs an object dump on the input elf file
+	- parses this dump file to create a vector containing all opcode data for each section
+	- this data is then written out (with endian correction) to the specified output sdram data file, which is a column 2 bytes wide
+
+expand_pc.cpp:
+	- used to give meaning to PC dumps
+	- matches each PC in dump with corresponding assembly instruction (found from disassembly of ELF)
+	- may need slight modifications before useful with Tiger
+	
+find_ra.cpp:
+	- finds the PC address of the return instruction in main()
+	- input is object dump of the elf file, which can be obtained from: "mipsel-unknown-elf-objdump -d file.elf > file.src"
+	- useful for adding breakpoints in simulator from the commandline (simulator crashes if it returns from main since no OS to return to)
+	
+gen_func_addr.cpp:
+	- parses ELF disassembly to determine the functions in the program, and the address range for each
+	- outputs verilog define statements to convey this information
+		- "`define FUNCTION_LO" & "`define FUNCTION_HI"
+		
+gen_hex.cpp:
+	- creates 4 hex files from single disassembly
+	- was used for previous processor (YACC), but could have use in future
+
+
+--------------------------------------------
+Debug_Stub/
+--------------------------------------------
+- source code for "ROM.mif" in processor, which is the initialization file for the onchip_mem RAM
+- contains code for bootloading and debugging (interfacing with GDB)
+- more information in 'Debug_Stub/README'
+
+--------------------------------------------
+JTAGTerminal/
+--------------------------------------------
+- C# project for MS Visual Studio
+- connects to vJTAGUart by opening socket and connecting with quartus_stp at command line
+- used to enable programming/debugging the processor
+- not really used for our puroses
+
+--------------------------------------------
+Lib/
+--------------------------------------------
+- set as standard include path for compiling in both 'legup/tiger/linux_tools' and 'legup/tiger/windows_tools'
+- contains source code for library (*.a) files
+	- to create library file (ex. uart.c -> libuart.a for linux_tools):
+		1) mipsel-unknown-elf-gcc -c legup/tiger/tool_source/lib/uart.c -o legup/tiger/tool_source/lib/uart.o -EL
+		2) mipsel-unknown-elf-ar rcs legup/tiger/linux_tools/lib/libuart.a legup/tiger/tools_source/lib/uart.o
+	- included with "-L legup/tiger/linux_tools/lib/" to set include path, and "-luart" to include "libuart.a"
+- "stdio.h" simply redirects header to "uart.h" (used for compatibility with general C code)
+- "uart.c/h" defines functionality for printf
+	- renames "printf" to "mprintf" (using #define) to avoid conflicts with system function printf
+	- printf currently accepts %d, %c, %s, %x, %X
+	- depending if SIM is defined, either outputs to GXemul terminal or to UART
+- "stdarg.h" is trimmed version of GCC's file, which contains macros for variable-length argument lists (ie printf(...) )
+
+--------------------------------------------
+Mips_Communication_Server/
+--------------------------------------------
+- C# project for MS Visual Studio
+- connects to vJTAGUart by opening socket and connecting with quartus_stp with GUI
+- used to enable programming/debugging the processor
+- cannot be connected while attempting to program verilog (must disconnect, program, then reconnect)
+- must be connected to program ELF file
+
+--------------------------------------------
+MIPSLoad/
+--------------------------------------------
+- used to transfer ELF file to sdram on DE2, and if -r is specified, will start the execution of the processor
+- use 'legup/tiger/windows_tools/run.bat' to call this function indirectly as opposed to using it yourself
+- more information in 'MIPSLoad/README'

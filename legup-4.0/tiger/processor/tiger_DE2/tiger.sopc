@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="tiger">
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element clk
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element data_cache_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element jtag_to_ava_master_bridge
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element tiger_top_0.leapSlave
+   {
+      datum baseAddress
+      {
+         value = "33554432";
+         type = "long";
+      }
+   }
+   element pipeline_bridge_MEMORY
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element pipeline_bridge_PERIPHERALS
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{output_language=VERILOG, output_directory=/home/choijon5/legup_clang/legup/tiger/processor/tiger_modified}";
+         type = "String";
+      }
+   }
+   element pipeline_bridge_PERIPHERALS.s1
+   {
+      datum baseAddress
+      {
+         value = "4026531840";
+         type = "long";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "4096";
+         type = "long";
+      }
+   }
+   element sdram.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element sdram
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{output_language=VERILOG, output_directory=C:\\Documents and Settings\\James\\Desktop\\mips_cache_on_avalon_clock2X}";
+         type = "String";
+      }
+   }
+   element tiger
+   {
+   }
+   element tiger_top_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element uart_0
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP2C35F672C6" />
+ <parameter name="deviceFamily" value="CYCLONEII" />
+ <parameter name="deviceSpeedGrade" value="" />
+ <parameter name="fabricMode" value="SOPC" />
+ <parameter name="generateLegacySim" value="true" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="true" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="maxAdditionalLatency" value="0" />
+ <parameter name="projectName" value="tiger_top.qpf" />
+ <parameter name="sopcBorderPoints" value="true" />
+ <parameter name="systemHash" value="4882949672" />
+ <parameter name="timeStamp" value="1374010802867" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <module kind="clock_source" version="11.1" enabled="1" name="clk">
+  <parameter name="clockFrequency" value="200000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   kind="altera_avalon_new_sdram_controller"
+   version="11.1"
+   enabled="1"
+   name="sdram">
+  <parameter name="TAC" value="5.5" />
+  <parameter name="TMRD" value="3" />
+  <parameter name="TRCD" value="20.0" />
+  <parameter name="TRFC" value="70.0" />
+  <parameter name="TRP" value="20.0" />
+  <parameter name="TWR" value="14.0" />
+  <parameter name="casLatency" value="3" />
+  <parameter name="clockRate" value="200000000" />
+  <parameter name="columnWidth" value="8" />
+  <parameter name="dataWidth" value="16" />
+  <parameter name="generateSimulationModel" value="true" />
+  <parameter name="initNOPDelay" value="0.0" />
+  <parameter name="initRefreshCommands" value="2" />
+  <parameter name="masteredTristateBridgeSlave" value="" />
+  <parameter name="model" value="custom" />
+  <parameter name="numberOfBanks" value="4" />
+  <parameter name="numberOfChipSelects" value="1" />
+  <parameter name="pinsSharedViaTriState" value="false" />
+  <parameter name="powerUpDelay" value="100.0" />
+  <parameter name="refreshPeriod" value="15.625" />
+  <parameter name="registerDataIn" value="true" />
+  <parameter name="rowWidth" value="12" />
+ </module>
+ <module
+   kind="altera_avalon_pipeline_bridge"
+   version="11.1"
+   enabled="1"
+   name="pipeline_bridge_PERIPHERALS">
+  <parameter name="burstEnable" value="false" />
+  <parameter name="dataWidth" value="32" />
+  <parameter name="downstreamPipeline" value="true" />
+  <parameter name="enableArbiterlock" value="false" />
+  <parameter name="masterAddressWidth" value="13" />
+  <parameter name="maxBurstSize" value="2" />
+  <parameter name="maximumPendingReadTransactions" value="1" />
+  <parameter name="upstreamPipeline" value="false" />
+  <parameter name="waitrequestPipeline" value="false" />
+ </module>
+ <module
+   kind="altera_avalon_pipeline_bridge"
+   version="11.1"
+   enabled="1"
+   name="pipeline_bridge_MEMORY">
+  <parameter name="burstEnable" value="true" />
+  <parameter name="dataWidth" value="32" />
+  <parameter name="downstreamPipeline" value="true" />
+  <parameter name="enableArbiterlock" value="false" />
+  <parameter name="masterAddressWidth" value="24" />
+  <parameter name="maxBurstSize" value="64" />
+  <parameter name="maximumPendingReadTransactions" value="10" />
+  <parameter name="upstreamPipeline" value="false" />
+  <parameter name="waitrequestPipeline" value="false" />
+ </module>
+ <module
+   kind="altera_jtag_avalon_master"
+   version="11.1"
+   enabled="1"
+   name="jtag_to_ava_master_bridge">
+  <parameter name="USE_PLI" value="0" />
+  <parameter name="PLI_PORT" value="50000" />
+  <parameter name="COMPONENT_CLOCK" value="0" />
+  <parameter name="FAST_VER" value="0" />
+  <parameter name="FIFO_DEPTHS" value="2" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+ </module>
+ <module kind="altera_avalon_uart" version="11.1" enabled="1" name="uart_0">
+  <parameter name="baud" value="115200" />
+  <parameter name="clockRate" value="200000000" />
+  <parameter name="dataBits" value="8" />
+  <parameter name="fixedBaud" value="true" />
+  <parameter name="parity" value="NONE" />
+  <parameter name="simCharStream" value="" />
+  <parameter name="simInteractiveInputEnable" value="false" />
+  <parameter name="simInteractiveOutputEnable" value="false" />
+  <parameter name="simTrueBaud" value="false" />
+  <parameter name="stopBits" value="1" />
+  <parameter name="syncRegDepth" value="2" />
+  <parameter name="useCtsRts" value="false" />
+  <parameter name="useEopRegister" value="false" />
+  <parameter name="useRelativePathForSimFile" value="false" />
+ </module>
+ <module kind="tiger_top" version="1.0" enabled="1" name="tiger_top_0">
+  <parameter name="prof_param_N2" value="8" />
+  <parameter name="prof_param_S2" value="5" />
+  <parameter name="prof_param_CW" value="32" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="200000000" />
+ </module>
+ <module kind="data_cache" version="1.0" enabled="1" name="data_cache_0">
+  <parameter name="AUTO_CLOCKRESET_CLOCK_RATE" value="200000000" />
+ </module>
+ <connection kind="clock" version="11.1" start="clk.clk" end="sdram.clk" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="clk.clk"
+   end="pipeline_bridge_PERIPHERALS.clk" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="clk.clk"
+   end="pipeline_bridge_MEMORY.clk" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="pipeline_bridge_MEMORY.m1"
+   end="sdram.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00800000" />
+ </connection>
+ <connection
+   kind="clock"
+   version="11.1"
+   start="clk.clk"
+   end="jtag_to_ava_master_bridge.clk" />
+ <connection kind="clock" version="11.1" start="clk.clk" end="uart_0.clk" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="pipeline_bridge_PERIPHERALS.m1"
+   end="uart_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x1000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="jtag_to_ava_master_bridge.master"
+   end="sdram.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00800000" />
+ </connection>
+ <connection kind="clock" version="11.1" start="clk.clk" end="tiger_top_0.clock" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="clk.clk"
+   end="data_cache_0.clockreset" />
+ <connection
+   kind="avalon_streaming"
+   version="11.1"
+   start="data_cache_0.PROC"
+   end="tiger_top_0.PROC" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.CACHE"
+   end="data_cache_0.CACHE0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.procMaster"
+   end="pipeline_bridge_PERIPHERALS.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0xf0000000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.instructionMaster"
+   end="pipeline_bridge_MEMORY.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="data_cache_0.dataMaster0"
+   end="pipeline_bridge_MEMORY.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="jtag_to_ava_master_bridge.master"
+   end="tiger_top_0.leapSlave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x02000000" />
+ </connection>
+</system>

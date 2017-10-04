@@ -1,0 +1,113 @@
+Altera SOPC Builder Version 10.11 Build 197
+Copyright (c) 1999-2009 Altera Corporation.  All rights reserved.
+
+
+# 2012.06.01 00:38:01 (*) mk_custom_sdk starting
+# 2012.06.01 00:38:01 (*) Reading project /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger.ptf.
+
+# 2012.06.01 00:38:01 (*) Finding all CPUs
+# 2012.06.01 00:38:01 (*) Finding all peripherals
+
+# 2012.06.01 00:38:01 (*) Finding software components
+# 2012.06.01 00:38:01 (*) (Legacy SDK Generation Skipped)
+# 2012.06.01 00:38:01 (*) (All TCL Script Generation Skipped)
+# 2012.06.01 00:38:01 (*) (No Libraries Built)
+# 2012.06.01 00:38:01 (*) (Contents Generation Skipped)
+# 2012.06.01 00:38:01 (*) mk_custom_sdk finishing
+# 2012.06.01 00:38:01 (*) Starting generation for system: tiger.
+
+.
+.
+...
+...
+
+# 2012.06.01 00:38:02 (*) Running Generator Program for sdram
+
+# 2012.06.01 00:38:03 (*) Running Generator Program for uart_0
+
+# 2012.06.01 00:38:04 (*) Running Generator Program for onchip_mem
+
+# 2012.06.01 00:38:04 (*) Running Generator Program for tiger_burst_0
+
+# 2012.06.01 00:38:05 (*) Running Generator Program for tiger_burst_1
+
+# 2012.06.01 00:38:06 (*) Running Generator Program for tiger_burst_2
+
+# 2012.06.01 00:38:07 (*) Running Generator Program for pipeline_bridge_PERIPHERALS
+
+# 2012.06.01 00:38:08 (*) Running Generator Program for pipeline_bridge_MEMORY
+
+.
+
+
+# 2012.06.01 00:38:09 (*) Running Test Generator Program for sdram
+
+# 2012.06.01 00:38:09 (*) Making arbitration and system (top) modules.
+
+# 2012.06.01 00:38:17 (*) Generating Quartus symbol for top level: tiger
+
+# 2012.06.01 00:38:17 (*) Symbol /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger.bsf already exists, no need to regenerate
+# 2012.06.01 00:38:17 (*) Creating command-line system-generation script: /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger_generation_script
+
+# 2012.06.01 00:38:17 (*) Running setup for HDL simulator: modelsim
+
+
+Building ModelSim Project
+
+Reading /home/choijon5/modeltech/tcl/vsim/pref.tcl 
+Reading /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger_sim/modelsim.tcl 
+/home/choijon5/altera/10.1/quartus//sopc_builder
+/home/choijon5/altera/10.1/quartus//linux/perl
+Sopc_Builder Directory: /home/choijon5/altera/10.1/quartus//sopc_builder 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+@@ 
+@@ setup_sim.do 
+@@ 
+@@ Defined aliases: 
+@@ 
+@@ s -- Load all design (HDL) files. 
+@@ re-vlog/re-vcom and re-vsim the design. 
+@@ 
+@@ s_cycloneiv -- For Modelsim SE, compile Cyclone IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixiv -- For Modelsim SE, compile Stratix IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixv -- For Modelsim SE, compile Stratix V models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ w -- Sets-up waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for display during 
+@@ simulation. This command opens a wave- 
+@@ window containing all such signals. 
+@@ 
+@@ l -- Sets-up list waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for listing during 
+@@ simulation. This command opens a list- 
+@@ window containing all such signals. 
+@@ 
+@@ h -- print this message 
+@@ 
+@@ 
+
+# 6.6d
+
+# do create_tiger_project.do 
+
+# Loading project tiger_sim
+
+# 2012.06.01 00:38:18 (*) Completed generation for system: tiger.
+# 2012.06.01 00:38:18 (*) THE FOLLOWING SYSTEM ITEMS HAVE BEEN GENERATED:
+  SOPC Builder database : /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger.ptf 
+  System HDL Model : /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger.v 
+  System Generation Script : /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger_generation_script 
+  HDL Simulation Directory : /home/choijon5/legup/tiger/processor/tiger_hybrid_pipelined_new/tiger_sim 
+
+# 2012.06.01 00:38:18 (*) SUCCESS: SYSTEM GENERATION COMPLETED.
+
+
+Press 'Exit' to exit.

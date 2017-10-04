@@ -1,0 +1,13 @@
+set_global_assignment -entity "system_clk_pll" -library "system_clk_pll" -name IP_TOOL_NAME "altera_pll"
+set_global_assignment -entity "system_clk_pll" -library "system_clk_pll" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "system_clk_pll" -library "system_clk_pll" -name IP_TOOL_ENV "mwpim"
+set_global_assignment -library "system_clk_pll" -name MISC_FILE [file join $::quartus(qip_path) "system_clk_pll.cmp"]
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+
+set_global_assignment -library "system_clk_pll" -name VERILOG_FILE [file join $::quartus(qip_path) "system_clk_pll.v"]
+set_global_assignment -library "system_clk_pll" -name VERILOG_FILE [file join $::quartus(qip_path) "system_clk_pll/system_clk_pll_0002.v"]
+set_global_assignment -library "system_clk_pll" -name QIP_FILE [file join $::quartus(qip_path) "system_clk_pll/system_clk_pll_0002.qip"]
+
+set_global_assignment -entity "system_clk_pll_0002" -library "system_clk_pll" -name IP_TOOL_NAME "altera_pll"
+set_global_assignment -entity "system_clk_pll_0002" -library "system_clk_pll" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "system_clk_pll_0002" -library "system_clk_pll" -name IP_TOOL_ENV "mwpim"

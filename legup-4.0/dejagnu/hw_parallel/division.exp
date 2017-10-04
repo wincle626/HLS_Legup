@@ -1,0 +1,45 @@
+load_lib legup.exp
+
+set expected {# Sum:\s+578900\s+}
+
+cd ../examples/parallel/single/dividers
+
+cd ../../pthreads/dividers
+
+set test "dividers Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/dividers_pipeline
+
+set test "dividers Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/dividers_2
+set test "dividers_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_3
+set test "dividers_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_4
+set test "dividers_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_8_4
+set test "dividers_8_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_12_4
+set test "dividers_12_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_16_4
+set test "dividers_16_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dividers_20_4
+set test "dividers_20_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

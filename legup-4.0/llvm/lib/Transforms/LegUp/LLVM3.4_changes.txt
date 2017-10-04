@@ -1,0 +1,683 @@
+diff --git a/llvm/lib/Transforms/LegUp/CustomVerilog.cpp b/llvm/lib/Transforms/LegUp/CustomVerilog.cpp
+index 0d6a52d..ef80858 100644
+--- a/llvm/lib/Transforms/LegUp/CustomVerilog.cpp
++++ b/llvm/lib/Transforms/LegUp/CustomVerilog.cpp
+@@ -9,13 +9,13 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/LLVMContext.h"
++#include "llvm/IR/LLVMContext.h"
+ #include "utils.h"
+ 
+ using namespace llvm;
+diff --git a/llvm/lib/Transforms/LegUp/ElementaryCycles.h b/llvm/lib/Transforms/LegUp/ElementaryCycles.h
+index b50dd3c..4e45f8d 100644
+--- a/llvm/lib/Transforms/LegUp/ElementaryCycles.h
++++ b/llvm/lib/Transforms/LegUp/ElementaryCycles.h
+@@ -22,7 +22,7 @@
+ #ifndef ELEMENTARYCYCLES_H
+ #define ELEMENTARYCYCLES_H
+ 
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Instructions.h"
+ #include <vector>
+ #include <list>
+ #include <map>
+diff --git a/llvm/lib/Transforms/LegUp/FunctionsList.cpp b/llvm/lib/Transforms/LegUp/FunctionsList.cpp
+index 4ae9109..2b5bbc6 100644
+--- a/llvm/lib/Transforms/LegUp/FunctionsList.cpp
++++ b/llvm/lib/Transforms/LegUp/FunctionsList.cpp
+@@ -9,9 +9,9 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "utils.h"
+ 
+diff --git a/llvm/lib/Transforms/LegUp/HwOnly.cpp b/llvm/lib/Transforms/LegUp/HwOnly.cpp
+index ba0b6e3..7f9c6b5 100644
+--- a/llvm/lib/Transforms/LegUp/HwOnly.cpp
++++ b/llvm/lib/Transforms/LegUp/HwOnly.cpp
+@@ -9,16 +9,16 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "utils.h"
+ #include <set>
+ #include <map>
+ #include "llvm/Support/CallSite.h"
+-#include "llvm/Attributes.h"
++#include "llvm/IR/Attributes.h"
+ //#include "llvm/BasicBlockUtils.h"
+ #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+ 
+diff --git a/llvm/lib/Transforms/LegUp/InitARM.cpp b/llvm/lib/Transforms/LegUp/InitARM.cpp
+index 4f6b223..2e95faf 100644
+--- a/llvm/lib/Transforms/LegUp/InitARM.cpp
++++ b/llvm/lib/Transforms/LegUp/InitARM.cpp
+@@ -11,14 +11,14 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Module.h"
+-#include "llvm/Constants.h"
+-#include "llvm/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Constants.h"
++#include "llvm/IR/Function.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/Type.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Instruction.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/Type.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Instruction.h"
++#include "llvm/IR/IRBuilder.h"
+ 
+ 
+ using namespace llvm;
+diff --git a/llvm/lib/Transforms/LegUp/IterativeModuloScheduling.cpp b/llvm/lib/Transforms/LegUp/IterativeModuloScheduling.cpp
+index fec5cf0..98b2cc7 100644
+--- a/llvm/lib/Transforms/LegUp/IterativeModuloScheduling.cpp
++++ b/llvm/lib/Transforms/LegUp/IterativeModuloScheduling.cpp
+@@ -24,15 +24,15 @@
+ #include "polly/ScopInfo.h"
+ #include "polly/TempScopInfo.h"
+ */
+-#include "llvm/LLVMContext.h"
++#include "llvm/IR/LLVMContext.h"
+ #include "llvm/Support/CommandLine.h"
+ #include "llvm/Analysis/LoopPass.h"
+ #include "llvm/Support/Debug.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/ScalarEvolutionExpander.h"
+-#include "llvm/Target/TargetData.h"
+-#include "llvm/Module.h"
++#include "llvm/IR/DataLayout.h"
++#include "llvm/IR/Module.h"
+ #include "llvm/Transforms/Utils/Local.h"
+ #include "llvm/Transforms/Utils/Cloning.h"
+ #include "llvm/ADT/SetVector.h"
+@@ -75,7 +75,7 @@ class IterativeModuloScheduling : public LoopPass {
+   //ScopDetection *SD;
+   //CloogInfo *C;
+   LoopInfo *LI;
+-  TargetData *TD;
++  DataLayout *TD;
+   //Region *R;
+ 
+   Allocation *alloc;
+@@ -4094,7 +4094,22 @@ FeasibleQueue(raw_fd_ostream &File) :file (File) {}
+                   /*Initializer=*/0, // has initializer, specified below
+                   /*Name=*/name);
+ 
+-          Constant* init = ConstantArray::get(M->getContext(), name, true);
++		  // TODO: Changed in LLVM 3.4 update
++		  // Copied ConstantArray::get() wrapper code from LLVM 2.x code
++          //Constant* init = ConstantArray::get(M->getContext(), name, true);
++
++		  LLVMContext &Context = M->getContext();
++		  StringRef Str = name;
++		  std::vector<Constant*> ElementVals;
++		  for (unsigned i = 0; i < Str.size(); ++i)
++			  ElementVals.push_back(ConstantInt::get(Type::getInt8Ty(Context), Str[i]));
++
++		  ElementVals.push_back(ConstantInt::get(Type::getInt8Ty(Context), 0));
++
++		  ArrayType *ATy = ArrayType::get(Type::getInt8Ty(Context), ElementVals.size());
++		  Constant* init = ConstantArray::get(ATy, ElementVals);
++		  // TODO end LLVM 3.4 update changes
++
+           dummyArray->setInitializer(init);
+ 
+           // create a RAM to represent the global shared memory
+@@ -4302,7 +4317,7 @@ FeasibleQueue(raw_fd_ostream &File) :file (File) {}
+          DT = &getAnalysis<DominatorTree>();
+          C = &getAnalysis<CloogInfo>();
+          SD = &getAnalysis<ScopDetection>();
+-         TD = &getAnalysis<TargetData>();
++         TD = &getAnalysis<DataLayout>();
+          */
+ 
+       /*
+@@ -4328,7 +4343,10 @@ FeasibleQueue(raw_fd_ostream &File) :file (File) {}
+ 
+       File() << "Found Loop: " << *loop << "\n";
+       File() << "Label: " << loopLabel << "\n";
+-      this->tripCount = L->getSmallConstantTripCount();
++      //this->tripCount = L->getSmallConstantTripCount();
++	  // TODO: this may be wrong, just needed to do something to make it compile
++	  ScalarEvolution *SE = &getAnalysis<ScalarEvolution>();
++      this->tripCount = SE->getSmallConstantTripCount(L, L->getExitingBlock());
+       // trip count might not be constant -> in which case the trip count is 0
+       //assert(this->tripCount);
+       File() << "Trip count: " << this->tripCount << "\n";
+@@ -4530,7 +4548,7 @@ FeasibleQueue(raw_fd_ostream &File) :file (File) {}
+       AU.addRequired<RegionInfo>();
+       AU.addRequired<ScopDetection>();
+       AU.addRequired<ScopInfo>();
+-      AU.addRequired<TargetData>();
++      AU.addRequired<DataLayout>();
+ 
+       AU.addPreserved<CloogInfo>();
+       AU.addPreserved<Dependences>();
+diff --git a/llvm/lib/Transforms/LegUp/LLVMBuild.txt b/llvm/lib/Transforms/LegUp/LLVMBuild.txt
+new file mode 100644
+index 0000000..faa4618
+--- /dev/null
++++ b/llvm/lib/Transforms/LegUp/LLVMBuild.txt
+@@ -0,0 +1,23 @@
++;===- ./lib/Transforms/LegUp/LLVMBuild.txt --------------------*- Conf -*--===;
++;
++;                     The LLVM Compiler Infrastructure
++;
++; This file is distributed under the University of Illinois Open Source
++; License. See LICENSE.TXT for details.
++;
++;===------------------------------------------------------------------------===;
++;
++; This is an LLVMBuild description file for the components in this subdirectory.
++;
++; For more information on the LLVMBuild system, please see:
++;
++;   http://llvm.org/docs/LLVMBuild.html
++;
++;===------------------------------------------------------------------------===;
++
++[component_0]
++type = Library
++name = LegUp
++parent = Transforms
++library_name = LegUp
++required_libraries = Analysis Core InstCombine Support Target TransformUtils
+diff --git a/llvm/lib/Transforms/LegUp/Makefile b/llvm/lib/Transforms/LegUp/Makefile
+index 0fd9e12..9d2c954 100644
+--- a/llvm/lib/Transforms/LegUp/Makefile
++++ b/llvm/lib/Transforms/LegUp/Makefile
+@@ -10,7 +10,7 @@
+ LEVEL = ../../..
+ LIBRARYNAME = LLVMLegUp
+ LOADABLE_MODULE = 1
+-USEDLIBS = LLVMCodeGen.a LLVMVerilog.a
++#USEDLIBS = LLVMCodeGen.a LLVMVerilog.a
+ 
+ include $(LEVEL)/Makefile.common
+ 
+diff --git a/llvm/lib/Transforms/LegUp/NonAcceleratedOnly.cpp b/llvm/lib/Transforms/LegUp/NonAcceleratedOnly.cpp
+index e686f1f..03b62fc 100644
+--- a/llvm/lib/Transforms/LegUp/NonAcceleratedOnly.cpp
++++ b/llvm/lib/Transforms/LegUp/NonAcceleratedOnly.cpp
+@@ -10,11 +10,11 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Debug.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "LegupConfig.h"
+ #include "utils.h"
+ 
+diff --git a/llvm/lib/Transforms/LegUp/NumParams.cpp b/llvm/lib/Transforms/LegUp/NumParams.cpp
+index bda392b..d0cae77 100644
+--- a/llvm/lib/Transforms/LegUp/NumParams.cpp
++++ b/llvm/lib/Transforms/LegUp/NumParams.cpp
+@@ -10,9 +10,9 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "utils.h"
+@@ -40,7 +40,7 @@ bool NumParams::runOnModule(Module &M) {
+     std::string FileError;
+     raw_fd_ostream num_params_rpt ("num_params.legup.rpt", FileError);
+     for (Module::iterator F = M.begin(), FE = M.end(); F != FE; ++F) {
+-        num_params_rpt << F->getNameStr() << ": " << F->arg_size() << " arguments.\n";
++        num_params_rpt << F->getName().str() << ": " << F->arg_size() << " arguments.\n";
+     }
+ 
+     return true;
+diff --git a/llvm/lib/Transforms/LegUp/ParallelAPI.cpp b/llvm/lib/Transforms/LegUp/ParallelAPI.cpp
+index 92e1f42..63fd2a7 100644
+--- a/llvm/lib/Transforms/LegUp/ParallelAPI.cpp
++++ b/llvm/lib/Transforms/LegUp/ParallelAPI.cpp
+@@ -9,20 +9,20 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Support/CallSite.h"
+ #include "utils.h"
+ #include "llvm/Analysis/LoopInfo.h"
+-#include "llvm/LLVMContext.h"
++#include "llvm/IR/LLVMContext.h"
+ #include "llvm/Analysis/CallGraph.h"
+-#include "llvm/Attributes.h"
+-#include "llvm/Constants.h"
++#include "llvm/IR/Attributes.h"
++#include "llvm/IR/Constants.h"
+ //#include "ConstantsContext.h"
+-#include "../lib/VMCore/ConstantsContext.h"
++#include "../lib/IR/ConstantsContext.h"
+ 
+ using namespace llvm;
+ 
+diff --git a/llvm/lib/Transforms/LegUp/PostLTO.cpp b/llvm/lib/Transforms/LegUp/PostLTO.cpp
+index 8bc32b6..dd624f6 100644
+--- a/llvm/lib/Transforms/LegUp/PostLTO.cpp
++++ b/llvm/lib/Transforms/LegUp/PostLTO.cpp
+@@ -8,13 +8,13 @@
+ //
+ //===----------------------------------------------------------------------===//
+ 
+-#include "llvm/Constants.h"
++#include "llvm/IR/Constants.h"
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Type.h"
+-#include "llvm/Use.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Type.h"
++#include "llvm/IR/Use.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/ErrorHandling.h"
+diff --git a/llvm/lib/Transforms/LegUp/PreLTO.cpp b/llvm/lib/Transforms/LegUp/PreLTO.cpp
+index 9c415f0..ce98e04 100644
+--- a/llvm/lib/Transforms/LegUp/PreLTO.cpp
++++ b/llvm/lib/Transforms/LegUp/PreLTO.cpp
+@@ -10,15 +10,15 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
+ #include "llvm/CodeGen/IntrinsicLowering.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Support/FormattedStream.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Intrinsics.h"
+-#include "llvm/Target/TargetData.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Intrinsics.h"
++#include "llvm/IR/DataLayout.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/StringExtras.h"
+ #include "llvm/Support/Debug.h"
+@@ -36,7 +36,7 @@ struct LegUp : public FunctionPass {
+     virtual bool doInitialization(Module &M) {
+        Mod = &M;
+ 
+-       TD = new TargetData(&M);
++       TD = new DataLayout(&M);
+ 
+        IL = new IntrinsicLowering(*TD);
+        return false;
+@@ -81,7 +81,7 @@ struct LegUp : public FunctionPass {
+ private:
+     Module *Mod;
+     IntrinsicLowering *IL;
+-    const TargetData* TD;
++    const DataLayout* TD;
+     bool lowerIfIntrinsic(CallInst *CI, Function *calledFunction);
+     bool lowerLegupInstrinsic(CallInst *CI, Function *calledFunction);
+     bool lowerOverflowIntrinsic(CallInst *CI, Function *calledFunction);
+@@ -106,7 +106,7 @@ bool LegUp::lowerIfIntrinsic(CallInst *CI, Function *calledFunction) {
+ 
+     switch (calledFunction->getIntrinsicID()) {
+       case Intrinsic::not_intrinsic:
+-      case Intrinsic::memory_barrier:
++      //case Intrinsic::memory_barrier: # replaced by fence atomic
+       case Intrinsic::vastart:
+       case Intrinsic::vacopy:
+       case Intrinsic::vaend:
+diff --git a/llvm/lib/Transforms/LegUp/ProfileARM.cpp b/llvm/lib/Transforms/LegUp/ProfileARM.cpp
+index a1a4976..ed7a63d 100755
+--- a/llvm/lib/Transforms/LegUp/ProfileARM.cpp
++++ b/llvm/lib/Transforms/LegUp/ProfileARM.cpp
+@@ -8,14 +8,14 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Module.h"
+-#include "llvm/Constants.h"
+-#include "llvm/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Constants.h"
++#include "llvm/IR/Function.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/Type.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Instruction.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/Type.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Instruction.h"
++#include "llvm/IR/IRBuilder.h"
+ 
+ 
+ using namespace llvm;
+diff --git a/llvm/lib/Transforms/LegUp/RenameHwOnly.cpp b/llvm/lib/Transforms/LegUp/RenameHwOnly.cpp
+index 38f2cda..c9eea4e 100644
+--- a/llvm/lib/Transforms/LegUp/RenameHwOnly.cpp
++++ b/llvm/lib/Transforms/LegUp/RenameHwOnly.cpp
+@@ -9,9 +9,9 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "utils.h"
+@@ -42,7 +42,7 @@ bool HwOnlyRename::runOnModule(Module &M) {
+     //    this makes sure BB cycles can still be correctly gathered.
+     for (Module::iterator F = M.begin(), FE = M.end(); F != FE; ++F)
+         if ( !F->isIntrinsic () && !LEGUP_CONFIG->isAccelerated(*F))
+-            F->setName(F->getNameStr()+"_accelerated");
++            F->setName(F->getName().str()+"_accelerated");
+ 
+     // Since this IR will be linked back with sw-only IR, global variables should be set
+     //    as LinkOnceAnyLinkage
+diff --git a/llvm/lib/Transforms/LegUp/SwOnly.cpp b/llvm/lib/Transforms/LegUp/SwOnly.cpp
+index 44641dd..53960f2 100644
+--- a/llvm/lib/Transforms/LegUp/SwOnly.cpp
++++ b/llvm/lib/Transforms/LegUp/SwOnly.cpp
+@@ -10,22 +10,22 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Support/FormattedStream.h"
+ #include "llvm/Support/FileUtilities.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Support/Signals.h"
+ #include "LegupConfig.h"
+ #include "utils.h"
+ #include <math.h>
+ #include <set>
+ #include <sstream>
+-#include "llvm/LLVMContext.h"
++#include "llvm/IR/LLVMContext.h"
+ 
+ using namespace llvm;
+ 
+diff --git a/llvm/lib/Transforms/LegUp/TrackBB.cpp b/llvm/lib/Transforms/LegUp/TrackBB.cpp
+index 669c24e..98629ce 100644
+--- a/llvm/lib/Transforms/LegUp/TrackBB.cpp
++++ b/llvm/lib/Transforms/LegUp/TrackBB.cpp
+@@ -9,15 +9,15 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Type.h"
+-#include "llvm/Use.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Type.h"
++#include "llvm/IR/Use.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/ErrorHandling.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/ADT/StringExtras.h"
+ #include "utils.h"
+ #include <vector>
+@@ -56,7 +56,7 @@ namespace legup
+                     ss << ( label_num - num_printf_added );
+                     BB_name = ss.str();
+                 }
+-                return "\nTrack@<"+F.getNameStr()+">:<%%"+BB_name+">\n";
++                return "\nTrack@<"+F.getName().str()+">:<%%"+BB_name+">\n";
+         }
+ 
+         virtual bool runOnFunction(Function &F) {
+@@ -72,8 +72,8 @@ namespace legup
+                     Instruction *instr = I;
+                     if (CallInst *CI = dyn_cast<CallInst>(instr) ) {
+ //                        if (!CI->getCalledFunction() || !CI->getCalledFunction()->hasExternalLinkage() ) {
+-                        if (!CI->getCalledFunction() || CI->getCalledFunction()->getNameStr() != "printf" ) {
+-                            printString += "Track@<Calling by " + F.getNameStr() + ">\n";
++                        if (!CI->getCalledFunction() || CI->getCalledFunction()->getName().str() != "printf" ) {
++                            printString += "Track@<Calling by " + F.getName().str() + ">\n";
+                             Args.push_back( Builder.CreateGlobalStringPtr(printString.c_str()) );
+                             CallInst::Create(PrintFunc, Args, "", instr);
+                             Args.clear();
+@@ -82,7 +82,7 @@ namespace legup
+                         }
+                     }
+                     else if (dyn_cast<ReturnInst>(instr)) {
+-                        printString += "Track@<Returning by " + F.getNameStr() + ">\n";
++                        printString += "Track@<Returning by " + F.getName().str() + ">\n";
+                         Args.push_back( Builder.CreateGlobalStringPtr(printString.c_str()) );
+                         CallInst::Create(PrintFunc, Args, "", instr);
+                         Args.clear();
+diff --git a/llvm/lib/Transforms/LegUp/WatchVariables.cpp b/llvm/lib/Transforms/LegUp/WatchVariables.cpp
+index a0e5e55..800fadb 100644
+--- a/llvm/lib/Transforms/LegUp/WatchVariables.cpp
++++ b/llvm/lib/Transforms/LegUp/WatchVariables.cpp
+@@ -9,15 +9,15 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Type.h"
+-#include "llvm/Use.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Type.h"
++#include "llvm/IR/Use.h"
+ #include "llvm/Support/raw_ostream.h"
+ #include "llvm/Support/Debug.h"
+ #include "llvm/Support/ErrorHandling.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/ADT/StringExtras.h"
+ #include <vector>
+ #include <queue>
+@@ -145,8 +145,8 @@ struct LegUpWatch : public FunctionPass {
+     virtual bool runOnFunction(Function &F) {
+         for (Function::iterator BB = F.begin(), EE = F.end(); BB != EE; ++BB) {
+             // initialize string to print out
+-            std::string printString = "\nWatch@" + F.getNameStr() + ":";
+-            printString += BB->getNameStr() + '\n';
++            std::string printString = "\nWatch@" + F.getName().str() + ":";
++            printString += BB->getName().str() + '\n';
+             std::vector<Value *> Args;
+             // reserve first argument of printf for printString
+             Args.push_back(NULL);
+diff --git a/llvm/lib/Transforms/LegUp/utils.cpp b/llvm/lib/Transforms/LegUp/utils.cpp
+index 8d7f187..801be68 100644
+--- a/llvm/lib/Transforms/LegUp/utils.cpp
++++ b/llvm/lib/Transforms/LegUp/utils.cpp
+@@ -9,16 +9,16 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
+ #include "llvm/CodeGen/IntrinsicLowering.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Support/FormattedStream.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/GlobalValue.h"
+-#include "llvm/Intrinsics.h"
+-#include "llvm/Target/TargetData.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/GlobalValue.h"
++#include "llvm/IR/Intrinsics.h"
++#include "llvm/IR/DataLayout.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/StringExtras.h"
+ #include "llvm/Support/Debug.h"
+@@ -26,13 +26,14 @@
+ #include "utils.h"
+ #include <string>
+ #include "llvm/Support/Signals.h"
+-#include "llvm/LLVMContext.h"
++#include "llvm/IR/LLVMContext.h"
+ #include "llvm/Support/CallSite.h"
+-#include "llvm/Attributes.h"
++#include "llvm/IR/Attributes.h"
+ //#include "llvm/BasicBlockUtils.h"
+ #include "llvm/Transforms/Utils/BasicBlockUtils.h"
+ #include "llvm/Analysis/LoopInfo.h"
+ #include "llvm/Analysis/CallGraph.h"
++#include "llvm/Analysis/ScalarEvolution.h"
+ 
+ using namespace llvm;
+ using namespace std;
+@@ -265,12 +266,14 @@ formatted_raw_ostream * GetOutputStream(string & OutputFilename) {
+ 
+     // Make sure that the Out file gets unlinked from the disk if we get a
+     // SIGINT
+-    sys::RemoveFileOnSignal(sys::Path(OutputFilename));
++    //sys::RemoveFileOnSignal(sys::Path(OutputFilename));
++    sys::RemoveFileOnSignal((OutputFilename));
+ 
+     std::string error;
+     raw_fd_ostream *FDOut =
+         new raw_fd_ostream(OutputFilename.c_str(), error,
+-                raw_fd_ostream::F_Binary);
++                //raw_fd_ostream::F_Binary);
++                sys::fs::F_None);
+     if (!error.empty()) {
+         errs() << error << '\n';
+         delete FDOut;
+@@ -634,7 +637,7 @@ Function* insertNewArgument(Module &M, std::string funcName, std::string argName
+ 	// argument marked as byval. Since the parameter attributes include the
+ 	// return type parameters at index 0, we don't use size() - 1, but just
+ 	// size() as index.
+-	AttrListPtr PAL = F->getAttributes();
++	//AttrListPtr PAL = F->getAttributes();
+ 
+ 	// Create the new function type based on the recomputed parameters.
+ 	FunctionType *NFTy = FunctionType::get(F->getReturnType(), params, false);
+@@ -643,7 +646,8 @@ Function* insertNewArgument(Module &M, std::string funcName, std::string argName
+ 	//Function *NF = Function::Create(NFTy, F->getLinkage());
+ 	Function *NF = Function::Create(NFTy, Function::ExternalLinkage);
+ 	NF->copyAttributesFrom(F);
+-	NF->setAttributes(PAL);
++	//NF->setAttributes(PAL);
++	NF->setAttributes(F->getAttributes());
+ 	F->getParent()->getFunctionList().insert(F, NF);
+ 	//M.getFunctionList().insert(F, NF);
+ 	NF->takeName(F);
+@@ -839,7 +843,10 @@ unsigned int getLoopTripCount(Function::iterator BB, LoopInfo *LI) {
+ 	if (Loop *loop = LI->getLoopFor(BB))
+ 	{
+ 		// Instantiate this many hardware accelerators
+-		loopTripCount = loop->getSmallConstantTripCount();
++		//loopTripCount = loop->getSmallConstantTripCount();
++		// TODO: LLVM 3.4 udpate changes
++		ScalarEvolution *SE = new ScalarEvolution();
++		loopTripCount = SE->getSmallConstantTripCount(loop, loop->getUniqueExitBlock());
+ 		// errs() << "\n\n Num Loop Iterations = " << numCallsToHardwareAccel << "\n\n";
+ 	}
+ 	assert(loopTripCount != 0 && "Could not analyze number of threads for the accelerated function");
+diff --git a/llvm/lib/Transforms/LegUp/utils.h b/llvm/lib/Transforms/LegUp/utils.h
+index a99e85b..bff2c10 100644
+--- a/llvm/lib/Transforms/LegUp/utils.h
++++ b/llvm/lib/Transforms/LegUp/utils.h
+@@ -13,15 +13,15 @@
+ #define LEGUP_UTILSTRANSFORMS_H
+ 
+ #include "llvm/Pass.h"
+-#include "llvm/Function.h"
+-#include "llvm/Module.h"
++#include "llvm/IR/Function.h"
++#include "llvm/IR/Module.h"
+ #include "llvm/CodeGen/IntrinsicLowering.h"
+-#include "llvm/Support/IRBuilder.h"
++#include "llvm/IR/IRBuilder.h"
+ #include "llvm/Support/FormattedStream.h"
+ #include "llvm/Support/raw_ostream.h"
+-#include "llvm/Instructions.h"
+-#include "llvm/Intrinsics.h"
+-#include "llvm/Target/TargetData.h"
++#include "llvm/IR/Instructions.h"
++#include "llvm/IR/Intrinsics.h"
++#include "llvm/IR/DataLayout.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/StringExtras.h"
+ #include "llvm/Support/Debug.h"

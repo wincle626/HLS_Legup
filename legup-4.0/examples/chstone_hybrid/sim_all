@@ -1,0 +1,57 @@
+#!/bin/bash
+
+cd adpcm/
+rm -rf sim_results.log
+./sim_all
+cd ../aes/
+rm -rf sim_results.log
+./sim_all
+cd ../blowfish/
+rm -rf sim_results.log
+./sim_all
+cd ../dfadd/
+rm -rf sim_results.log
+./sim_all
+cd ../dfdiv/
+rm -rf sim_results.log
+./sim_all
+cd ../dfmul/
+rm -rf sim_results.log
+./sim_all
+cd ../dfsin/
+rm -rf sim_results.log
+./sim_all
+cd ../dhrystone/
+rm -rf sim_results.log
+./sim_all
+cd ../gsm/
+rm -rf sim_results.log
+./sim_all
+cd ../jpeg/
+rm -rf sim_results.log
+./sim_all
+#cd ../mips/
+#rm -rf sim_results.log
+#./mips/sim_all
+cd ../motion/
+rm -rf sim_results.log
+./sim_all
+cd ../sha/
+rm -rf sim_results.log
+./sim_all
+cd ..
+
+rm -rf sim_results.log
+cat ./adpcm/sim_results.log > sim_results.log
+cat ./aes/sim_results.log >> sim_results.log
+cat ./blowfish/sim_results.log >> sim_results.log
+cat ./dfadd/sim_results.log >> sim_results.log
+cat ./dfdiv/sim_results.log >> sim_results.log
+cat ./dfmul/sim_results.log >> sim_results.log
+cat ./dfsin/sim_results.log >> sim_results.log
+cat ./dhrystone/sim_results.log >> sim_results.log
+cat ./gsm/sim_results.log >> sim_results.log
+cat ./jpeg/sim_results.log >> sim_results.log
+#cat ./mips/sim_results.log >> sim_results.log
+cat ./motion/sim_results.log >> sim_results.log
+cat ./sha/sim_results.log >> sim_results.log

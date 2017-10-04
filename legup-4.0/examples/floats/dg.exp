@@ -1,0 +1,12 @@
+load_lib legup.exp
+
+cd floats
+set test "floats"
+set expected {return_val=\s+3\s+}
+#set gxexpected {reg: v0 = 0x0000000000000003}
+
+
+run-test $test $expected
+#run-test-gx $test $gxexpected
+
+cd ..

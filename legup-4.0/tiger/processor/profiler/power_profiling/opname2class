@@ -1,0 +1,42 @@
+#!/bin/bash
+
+A="j,bltz,blez,bgtz,bltzal,sltiu,bgezal,bgez,jal,lui"
+B="slti,sra,srl,sll,andi"
+C="sw,sb,xori,or,addiu,addi"
+D="sltu,slt,ori,div,srlv,and,xor,addu,sllv,add,mult,divu,sub,multu,subu"
+E="bne,beq"
+F="lb,lw"
+
+instr_list=${A//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|A|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+instr_list=${B//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|B|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+instr_list=${C//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|C|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+instr_list=${D//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|D|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+instr_list=${E//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|E|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+instr_list=${F//,/ }
+for op in $(echo $instr_list); do
+	sed -i "s|^$op\$|F|g" sim_trace/mpeg2.sim.asm_trace_clean
+done
+
+sed -i "s|^nop\$|UNKNOWN|g" sim_trace/mpeg2.sim.asm_trace_clean
+
+

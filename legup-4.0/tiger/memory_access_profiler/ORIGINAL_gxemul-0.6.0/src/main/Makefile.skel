@@ -1,0 +1,31 @@
+#
+#  Makefile for GXemul src/main
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(DINCLUDE)
+
+OBJS=Checksum.o Command.o CommandInterpreter.o Component.o ComponentFactory.o \
+	EscapedString.o FileLoader.o GXemul.o StateVariable.o \
+	SymbolRegistry.o UnitTest.o debug_new.o
+
+all: $(OBJS) do_commands do_fileloaders
+
+$(OBJS): Makefile
+
+do_commands:
+	cd commands; $(MAKE)
+
+do_fileloaders:
+	cd fileloaders; $(MAKE)
+
+clean:
+	cd commands; $(MAKE) clean
+	cd fileloaders; $(MAKE) clean
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	cd commands; $(MAKE) clean_all
+	cd fileloaders; $(MAKE) clean_all
+	rm -f Makefile
+
+

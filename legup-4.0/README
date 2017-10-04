@@ -1,0 +1,42 @@
+LegUp: High-Level Synthesis Research Tool
+------------------------------------------
+Version: 4.0
+Released: August 17, 2015
+Developed at the University of Toronto
+Email: legup@eecg.toronto.edu
+
+Authors:
+Andrew Canis - Core HLS flow, loop pipelining, multi-pumping
+Jongsok Choi - Hybrid flow, DDR2 support, multi-ported caches, pthreads/openmp
+Jason Anderson - SDC Scheduler
+Blair Fort - ARM flow, PCIe flow
+Bain Syrowik - ARM flow
+Joy (Yu Ting) Chen - if-conversion flow, debugger
+Julie Hsiao - Bitwidth analysis, debugger
+Jeff Goeders - Debugger
+Nazanin Calagar - Debugger
+Mathew Hall - Custom verilog
+Marcel Gort - Minimize bitwidth pass
+Ryan Xi - Floating point support. Helped by preliminary work from Jack Fu and Nazanin Calagar
+Ruolong Lian - Compiler analysis, Hybrid partition analysis, re-implementation of LEAP hardware profiler
+Qijing Huang - Dual port memory support, Compiler optimizations
+Victor Zhang - PCIe, Scheduling, struct support, make watch, lots of bug fixes
+Ahmed Kammoona - PCIe, Resource estimation
+Bryce Long - PCIe
+John Qin - schedule viewer GUI
+Li Liu - floating point random tests
+Ryoya Sobue - multi-cycle timing constraints schedule parser
+Stefan Hadjis - Pattern Sharing, Multi-cycling
+Kevin Nam - Cache profiler, memory access profiler
+Mark Aldham - Tiger MIPS integration, LEAP hardware profiler
+Jiu Cheng Cai - PCIe flow
+Emily Miao - PCIe flow
+Meng Wang - Fixed point library
+Yanyan Zhang - Timing analysis
+
+
+Installation
+--------------
+For installation instructions please visit:
+
+    http://legup.eecg.utoronto.ca/docs/4.0/

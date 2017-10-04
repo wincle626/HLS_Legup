@@ -1,0 +1,65 @@
+============================================
+===   Windows Tools                      ===
+============================================
+
+assemble+link.bat <file.s> [-sim | -sim_eb]:
+	- takes in assembly file (created from LLVM -- see ../linux_tools/compile_to_assembly) and compiles to ELF file
+	- if "-sim" is specified, the outputted ELF file will be in little endian format and printf will redirect to simulator's prompt
+	- if "-sim_eb" is specified, the outputted ELF file will be in big endian format and printf will redirect to simulator's prompt
+	- if neither are specified, the outputted ELF file will be in little endian format and printf will redirect to the UART (baud = 115200, data bits=8)
+	- output file will be named "file.elf" and located in currect directory
+	
+compile.bat <file.c>:
+	- compiles "file.c" to "file.elf", located in currect directory
+	- compiles for little endian, printf redirects to UART
+
+debug.bat <file.elf>:
+	- loads "file.elf" onto DE2 board, connects to processor through gdb
+	- requires "MIPS Communication Server.exe" to be run and connected
+	
+program_tiger.bat <file.sof>:
+	- programs "file.sof" to the DE2 (lib/tiger_top_sdram.sof is a working version of the processor) for quick testing
+	- cannot program to board if "MIPS Communication Server.exe" is connected -- disconnect, program, and reconnect if problems encountered
+
+run.bat <file.elf>:
+	- loads "file.elf" onto DE2 board, and immediately starts its execution
+	- requires "MIPS Communication Server.exe" to be run and connected
+	
+run_chstone:
+	- simply runs each of the benchmarks in CHStone on the DE2 for automation purposes
+	- assumes each of the ELF files are located in currect directory
+	
+update_quartus_mif.bat <init.mif>:
+	- updates the mif file in desired quartus project, and reassembles
+	- useful for automation when testing mif files (especially in conjunction with program_tiger.bat)
+	- path to quartus and to project are hardcoded -- will need to be altered
+	
+bin2mif.exe <file.bin> <file.mif>
+	- converts file in bin format to mif format
+	- bin can be created by adding "--oformat binary" when linking (ie in compile.bat or assemble+link.bat)
+
+elf2sdram.exe <file.elf> <sdram.dat>:
+	- performs an object dump on the input elf file and parses this file to create an sdram initialization file for modelsim simulations
+	- source code (elf2sdram.cpp) located in: legup/tiger/tool_source/
+	- for use with modelsim, output file must be named "sdram.dat" and place in: legup/tiger/processor/tiger_mips/tiger_sim/
+	
+gdb.exe:
+	- full-featured gdb used to communicate with the processor
+	- don't need to run directly, instead use "debug.bat" to load elf and connect gdb
+	
+
+
+--------------------------------------------
+Library Code: lib/
+--------------------------------------------
+*.a 					- compiled C library code, compiled with mipsel-unknown-elf-gcc and archived with mipsel-unknown-elf-ar
+prog_link.ld			- used to tell linker where to place code sections of assembly file into elf
+tiger_top_sdram.sof		- working copy of tiger_top quartus project, ready to program to board instead of resynthesizing, etc.
+serial.tcl				- used to communicate with processor through JTAG UART
+
+
+--------------------------------------------
+Cross-Compiled GCC: tiger_tools/
+--------------------------------------------
+This contains an array of GCC tools, including gcc, g++, as, ld, ar.  Also contains cygwin DLL files.
+

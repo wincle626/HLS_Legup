@@ -1,0 +1,12 @@
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tigers_jtag_uart_1.v]
+ set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) vJTAGUart.v]
+ set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) HexLED_0.v]
+ set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tiger_top.v]
+ set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) HexLED_hw.tcl]
+set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) tiger_top_hw.tcl]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tiger_top_0.v]
+ set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tigers_jtag_uart.v]
+ set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) HexLED.v]
+ set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) vJTAGUart_hw.tcl]
+set_global_assignment -name SOPC_BUILDER_SIGNATURE_ID 0023AEA6235700000128B6E2CEAC 
+ 

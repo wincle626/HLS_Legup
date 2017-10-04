@@ -1,0 +1,10 @@
+# File: Makefile.private
+# This file is included by Makefile.common
+#
+# THIS FILE SHOULD NEVER BE PUSHED BACK INTO THE REPO.
+# (except for this initial empty version)
+#
+# This file can be used for new/private targets that are not ready to be pushed 
+# for general use. When ready, the targets should be moved to the appropriate
+# Makefile and pushed into the repo.
+

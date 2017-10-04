@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/float_add
+set test "pipeline/float_add"
+set expected {return_val=\s+76\s+.*Cycles:\s+303\s+}
+
+run-test $test $expected
+
+cd ../..

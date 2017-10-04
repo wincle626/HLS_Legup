@@ -1,0 +1,197 @@
+# constants
+proc MODELSIM_ERROR {} { return 1 }
+proc LEGUP_ERROR {} { return 2 }
+
+# expect that modelsim will give an error
+# see unaligned/ for example
+proc run-test-modelsim-error { test expected} {
+    run-test $test $expected [MODELSIM_ERROR]
+}
+
+proc run-test-legup-error { test expected} {
+    run-test $test $expected [LEGUP_ERROR]
+}
+
+# test an example:
+# 1) compile c to verilog
+# 2) run modelsim 
+# 3) check for warnings/errors if expect_error = 0 (default)
+# 4) check for expected output
+
+proc run-test-gx { test gxexpected {expect_error 0}} {
+    eval exec "make cleantiger"
+    set output [run-cmd $test "make emultest"]
+    run-regexp "gxemul simulation. Expected: $gxexpected" $gxexpected $output
+}
+
+proc run-test-sw-once { test expected noinline noopt {expect_error 0}} {
+
+    set ::env(NO_INLINE) "$noinline"
+    set ::env(NO_OPT) "$noopt"
+
+    set title "$test sw simulation (NO_INLINE=$noinline, NO_OPT=$noopt)"
+    puts "starting: $title\n";
+
+    eval exec "make clean"
+    set output [run-cmd $test "make swsim"]
+    run-regexp "$title Expected: $expected" $expected $output
+
+    if { $expect_error != [MODELSIM_ERROR] } {
+        #run-no-regexp "Modelsim warnings" "Warning" $output
+        run-no-regexp "Modelsim errors" "Error" $output
+    }
+
+    unset ::env(NO_INLINE)
+    unset ::env(NO_OPT)
+}
+
+proc run-test-sw { test expected {expect_error 0}} {
+
+    run-test-sw-once $test $expected 0 0 $expect_error
+
+    # no_inline
+    run-test-sw-once $test $expected 1 0 $expect_error
+
+    # no_inline and no_opt
+    run-test-sw-once $test $expected 1 1 $expect_error
+
+}
+
+proc run-test-hybrid { test hybridexpected {expect_error 0}} {
+
+	#do make functionslist to generate functions.list which contains a list of functions
+	run-cmd $test "make functionslist"
+
+	#Open up functions.list and for each function, set it as accelerator and call make hybrid
+	set in [open "$test.list" r]
+	while {[gets $in line] != -1} {
+		exec echo set_accelerator_function \"$line\" > config.tcl
+		set test_function "$test $line"
+#		set allow_stderr 0
+		run-test-hybrid-once $test_function $hybridexpected $expect_error
+	}
+	close $in
+
+}
+
+proc run-test-hybrid-once { test hybridexpected {expect_error 0}} {
+	puts "STARTING: $test"
+    set output [run-cmd $test "make hybridsim"]
+	puts "FINISHED: $test\n";
+	run-regexp "hybrid simulation. Expected $hybridexpected" $hybridexpected $output
+
+	if { $expect_error != [MODELSIM_ERROR] } {
+	    #run-no-regexp "Modelsim warnings" "Warning" $output
+	    run-no-regexp "Modelsim errors" "Error" $output
+    }	
+}
+
+proc run-test-full { test expected gxexpected {expect_error 0}} {
+
+    set ::env(NO_OPT) 0
+    set ::env(NO_INLINE) 1
+
+    run-test $test $expected
+    run-test-gx $test $gxexpected
+
+    set ::env(NO_OPT) 1
+
+    run-test $test $expected
+    run-test-gx $test $gxexpected
+
+    unset ::env(NO_INLINE)
+    unset ::env(NO_OPT)
+}
+
+proc run-test { test expected {expect_error 0}} {
+    eval exec "make clean"
+    if { $expect_error == [LEGUP_ERROR] } {
+        set allow_stderr 1
+        set output [run-cmd $test "make" $allow_stderr]
+        run-regexp "Error expected: $expected" $expected $output
+        # legup is expected to fail so skip modelsim 
+        return
+    } 
+
+    # test modelsim
+    set output [run-cmd $test "make v"]
+
+    if { $expect_error != [MODELSIM_ERROR] } {
+        run-no-regexp "Modelsim warnings" "Warning" $output
+        run-no-regexp "Modelsim errors" "Error" $output
+    }
+
+    run-regexp "Modelsim simulation. Expected: $expected" $expected $output
+
+    # Too slow, need to conditionally enable Quartus
+    #set args "main --source=$test.v --family=StratixIV"
+    #set output [run-cmd "$test: Quartus Synthesis" "quartus_map $args"]
+    #run-no-regexp "Quartus warnings" "Warning" $output
+
+    #run-cmd "$test: Quartus Compile" "quartus_sh --flow compile $test"  
+}
+
+proc run-regexp { test regexp var} {
+    if [regexp $regexp $var] {
+        pass "$test"
+    } else {
+        fail "$test"
+    }
+}
+
+# make sure regular expression does NOT match
+proc run-no-regexp { test regexp var} {
+    if [regexp $regexp $var] {
+        fail "$test"
+    } else {
+        pass "$test"
+    }
+}
+
+proc run-cmd { test cmd {allow_stderr 0}} {
+  set status 0
+  set resultmsg ""
+  set retval [ catch { eval exec -keepnewline -- "$cmd" } errmsg ]
+  if { $retval != 0 } {
+    set code [lindex $::errorCode 0]
+    switch "$code" {
+      CHILDSTATUS {
+        set status [lindex $::errorCode 2]
+        if { $status != 0 } {
+          set resultmsg "$test\nFailed with exit($status)$errmsg"
+        }
+      }
+      CHILDKILLED {
+        set signal [lindex $::errorCode 2]
+        set resultmsg "$test\nFailed with signal($signal)$errmsg"
+      }
+      CHILDSUSP {
+        set signal [lindex $::errorCode 2]
+        set resultmsg "$test\nFailed with suspend($signal)$errmsg"
+      }
+      POSIX {
+        set posixNum [lindex $::errorCode 1]
+        set posixMsg [lindex $::errorCode 2]
+        set resultmsg "$test\nFailed with posix($posixNum,$posixMsg)$errmsg"
+      }
+      NONE {
+        # Any other error such as stderr output of a program, or syntax error in
+        # the cmd
+        set resultmsg "$test\nFailed with unknown error (or has stderr output)$errmsg"
+      }
+      default {
+        set resultmsg "$test\nFailed with unknown error$errmsg"
+      }
+    }
+  }
+
+  if { $resultmsg != "" && $allow_stderr == 0} {
+    fail $resultmsg
+  } else {
+    pass $test
+  }
+
+  verbose "$errmsg" 1
+  return "$errmsg"
+}
+

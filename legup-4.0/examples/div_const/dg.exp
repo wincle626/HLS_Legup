@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd div_const
+set test "div_const"
+set expected {return_val=\s+36431\s+}
+set gxexpected {reg: v0 = 0x0000000000008e4f}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

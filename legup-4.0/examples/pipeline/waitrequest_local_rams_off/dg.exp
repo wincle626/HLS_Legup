@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/waitrequest_local_rams_off
+set test "pipeline/waitrequest_local_rams_off"
+set expected {return_val=\s+1127\s+}
+
+run-test $test $expected
+
+cd ../..

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd custom_verilog/propagating_io_connects
+set test "propagating_io"
+set expected {LEDR1=00111011 LEDR2=11111100}
+
+run-test $test $expected
+
+cd ../..

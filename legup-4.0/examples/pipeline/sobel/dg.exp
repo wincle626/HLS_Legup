@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/sobel
+set test "pipeline/sobel"
+set expected {return_val=\s+262144\s+.*Cycles:\s+1049609\s+}
+
+run-test $test $expected
+
+cd ../..

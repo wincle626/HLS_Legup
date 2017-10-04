@@ -1,0 +1,170 @@
+#
+#  Makefile for GXemul src/cpus
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(DINCLUDE)
+
+OBJS=cpu.o $(CPU_ARCHS) $(CPU_BACKENDS)
+TOOLS=generate_head generate_tail $(CPU_TOOLS)
+
+
+all: $(TOOLS)
+	$(MAKE) buildobjs
+
+
+buildobjs: $(OBJS)
+
+
+$(OBJS): Makefile
+
+
+
+###############################################################################
+
+cpu_arm.o: cpu_arm.cc cpu_arm_instr.cc cpu_dyntrans.cc memory_rw.cc \
+	tmp_arm_head.cc tmp_arm_tail.cc
+
+cpu_arm_instr.cc: cpu_arm_instr_misc.cc
+
+tmp_arm_loadstore.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore > tmp_arm_loadstore.cc
+tmp_arm_loadstore_p0_u0_w0.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 0 0 0 > tmp_arm_loadstore_p0_u0_w0.cc
+tmp_arm_loadstore_p0_u0_w1.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 0 0 1 > tmp_arm_loadstore_p0_u0_w1.cc
+tmp_arm_loadstore_p0_u1_w0.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 0 1 0 > tmp_arm_loadstore_p0_u1_w0.cc
+tmp_arm_loadstore_p0_u1_w1.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 0 1 1 > tmp_arm_loadstore_p0_u1_w1.cc
+tmp_arm_loadstore_p1_u0_w0.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 1 0 0 > tmp_arm_loadstore_p1_u0_w0.cc
+tmp_arm_loadstore_p1_u0_w1.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 1 0 1 > tmp_arm_loadstore_p1_u0_w1.cc
+tmp_arm_loadstore_p1_u1_w0.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 1 1 0 > tmp_arm_loadstore_p1_u1_w0.cc
+tmp_arm_loadstore_p1_u1_w1.cc: cpu_arm_instr_loadstore.cc generate_arm_loadstore
+	./generate_arm_loadstore 1 1 1 > tmp_arm_loadstore_p1_u1_w1.cc
+
+tmp_arm_multi.cc: generate_arm_multi cpu_arm_multi.txt
+	./generate_arm_multi `cat cpu_arm_multi.txt` > tmp_arm_multi.cc
+
+tmp_arm_dpi.cc: cpu_arm_instr_dpi.cc generate_arm_dpi
+	./generate_arm_dpi > tmp_arm_dpi.cc
+
+tmp_arm_r0.cc: generate_arm_r
+	./generate_arm_r 0x000 0x0ff > tmp_arm_r0.cc
+tmp_arm_r1.cc: generate_arm_r
+	./generate_arm_r 0x100 0x1ff > tmp_arm_r1.cc
+tmp_arm_r2.cc: generate_arm_r
+	./generate_arm_r 0x200 0x2ff > tmp_arm_r2.cc
+tmp_arm_r3.cc: generate_arm_r
+	./generate_arm_r 0x300 0x3ff > tmp_arm_r3.cc
+tmp_arm_r4.cc: generate_arm_r
+	./generate_arm_r 0x400 0x4ff > tmp_arm_r4.cc
+tmp_arm_r5.cc: generate_arm_r
+	./generate_arm_r 0x500 0x5ff > tmp_arm_r5.cc
+tmp_arm_r6.cc: generate_arm_r
+	./generate_arm_r 0x600 0x6ff > tmp_arm_r6.cc
+tmp_arm_r7.cc: generate_arm_r
+	./generate_arm_r 0x700 0x7ff > tmp_arm_r7.cc
+tmp_arm_r8.cc: generate_arm_r
+	./generate_arm_r 0x800 0x8ff > tmp_arm_r8.cc
+tmp_arm_r9.cc: generate_arm_r
+	./generate_arm_r 0x900 0x9ff > tmp_arm_r9.cc
+tmp_arm_ra.cc: generate_arm_r
+	./generate_arm_r 0xa00 0xaff > tmp_arm_ra.cc
+tmp_arm_rb.cc: generate_arm_r
+	./generate_arm_r 0xb00 0xbff > tmp_arm_rb.cc
+tmp_arm_rc.cc: generate_arm_r
+	./generate_arm_r 0xc00 0xcff > tmp_arm_rc.cc
+tmp_arm_rd.cc: generate_arm_r
+	./generate_arm_r 0xd00 0xdff > tmp_arm_rd.cc
+tmp_arm_re.cc: generate_arm_r
+	./generate_arm_r 0xe00 0xeff > tmp_arm_re.cc
+tmp_arm_rf.cc: generate_arm_r
+	./generate_arm_r 0xf00 0xfff > tmp_arm_rf.cc
+
+tmp_arm_r.cc: generate_arm_r
+	./generate_arm_r 0 0 > tmp_arm_r.cc
+
+tmp_arm_head.cc: generate_head
+	./generate_head arm ARM > tmp_arm_head.cc
+
+tmp_arm_tail.cc: generate_tail
+	./generate_tail arm ARM > tmp_arm_tail.cc
+
+
+###############################################################################
+
+cpu_m88k.o: cpu_m88k.cc cpu_m88k_instr.cc cpu_dyntrans.cc memory_rw.cc \
+	tmp_m88k_loadstore.cc tmp_m88k_head.cc tmp_m88k_tail.cc tmp_m88k_bcnd.cc
+
+tmp_m88k_bcnd.cc: generate_m88k_bcnd
+	./generate_m88k_bcnd > tmp_m88k_bcnd.cc
+
+tmp_m88k_loadstore.cc: cpu_m88k_instr_loadstore.cc generate_m88k_loadstore
+	./generate_m88k_loadstore > tmp_m88k_loadstore.cc
+
+tmp_m88k_head.cc: generate_head
+	./generate_head m88k M88K > tmp_m88k_head.cc
+
+tmp_m88k_tail.cc: generate_tail
+	./generate_tail m88k M88K > tmp_m88k_tail.cc
+
+
+###############################################################################
+
+cpu_mips.o: cpu_mips.cc cpu_dyntrans.cc memory_mips.cc \
+	cpu_mips_instr.cc tmp_mips_loadstore.cc tmp_mips_loadstore_multi.cc \
+	tmp_mips_head.cc tmp_mips_tail.cc
+
+memory_mips.cc: memory_rw.cc memory_mips_v2p.cc
+
+tmp_mips_loadstore.cc: cpu_mips_instr_loadstore.cc generate_mips_loadstore
+	./generate_mips_loadstore > tmp_mips_loadstore.cc
+
+tmp_mips_loadstore_multi.cc: generate_mips_loadstore_multi
+	./generate_mips_loadstore_multi > tmp_mips_loadstore_multi.cc
+
+tmp_mips_head.cc: generate_head
+	./generate_head mips MIPS > tmp_mips_head.cc
+
+tmp_mips_tail.cc: generate_tail
+	./generate_tail mips MIPS > tmp_mips_tail.cc
+
+
+###############################################################################
+
+cpu_ppc.o: cpu_ppc.cc cpu_ppc_instr.cc cpu_dyntrans.cc memory_ppc.cc \
+	memory_rw.cc tmp_ppc_head.cc tmp_ppc_tail.cc tmp_ppc_loadstore.cc
+
+tmp_ppc_loadstore.cc: cpu_ppc_instr_loadstore.cc generate_ppc_loadstore
+	./generate_ppc_loadstore > tmp_ppc_loadstore.cc
+
+tmp_ppc_head.cc: generate_head
+	./generate_head ppc PPC > tmp_ppc_head.cc
+
+tmp_ppc_tail.cc: generate_tail
+	./generate_tail ppc PPC > tmp_ppc_tail.cc
+
+
+###############################################################################
+
+cpu_sh.o: cpu_sh.cc cpu_sh_instr.cc cpu_dyntrans.cc memory_rw.cc \
+	tmp_sh_head.cc tmp_sh_tail.cc
+
+tmp_sh_head.cc: generate_head
+	./generate_head sh SH > tmp_sh_head.cc
+
+tmp_sh_tail.cc: generate_tail
+	./generate_tail sh SH > tmp_sh_tail.cc
+
+
+###############################################################################
+
+clean:
+	rm -f $(OBJS) $(TOOLS) *core tmp_*.c* *.gmon experiment_arm_multi
+
+clean_all: clean
+	rm -f Makefile
+

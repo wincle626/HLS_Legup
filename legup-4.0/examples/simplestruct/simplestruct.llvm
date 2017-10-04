@@ -1,0 +1,14 @@
+%struct.record = type { %struct.record*, i32, i32, i32, i32 }
+
+define i32 @main() nounwind {
+entry:
+  %head = alloca %struct.record, align 8          ; <%struct.record*> [#uses=6]
+  ; store 24
+  %0 = getelementptr inbounds %struct.record* %head, i32 0, i32 1 ; <i32*> [#uses=1]
+  store volatile i32 24, i32* %0, align 4
+  ; load 24
+  %1 = getelementptr inbounds %struct.record* %head, i32 0, i32 1 ; <i32*> [#uses=1]
+  %2 = load volatile i32* %1, align 4           ; <i32> [#uses=2]
+  ; return 24
+  ret i32 %2
+}

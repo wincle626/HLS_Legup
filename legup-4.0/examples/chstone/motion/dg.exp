@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/motion
+set test "motion"
+set expected {return_val=\s+12\s+}
+set gxexpected {reg: v0 = 0x000000000000000c}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

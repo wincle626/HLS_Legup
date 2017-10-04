@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd malloc
+set test "malloc"
+set expected {return_val=\s+1368\s+}
+set gxexpected {reg: v0 = 0x0000000000000558}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

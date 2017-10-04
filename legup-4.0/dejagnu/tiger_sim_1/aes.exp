@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/aes
+set test "aes"
+set expected {Result: 32}
+
+run-test-sw $test $expected
+
+cd ../..

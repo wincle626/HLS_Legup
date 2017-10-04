@@ -1,0 +1,24 @@
+#
+#  Makefile for GXemul src/plugins
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(DINCLUDE)
+
+OBJS=
+
+all: $(OBJS) do_file
+
+$(OBJS): Makefile
+
+do_file:
+	cd file; $(MAKE)
+
+clean:
+	cd file; $(MAKE) clean
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	cd file; $(MAKE) clean_all
+	rm -f Makefile
+
+

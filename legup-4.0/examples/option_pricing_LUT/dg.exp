@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd option_pricing_LUT
+set test "optionPricingLUT"
+set expected {return_val=\s+11159}
+set gxexpected {reg: v0 = 0x0000000000002b97}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../

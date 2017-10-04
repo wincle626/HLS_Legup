@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/bug
+set test "bug"
+
+set pcieexpected {return_val=\s+9}
+run-test-pcie $test $pcieexpected
+
+cd ../../../examples

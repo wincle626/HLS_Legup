@@ -1,0 +1,20 @@
+#!/bin/sh
+
+function max_spacing() {
+	while read data; do
+		spaces=`echo "$data" | grep "<" | grep -o "^[ ]*"`
+		echo -e "${#spaces}\t\t|$data"
+	done
+}
+
+chstone_dir=~/legup/examples/chstone
+files=(jpeg/main.emul.elf) #(adpcm/adpcm.emul.elf aes/aes.emul.elf blowfish/bf.emul.elf dfadd/dfadd.emul.elf dfdiv/dfdiv.emul.elf dfmul/dfmul.emul.elf dfsin/dfsin.emul.elf gsm/gsm.emul.elf jpeg/main.emul.elf mips/mips.emul.elf motion/mpeg2.emul.elf sha/sha_driver.emul.elf ../dhrystone/dhry.emul.elf)
+
+for f in ${files[@]}
+do
+	echo ${f%%/*}
+	gxemul -E baremips -e R3000 -c trace $chstone_dir/$f -p `./find_ra $chstone_dir/${f%.*}.src` -t -q > ${f##*/}.depth
+	#cat ${f##*/}.depth | max_spacing
+	./find_depth ${f##*/}.depth
+	rm ${f##*/}.depth
+done

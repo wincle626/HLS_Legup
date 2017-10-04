@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd chstone/dfdiv
+set test "dfdiv"
+set expected {Result: 22}
+
+run-test-sw $test $expected
+
+cd ../..

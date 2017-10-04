@@ -1,0 +1,34 @@
+Mandelbrot Display Demo
+
+There are 4 versions of Mandelbrot demo with zoom in/out animation,
+
+1. ARM cortex A9 - <DE1-SoC_VGA>
+2. pure hardware baseline version - <pureHW_baseline>
+3. pure hardware optimized version - <pureHW_optimized>
+4. pure hardware pthread verion - <pureHW_pthread> // not working yet
+
+#######################################################
+How to do the demo,
+
+######################
+# 1. ARM cortex A9 - <DE1-SoC_VGA>
+######################
+The Monitor Program is required in this case. // 13.1 or higher (14.0 not out yet?)
+
+1. Open the Monitor Program
+2. Open project, select app_software/VGA_mandelbrot.amp
+3. The FPGA should now be programmed, (downloading...)
+	3.1 if monitor program gives error about failing to download the system,
+		run ./download_system.sh
+4. Click compile&download
+5. Run~
+
+
+######################
+# 2. pure hardware baseline version - <pureHW_baseline>
+# 3. pure hardware optimized version - <pureHW_optimized>
+# 4. pure hardware pthread verion - <pureHW_pthread> // not working yet
+######################
+1. run 'make program_mandelbrot'
+2. KEY[0] to reset
+3. KEY[1] to start

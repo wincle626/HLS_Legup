@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+set hybridexpected {# Result: 55000}
+
+cd ../examples/parallel/openmp/critical
+set test "critical OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../
+

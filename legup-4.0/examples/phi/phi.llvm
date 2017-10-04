@@ -1,0 +1,23 @@
+@.str = private constant [6 x i8] c"b=%d\0A\00", align 1 ; <[6 x i8]*> [#uses=1]
+
+define i32 @main() nounwind {
+bb1:
+  br label %bb2
+
+bb2:
+  %a = phi i32 [ 1, %bb1 ], [ 2, %bb3 ] ; <i32> [#uses=1]
+  %b = phi i32 [ 0, %bb1 ], [ %a, %bb3 ] ; <i32> [#uses=1]
+  ; when coming from bb3, %b should equal 1, NOT 2
+  %0 = call i32 (i8*, ...)* @printf(i8* noalias getelementptr inbounds ([6 x i8]* @.str, i64 0, i64 0), i32 %b) nounwind ; <i32> [#uses=0]
+  %exit = icmp ne i32 %b, 0   ; <i1> [#uses=1]
+  br i1 %exit, label %return, label %bb3
+
+bb3:
+  br label %bb2
+
+return:                                           
+  ret i32 0
+
+}
+
+declare i32 @printf(i8* noalias, ...)

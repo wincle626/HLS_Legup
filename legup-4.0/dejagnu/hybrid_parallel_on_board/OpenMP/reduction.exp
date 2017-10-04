@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+set hybridexpected {Result: 55000}
+
+cd ../examples/parallel/openmp/reduction
+set test "reduction OpenMP"
+run-test-hybridparallel-once-on-board $test $hybridexpected
+
+cd ../../../
+
+

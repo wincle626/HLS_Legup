@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/black_scholes_iter
+set test "black_scholes_iter"
+
+set pcieexpected {return_val= 4626243244862668105}
+run-test-pcie $test $pcieexpected
+
+cd ../../../examples

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd long_cmp
+set test "long_cmp"
+set expected {Result: 1}
+
+run-test-qemu $test $expected
+
+cd ..

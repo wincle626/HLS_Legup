@@ -1,0 +1,3 @@
+#!/bin/sh
+
+gcc MIPSLoad.c -I /usr/src/binutils-20050610-1/bfd/ -L /usr/src/binutils-20050610-1/bfd -lbfd -lintl -liberty -Wall -g -o MIPSLoad.exe

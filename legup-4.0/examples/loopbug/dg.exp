@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd loopbug
+set test "loopbug"
+set expected {return_val=\s+8\s+}
+set gxexpected {reg: v0 = 0x0000000000000008}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

@@ -1,0 +1,25 @@
+load_lib legup.exp
+
+set hybridexpected {# Sum: 2048}
+
+cd ../examples/parallel/single/df
+set test "df Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/df
+set test "df Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/df_2
+set test "df_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../df_3
+set test "df_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../df_4
+set test "df_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../

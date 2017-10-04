@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+   }
+   element VGA_Alpha_Blender
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Buffer
+   {
+      datum _sortIndex
+      {
+         value = "9";
+         type = "int";
+      }
+   }
+   element VGA_Char_Buffer
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Controller
+   {
+      datum _sortIndex
+      {
+         value = "11";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Dual_Clock_FIFO
+   {
+      datum _sortIndex
+      {
+         value = "10";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Pixel_DMA
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Pixel_FIFO
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Pixel_RGB_Resampler
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element VGA_Pixel_Scaler
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element sys_clk
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element vga_pll.vga_clk
+   {
+      datum _clockDomain
+      {
+         value = "vga_clk";
+         type = "String";
+      }
+   }
+   element vga_pll
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element video_test_pattern_0
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="5CSEMA5F31C6" />
+ <parameter name="deviceFamily" value="Cyclone V" />
+ <parameter name="deviceSpeedGrade" value="6" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface name="sys_clk" internal="sys_clk.clk_in" type="clock" dir="end" />
+ <interface
+   name="sys_reset"
+   internal="sys_clk.clk_in_reset"
+   type="reset"
+   dir="end" />
+ <interface
+   name="vga"
+   internal="VGA_Controller.external_interface"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="char_buffer_control_slave"
+   internal="VGA_Char_Buffer.avalon_char_control_slave" />
+ <interface
+   name="char_buffer_slave"
+   internal="VGA_Char_Buffer.avalon_char_buffer_slave" />
+ <interface
+   name="pixel_dma_master"
+   internal="VGA_Pixel_DMA.avalon_pixel_dma_master"
+   type="avalon"
+   dir="start" />
+ <interface
+   name="pixel_dma_control_slave"
+   internal="VGA_Pixel_DMA.avalon_control_slave"
+   type="avalon"
+   dir="end" />
+ <interface
+   name="vga_pll_ref_clk"
+   internal="vga_pll.ref_clk"
+   type="clock"
+   dir="end" />
+ <interface
+   name="vga_pll_ref_reset"
+   internal="vga_pll.ref_reset"
+   type="reset"
+   dir="end" />
+ <module kind="clock_source" version="14.0" enabled="1" name="sys_clk">
+  <parameter name="clockFrequency" value="100000000" />
+  <parameter name="clockFrequencyKnown" value="false" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_pixel_buffer_dma"
+   version="13.0"
+   enabled="1"
+   name="VGA_Pixel_DMA">
+  <parameter name="addr_mode" value="X-Y" />
+  <parameter name="start_address" value="0" />
+  <parameter name="back_start_address" value="0" />
+  <parameter name="image_width" value="1024" />
+  <parameter name="image_height" value="768" />
+  <parameter name="color_space" value="16-bit RGB" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_dual_clock_buffer"
+   version="13.0"
+   enabled="1"
+   name="VGA_Pixel_FIFO">
+  <parameter name="color_bits" value="16" />
+  <parameter name="color_planes" value="1" />
+  <parameter name="AUTO_CLOCK_STREAM_IN_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLOCK_STREAM_OUT_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_rgb_resampler"
+   version="13.0"
+   enabled="1"
+   name="VGA_Pixel_RGB_Resampler">
+  <parameter name="input_type" value="16-bit RGB" />
+  <parameter name="output_type" value="30-bit RGB" />
+  <parameter name="alpha" value="1023" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_scaler"
+   version="13.0"
+   enabled="0"
+   name="VGA_Pixel_Scaler">
+  <parameter name="width_scaling" value="2" />
+  <parameter name="height_scaling" value="2" />
+  <parameter name="width_in" value="512" />
+  <parameter name="height_in" value="384" />
+  <parameter name="color_bits" value="10" />
+  <parameter name="color_planes" value="3" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_character_buffer_with_dma"
+   version="13.0"
+   enabled="0"
+   name="VGA_Char_Buffer">
+  <parameter name="vga_device" value="On-board VGA DAC" />
+  <parameter name="enable_transparency" value="true" />
+  <parameter name="color_bits" value="1-bit" />
+  <parameter name="resolution" value="80 x 60" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_alpha_blender"
+   version="13.0"
+   enabled="0"
+   name="VGA_Alpha_Blender">
+  <parameter name="mode" value="Simple" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_dual_clock_buffer"
+   version="13.0"
+   enabled="1"
+   name="VGA_Dual_Clock_FIFO">
+  <parameter name="color_bits" value="10" />
+  <parameter name="color_planes" value="3" />
+  <parameter name="AUTO_CLOCK_STREAM_IN_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLOCK_STREAM_OUT_CLOCK_RATE" value="65000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_vga_controller"
+   version="13.0"
+   enabled="1"
+   name="VGA_Controller">
+  <parameter name="board" value="DE1-SoC" />
+  <parameter name="device" value="VGA Connector" />
+  <parameter name="resolution" value="XGA 1024x768" />
+  <parameter name="underflow_flag" value="false" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="65000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_pll"
+   version="13.1"
+   enabled="1"
+   name="vga_pll">
+  <parameter name="gui_refclk" value="50.0" />
+  <parameter name="video_in_clk_en" value="false" />
+  <parameter name="camera" value="5MP Digital Camera" />
+  <parameter name="vga_clk_en" value="true" />
+  <parameter name="gui_resolution" value="XGA 1024x768" />
+  <parameter name="lcd_clk_en" value="false" />
+  <parameter name="lcd">7" LCD on VEEK-MT and MTL Module</parameter>
+  <parameter name="device_family" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_test_pattern"
+   version="13.0"
+   enabled="0"
+   name="video_test_pattern_0">
+  <parameter name="width" value="1024" />
+  <parameter name="height" value="768" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <module
+   kind="altera_up_avalon_video_dual_clock_buffer"
+   version="13.0"
+   enabled="0"
+   name="VGA_Buffer">
+  <parameter name="color_bits" value="10" />
+  <parameter name="color_planes" value="3" />
+  <parameter name="AUTO_CLOCK_STREAM_IN_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_CLOCK_STREAM_OUT_CLOCK_RATE" value="0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+ </module>
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Pixel_DMA.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Pixel_DMA.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Pixel_FIFO.clock_stream_in" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Pixel_FIFO.clock_stream_in_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Pixel_FIFO.clock_stream_out" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Pixel_FIFO.clock_stream_out_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Pixel_RGB_Resampler.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Pixel_RGB_Resampler.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Pixel_Scaler.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Pixel_Scaler.clock_reset_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Char_Buffer.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Char_Buffer.clock_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Alpha_Blender.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Alpha_Blender.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Dual_Clock_FIFO.clock_stream_in" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Dual_Clock_FIFO.clock_stream_in_reset" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Pixel_Scaler.avalon_scaler_source"
+   end="VGA_Alpha_Blender.avalon_background_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Char_Buffer.avalon_char_source"
+   end="VGA_Alpha_Blender.avalon_foreground_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Dual_Clock_FIFO.avalon_dc_buffer_source"
+   end="VGA_Controller.avalon_vga_sink" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="vga_pll.vga_clk"
+   end="VGA_Dual_Clock_FIFO.clock_stream_out" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="vga_pll.vga_clk"
+   end="VGA_Controller.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="vga_pll.reset_source"
+   end="VGA_Dual_Clock_FIFO.clock_stream_out_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="vga_pll.reset_source"
+   end="VGA_Controller.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="video_test_pattern_0.clock_reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="video_test_pattern_0.clock_reset_reset" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Pixel_DMA.avalon_pixel_source"
+   end="VGA_Pixel_FIFO.avalon_dc_buffer_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Pixel_FIFO.avalon_dc_buffer_source"
+   end="VGA_Pixel_RGB_Resampler.avalon_rgb_sink" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Buffer.clock_stream_in" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Buffer.clock_stream_in_reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="sys_clk.clk"
+   end="VGA_Buffer.clock_stream_out" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="sys_clk.clk_reset"
+   end="VGA_Buffer.clock_stream_out_reset" />
+ <connection
+   kind="avalon_streaming"
+   version="14.0"
+   start="VGA_Pixel_RGB_Resampler.avalon_rgb_source"
+   end="VGA_Dual_Clock_FIFO.avalon_dc_buffer_sink" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="false" />
+</system>

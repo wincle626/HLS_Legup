@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd pipeline/two_loops
+set test "pipeline/two_loops"
+set expected {return_val=\s+147446496\s+.*Cycles:\s+72\s+}
+set gxexpected {reg: v0 = 0x0000000008c9dae0}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

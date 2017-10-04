@@ -1,0 +1,241 @@
+
+The <tt>mvme187</tt> machine is a
+<a href="http://en.wikipedia.org/wiki/VMEbus">VMEbus</a> based machine with a
+<a href="../components/component_m88k_cpu.html">Motorola 88100 CPU</a>.
+
+
+<p><br>
+<a name="openbsdmvme88kinstall"></a>
+<h3>OpenBSD/mvme88k:</h3>
+
+<font color="#ff0000">NOTE: THIS DOES NOT WORK YET! These are preliminary
+instructions on how it may work when the new GXemul framework is
+complete enough.</font>
+
+<p>It is possible to run
+<a href="http://www.openbsd.org/mvme88k.html">OpenBSD/mvme88k</a>
+on the emulated Motorola MVME187 machine.
+
+<p>To install OpenBSD/mvme88k onto an emulated harddisk image, follow these
+instructions:
+
+<p>
+<ol>
+  <li>Create an empty harddisk image, which will be the root disk
+	that OpenBSD installs itself onto:<pre>
+	<b>dd if=/dev/zero of=obsd_mvme88k.img bs=1024 count=1 seek=1900000</b>
+
+</pre>
+  <li>Download the entire mvme88k directory from the ftp server:<pre>
+	<b>wget -np -l 0 -r <a href="ftp://ftp.se.openbsd.org/pub/OpenBSD/4.4/mvme88k/">ftp://ftp.se.openbsd.org/pub/OpenBSD/4.4/mvme88k/</a></b>
+
+</pre>
+
+  <li>You now need to make an ISO image of the entire directory you downloaded.
+	(I recommend using <tt>mkisofs</tt> for that purpose. If you don't
+	already have <tt>mkisofs</tt> installed on your system, you need
+	to install it in order to do this.)<pre>
+	<b>mkisofs -o openbsd_mvme88k_4.4.iso -U ftp.se.openbsd.org/pub/OpenBSD/</b>
+
+</pre>
+  <li>Copy away the kernel, we'll need it later. But remove the rest of the
+	downloaded tree.<pre>
+	<b>cp ftp.se.openbsd.org/pub/OpenBSD/4.4/mvme88k/bsd .
+	rm -rf ftp.se.openbsd.org</b>
+</pre>
+
+  <li>Start the emulator using this command line:<pre>
+	<b>gxemul -e mvme187 -d obsd_mvme88k.img -d b:openbsd_mvme88k_4.4.iso -j 4.4/mvme88k/bsd.rd</b>
+
+</pre>
+	and proceed like you would do if you were installing OpenBSD
+	on a real MVME187. There is a problem with finding the filesystem on
+	the CDROM, since there is no disklabel [and/or because the emulator
+	perhaps does not simulate CDROM TOCs well enough], but it's possible
+	to mount
+	the filesystem using manual intervention. Here is an example of what
+	an install can look like: (user input in <font color="#0000ff"><i>blue italic</i></font>)<pre>
+	CPU0 is associated to 2 MC88200 CMMUs
+	Copyright (c) 1982, 1986, 1989, 1991, 1993
+		The Regents of the University of California.  All rights reserved.
+	Copyright (c) 1995-2008 OpenBSD. All rights reserved.  http://www.OpenBSD.org
+
+	OpenBSD 4.4 (RAMDISK) #19: Sun Aug 10 21:03:44 GMT 2008
+	    root@arzon.gentiane.org:/usr/src/sys/arch/mvme88k/compile/RAMDISK
+	real mem = 67108864 (64MB)
+	avail mem = 56791040 (54MB)
+	mainbus0 at root: Motorola MVME187, 33MHz
+	cpu0: M88100 rev 0x3, 2 CMMU
+	cpu0: M88200 (16K) rev 0x9, full Icache, M88200 (16K) rev 0x9, full Dcache
+	pcctwo0 at mainbus0 addr 0xfff00000: rev 0
+	nvram0 at pcctwo0 offset 0xc0000: MK48T08
+	cl0 at pcctwo0 offset 0x45000 ipl 3: console
+	osiop0 at pcctwo0 offset 0x47000 ipl 2: NCR53C710 rev 2, 66MHz
+	scsibus0 at osiop0: 8 targets, initiator 7
+	osiop0: target 0 ignored sync request
+	osiop0: target 0 now using 8 bit asynch xfers
+	sd0 at scsibus0 targ 0 lun 0: <GXemul, obsd_mvme88k.im, 0> SCSI2 0/direct fixed
+	sd0: 1855MB, 1855 cyl, 16 head, 128 sec, 512 bytes/sec, 3800003 sec total
+	osiop0: target 1 ignored sync request
+	osiop0: target 1 now using 8 bit asynch xfers
+	cd0 at scsibus0 targ 1 lun 0: <GXemul, openbsd_mvme88k, 0> SCSI2 5/cdrom removable
+	vme0 at pcctwo0 offset 0x40000
+	vme0: using BUG parameters
+	vme0: vme to cpu irq level 1:1
+	vmes0 at vme0
+	rd0: fixed, 4096 blocks
+	boot device: <unknown>
+	root on rd0a swap on rd0b dump on rd0b
+	WARNING: clock gained 138 days -- CHECK AND RESET THE DATE!
+	erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+	(I)nstall, (U)pgrade or (S)hell? <font color="#0000ff"><i>i</i></font>
+
+	Welcome to the OpenBSD/mvme88k 4.4 install program.
+
+	This program will help you install OpenBSD. At any prompt except password
+	prompts you can escape to a shell by typing '!'. Default answers are shown
+	in []'s and are selected by pressing RETURN.  At any time you can exit this
+	program by pressing Control-C, but exiting during an install can leave your
+	system in an inconsistent state.
+
+	Terminal type? [vt100] <font color="#0000ff"><i>xterm</i></font>
+
+	IS YOUR DATA BACKED UP? As with anything that modifies disk contents, this
+	program can cause SIGNIFICANT data loss.
+
+	It is often helpful to have the installation notes handy. For complex disk
+	configurations, relevant disk hardware manuals and a calculator are useful.
+
+	Proceed with install? [no] <font color="#0000ff"><i>yes</i></font>
+	Cool! Let's get to it.
+
+	You will now initialize the disk(s) that OpenBSD will use. To enable all
+	available security features you should configure the disk(s) to allow the
+	creation of separate filesystems for /, /tmp, /var, /usr, and /home.
+
+	Available disks are: sd0.
+	Which one is the root disk? (or 'done') [sd0] <font color="#0000ff"><i>sd0</i></font>
+	osiop0: target 0 ignored sync request
+	osiop0: target 0 now using 8 bit asynch xfers
+	Initial label editor (enter '?' for help at any prompt)
+	> <font color="#0000ff"><i>a a</i></font>
+	offset: [0] <font color="#0000ff"><i>63</i></font>
+	size: [3799940] <font color="#0000ff"><i>3500000</i></font>
+	FS type: [4.2BSD] 
+	mount point: [none] <font color="#0000ff"><i>/</i></font>
+	> <font color="#0000ff"><i>a b</i></font>
+	offset: [3500063] 
+	size: [299940] 
+	FS type: [swap] 
+	> <font color="#0000ff"><i>w</i></font>
+	> <font color="#0000ff"><i>q</i></font>
+	No label changes.
+	No more disks to initialize.
+
+	OpenBSD filesystems:
+	sd0a /
+
+	The next step *DESTROYS* all existing data on these partitions!
+	Are you really sure that you're ready to proceed? [no] <font color="#0000ff"><i>yes</i></font>
+	/dev/rsd0a: 1709.0MB in 3500000 sectors of 512 bytes
+	9 cylinder groups of 202.47MB, 12958 blocks, 25984 inodes each
+	/dev/sd0a on /mnt type ffs (rw, asynchronous, local, ctime=Thu Jan  1 16:29:57 2009)
+
+	System hostname? (short form, e.g. 'foo') <font color="#0000ff"><i>test</i></font>
+	Configure the network? [yes] <font color="#0000ff"><i>no</i></font>
+	Password for root account? (will not echo) 
+	Password for root account? (again) 
+
+	Let's install the sets!
+	Location of sets? (cd disk ftp http nfs or 'done') [cd] <font color="#0000ff"><i>disk</i></font>
+	Is the disk partition already mounted? [no] <font color="#0000ff"><i>!mount -t cd9660 /dev/cd0c /mnt2</i></font>
+	osiop0: target 1 ignored sync request
+	osiop0: target 1 now using 8 bit asynch xfers
+	Is the disk partition already mounted? [no] <font color="#0000ff"><i>yes</i></font>
+	Pathname to the sets? (or 'done') [4.4/mvme88k] <font color="#0000ff"><i>/mnt2/4.4/mvme88k</i></font>
+
+	Select sets by entering a set name, a file name pattern or 'all'. De-select
+	sets by prepending a '-' to the set name, file name pattern or 'all'. Selected
+	sets are labelled '[X]'.
+
+	        [X] bsd
+	        [X] bsd.rd
+	        [ ] bsd.mp
+	        [X] base44.tgz
+	        [X] etc44.tgz
+	        [X] misc44.tgz
+	        [X] comp44.tgz
+	        [X] man44.tgz
+	        [X] game44.tgz
+	        [ ] xbase44.tgz
+	        [ ] xetc44.tgz
+	        [ ] xshare44.tgz
+	        [ ] xfont44.tgz
+	        [ ] xserv44.tgz
+	Set name? (or 'done') [bsd.mp] <font color="#0000ff"><i>done</i></font>
+	Ready to install sets? [yes] <font color="#0000ff"><i>yes</i></font>
+	Getting bsd ...
+	100% |**************************************************|  2329 KB    01:21    
+	Getting bsd.rd ...
+	100% |**************************************************|  3150 KB    01:48    
+	Getting base44.tgz ...
+	100% |**************************************************| 87686 KB    11:56    
+	Getting etc44.tgz ...
+	100% |**************************************************|   629 KB    00:14    
+	Getting misc44.tgz ...
+	100% |**************************************************|  2866 KB    00:37    
+	Getting comp44.tgz ...
+	100% |**************************************************| 38869 KB    06:19    
+	Getting man44.tgz ...
+	100% |**************************************************|  6967 KB    01:50    
+	Getting game44.tgz ...
+	100% |**************************************************|  7037 KB    01:16    
+	Location of sets? (cd disk ftp http nfs or 'done') [done] <font color="#0000ff"><i>done</i></font>
+	Start sshd(8) by default? [yes] <font color="#0000ff"><i>yes</i></font>
+	Start ntpd(8) by default? [no] <font color="#0000ff"><i>no</i></font>
+	Saving configuration files...done.
+	Generating initial host.random file...done.
+	What timezone are you in? ('?' for list) [Canada/Mountain] <font color="#0000ff"><i>Europe/Stockholm</i></font>
+	Setting local timezone to 'Europe/Stockholm'...done.
+	Making all device nodes...done.
+	Installing boot block...
+	boot: /mnt/boot
+	proto: /mnt/usr/mdec/bootxx
+	device: /dev/rsd0a
+	cdevice: /dev/rsd0c
+	modifying vid.
+	/mnt/usr/mdec/bootxx: entry point 0x9f0000
+	proto bootblock size 5120
+	room for 64 filesystem blocks at 0x9f1198
+	Will load 2 blocks of size 16384 each.
+	0: 17696
+	1: 17728
+
+	CONGRATULATIONS! Your OpenBSD install has been successfully completed!
+	To boot the new system, enter halt at the command prompt. Once the
+	system has halted, reset the machine and boot from the disk.
+	# <font color="#0000ff"><i>umount /mnt</i></font>
+	# <font color="#0000ff"><i>halt</i></font>
+
+</pre>
+</ol>
+
+<p>
+Once the install has finished, the following command should let you 
+boot from the harddisk image:
+<pre>
+	<b>gxemul -e mvme187 -d obsd_mvme88k.img bsd</b>
+</pre>
+
+<p>When asked about root disk, enter <tt><b>sd0</b></tt>.
+
+<p>No NIC has been implemented yet for mvme187, so there is no network connectivity
+from within the guest OS.
+
+
+
+
+
+<p><hr>
+</body>
+</html>

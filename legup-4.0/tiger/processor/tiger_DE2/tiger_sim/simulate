@@ -1,0 +1,7 @@
+cp ../onchip_mem.v.copy ../onchip_mem.v
+cp ../jtag_uart_1.v.copy ../jtag_uart_1.v
+cp ../uart_0.v.copy ../uart_0.v
+cp ../tiger_inst.v.copy ../tiger_inst.v
+sed -i '/include./d' ../tiger.v
+vsim -c -do "../run_sim_nowave.tcl" | tee transcript.txt
+grep "Watch@" transcript.txt | sed 's/^\# Watch@//' > sim.txt

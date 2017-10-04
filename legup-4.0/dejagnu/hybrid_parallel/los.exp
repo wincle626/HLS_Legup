@@ -1,0 +1,49 @@
+load_lib legup.exp
+
+#set hybridexpected {# Result: 1800}
+set hybridexpected {# Sum: 2193}
+cd ../examples/parallel/openmp/los
+set test "los OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../single/los
+set test "los Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/los
+set test "los Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads+openmp/los_2
+set test "los_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_3
+set test "los_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_4
+set test "los_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_8_4
+set test "los_8_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_12_4
+set test "los_12_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_16_4
+set test "los_16_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_20_4
+set test "los_20_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../los_30_4
+set test "los_30_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../../

@@ -1,0 +1,1924 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>datasheet for tiger</title>
+  <style type="text/css">
+body { font-family:arial ;}
+a { text-decoration:underline ; color:#003000 ;}
+a:hover { text-decoration:underline ; color:0030f0 ;}
+td { padding : 5px ;}
+table.topTitle { width:100% ;}
+table.topTitle td.l { text-align:left ; font-weight: bold ; font-size:30px ;}
+table.topTitle td.r { text-align:right ; font-weight: bold ; font-size:16px ;}
+table.blueBar { width : 100% ; border-spacing : 0px ;}
+table.blueBar td { background:#0036ff ; font-size:12px ; color : white ; text-align : left ; font-weight : bold ;}
+table.blueBar td.l { text-align : left ;}
+table.blueBar td.r { text-align : right ;}
+table.items { width:100% ; border-collapse:collapse ;}
+table.items td.label { font-weight:bold ; font-size:16px ; vertical-align:top ;}
+table.items td.mono { font-family:courier ; font-size:12px ; white-space:pre ;}
+div.label { font-weight:bold ; font-size:16px ; vertical-align:top ; text-align:center ;}
+table.grid { border-collapse:collapse ;}
+table.grid td { border:1px solid #bbb ; font-size:12px ;}
+body { font-family:arial ;}
+table.x { font-family:courier ; border-collapse:collapse ; padding:2px ;}
+table.x td { border:1px solid #bbb ;}
+td.tableTitle { font-weight:bold ; text-align:center ;}
+table.grid { border-collapse:collapse ;}
+table.grid td { border:1px solid #bbb ;}
+table.grid td.tableTitle { font-weight:bold ; text-align:center ;}
+table.mmap { border-collapse:collapse ; text-size:11px ; border:1px solid #d8d8d8 ;}
+table.mmap td { border-color:#d8d8d8 ; border-width:1px ; border-style:solid ;}
+table.mmap td.empty { border-style:none ; background-color:#f0f0f0 ;}
+table.mmap td.slavemodule { text-align:left ; font-size:11px ; border-style:solid solid none solid ;}
+table.mmap td.slavem { text-align:right ; font-size:9px ; font-style:italic ; border-style:none solid none solid ;}
+table.mmap td.slaveb { text-align:right ; font-size:9px ; font-style:italic ; border-style:none solid solid solid ;}
+table.mmap td.mastermodule { text-align:center ; font-size:11px ; border-style:solid solid none solid ;}
+table.mmap td.masterlr { text-align:center ; font-size:9px ; font-style:italic ; border-style:none solid solid solid ;}
+table.mmap td.masterl { text-align:center ; font-size:9px ; font-style:italic ; border-style:none none solid solid ;}
+table.mmap td.masterm { text-align:center ; font-size:9px ; font-style:italic ; border-style:none none solid none ;}
+table.mmap td.masterr { text-align:center ; font-size:9px ; font-style:italic ; border-style:none solid solid none ;}
+table.mmap td.addr { font-family:courier ; font-size:9px ; text-align:right ;}
+table.connectionboxes { border-collapse:separate ; border-spacing:0px ; font-family:arial ;}
+table.connectionboxes td.from { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.to { font-size:9px ; font-style:italic ; vertical-align:top ; text-align:right ;}
+table.connectionboxes td.lefthandwire { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:right ;}
+table.connectionboxes td.righthandwire { border-bottom:1px solid black ; font-size:9px ; font-style:italic ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.righthandlabel { font-size:11px ; vertical-align:bottom ; text-align:left ;}
+table.connectionboxes td.neighbor { padding:3px ; border:1px solid black ; font-size: 11px ; background:#e8e8e8 ; vertical-align:center ; text-align:center ;}
+table.connectionboxes td.main { padding:8px ; border:1px solid black ; font-size: 14px ; font-weight:bold ; background:#ffffff ; vertical-align:center ; text-align:center ;}
+.parametersbox { border:1px solid #d0d0d0 ; display:inline-block ; max-height:160px ; overflow:auto ; width:360px ; font-size:10px ;}
+.flowbox { display:inline-block ;}
+.parametersbox table { font-size:10px ;}
+td.parametername { font-style:italic ;}
+td.parametervalue { font-weight:bold ;}
+div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; border-top:1px solid #707070 ; border-bottom:1px solid #707070 ; padding:20px ; margin:20px ; width:auto ;}</style>
+ </head>
+ <body>
+  <table class="topTitle">
+   <tr>
+    <td class="l">tiger</td>
+    <td class="r">
+     <br/>
+     <br/>
+    </td>
+   </tr>
+  </table>
+  <table class="blueBar">
+   <tr>
+    <td class="l">2013.07.16.17:16:51</td>
+    <td class="r">Datasheet</td>
+   </tr>
+  </table>
+  <div style="width:100% ;  height:10px"> </div>
+  <div class="label">Overview</div>
+  <div class="greydiv">
+   <div style="display:inline-block ; text-align:left">
+    <table class="connectionboxes">
+     <tr>
+      <td class="lefthandwire">&#160;&#160;clk&#160;</td>
+      <td class="main" rowspan="6">tiger</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td class="righthandlabel">&#160;&#160;
+       <a href="#module_uart_0"><b>uart_0</b>
+       </a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td class="righthandwire">&#160;rxd&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td class="righthandwire">&#160;txd&#160;&#160;</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+    </table>
+   </div><span style="display:inline-block ; width:28px"> </span>
+   <div style="display:inline-block ; text-align:left"><span>
+     <br/>All Components
+     <br/>&#160;&#160;
+     <a href="#module_pipeline_bridge_PERIPHERALS"><b>pipeline_bridge_PERIPHERALS</b>
+     </a> altera_avalon_pipeline_bridge 11.1
+     <br/>&#160;&#160;
+     <a href="#module_pipeline_bridge_MEMORY"><b>pipeline_bridge_MEMORY</b>
+     </a> altera_avalon_pipeline_bridge 11.1
+     <br/>&#160;&#160;
+     <a href="#module_uart_0"><b>uart_0</b>
+     </a> altera_avalon_uart 11.1
+     <br/>&#160;&#160;
+     <a href="#module_ddr2"><b>ddr2</b>
+     </a> altmemddr2 11.1
+     <br/>&#160;&#160;
+     <a href="#module_tiger_top_0"><b>tiger_top_0</b>
+     </a> tiger_top 1.0
+     <br/>&#160;&#160;
+     <a href="#module_data_cache_0"><b>data_cache_0</b>
+     </a> data_cache 1.0</span>
+   </div>
+  </div>
+  <div style="width:100% ;  height:10px"> </div>
+  <div class="label">Memory Map</div>
+  <table class="mmap">
+   <tr>
+    <td class="empty" rowspan="2"></td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_jtag_to_ava_master_bridge"><b>jtag_to_ava_master_bridge</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="3">
+     <a href="#module_tiger_top_0"><b>tiger_top_0</b>
+     </a>
+    </td>
+    <td class="mastermodule" colspan="1">
+     <a href="#module_data_cache_0"><b>data_cache_0</b>
+     </a>
+    </td>
+   </tr>
+   <tr>
+    <td class="masterlr">&#160;master</td>
+    <td class="masterl">&#160;CACHE</td>
+    <td class="masterm">&#160;procMaster</td>
+    <td class="masterr">&#160;instructionMaster</td>
+    <td class="masterlr">&#160;dataMaster0</td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_uart_0"><b>uart_0</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s1&#160;</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="addr"><span style="color:#989898">0x</span>f0001000</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_ddr2"><b>ddr2</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">s1&#160;</td>
+    <td class="addr"><span style="color:#989898">0x</span>40000000</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="addr"><span style="color:#989898">0x</span>40000000</td>
+    <td class="addr"><span style="color:#989898">0x</span>40000000</td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_tiger_top_0"><b>tiger_top_0</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">leapSlave&#160;</td>
+    <td class="addr"><span style="color:#989898">0x</span>80000000</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slavemodule">&#160;
+     <a href="#module_data_cache_0"><b>data_cache_0</b>
+     </a>
+    </td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+   <tr>
+    <td class="slaveb">CACHE0&#160;</td>
+    <td class="empty"></td>
+    <td class="addr"><span style="color:#989898">0x</span>00000000</td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+    <td class="empty"></td>
+   </tr>
+  </table>
+  <a name="module_clk"> </a>
+  <div>
+   <hr/>
+   <h2>clk</h2>clock_source v11.1
+   <br/>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">clockFrequency</td>
+        <td class="parametervalue">200000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">clockFrequencyKnown</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">inputClockFrequency</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">resetSynchronousEdges</td>
+        <td class="parametervalue">NONE</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_pipeline_bridge_PERIPHERALS"> </a>
+  <div>
+   <hr/>
+   <h2>pipeline_bridge_PERIPHERALS</h2>altera_avalon_pipeline_bridge v11.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="main" rowspan="7">pipeline_bridge_PERIPHERALS</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+      <td class="from">procMaster&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">m1&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_uart_0">uart_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">burstEnable</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">dataWidth</td>
+        <td class="parametervalue">32</td>
+       </tr>
+       <tr>
+        <td class="parametername">downstreamPipeline</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">enableArbiterlock</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">masterAddressWidth</td>
+        <td class="parametervalue">13</td>
+       </tr>
+       <tr>
+        <td class="parametername">maxBurstSize</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">maximumPendingReadTransactions</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">slaveAddressWidth</td>
+        <td class="parametervalue">11</td>
+       </tr>
+       <tr>
+        <td class="parametername">upstreamPipeline</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">waitrequestPipeline</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_pipeline_bridge_MEMORY"> </a>
+  <div>
+   <hr/>
+   <h2>pipeline_bridge_MEMORY</h2>altera_avalon_pipeline_bridge v11.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="main" rowspan="10">pipeline_bridge_MEMORY</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+      <td class="from">instructionMaster&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_data_cache_0">data_cache_0</a>
+      </td>
+      <td class="from">dataMaster0&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">m1&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">burstEnable</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">dataWidth</td>
+        <td class="parametervalue">256</td>
+       </tr>
+       <tr>
+        <td class="parametername">downstreamPipeline</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">enableArbiterlock</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">masterAddressWidth</td>
+        <td class="parametervalue">31</td>
+       </tr>
+       <tr>
+        <td class="parametername">maxBurstSize</td>
+        <td class="parametervalue">64</td>
+       </tr>
+       <tr>
+        <td class="parametername">maximumPendingReadTransactions</td>
+        <td class="parametervalue">35</td>
+       </tr>
+       <tr>
+        <td class="parametername">slaveAddressWidth</td>
+        <td class="parametervalue">26</td>
+       </tr>
+       <tr>
+        <td class="parametername">upstreamPipeline</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">waitrequestPipeline</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_jtag_to_ava_master_bridge"> </a>
+  <div>
+   <hr/>
+   <h2>jtag_to_ava_master_bridge</h2>altera_jtag_avalon_master v11.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="main" rowspan="7">jtag_to_ava_master_bridge</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">master&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">master&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;leapSlave</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">USE_PLI</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">PLI_PORT</td>
+        <td class="parametervalue">50000</td>
+       </tr>
+       <tr>
+        <td class="parametername">COMPONENT_CLOCK</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">FAST_VER</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">FIFO_DEPTHS</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">AUTO_DEVICE_FAMILY</td>
+        <td class="parametervalue">Stratix IV</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">Stratix IV</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_uart_0"> </a>
+  <div>
+   <hr/>
+   <h2>uart_0</h2>altera_avalon_uart v11.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_PERIPHERALS">pipeline_bridge_PERIPHERALS</a>
+      </td>
+      <td class="from">m1&#160;&#160;</td>
+      <td class="main" rowspan="5">uart_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">baud</td>
+        <td class="parametervalue">115200</td>
+       </tr>
+       <tr>
+        <td class="parametername">baudError</td>
+        <td class="parametervalue">0.01</td>
+       </tr>
+       <tr>
+        <td class="parametername">clockRate</td>
+        <td class="parametervalue">200000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">dataBits</td>
+        <td class="parametervalue">8</td>
+       </tr>
+       <tr>
+        <td class="parametername">fixedBaud</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">parity</td>
+        <td class="parametervalue">NONE</td>
+       </tr>
+       <tr>
+        <td class="parametername">simCharStream</td>
+        <td class="parametervalue"></td>
+       </tr>
+       <tr>
+        <td class="parametername">simInteractiveInputEnable</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">simInteractiveOutputEnable</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">simTrueBaud</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">stopBits</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">syncRegDepth</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">useCtsRts</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">useEopRegister</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">useRelativePathForSimFile</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>
+      <table>
+       <tr>
+        <td class="parametername">BAUD</td>
+        <td class="parametervalue">115200</td>
+       </tr>
+       <tr>
+        <td class="parametername">DATA_BITS</td>
+        <td class="parametervalue">8</td>
+       </tr>
+       <tr>
+        <td class="parametername">FIXED_BAUD</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">PARITY</td>
+        <td class="parametervalue">'N'</td>
+       </tr>
+       <tr>
+        <td class="parametername">STOP_BITS</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">SYNC_REG_DEPTH</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">USE_CTS_RTS</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">USE_EOP_REGISTER</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">SIM_TRUE_BAUD</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">SIM_CHAR_STREAM</td>
+        <td class="parametervalue">""</td>
+       </tr>
+       <tr>
+        <td class="parametername">FREQ</td>
+        <td class="parametervalue">200000000u</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_ddr2"> </a>
+  <div>
+   <hr/>
+   <h2>ddr2</h2>altmemddr2 v11.1
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_clk">clk</a>
+      </td>
+      <td class="from">clk&#160;&#160;</td>
+      <td class="main" rowspan="25">ddr2</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;refclk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_MEMORY">pipeline_bridge_MEMORY</a>
+      </td>
+      <td class="from">m1&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_jtag_to_ava_master_bridge">jtag_to_ava_master_bridge</a>
+      </td>
+      <td class="from">master&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_PERIPHERALS">pipeline_bridge_PERIPHERALS</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_MEMORY">pipeline_bridge_MEMORY</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_jtag_to_ava_master_bridge">jtag_to_ava_master_bridge</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_uart_0">uart_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_data_cache_0">data_cache_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clockreset</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">pipeline_commands</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">debug_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">export_debug_port</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">use_generated_memory_model</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">dedicated_memory_clk_phase_label</td>
+        <td class="parametervalue">Dedicated memory clock phase:</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_clk_mhz</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">quartus_project_exists</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">local_if_drate</td>
+        <td class="parametervalue">Half</td>
+       </tr>
+       <tr>
+        <td class="parametername">enable_v72_rsu</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">local_if_clk_mhz_label</td>
+        <td class="parametervalue">200.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">new_variant</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_memtype</td>
+        <td class="parametervalue">DDR2 SDRAM</td>
+       </tr>
+       <tr>
+        <td class="parametername">pll_ref_clk_mhz</td>
+        <td class="parametervalue">200.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_clk_ps_label</td>
+        <td class="parametervalue">(2500 ps)</td>
+       </tr>
+       <tr>
+        <td class="parametername">family</td>
+        <td class="parametervalue">Stratix IV</td>
+       </tr>
+       <tr>
+        <td class="parametername">project_family</td>
+        <td class="parametervalue">Stratix IV</td>
+       </tr>
+       <tr>
+        <td class="parametername">speed_grade</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">dedicated_memory_clk_phase</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">pll_ref_clk_ps_label</td>
+        <td class="parametervalue">(5000 ps)</td>
+       </tr>
+       <tr>
+        <td class="parametername">avalon_burst_length</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_clk_pair_count</td>
+        <td class="parametervalue">2</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_cs_per_dimm</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">pre_latency_label</td>
+        <td class="parametervalue">Fix read latency at:</td>
+       </tr>
+       <tr>
+        <td class="parametername">dedicated_memory_clk_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">mirror_addressing</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_bankaddr_width</td>
+        <td class="parametervalue">3</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_9</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_rowaddr_width</td>
+        <td class="parametervalue">14</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_dyn_deskew_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">post_latency_label</td>
+        <td class="parametervalue">cycles (0 cycles=minimum latency, non-deterministic)</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_dm_pins_en</td>
+        <td class="parametervalue">Yes</td>
+       </tr>
+       <tr>
+        <td class="parametername">local_if_dwidth_label</td>
+        <td class="parametervalue">256</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_7</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_8</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_preset</td>
+        <td class="parametervalue">Custom (DE4_DDR2_800_1GB)</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_pchaddr_bit</td>
+        <td class="parametervalue">10</td>
+       </tr>
+       <tr>
+        <td class="parametername">WIDTH_RATIO</td>
+        <td class="parametervalue">4</td>
+       </tr>
+       <tr>
+        <td class="parametername">vendor</td>
+        <td class="parametervalue">Micron</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_3</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_4</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">chip_or_dimm</td>
+        <td class="parametervalue">Unbuffered DIMM</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_5</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_6</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_0</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_size</td>
+        <td class="parametervalue">4</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_1</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_2</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_11</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_10</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_cs_width</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_preset_rlat</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_cs_per_rank</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">fast_simulation_en</td>
+        <td class="parametervalue">SUPERFAST</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_15</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_14</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_dwidth</td>
+        <td class="parametervalue">64</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_dq_per_dqs</td>
+        <td class="parametervalue">8</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_coladdr_width</td>
+        <td class="parametervalue">10</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_13</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">register_control_word_12</td>
+        <td class="parametervalue">0000</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tiha_ps</td>
+        <td class="parametervalue">375</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdsh_ck</td>
+        <td class="parametervalue">0.2</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_trfc_ns</td>
+        <td class="parametervalue">127.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tqh_ck</td>
+        <td class="parametervalue">0.36</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tisa_ps</td>
+        <td class="parametervalue">375</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdss_ck</td>
+        <td class="parametervalue">0.2</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_trtp_ns</td>
+        <td class="parametervalue">7.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_tinit_us</td>
+        <td class="parametervalue">200.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_trcd_ns</td>
+        <td class="parametervalue">15.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_twtr_ck</td>
+        <td class="parametervalue">3</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_trrd_ns</td>
+        <td class="parametervalue">7.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdqss_ck</td>
+        <td class="parametervalue">0.25</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tqhs_ps</td>
+        <td class="parametervalue">300</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdsa_ps</td>
+        <td class="parametervalue">250</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tac_ps</td>
+        <td class="parametervalue">400</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdha_ps</td>
+        <td class="parametervalue">250</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_tras_ns</td>
+        <td class="parametervalue">40.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_twr_ns</td>
+        <td class="parametervalue">15.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdqsck_ps</td>
+        <td class="parametervalue">350</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_trp_ns</td>
+        <td class="parametervalue">15.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tdqsq_ps</td>
+        <td class="parametervalue">200</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_tmrd_ns</td>
+        <td class="parametervalue">5.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tfaw_ns</td>
+        <td class="parametervalue">37.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_trefi_us</td>
+        <td class="parametervalue">7.8</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_40_fmax</td>
+        <td class="parametervalue">267.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_odt</td>
+        <td class="parametervalue">50</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_WLH_percent</td>
+        <td class="parametervalue">0.6</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_drv_str</td>
+        <td class="parametervalue">Normal</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DH_percent</td>
+        <td class="parametervalue">0.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">input_period</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_QH_percent</td>
+        <td class="parametervalue">0.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_QHS_percent</td>
+        <td class="parametervalue">0.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_30_fmax</td>
+        <td class="parametervalue">267.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">ac_clk_select</td>
+        <td class="parametervalue">dedicated</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DQSQ_percent</td>
+        <td class="parametervalue">0.65</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DS_percent</td>
+        <td class="parametervalue">0.6</td>
+       </tr>
+       <tr>
+        <td class="parametername">pll_reconfig_ports_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_btype</td>
+        <td class="parametervalue">Sequential</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_IS_percent</td>
+        <td class="parametervalue">0.7</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl</td>
+        <td class="parametervalue">6.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DQSS_percent</td>
+        <td class="parametervalue">0.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">export_bank_info</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DSS_percent</td>
+        <td class="parametervalue">0.6</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_dll_en</td>
+        <td class="parametervalue">Yes</td>
+       </tr>
+       <tr>
+        <td class="parametername">ac_phase</td>
+        <td class="parametervalue">240</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_oct_en</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_60_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DSH_percent</td>
+        <td class="parametervalue">0.6</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_if_dqsn_en</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">enable_mp_calibration</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_IH_percent</td>
+        <td class="parametervalue">0.6</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_15_fmax</td>
+        <td class="parametervalue">533.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">dll_external</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_bl</td>
+        <td class="parametervalue">8</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_WLS_percent</td>
+        <td class="parametervalue">0.7</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_50_fmax</td>
+        <td class="parametervalue">334.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mp_DQSCK_percent</td>
+        <td class="parametervalue">0.5</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_25_fmax</td>
+        <td class="parametervalue">533.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_20_fmax</td>
+        <td class="parametervalue">533.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">cfg_reorder_data</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_ecc_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_hrb_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ref_clk_source</td>
+        <td class="parametervalue">clk</td>
+       </tr>
+       <tr>
+        <td class="parametername">cfg_data_reordering_type</td>
+        <td class="parametervalue">INTER_BANK</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_powerdn_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">multicast_wr_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">auto_powerdn_cycles</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_self_refresh_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">cfg_starve_limit</td>
+        <td class="parametervalue">10</td>
+       </tr>
+       <tr>
+        <td class="parametername">shared_sys_clk_source</td>
+        <td class="parametervalue"></td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_latency</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">tool_context</td>
+        <td class="parametervalue">SOPC_BUILDER</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_addr_mapping</td>
+        <td class="parametervalue">CHIP_BANK_ROW_COL</td>
+       </tr>
+       <tr>
+        <td class="parametername">burst_merge_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">user_refresh_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">qsys_mode</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">clk_source_sharing_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_lookahead_depth</td>
+        <td class="parametervalue">4</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_autopch_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_dynamic_bank_allocation</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_dynamic_bank_num</td>
+        <td class="parametervalue">4</td>
+       </tr>
+       <tr>
+        <td class="parametername">local_if_type_avalon</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">csr_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">ctl_auto_correct_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">auto_powerdn_en</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">phy_if_type_afi</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">controller_type</td>
+        <td class="parametervalue">ddrx_ctl</td>
+       </tr>
+       <tr>
+        <td class="parametername">max_local_size</td>
+        <td class="parametervalue">64</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_srtr</td>
+        <td class="parametervalue">Normal</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_mpr_loc</td>
+        <td class="parametervalue">Predefined Pattern</td>
+       </tr>
+       <tr>
+        <td class="parametername">dss_tinit_rst_us</td>
+        <td class="parametervalue">200.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_90_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_rtt_wr</td>
+        <td class="parametervalue">Dynamic ODT off</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_100_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_pasr</td>
+        <td class="parametervalue">Full Array</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_asrm</td>
+        <td class="parametervalue">Manual SR Reference (SRT)</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_mpr_oper</td>
+        <td class="parametervalue">Predefined Pattern</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_80_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_drv_impedance</td>
+        <td class="parametervalue">RZQ/7</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_rtt_nom</td>
+        <td class="parametervalue">ODT Disabled</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_tcl_70_fmax</td>
+        <td class="parametervalue">400.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_wtcl</td>
+        <td class="parametervalue">5.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_dll_pch</td>
+        <td class="parametervalue">Fast Exit</td>
+       </tr>
+       <tr>
+        <td class="parametername">mem_atcl</td>
+        <td class="parametervalue">Disabled</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_settings_valid</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_IH</td>
+        <td class="parametervalue">0.375</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_intra_DQS_group_skew</td>
+        <td class="parametervalue">0.02</td>
+       </tr>
+       <tr>
+        <td class="parametername">isi_DQS</td>
+        <td class="parametervalue">0.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">addr_cmd_slew_rate</td>
+        <td class="parametervalue">1.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_tpd_inter_DIMM</td>
+        <td class="parametervalue">0.05</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_addresscmd_CK_skew</td>
+        <td class="parametervalue">0.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_DS_calculated</td>
+        <td class="parametervalue">0.246</td>
+       </tr>
+       <tr>
+        <td class="parametername">isi_addresscmd_hold</td>
+        <td class="parametervalue">0.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_IS</td>
+        <td class="parametervalue">0.375</td>
+       </tr>
+       <tr>
+        <td class="parametername">restore_default_toggle</td>
+        <td class="parametervalue">false</td>
+       </tr>
+       <tr>
+        <td class="parametername">dqs_dqsn_slew_rate</td>
+        <td class="parametervalue">4.35</td>
+       </tr>
+       <tr>
+        <td class="parametername">dq_slew_rate</td>
+        <td class="parametervalue">1.39</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_inter_DQS_group_skew</td>
+        <td class="parametervalue">0.02</td>
+       </tr>
+       <tr>
+        <td class="parametername">isi_addresscmd_setup</td>
+        <td class="parametervalue">0.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_minCK_DQS_skew</td>
+        <td class="parametervalue">-0.01</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_IS_calculated</td>
+        <td class="parametervalue">0.375</td>
+       </tr>
+       <tr>
+        <td class="parametername">num_slots_or_devices</td>
+        <td class="parametervalue">1</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_maxCK_DQS_skew</td>
+        <td class="parametervalue">0.01</td>
+       </tr>
+       <tr>
+        <td class="parametername">board_skew_ps</td>
+        <td class="parametervalue">20</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_DH</td>
+        <td class="parametervalue">0.231</td>
+       </tr>
+       <tr>
+        <td class="parametername">ck_ckn_slew_rate</td>
+        <td class="parametervalue">2.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">isi_DQ</td>
+        <td class="parametervalue">0.0</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_IH_calculated</td>
+        <td class="parametervalue">0.375</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_DH_calculated</td>
+        <td class="parametervalue">0.231</td>
+       </tr>
+       <tr>
+        <td class="parametername">t_DS</td>
+        <td class="parametervalue">0.246</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_tiger_top_0"> </a>
+  <div>
+   <hr/>
+   <h2>tiger_top_0</h2>tiger_top v1.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="main" rowspan="16">tiger_top_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clock</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_data_cache_0">data_cache_0</a>
+      </td>
+      <td class="from">PROC&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;PROC</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_jtag_to_ava_master_bridge">jtag_to_ava_master_bridge</a>
+      </td>
+      <td class="from">master&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;leapSlave</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">instructionMaster&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_MEMORY">pipeline_bridge_MEMORY</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">procMaster&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_PERIPHERALS">pipeline_bridge_PERIPHERALS</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">CACHE&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_data_cache_0">data_cache_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;CACHE0</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">prof_param_N2</td>
+        <td class="parametervalue">8</td>
+       </tr>
+       <tr>
+        <td class="parametername">prof_param_S2</td>
+        <td class="parametervalue">5</td>
+       </tr>
+       <tr>
+        <td class="parametername">prof_param_CW</td>
+        <td class="parametervalue">32</td>
+       </tr>
+       <tr>
+        <td class="parametername">AUTO_CLOCK_CLOCK_RATE</td>
+        <td class="parametervalue">200000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <a name="module_data_cache_0"> </a>
+  <div>
+   <hr/>
+   <h2>data_cache_0</h2>data_cache v1.0
+   <br/>
+   <div class="greydiv">
+    <table class="connectionboxes">
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_ddr2">ddr2</a>
+      </td>
+      <td class="from">sysclk&#160;&#160;</td>
+      <td class="main" rowspan="10">data_cache_0</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;clockreset</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+      <td class="from">CACHE&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td class="to">&#160;&#160;CACHE0</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">PROC&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_tiger_top_0">tiger_top_0</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;PROC</td>
+     </tr>
+     <tr style="height:6px">
+      <td></td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">dataMaster0&#160;&#160;</td>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_pipeline_bridge_MEMORY">pipeline_bridge_MEMORY</a>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;s1</td>
+     </tr>
+    </table>
+   </div>
+   <br/>
+   <br/>
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Parameters</h2>
+      <table>
+       <tr>
+        <td class="parametername">AUTO_CLOCKRESET_CLOCK_RATE</td>
+        <td class="parametervalue">200000000</td>
+       </tr>
+       <tr>
+        <td class="parametername">deviceFamily</td>
+        <td class="parametervalue">UNKNOWN</td>
+       </tr>
+       <tr>
+        <td class="parametername">generateLegacySim</td>
+        <td class="parametervalue">false</td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>&#160;&#160;
+   <table class="flowbox">
+    <tr>
+     <td class="parametersbox">
+      <h2>Software Assignments</h2>(none)</td>
+    </tr>
+   </table>
+  </div>
+  <table class="blueBar">
+   <tr>
+    <td class="l">generation took 0.01 seconds</td>
+    <td class="r">rendering took 0.16 seconds</td>
+   </tr>
+  </table>
+ </body>
+</html>

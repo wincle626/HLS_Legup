@@ -1,0 +1,2097 @@
+; ModuleID = 'testGen'
+target datalayout = "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-n8:16:32:64-S128"
+target triple = "i386-pc-linux-gnu"
+
+@.str = private constant [15 x i8] c"return_val:%u\0A\00", align 1
+@output_array_result_1_2 = common global [2 x i32] zeroinitializer, align 16
+@output_array_result_1_5 = common global [2 x i32] zeroinitializer, align 16
+@output_array_result_1_7 = common global [2 x i32] zeroinitializer, align 16
+@output_array_result_1_9 = common global [2 x i32] zeroinitializer, align 16
+@output_array_result_1_1 = common global [6 x i32] zeroinitializer, align 16
+@output_array_result_1_10 = common global [6 x i32] zeroinitializer, align 16
+@main.Array = private constant [10 x i32] [i32 1915133315, i32 1243081341, i32 1745887817, i32 1200305841, i32 408729150, i32 920345591, i32 292024705, i32 1471938715, i32 1108308567, i32 1426243336], align 16
+
+define i32 @testFunc(i32* %input_array_0, i32 %input_branch_147016592_0, i32 %input_branch_3075957808_0) {
+BB_0:
+  %0 = getelementptr i32* %input_array_0, i32 0
+  %1 = load i32* %0
+  %2 = getelementptr i32* %input_array_0, i32 1
+  %3 = load i32* %2
+  %4 = getelementptr i32* %input_array_0, i32 2
+  %5 = load i32* %4
+  %6 = getelementptr i32* %input_array_0, i32 3
+  %7 = load i32* %6
+  %8 = getelementptr i32* %input_array_0, i32 4
+  %9 = load i32* %8
+  %10 = getelementptr i32* %input_array_0, i32 5
+  %11 = load i32* %10
+  %12 = getelementptr i32* %input_array_0, i32 6
+  %13 = load i32* %12
+  %14 = getelementptr i32* %input_array_0, i32 7
+  %15 = load i32* %14
+  %16 = getelementptr i32* %input_array_0, i32 8
+  %17 = load i32* %16
+  %18 = getelementptr i32* %input_array_0, i32 9
+  %19 = load i32* %18
+  br label %BB_3
+
+BB_1:                                             ; preds = %BB_2
+  ret i32 %47
+
+BB_2:                                             ; preds = %BB_10, %BB_9, %BB_8
+  %20 = phi i32 [ %295, %BB_8 ], [ %316, %BB_9 ], [ %366, %BB_10 ]
+  %21 = phi i32 [ %297, %BB_8 ], [ %356, %BB_9 ], [ %368, %BB_10 ]
+  %22 = phi i32 [ %299, %BB_8 ], [ %357, %BB_9 ], [ %370, %BB_10 ]
+  %23 = phi i32 [ %301, %BB_8 ], [ %358, %BB_9 ], [ %372, %BB_10 ]
+  %24 = phi i32 [ %303, %BB_8 ], [ %359, %BB_9 ], [ %374, %BB_10 ]
+  %25 = phi i32 [ %305, %BB_8 ], [ %337, %BB_9 ], [ %376, %BB_10 ]
+  %26 = or i32 %20, 1
+  %27 = sdiv i32 458, %26
+  %28 = mul i32 %27, %23
+  %29 = or i32 %25, 1
+  %30 = sdiv i32 %23, %29
+  %31 = sub i32 %23, 645
+  %32 = sitofp i32 73 to float
+  %33 = sitofp i32 443 to float
+  %34 = fmul float %32, %33
+  %35 = add i32 %31, %20
+  %36 = add i32 %28, %21
+  %37 = fptosi float %34 to i32
+  %38 = mul i32 %30, %37
+  %39 = or i32 %25, 1
+  %40 = sdiv i32 %35, %39
+  %41 = sub i32 %40, %36
+  %42 = mul i32 %38, %22
+  %43 = sitofp i32 %41 to float
+  %44 = sitofp i32 %42 to float
+  %45 = fmul float %43, %44
+  %46 = fptosi float %45 to i32
+  %47 = add i32 %46, %24
+  br label %BB_1
+
+BB_3:                                             ; preds = %BB_0
+  %48 = mul i32 %1, %15
+  %49 = sitofp i32 221 to float
+  %50 = sitofp i32 %1 to float
+  %51 = fadd float %49, %50
+  %52 = add i32 337, %3
+  %53 = sub i32 592, %11
+  %54 = sub i32 592, %13
+  %55 = add i32 149, %13
+  %56 = sitofp i32 %13 to float
+  %57 = sitofp i32 325 to float
+  %58 = fsub float %56, %57
+  %59 = sitofp i32 392 to float
+  %60 = sitofp i32 %15 to float
+  %61 = fadd float %59, %60
+  %62 = sitofp i32 %19 to float
+  %63 = fmul float %51, %62
+  %64 = add i32 337, 325
+  %65 = sitofp i32 337 to float
+  %66 = sitofp i32 339 to float
+  %67 = fadd float %65, %66
+  %68 = sitofp i32 128 to float
+  %69 = sitofp i32 392 to float
+  %70 = fadd float %68, %69
+  %71 = sub i32 777, 777
+  %72 = sitofp i32 128 to float
+  %73 = sitofp i32 904 to float
+  %74 = fmul float %72, %73
+  %75 = sitofp i32 21 to float
+  %76 = sitofp i32 258 to float
+  %77 = fadd float %75, %76
+  %78 = sitofp i32 %53 to float
+  %79 = sitofp i32 %3 to float
+  %80 = fsub float %78, %79
+  %81 = sitofp i32 %3 to float
+  %82 = fsub float %77, %81
+  %83 = sitofp i32 %3 to float
+  %84 = fadd float %83, %77
+  %85 = sitofp i32 %54 to float
+  %86 = sitofp i32 %52 to float
+  %87 = fptosi float %86 to i32
+  %88 = or i32 %87, 1
+  %89 = sitofp i32 %88 to float
+  %90 = fdiv float %85, %89
+  %91 = sitofp i32 %7 to float
+  %92 = fadd float %74, %91
+  %93 = add i32 %55, %9
+  %94 = sitofp i32 %11 to float
+  %95 = fadd float %70, %94
+  %96 = sitofp i32 %13 to float
+  %97 = fsub float %95, %96
+  %98 = sitofp i32 %71 to float
+  %99 = fadd float %98, %58
+  %100 = fptosi float %67 to i32
+  %101 = fptosi float %61 to i32
+  %102 = or i32 %101, 1
+  %103 = sdiv i32 %100, %102
+  %104 = sitofp i32 %17 to float
+  %105 = fsub float %77, %104
+  %106 = fptosi float %84 to i32
+  %107 = add i32 %64, %106
+  %108 = sitofp i32 %48 to float
+  %109 = fadd float %108, %82
+  %110 = fptosi float %99 to i32
+  %111 = add i32 %110, %5
+  %112 = fmul float %92, %105
+  switch i32 %input_branch_147016592_0, label %BB_4 [
+    i32 1, label %BB_5
+  ]
+
+BB_4:                                             ; preds = %BB_3
+  %113 = sitofp i32 592 to float
+  %114 = fadd float %113, %112
+  %115 = fptosi float %109 to i32
+  %116 = mul i32 %115, 822
+  %117 = sitofp i32 822 to float
+  %118 = fsub float %109, %117
+  %119 = fptosi float %80 to i32
+  %120 = sub i32 %119, %93
+  %121 = sitofp i32 392 to float
+  %122 = sitofp i32 %107 to float
+  %123 = fsub float %121, %122
+  %124 = sitofp i32 %103 to float
+  %125 = fadd float %114, %124
+  %126 = fptosi float %123 to i32
+  %127 = fptosi float %63 to i32
+  %128 = add i32 %126, %127
+  %129 = add i32 392, 592
+  %130 = sitofp i32 337 to float
+  %131 = sitofp i32 325 to float
+  %132 = fadd float %130, %131
+  %133 = add i32 325, 339
+  %134 = sitofp i32 %133 to float
+  %135 = sitofp i32 %111 to float
+  %136 = fadd float %134, %135
+  %137 = fptosi float %118 to i32
+  %138 = fptosi float %112 to i32
+  %139 = add i32 %137, %138
+  %140 = sitofp i32 %139 to float
+  %141 = fsub float %140, %109
+  %142 = fptosi float %109 to i32
+  %143 = add i32 %129, %142
+  %144 = fptosi float %80 to i32
+  %145 = mul i32 %128, %144
+  %146 = or i32 %120, 1
+  %147 = sdiv i32 %129, %146
+  %148 = sitofp i32 %143 to float
+  %149 = fmul float %148, %90
+  %150 = fptosi float %132 to i32
+  %151 = or i32 %93, 1
+  %152 = sdiv i32 %150, %151
+  %153 = fptosi float %63 to i32
+  %154 = sub i32 %129, %153
+  %155 = fptosi float %136 to i32
+  %156 = add i32 %155, %147
+  %157 = fptosi float %97 to i32
+  %158 = add i32 %156, %157
+  %159 = sitofp i32 %154 to float
+  %160 = sitofp i32 %116 to float
+  %161 = fsub float %159, %160
+  %162 = sitofp i32 %145 to float
+  %163 = fmul float %162, %161
+  %164 = sitofp i32 %107 to float
+  %165 = fsub float %149, %164
+  %166 = sitofp i32 %152 to float
+  %167 = fadd float %125, %166
+  switch i32 %input_branch_3075957808_0, label %BB_6 [
+    i32 1, label %BB_7
+  ]
+
+BB_5:                                             ; preds = %BB_3
+  %168 = add i32 %111, 337
+  %169 = fadd float %63, %97
+  %170 = sitofp i32 %107 to float
+  %171 = fadd float %170, %109
+  %172 = sitofp i32 %103 to float
+  %173 = fadd float %63, %172
+  %174 = fptosi float %90 to i32
+  %175 = add i32 325, %174
+  %176 = fptosi float %63 to i32
+  %177 = sub i32 822, %176
+  %178 = fptosi float %63 to i32
+  %179 = add i32 %178, 592
+  %180 = sub i32 %179, %168
+  %181 = fptosi float %112 to i32
+  %182 = mul i32 %175, %181
+  %183 = fptosi float %97 to i32
+  %184 = sub i32 %182, %183
+  %185 = fptosi float %169 to i32
+  %186 = fptosi float %173 to i32
+  %187 = or i32 %186, 1
+  %188 = sdiv i32 %185, %187
+  %189 = sitofp i32 %177 to float
+  %190 = fsub float %171, %189
+  %191 = add i32 %184, %107
+  %192 = sitofp i32 %191 to float
+  %193 = sitofp i32 %103 to float
+  %194 = fsub float %192, %193
+  %195 = sitofp i32 %188 to float
+  %196 = fadd float %195, %90
+  %197 = fptosi float %196 to i32
+  %198 = fptosi float %63 to i32
+  %199 = add i32 %197, %198
+  %200 = sitofp i32 %199 to float
+  %201 = sitofp i32 %111 to float
+  %202 = fsub float %200, %201
+  %203 = sitofp i32 %180 to float
+  %204 = fadd float %190, %203
+  %205 = fptosi float %109 to i32
+  %206 = or i32 %205, 1
+  %207 = sitofp i32 %206 to float
+  %208 = fdiv float %204, %207
+  %209 = fmul float %194, %80
+  %210 = sitofp i32 %93 to float
+  %211 = fadd float %208, %210
+  %212 = fptosi float %202 to i32
+  %213 = fptosi float %211 to i32
+  %214 = add i32 %212, %213
+  br label %BB_8
+
+BB_6:                                             ; preds = %BB_4
+  %215 = sitofp i32 151 to float
+  %216 = sitofp i32 %158 to float
+  %217 = fadd float %215, %216
+  %218 = fptosi float %167 to i32
+  %219 = sub i32 %218, 576
+  %220 = sitofp i32 %219 to float
+  %221 = fsub float %220, %165
+  %222 = fptosi float %165 to i32
+  %223 = add i32 %222, 576
+  %224 = fptosi float %165 to i32
+  %225 = mul i32 %224, 818
+  %226 = sitofp i32 %225 to float
+  %227 = sitofp i32 175 to float
+  %228 = fptosi float %227 to i32
+  %229 = or i32 %228, 1
+  %230 = sitofp i32 %229 to float
+  %231 = fdiv float %226, %230
+  %232 = sitofp i32 565 to float
+  %233 = sitofp i32 631 to float
+  %234 = fadd float %232, %233
+  %235 = sitofp i32 %225 to float
+  %236 = sitofp i32 643 to float
+  %237 = fadd float %235, %236
+  %238 = fptosi float %231 to i32
+  %239 = add i32 %238, %158
+  %240 = fptosi float %217 to i32
+  %241 = fptosi float %217 to i32
+  %242 = add i32 %240, %241
+  %243 = sitofp i32 %242 to float
+  %244 = fmul float %243, %163
+  %245 = fsub float %234, %141
+  %246 = fptosi float %141 to i32
+  %247 = or i32 %246, 1
+  %248 = sdiv i32 %225, %247
+  %249 = fadd float %237, %167
+  %250 = fptosi float %167 to i32
+  %251 = add i32 %225, %250
+  %252 = add i32 %248, %223
+  %253 = or i32 %158, 1
+  %254 = sdiv i32 %251, %253
+  br label %BB_9
+
+BB_7:                                             ; preds = %BB_4
+  %255 = sitofp i32 %158 to float
+  %256 = sitofp i32 641 to float
+  %257 = fptosi float %256 to i32
+  %258 = or i32 %257, 1
+  %259 = sitofp i32 %258 to float
+  %260 = fdiv float %255, %259
+  %261 = fptosi float %163 to i32
+  %262 = add i32 %158, %261
+  %263 = fptosi float %141 to i32
+  %264 = fptosi float %163 to i32
+  %265 = mul i32 %263, %264
+  %266 = sitofp i32 565 to float
+  %267 = fadd float %141, %266
+  %268 = sitofp i32 576 to float
+  %269 = fadd float %268, %141
+  %270 = fptosi float %141 to i32
+  %271 = fptosi float %141 to i32
+  %272 = add i32 %270, %271
+  %273 = fptosi float %167 to i32
+  %274 = add i32 %265, %273
+  %275 = sitofp i32 175 to float
+  %276 = fmul float %167, %275
+  %277 = sitofp i32 643 to float
+  %278 = fsub float %277, %167
+  %279 = fsub float %269, %165
+  %280 = sitofp i32 631 to float
+  %281 = sitofp i32 %272 to float
+  %282 = fadd float %280, %281
+  %283 = sitofp i32 %262 to float
+  %284 = fmul float %283, %276
+  %285 = fsub float %267, %163
+  %286 = fptosi float %141 to i32
+  %287 = or i32 %286, 1
+  %288 = sdiv i32 %272, %287
+  %289 = fadd float %282, %278
+  %290 = fptosi float %260 to i32
+  %291 = add i32 %288, %290
+  br label %BB_10
+
+BB_8:                                             ; preds = %BB_5
+  %292 = fptosi float %209 to i32
+  %293 = call i32* @testFunc_1_8(i32 %214, i32 %292, i32 0, i32 0, i32 1, i32 1)
+  %294 = getelementptr i32* %293, i32 0
+  %295 = load i32* %294
+  %296 = getelementptr i32* %293, i32 1
+  %297 = load i32* %296
+  %298 = getelementptr i32* %293, i32 2
+  %299 = load i32* %298
+  %300 = getelementptr i32* %293, i32 3
+  %301 = load i32* %300
+  %302 = getelementptr i32* %293, i32 4
+  %303 = load i32* %302
+  %304 = getelementptr i32* %293, i32 5
+  %305 = load i32* %304
+  br label %BB_2
+
+BB_9:                                             ; preds = %BB_6
+  %306 = fptosi float %245 to i32
+  %307 = fptosi float %221 to i32
+  %308 = add i32 %306, %307
+  %309 = fptosi float %249 to i32
+  %310 = mul i32 %309, %252
+  %311 = fptosi float %221 to i32
+  %312 = or i32 %311, 1
+  %313 = sdiv i32 %308, %312
+  %314 = fptosi float %221 to i32
+  %315 = add i32 %314, 684
+  %316 = add i32 %313, %252
+  %317 = sitofp i32 576 to float
+  %318 = sitofp i32 %252 to float
+  %319 = fadd float %317, %318
+  %320 = sub i32 576, %252
+  %321 = sitofp i32 %252 to float
+  %322 = sitofp i32 %252 to float
+  %323 = fadd float %321, %322
+  %324 = sitofp i32 %315 to float
+  %325 = sitofp i32 %254 to float
+  %326 = fsub float %324, %325
+  %327 = sitofp i32 576 to float
+  %328 = sitofp i32 684 to float
+  %329 = fadd float %327, %328
+  %330 = sitofp i32 818 to float
+  %331 = sitofp i32 151 to float
+  %332 = fsub float %330, %331
+  %333 = sitofp i32 %239 to float
+  %334 = fsub float %326, %333
+  %335 = fptosi float %319 to i32
+  %336 = fptosi float %244 to i32
+  %337 = add i32 %335, %336
+  %338 = fptosi float %332 to i32
+  %339 = fptosi float %249 to i32
+  %340 = add i32 %338, %339
+  %341 = sitofp i32 %320 to float
+  %342 = sitofp i32 %310 to float
+  %343 = fsub float %341, %342
+  %344 = fptosi float %323 to i32
+  %345 = mul i32 %344, %252
+  %346 = sitofp i32 %345 to float
+  %347 = sitofp i32 %254 to float
+  %348 = fsub float %346, %347
+  %349 = fptosi float %329 to i32
+  %350 = or i32 643, 1
+  %351 = sdiv i32 %349, %350
+  %352 = sitofp i32 %351 to float
+  %353 = fadd float %352, %245
+  %354 = sitofp i32 %340 to float
+  %355 = fmul float %343, %354
+  %356 = fptosi float %355 to i32
+  %357 = fptosi float %348 to i32
+  %358 = fptosi float %353 to i32
+  %359 = fptosi float %334 to i32
+  br label %BB_2
+
+BB_10:                                            ; preds = %BB_7
+  %360 = fptosi float %284 to i32
+  %361 = fptosi float %285 to i32
+  %362 = fptosi float %289 to i32
+  %363 = fptosi float %279 to i32
+  %364 = call i32* @testFunc_10_10(i32 %291, i32 %360, i32 %361, i32 %362, i32 %363, i32 %274, i32 1, i32 1, i32 1, i32 0, i32 0, i32 1)
+  %365 = getelementptr i32* %364, i32 0
+  %366 = load i32* %365
+  %367 = getelementptr i32* %364, i32 1
+  %368 = load i32* %367
+  %369 = getelementptr i32* %364, i32 2
+  %370 = load i32* %369
+  %371 = getelementptr i32* %364, i32 3
+  %372 = load i32* %371
+  %373 = getelementptr i32* %364, i32 4
+  %374 = load i32* %373
+  %375 = getelementptr i32* %364, i32 5
+  %376 = load i32* %375
+  br label %BB_2
+}
+
+define i32 @main() {
+  %1 = getelementptr [10 x i32]* @main.Array, i32 0, i32 0
+  %2 = call i32 @testFunc(i32* %1, i32 0, i32 0)
+  %3 = call i32 (i8*, ...)* @printf(i8* getelementptr inbounds ([15 x i8]* @.str, i32 0, i32 0), i32 %2)
+  ret i32 %2
+}
+
+declare i32 @printf(i8*, ...)
+
+define i32* @testFunc_1_8(i32 %input_0, i32 %input_1, i32 %input_branch_147053896_0, i32 %input_branch_3075957808_0, i32 %input_branch_3075957808_01, i32 %input_branch_3075957808_02) {
+BB_0_8_1:
+  br label %BB_3_8_1
+
+BB_1_8_1:                                         ; preds = %BB_2_8_1
+  store i32 %17, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 0), align 16
+  %0 = fptosi float %25 to i32
+  store i32 %0, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 1), align 16
+  %1 = fptosi float %20 to i32
+  store i32 %1, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 2), align 16
+  %2 = fptosi float %11 to i32
+  store i32 %2, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 3), align 16
+  %3 = fptosi float %23 to i32
+  store i32 %3, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 4), align 16
+  store i32 %15, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 5), align 16
+  ret i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_1, i64 0, i64 0)
+
+BB_2_8_1:                                         ; preds = %BB_16_8_1, %BB_15_8_1, %BB_14_8_1, %BB_13_8_1, %BB_12_8_1
+  %4 = phi i32 [ %120, %BB_12_8_1 ], [ %127, %BB_13_8_1 ], [ %133, %BB_14_8_1 ], [ %138, %BB_15_8_1 ], [ %152, %BB_16_8_1 ]
+  %5 = phi i32 [ %123, %BB_12_8_1 ], [ %129, %BB_13_8_1 ], [ %135, %BB_14_8_1 ], [ %140, %BB_15_8_1 ], [ %153, %BB_16_8_1 ]
+  %6 = or i32 %5, 1
+  %7 = sdiv i32 %5, %6
+  %8 = add i32 443, %5
+  %9 = sitofp i32 767 to float
+  %10 = sitofp i32 430 to float
+  %11 = fadd float %9, %10
+  %12 = sitofp i32 430 to float
+  %13 = sitofp i32 73 to float
+  %14 = fsub float %12, %13
+  %15 = add i32 %7, 742
+  %16 = mul i32 645, 458
+  %17 = add i32 %7, %4
+  %18 = sitofp i32 %16 to float
+  %19 = sitofp i32 %5 to float
+  %20 = fsub float %18, %19
+  %21 = sitofp i32 %5 to float
+  %22 = sitofp i32 %8 to float
+  %23 = fsub float %21, %22
+  %24 = sitofp i32 %8 to float
+  %25 = fmul float %14, %24
+  br label %BB_1_8_1
+
+BB_3_8_1:                                         ; preds = %BB_0_8_1
+  %26 = sitofp i32 %input_1 to float
+  %27 = sitofp i32 %input_0 to float
+  %28 = fsub float %26, %27
+  %29 = add i32 767, 430
+  %30 = sitofp i32 %input_0 to float
+  %31 = fmul float %28, %30
+  %32 = sitofp i32 %29 to float
+  %33 = sitofp i32 %input_1 to float
+  %34 = fsub float %32, %33
+  %35 = sitofp i32 %29 to float
+  %36 = sitofp i32 %29 to float
+  %37 = fadd float %35, %36
+  %38 = fptosi float %34 to i32
+  %39 = fptosi float %37 to i32
+  %40 = add i32 %38, %39
+  switch i32 %input_branch_147053896_0, label %BB_4_8_1 [
+    i32 1, label %BB_5_8_1
+  ]
+
+BB_4_8_1:                                         ; preds = %BB_3_8_1
+  %41 = sitofp i32 %40 to float
+  %42 = fsub float %31, %41
+  %43 = add i32 767, 430
+  %44 = sitofp i32 %40 to float
+  %45 = fmul float %42, %44
+  %46 = sitofp i32 %43 to float
+  %47 = fsub float %46, %31
+  %48 = sitofp i32 %43 to float
+  %49 = sitofp i32 %43 to float
+  %50 = fadd float %48, %49
+  %51 = fptosi float %47 to i32
+  %52 = fptosi float %50 to i32
+  %53 = add i32 %51, %52
+  switch i32 %input_branch_3075957808_0, label %BB_6_8_1 [
+    i32 1, label %BB_7_8_1
+  ]
+
+BB_5_8_1:                                         ; preds = %BB_3_8_1
+  %54 = fptosi float %31 to i32
+  %55 = add i32 %40, %54
+  %56 = sitofp i32 %55 to float
+  %57 = sitofp i32 %55 to float
+  %58 = fsub float %56, %57
+  %59 = fptosi float %58 to i32
+  %60 = fptosi float %58 to i32
+  %61 = sub i32 %59, %60
+  %62 = sitofp i32 %61 to float
+  %63 = fmul float %62, %31
+  %64 = fptosi float %63 to i32
+  %65 = add i32 %64, %40
+  br label %BB_8_8_1
+
+BB_6_8_1:                                         ; preds = %BB_4_8_1
+  %66 = fptosi float %45 to i32
+  %67 = or i32 %53, 1
+  %68 = sdiv i32 %66, %67
+  %69 = sub i32 %68, %53
+  %70 = mul i32 %68, %68
+  %71 = sitofp i32 %69 to float
+  %72 = sitofp i32 %70 to float
+  %73 = fmul float %71, %72
+  %74 = fptosi float %73 to i32
+  %75 = fptosi float %45 to i32
+  %76 = add i32 %74, %75
+  br label %BB_9_8_1
+
+BB_7_8_1:                                         ; preds = %BB_4_8_1
+  %77 = fptosi float %45 to i32
+  %78 = add i32 %77, 767
+  %79 = fptosi float %45 to i32
+  %80 = mul i32 430, %79
+  %81 = sitofp i32 %78 to float
+  %82 = fsub float %81, %45
+  %83 = mul i32 %80, %78
+  %84 = fptosi float %82 to i32
+  %85 = add i32 %84, %53
+  %86 = sitofp i32 %83 to float
+  %87 = fmul float %86, %45
+  br label %BB_10_8_1
+
+BB_8_8_1:                                         ; preds = %BB_5_8_1
+  %88 = call i32* @testFunc_2_8(i32 %65, i32 0, i32 0)
+  %89 = getelementptr i32* %88, i32 0
+  %90 = load i32* %89
+  %91 = getelementptr i32* %88, i32 1
+  %92 = load i32* %91
+  switch i32 %input_branch_3075957808_01, label %BB_11_8_1 [
+    i32 1, label %BB_12_8_1
+  ]
+
+BB_9_8_1:                                         ; preds = %BB_6_8_1
+  %93 = sitofp i32 %76 to float
+  %94 = sitofp i32 4 to float
+  %95 = fmul float %93, %94
+  %96 = sitofp i32 100 to float
+  %97 = sitofp i32 %76 to float
+  %98 = fsub float %96, %97
+  %99 = sitofp i32 %76 to float
+  %100 = sitofp i32 %76 to float
+  %101 = fadd float %99, %100
+  %102 = fptosi float %98 to i32
+  %103 = fptosi float %101 to i32
+  %104 = add i32 %102, %103
+  switch i32 %input_branch_3075957808_02, label %BB_13_8_1 [
+    i32 1, label %BB_14_8_1
+  ]
+
+BB_10_8_1:                                        ; preds = %BB_7_8_1
+  %105 = fptosi float %87 to i32
+  %106 = call i32 @testFunc_3_10(i32 %85, i32 %105, i32 0, i32 1)
+  br label %BB_15_8_1
+
+BB_11_8_1:                                        ; preds = %BB_8_8_1
+  %107 = call i32 @testFunc_4_11(i32 %90, i32 %92, i32 0, i32 1)
+  br label %BB_16_8_1
+
+BB_12_8_1:                                        ; preds = %BB_8_8_1
+  %108 = sitofp i32 %92 to float
+  %109 = sitofp i32 %90 to float
+  %110 = fsub float %108, %109
+  %111 = sitofp i32 %90 to float
+  %112 = sitofp i32 %90 to float
+  %113 = fadd float %111, %112
+  %114 = sitofp i32 %90 to float
+  %115 = sitofp i32 %90 to float
+  %116 = fsub float %114, %115
+  %117 = add i32 202, %90
+  %118 = fptosi float %110 to i32
+  %119 = fptosi float %113 to i32
+  %120 = add i32 %118, %119
+  %121 = sitofp i32 %117 to float
+  %122 = fmul float %116, %121
+  %123 = fptosi float %122 to i32
+  br label %BB_2_8_1
+
+BB_13_8_1:                                        ; preds = %BB_9_8_1
+  %124 = fptosi float %95 to i32
+  %125 = call i32* @testFunc_5_13(i32 %104, i32 %124, i32 0, i32 1)
+  %126 = getelementptr i32* %125, i32 0
+  %127 = load i32* %126
+  %128 = getelementptr i32* %125, i32 1
+  %129 = load i32* %128
+  br label %BB_2_8_1
+
+BB_14_8_1:                                        ; preds = %BB_9_8_1
+  %130 = fptosi float %95 to i32
+  %131 = call i32* @testFunc_7_14(i32 %104, i32 %130, i32 1, i32 1)
+  %132 = getelementptr i32* %131, i32 0
+  %133 = load i32* %132
+  %134 = getelementptr i32* %131, i32 1
+  %135 = load i32* %134
+  br label %BB_2_8_1
+
+BB_15_8_1:                                        ; preds = %BB_10_8_1
+  %136 = call i32* @testFunc_9_15(i32 %106, i32 0, i32 1)
+  %137 = getelementptr i32* %136, i32 0
+  %138 = load i32* %137
+  %139 = getelementptr i32* %136, i32 1
+  %140 = load i32* %139
+  br label %BB_2_8_1
+
+BB_16_8_1:                                        ; preds = %BB_11_8_1
+  %141 = sitofp i32 %107 to float
+  %142 = sitofp i32 4 to float
+  %143 = fmul float %141, %142
+  %144 = sitofp i32 100 to float
+  %145 = sitofp i32 %107 to float
+  %146 = fsub float %144, %145
+  %147 = sitofp i32 %107 to float
+  %148 = sitofp i32 %107 to float
+  %149 = fadd float %147, %148
+  %150 = fptosi float %146 to i32
+  %151 = fptosi float %149 to i32
+  %152 = add i32 %150, %151
+  %153 = fptosi float %143 to i32
+  br label %BB_2_8_1
+}
+
+define i32* @testFunc_2_8(i32 %input_0, i32 %input_branch_3075958312_0, i32 %input_branch_3075957808_0) {
+BB_0_8_2:
+  br label %BB_3_8_2
+
+BB_1_8_2:                                         ; preds = %BB_2_8_2
+  store i32 %13, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_2, i64 0, i64 0), align 16
+  %0 = fptosi float %4 to i32
+  store i32 %0, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_2, i64 0, i64 1), align 16
+  ret i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_2, i64 0, i64 0)
+
+BB_2_8_2:                                         ; preds = %BB_7_8_2, %BB_6_8_2, %BB_5_8_2
+  %1 = phi i32 [ %34, %BB_5_8_2 ], [ %40, %BB_6_8_2 ], [ %49, %BB_7_8_2 ]
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 4 to float
+  %4 = fmul float %2, %3
+  %5 = sitofp i32 100 to float
+  %6 = sitofp i32 %1 to float
+  %7 = fsub float %5, %6
+  %8 = sitofp i32 4 to float
+  %9 = sitofp i32 %1 to float
+  %10 = fadd float %8, %9
+  %11 = fptosi float %7 to i32
+  %12 = fptosi float %10 to i32
+  %13 = add i32 %11, %12
+  br label %BB_1_8_2
+
+BB_3_8_2:                                         ; preds = %BB_0_8_2
+  %14 = sitofp i32 %input_0 to float
+  %15 = sitofp i32 771 to float
+  %16 = fmul float %14, %15
+  %17 = sitofp i32 4 to float
+  %18 = sitofp i32 100 to float
+  %19 = fsub float %17, %18
+  %20 = fptosi float %16 to i32
+  %21 = fptosi float %19 to i32
+  %22 = add i32 %20, %21
+  switch i32 %input_branch_3075958312_0, label %BB_4_8_2 [
+    i32 1, label %BB_5_8_2
+  ]
+
+BB_4_8_2:                                         ; preds = %BB_3_8_2
+  %23 = sub i32 372, 803
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 276 to float
+  %26 = fmul float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = add i32 %27, %22
+  switch i32 %input_branch_3075957808_0, label %BB_6_8_2 [
+    i32 1, label %BB_7_8_2
+  ]
+
+BB_5_8_2:                                         ; preds = %BB_3_8_2
+  %29 = sub i32 372, 803
+  %30 = sitofp i32 %29 to float
+  %31 = sitofp i32 276 to float
+  %32 = fmul float %30, %31
+  %33 = fptosi float %32 to i32
+  %34 = add i32 %33, %22
+  br label %BB_2_8_2
+
+BB_6_8_2:                                         ; preds = %BB_4_8_2
+  %35 = sub i32 372, 803
+  %36 = sitofp i32 %35 to float
+  %37 = sitofp i32 276 to float
+  %38 = fmul float %36, %37
+  %39 = fptosi float %38 to i32
+  %40 = add i32 %39, %28
+  br label %BB_2_8_2
+
+BB_7_8_2:                                         ; preds = %BB_4_8_2
+  %41 = sitofp i32 %28 to float
+  %42 = sitofp i32 771 to float
+  %43 = fmul float %41, %42
+  %44 = sitofp i32 4 to float
+  %45 = sitofp i32 100 to float
+  %46 = fsub float %44, %45
+  %47 = fptosi float %43 to i32
+  %48 = fptosi float %46 to i32
+  %49 = add i32 %47, %48
+  br label %BB_2_8_2
+}
+
+define i32 @testFunc_3_10(i32 %input_0, i32 %input_1, i32 %input_branch_147082728_0, i32 %input_branch_3075957808_0) {
+BB_0_10_3:
+  br label %BB_3_10_3
+
+BB_1_10_3:                                        ; preds = %BB_2_10_3
+  ret i32 %6
+
+BB_2_10_3:                                        ; preds = %BB_7_10_3, %BB_6_10_3, %BB_5_10_3
+  %0 = phi i32 [ %45, %BB_5_10_3 ], [ %51, %BB_6_10_3 ], [ %60, %BB_7_10_3 ]
+  %1 = sub i32 372, 803
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 276 to float
+  %4 = fmul float %2, %3
+  %5 = fptosi float %4 to i32
+  %6 = add i32 %5, %0
+  br label %BB_1_10_3
+
+BB_3_10_3:                                        ; preds = %BB_0_10_3
+  %7 = sitofp i32 %input_1 to float
+  %8 = sitofp i32 %input_0 to float
+  %9 = fsub float %7, %8
+  %10 = add i32 767, 430
+  %11 = sitofp i32 %input_0 to float
+  %12 = fmul float %9, %11
+  %13 = sitofp i32 %10 to float
+  %14 = sitofp i32 %input_1 to float
+  %15 = fsub float %13, %14
+  %16 = sitofp i32 %10 to float
+  %17 = sitofp i32 %10 to float
+  %18 = fadd float %16, %17
+  %19 = fptosi float %15 to i32
+  %20 = fptosi float %18 to i32
+  %21 = add i32 %19, %20
+  switch i32 %input_branch_147082728_0, label %BB_4_10_3 [
+    i32 1, label %BB_5_10_3
+  ]
+
+BB_4_10_3:                                        ; preds = %BB_3_10_3
+  %22 = fptosi float %12 to i32
+  %23 = add i32 %21, %22
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 %23 to float
+  %26 = fsub float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = fptosi float %26 to i32
+  %29 = sub i32 %27, %28
+  %30 = sitofp i32 %29 to float
+  %31 = fmul float %30, %12
+  %32 = fptosi float %31 to i32
+  %33 = add i32 %32, %21
+  switch i32 %input_branch_3075957808_0, label %BB_6_10_3 [
+    i32 1, label %BB_7_10_3
+  ]
+
+BB_5_10_3:                                        ; preds = %BB_3_10_3
+  %34 = fptosi float %12 to i32
+  %35 = add i32 %21, %34
+  %36 = sitofp i32 %35 to float
+  %37 = sitofp i32 %35 to float
+  %38 = fsub float %36, %37
+  %39 = fptosi float %38 to i32
+  %40 = fptosi float %38 to i32
+  %41 = sub i32 %39, %40
+  %42 = sitofp i32 %41 to float
+  %43 = fmul float %42, %12
+  %44 = fptosi float %43 to i32
+  %45 = add i32 %44, %21
+  br label %BB_2_10_3
+
+BB_6_10_3:                                        ; preds = %BB_4_10_3
+  %46 = sub i32 372, 803
+  %47 = sitofp i32 %46 to float
+  %48 = sitofp i32 276 to float
+  %49 = fmul float %47, %48
+  %50 = fptosi float %49 to i32
+  %51 = add i32 %50, %33
+  br label %BB_2_10_3
+
+BB_7_10_3:                                        ; preds = %BB_4_10_3
+  %52 = sitofp i32 %33 to float
+  %53 = sitofp i32 771 to float
+  %54 = fmul float %52, %53
+  %55 = sitofp i32 4 to float
+  %56 = sitofp i32 100 to float
+  %57 = fsub float %55, %56
+  %58 = fptosi float %54 to i32
+  %59 = fptosi float %57 to i32
+  %60 = add i32 %58, %59
+  br label %BB_2_10_3
+}
+
+define i32 @testFunc_4_11(i32 %input_0, i32 %input_1, i32 %input_branch_3075958312_0, i32 %input_branch_3075957808_0) {
+BB_0_11_4:
+  br label %BB_3_11_4
+
+BB_1_11_4:                                        ; preds = %BB_2_11_4
+  ret i32 %6
+
+BB_2_11_4:                                        ; preds = %BB_7_11_4, %BB_6_11_4, %BB_5_11_4
+  %0 = phi i32 [ %43, %BB_5_11_4 ], [ %49, %BB_6_11_4 ], [ %58, %BB_7_11_4 ]
+  %1 = sub i32 372, 803
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 276 to float
+  %4 = fmul float %2, %3
+  %5 = fptosi float %4 to i32
+  %6 = add i32 %5, %0
+  br label %BB_1_11_4
+
+BB_3_11_4:                                        ; preds = %BB_0_11_4
+  %7 = sitofp i32 %input_1 to float
+  %8 = sitofp i32 %input_0 to float
+  %9 = fsub float %7, %8
+  %10 = add i32 767, 430
+  %11 = sitofp i32 %input_0 to float
+  %12 = fmul float %9, %11
+  %13 = sitofp i32 %10 to float
+  %14 = sitofp i32 %input_1 to float
+  %15 = fsub float %13, %14
+  %16 = sitofp i32 %10 to float
+  %17 = sitofp i32 %10 to float
+  %18 = fadd float %16, %17
+  %19 = fptosi float %15 to i32
+  %20 = fptosi float %18 to i32
+  %21 = add i32 %19, %20
+  switch i32 %input_branch_3075958312_0, label %BB_4_11_4 [
+    i32 1, label %BB_5_11_4
+  ]
+
+BB_4_11_4:                                        ; preds = %BB_3_11_4
+  %22 = fptosi float %12 to i32
+  %23 = add i32 %21, %22
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 %23 to float
+  %26 = fsub float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = fptosi float %26 to i32
+  %29 = sub i32 %27, %28
+  %30 = sitofp i32 %29 to float
+  %31 = fmul float %30, %12
+  %32 = fptosi float %31 to i32
+  %33 = add i32 %32, %21
+  switch i32 %input_branch_3075957808_0, label %BB_6_11_4 [
+    i32 1, label %BB_7_11_4
+  ]
+
+BB_5_11_4:                                        ; preds = %BB_3_11_4
+  %34 = fptosi float %12 to i32
+  %35 = add i32 %34, %21
+  %36 = sitofp i32 %35 to float
+  %37 = fsub float %36, %12
+  %38 = fptosi float %37 to i32
+  %39 = sub i32 %38, %21
+  %40 = sitofp i32 %39 to float
+  %41 = fmul float %40, %12
+  %42 = fptosi float %41 to i32
+  %43 = add i32 %42, %21
+  br label %BB_2_11_4
+
+BB_6_11_4:                                        ; preds = %BB_4_11_4
+  %44 = sub i32 372, 803
+  %45 = sitofp i32 %44 to float
+  %46 = sitofp i32 276 to float
+  %47 = fmul float %45, %46
+  %48 = fptosi float %47 to i32
+  %49 = add i32 %48, %33
+  br label %BB_2_11_4
+
+BB_7_11_4:                                        ; preds = %BB_4_11_4
+  %50 = sitofp i32 %33 to float
+  %51 = sitofp i32 771 to float
+  %52 = fmul float %50, %51
+  %53 = sitofp i32 4 to float
+  %54 = sitofp i32 100 to float
+  %55 = fsub float %53, %54
+  %56 = fptosi float %52 to i32
+  %57 = fptosi float %55 to i32
+  %58 = add i32 %56, %57
+  br label %BB_2_11_4
+}
+
+define i32* @testFunc_5_13(i32 %input_0, i32 %input_1, i32 %input_branch_147106024_0, i32 %input_branch_3075957808_0) {
+BB_0_13_5:
+  br label %BB_3_13_5
+
+BB_1_13_5:                                        ; preds = %BB_2_13_5
+  store i32 %13, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_5, i64 0, i64 0), align 16
+  %0 = fptosi float %4 to i32
+  store i32 %0, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_5, i64 0, i64 1), align 16
+  ret i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_5, i64 0, i64 0)
+
+BB_2_13_5:                                        ; preds = %BB_8_13_5, %BB_7_13_5, %BB_6_13_5
+  %1 = phi i32 [ %50, %BB_6_13_5 ], [ %59, %BB_7_13_5 ], [ %61, %BB_8_13_5 ]
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 4 to float
+  %4 = fmul float %2, %3
+  %5 = sitofp i32 100 to float
+  %6 = sitofp i32 %1 to float
+  %7 = fsub float %5, %6
+  %8 = sitofp i32 4 to float
+  %9 = sitofp i32 %1 to float
+  %10 = fadd float %8, %9
+  %11 = fptosi float %7 to i32
+  %12 = fptosi float %10 to i32
+  %13 = add i32 %11, %12
+  br label %BB_1_13_5
+
+BB_3_13_5:                                        ; preds = %BB_0_13_5
+  %14 = sitofp i32 %input_0 to float
+  %15 = sitofp i32 %input_0 to float
+  %16 = fadd float %14, %15
+  %17 = or i32 %input_1, 1
+  %18 = sdiv i32 %input_0, %17
+  %19 = sitofp i32 %input_1 to float
+  %20 = fmul float %16, %19
+  %21 = sitofp i32 %18 to float
+  %22 = sitofp i32 %input_0 to float
+  %23 = fsub float %21, %22
+  %24 = fptosi float %20 to i32
+  %25 = fptosi float %23 to i32
+  %26 = add i32 %24, %25
+  switch i32 %input_branch_147106024_0, label %BB_4_13_5 [
+    i32 1, label %BB_5_13_5
+  ]
+
+BB_4_13_5:                                        ; preds = %BB_3_13_5
+  %27 = sub i32 372, 803
+  %28 = sitofp i32 %27 to float
+  %29 = sitofp i32 276 to float
+  %30 = fmul float %28, %29
+  %31 = fptosi float %30 to i32
+  %32 = add i32 %31, %26
+  switch i32 %input_branch_3075957808_0, label %BB_6_13_5 [
+    i32 1, label %BB_7_13_5
+  ]
+
+BB_5_13_5:                                        ; preds = %BB_3_13_5
+  %33 = sitofp i32 %26 to float
+  %34 = sitofp i32 4 to float
+  %35 = fmul float %33, %34
+  %36 = sitofp i32 100 to float
+  %37 = sitofp i32 %26 to float
+  %38 = fsub float %36, %37
+  %39 = sitofp i32 %26 to float
+  %40 = sitofp i32 %26 to float
+  %41 = fadd float %39, %40
+  %42 = fptosi float %38 to i32
+  %43 = fptosi float %41 to i32
+  %44 = add i32 %42, %43
+  br label %BB_8_13_5
+
+BB_6_13_5:                                        ; preds = %BB_4_13_5
+  %45 = sub i32 372, 803
+  %46 = sitofp i32 %45 to float
+  %47 = sitofp i32 276 to float
+  %48 = fmul float %46, %47
+  %49 = fptosi float %48 to i32
+  %50 = add i32 %49, %32
+  br label %BB_2_13_5
+
+BB_7_13_5:                                        ; preds = %BB_4_13_5
+  %51 = sitofp i32 %32 to float
+  %52 = sitofp i32 771 to float
+  %53 = fmul float %51, %52
+  %54 = sitofp i32 4 to float
+  %55 = sitofp i32 100 to float
+  %56 = fsub float %54, %55
+  %57 = fptosi float %53 to i32
+  %58 = fptosi float %56 to i32
+  %59 = add i32 %57, %58
+  br label %BB_2_13_5
+
+BB_8_13_5:                                        ; preds = %BB_5_13_5
+  %60 = fptosi float %35 to i32
+  %61 = call i32 @testFunc_6_8(i32 %44, i32 %60, i32 1, i32 1)
+  br label %BB_2_13_5
+}
+
+define i32 @testFunc_6_8(i32 %input_0, i32 %input_1, i32 %input_branch_147117352_0, i32 %input_branch_3075957808_0) {
+BB_0_8_6:
+  br label %BB_3_8_6
+
+BB_1_8_6:                                         ; preds = %BB_2_8_6
+  ret i32 %6
+
+BB_2_8_6:                                         ; preds = %BB_7_8_6, %BB_6_8_6, %BB_5_8_6
+  %0 = phi i32 [ %45, %BB_5_8_6 ], [ %51, %BB_6_8_6 ], [ %60, %BB_7_8_6 ]
+  %1 = sub i32 372, 803
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 276 to float
+  %4 = fmul float %2, %3
+  %5 = fptosi float %4 to i32
+  %6 = add i32 %5, %0
+  br label %BB_1_8_6
+
+BB_3_8_6:                                         ; preds = %BB_0_8_6
+  %7 = sitofp i32 %input_1 to float
+  %8 = sitofp i32 %input_0 to float
+  %9 = fsub float %7, %8
+  %10 = add i32 767, 430
+  %11 = sitofp i32 %input_0 to float
+  %12 = fmul float %9, %11
+  %13 = sitofp i32 %10 to float
+  %14 = sitofp i32 %input_1 to float
+  %15 = fsub float %13, %14
+  %16 = sitofp i32 %10 to float
+  %17 = sitofp i32 %10 to float
+  %18 = fadd float %16, %17
+  %19 = fptosi float %15 to i32
+  %20 = fptosi float %18 to i32
+  %21 = add i32 %19, %20
+  switch i32 %input_branch_147117352_0, label %BB_4_8_6 [
+    i32 1, label %BB_5_8_6
+  ]
+
+BB_4_8_6:                                         ; preds = %BB_3_8_6
+  %22 = fptosi float %12 to i32
+  %23 = add i32 %21, %22
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 %23 to float
+  %26 = fsub float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = fptosi float %26 to i32
+  %29 = sub i32 %27, %28
+  %30 = sitofp i32 %29 to float
+  %31 = fmul float %30, %12
+  %32 = fptosi float %31 to i32
+  %33 = add i32 %32, %21
+  switch i32 %input_branch_3075957808_0, label %BB_6_8_6 [
+    i32 1, label %BB_7_8_6
+  ]
+
+BB_5_8_6:                                         ; preds = %BB_3_8_6
+  %34 = fptosi float %12 to i32
+  %35 = add i32 %21, %34
+  %36 = sitofp i32 %35 to float
+  %37 = sitofp i32 %35 to float
+  %38 = fsub float %36, %37
+  %39 = fptosi float %38 to i32
+  %40 = fptosi float %38 to i32
+  %41 = sub i32 %39, %40
+  %42 = sitofp i32 %41 to float
+  %43 = fmul float %42, %12
+  %44 = fptosi float %43 to i32
+  %45 = add i32 %44, %21
+  br label %BB_2_8_6
+
+BB_6_8_6:                                         ; preds = %BB_4_8_6
+  %46 = sub i32 372, 803
+  %47 = sitofp i32 %46 to float
+  %48 = sitofp i32 276 to float
+  %49 = fmul float %47, %48
+  %50 = fptosi float %49 to i32
+  %51 = add i32 %50, %33
+  br label %BB_2_8_6
+
+BB_7_8_6:                                         ; preds = %BB_4_8_6
+  %52 = sitofp i32 %33 to float
+  %53 = sitofp i32 771 to float
+  %54 = fmul float %52, %53
+  %55 = sitofp i32 4 to float
+  %56 = sitofp i32 100 to float
+  %57 = fsub float %55, %56
+  %58 = fptosi float %54 to i32
+  %59 = fptosi float %57 to i32
+  %60 = add i32 %58, %59
+  br label %BB_2_8_6
+}
+
+define i32* @testFunc_7_14(i32 %input_0, i32 %input_1, i32 %input_branch_3075958440_0, i32 %input_branch_3075957808_0) {
+BB_0_14_7:
+  br label %BB_3_14_7
+
+BB_1_14_7:                                        ; preds = %BB_2_14_7
+  store i32 %13, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_7, i64 0, i64 0), align 16
+  %0 = fptosi float %4 to i32
+  store i32 %0, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_7, i64 0, i64 1), align 16
+  ret i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_7, i64 0, i64 0)
+
+BB_2_14_7:                                        ; preds = %BB_8_14_7, %BB_7_14_7, %BB_6_14_7
+  %1 = phi i32 [ %50, %BB_6_14_7 ], [ %59, %BB_7_14_7 ], [ %61, %BB_8_14_7 ]
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 4 to float
+  %4 = fmul float %2, %3
+  %5 = sitofp i32 100 to float
+  %6 = sitofp i32 %1 to float
+  %7 = fsub float %5, %6
+  %8 = sitofp i32 4 to float
+  %9 = sitofp i32 %1 to float
+  %10 = fadd float %8, %9
+  %11 = fptosi float %7 to i32
+  %12 = fptosi float %10 to i32
+  %13 = add i32 %11, %12
+  br label %BB_1_14_7
+
+BB_3_14_7:                                        ; preds = %BB_0_14_7
+  %14 = sitofp i32 %input_1 to float
+  %15 = sitofp i32 %input_0 to float
+  %16 = fadd float %14, %15
+  %17 = or i32 %input_0, 1
+  %18 = sdiv i32 %input_1, %17
+  %19 = sitofp i32 %input_1 to float
+  %20 = fmul float %16, %19
+  %21 = sitofp i32 %18 to float
+  %22 = sitofp i32 %input_0 to float
+  %23 = fsub float %21, %22
+  %24 = fptosi float %20 to i32
+  %25 = fptosi float %23 to i32
+  %26 = add i32 %24, %25
+  switch i32 %input_branch_3075958440_0, label %BB_4_14_7 [
+    i32 1, label %BB_5_14_7
+  ]
+
+BB_4_14_7:                                        ; preds = %BB_3_14_7
+  %27 = sub i32 372, 803
+  %28 = sitofp i32 %27 to float
+  %29 = sitofp i32 276 to float
+  %30 = fmul float %28, %29
+  %31 = fptosi float %30 to i32
+  %32 = add i32 %31, %26
+  switch i32 %input_branch_3075957808_0, label %BB_6_14_7 [
+    i32 1, label %BB_7_14_7
+  ]
+
+BB_5_14_7:                                        ; preds = %BB_3_14_7
+  %33 = sitofp i32 %26 to float
+  %34 = sitofp i32 4 to float
+  %35 = fmul float %33, %34
+  %36 = sitofp i32 100 to float
+  %37 = sitofp i32 %26 to float
+  %38 = fsub float %36, %37
+  %39 = sitofp i32 %26 to float
+  %40 = sitofp i32 %26 to float
+  %41 = fadd float %39, %40
+  %42 = fptosi float %38 to i32
+  %43 = fptosi float %41 to i32
+  %44 = add i32 %42, %43
+  br label %BB_8_14_7
+
+BB_6_14_7:                                        ; preds = %BB_4_14_7
+  %45 = sub i32 372, 803
+  %46 = sitofp i32 %45 to float
+  %47 = sitofp i32 276 to float
+  %48 = fmul float %46, %47
+  %49 = fptosi float %48 to i32
+  %50 = add i32 %49, %32
+  br label %BB_2_14_7
+
+BB_7_14_7:                                        ; preds = %BB_4_14_7
+  %51 = sitofp i32 %32 to float
+  %52 = sitofp i32 771 to float
+  %53 = fmul float %51, %52
+  %54 = sitofp i32 4 to float
+  %55 = sitofp i32 100 to float
+  %56 = fsub float %54, %55
+  %57 = fptosi float %53 to i32
+  %58 = fptosi float %56 to i32
+  %59 = add i32 %57, %58
+  br label %BB_2_14_7
+
+BB_8_14_7:                                        ; preds = %BB_5_14_7
+  %60 = fptosi float %35 to i32
+  %61 = call i32 @testFunc_8_8(i32 %44, i32 %60, i32 1, i32 1)
+  br label %BB_2_14_7
+}
+
+define i32 @testFunc_8_8(i32 %input_0, i32 %input_1, i32 %input_branch_147139272_0, i32 %input_branch_3075957808_0) {
+BB_0_8_8:
+  br label %BB_3_8_8
+
+BB_1_8_8:                                         ; preds = %BB_2_8_8
+  ret i32 %6
+
+BB_2_8_8:                                         ; preds = %BB_7_8_8, %BB_6_8_8, %BB_5_8_8
+  %0 = phi i32 [ %45, %BB_5_8_8 ], [ %51, %BB_6_8_8 ], [ %60, %BB_7_8_8 ]
+  %1 = sub i32 372, 803
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 276 to float
+  %4 = fmul float %2, %3
+  %5 = fptosi float %4 to i32
+  %6 = add i32 %5, %0
+  br label %BB_1_8_8
+
+BB_3_8_8:                                         ; preds = %BB_0_8_8
+  %7 = sitofp i32 %input_1 to float
+  %8 = sitofp i32 %input_0 to float
+  %9 = fsub float %7, %8
+  %10 = add i32 767, 430
+  %11 = sitofp i32 %input_0 to float
+  %12 = fmul float %9, %11
+  %13 = sitofp i32 %10 to float
+  %14 = sitofp i32 %input_1 to float
+  %15 = fsub float %13, %14
+  %16 = sitofp i32 %10 to float
+  %17 = sitofp i32 %10 to float
+  %18 = fadd float %16, %17
+  %19 = fptosi float %15 to i32
+  %20 = fptosi float %18 to i32
+  %21 = add i32 %19, %20
+  switch i32 %input_branch_147139272_0, label %BB_4_8_8 [
+    i32 1, label %BB_5_8_8
+  ]
+
+BB_4_8_8:                                         ; preds = %BB_3_8_8
+  %22 = fptosi float %12 to i32
+  %23 = add i32 %21, %22
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 %23 to float
+  %26 = fsub float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = fptosi float %26 to i32
+  %29 = sub i32 %27, %28
+  %30 = sitofp i32 %29 to float
+  %31 = fmul float %30, %12
+  %32 = fptosi float %31 to i32
+  %33 = add i32 %32, %21
+  switch i32 %input_branch_3075957808_0, label %BB_6_8_8 [
+    i32 1, label %BB_7_8_8
+  ]
+
+BB_5_8_8:                                         ; preds = %BB_3_8_8
+  %34 = fptosi float %12 to i32
+  %35 = add i32 %21, %34
+  %36 = sitofp i32 %35 to float
+  %37 = sitofp i32 %35 to float
+  %38 = fsub float %36, %37
+  %39 = fptosi float %38 to i32
+  %40 = fptosi float %38 to i32
+  %41 = sub i32 %39, %40
+  %42 = sitofp i32 %41 to float
+  %43 = fmul float %42, %12
+  %44 = fptosi float %43 to i32
+  %45 = add i32 %44, %21
+  br label %BB_2_8_8
+
+BB_6_8_8:                                         ; preds = %BB_4_8_8
+  %46 = sub i32 372, 803
+  %47 = sitofp i32 %46 to float
+  %48 = sitofp i32 276 to float
+  %49 = fmul float %47, %48
+  %50 = fptosi float %49 to i32
+  %51 = add i32 %50, %33
+  br label %BB_2_8_8
+
+BB_7_8_8:                                         ; preds = %BB_4_8_8
+  %52 = sitofp i32 %33 to float
+  %53 = sitofp i32 771 to float
+  %54 = fmul float %52, %53
+  %55 = sitofp i32 4 to float
+  %56 = sitofp i32 100 to float
+  %57 = fsub float %55, %56
+  %58 = fptosi float %54 to i32
+  %59 = fptosi float %57 to i32
+  %60 = add i32 %58, %59
+  br label %BB_2_8_8
+}
+
+define i32* @testFunc_9_15(i32 %input_0, i32 %input_branch_3075958440_0, i32 %input_branch_3075957808_0) {
+BB_0_15_9:
+  br label %BB_3_15_9
+
+BB_1_15_9:                                        ; preds = %BB_2_15_9
+  store i32 %13, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_9, i64 0, i64 0), align 16
+  %0 = fptosi float %4 to i32
+  store i32 %0, i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_9, i64 0, i64 1), align 16
+  ret i32* getelementptr inbounds ([2 x i32]* @output_array_result_1_9, i64 0, i64 0)
+
+BB_2_15_9:                                        ; preds = %BB_7_15_9, %BB_6_15_9, %BB_5_15_9
+  %1 = phi i32 [ %34, %BB_5_15_9 ], [ %40, %BB_6_15_9 ], [ %49, %BB_7_15_9 ]
+  %2 = sitofp i32 %1 to float
+  %3 = sitofp i32 4 to float
+  %4 = fmul float %2, %3
+  %5 = sitofp i32 100 to float
+  %6 = sitofp i32 %1 to float
+  %7 = fsub float %5, %6
+  %8 = sitofp i32 4 to float
+  %9 = sitofp i32 %1 to float
+  %10 = fadd float %8, %9
+  %11 = fptosi float %7 to i32
+  %12 = fptosi float %10 to i32
+  %13 = add i32 %11, %12
+  br label %BB_1_15_9
+
+BB_3_15_9:                                        ; preds = %BB_0_15_9
+  %14 = sitofp i32 %input_0 to float
+  %15 = sitofp i32 771 to float
+  %16 = fmul float %14, %15
+  %17 = sitofp i32 4 to float
+  %18 = sitofp i32 100 to float
+  %19 = fsub float %17, %18
+  %20 = fptosi float %16 to i32
+  %21 = fptosi float %19 to i32
+  %22 = add i32 %20, %21
+  switch i32 %input_branch_3075958440_0, label %BB_4_15_9 [
+    i32 1, label %BB_5_15_9
+  ]
+
+BB_4_15_9:                                        ; preds = %BB_3_15_9
+  %23 = sub i32 372, 803
+  %24 = sitofp i32 %23 to float
+  %25 = sitofp i32 276 to float
+  %26 = fmul float %24, %25
+  %27 = fptosi float %26 to i32
+  %28 = add i32 %27, %22
+  switch i32 %input_branch_3075957808_0, label %BB_6_15_9 [
+    i32 1, label %BB_7_15_9
+  ]
+
+BB_5_15_9:                                        ; preds = %BB_3_15_9
+  %29 = sub i32 372, 803
+  %30 = sitofp i32 %29 to float
+  %31 = sitofp i32 276 to float
+  %32 = fmul float %30, %31
+  %33 = fptosi float %32 to i32
+  %34 = add i32 %33, %22
+  br label %BB_2_15_9
+
+BB_6_15_9:                                        ; preds = %BB_4_15_9
+  %35 = sub i32 372, 803
+  %36 = sitofp i32 %35 to float
+  %37 = sitofp i32 276 to float
+  %38 = fmul float %36, %37
+  %39 = fptosi float %38 to i32
+  %40 = add i32 %39, %28
+  br label %BB_2_15_9
+
+BB_7_15_9:                                        ; preds = %BB_4_15_9
+  %41 = sitofp i32 %28 to float
+  %42 = sitofp i32 771 to float
+  %43 = fmul float %41, %42
+  %44 = sitofp i32 4 to float
+  %45 = sitofp i32 100 to float
+  %46 = fsub float %44, %45
+  %47 = fptosi float %43 to i32
+  %48 = fptosi float %46 to i32
+  %49 = add i32 %47, %48
+  br label %BB_2_15_9
+}
+
+define i32* @testFunc_10_10(i32 %input_0, i32 %input_1, i32 %input_2, i32 %input_3, i32 %input_4, i32 %input_5, i32 %input_branch_147169984_0, i32 %input_branch_3075957808_0, i32 %input_branch_3075957808_01, i32 %input_branch_3075957808_02, i32 %input_branch_3075957808_03, i32 %input_branch_147170544_0) {
+BB_0_10_10:
+  br label %BB_3_10_10
+
+BB_1_10_10:                                       ; preds = %BB_2_10_10
+  store i32 %40, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 0), align 16
+  %0 = fptosi float %43 to i32
+  store i32 %0, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 1), align 16
+  %1 = fptosi float %32 to i32
+  store i32 %1, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 2), align 16
+  %2 = fptosi float %26 to i32
+  store i32 %2, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 3), align 16
+  %3 = fptosi float %29 to i32
+  store i32 %3, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 4), align 16
+  store i32 %41, i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 5), align 16
+  ret i32* getelementptr inbounds ([6 x i32]* @output_array_result_1_10, i64 0, i64 0)
+
+BB_2_10_10:                                       ; preds = %BB_24_10_10, %BB_23_10_10, %BB_22_10_10, %BB_21_10_10, %BB_20_10_10, %BB_19_10_10, %BB_18_10_10
+  %4 = phi i32 [ %437, %BB_18_10_10 ], [ %480, %BB_19_10_10 ], [ %506, %BB_20_10_10 ], [ %535, %BB_21_10_10 ], [ %558, %BB_22_10_10 ], [ %591, %BB_23_10_10 ], [ %612, %BB_24_10_10 ]
+  %5 = phi i32 [ %446, %BB_18_10_10 ], [ %481, %BB_19_10_10 ], [ %513, %BB_20_10_10 ], [ %541, %BB_21_10_10 ], [ %566, %BB_22_10_10 ], [ %595, %BB_23_10_10 ], [ %620, %BB_24_10_10 ]
+  %6 = phi i32 [ %447, %BB_18_10_10 ], [ %482, %BB_19_10_10 ], [ %514, %BB_20_10_10 ], [ %542, %BB_21_10_10 ], [ %567, %BB_22_10_10 ], [ %596, %BB_23_10_10 ], [ %621, %BB_24_10_10 ]
+  %7 = phi i32 [ %448, %BB_18_10_10 ], [ %483, %BB_19_10_10 ], [ %515, %BB_20_10_10 ], [ %543, %BB_21_10_10 ], [ %568, %BB_22_10_10 ], [ %597, %BB_23_10_10 ], [ %622, %BB_24_10_10 ]
+  %8 = phi i32 [ %449, %BB_18_10_10 ], [ %484, %BB_19_10_10 ], [ %516, %BB_20_10_10 ], [ %544, %BB_21_10_10 ], [ %569, %BB_22_10_10 ], [ %598, %BB_23_10_10 ], [ %623, %BB_24_10_10 ]
+  %9 = phi i32 [ %443, %BB_18_10_10 ], [ %475, %BB_19_10_10 ], [ %486, %BB_20_10_10 ], [ %533, %BB_21_10_10 ], [ %556, %BB_22_10_10 ], [ %587, %BB_23_10_10 ], [ %610, %BB_24_10_10 ]
+  %10 = or i32 976, 1
+  %11 = sdiv i32 %4, %10
+  %12 = add i32 %9, %5
+  %13 = sitofp i32 %5 to float
+  %14 = sitofp i32 592 to float
+  %15 = fadd float %13, %14
+  %16 = fptosi float %15 to i32
+  %17 = add i32 %16, %6
+  %18 = sitofp i32 645 to float
+  %19 = sitofp i32 %6 to float
+  %20 = fmul float %18, %19
+  %21 = add i32 %9, 976
+  %22 = mul i32 645, 458
+  %23 = mul i32 822, 976
+  %24 = sub i32 684, 242
+  %25 = sitofp i32 %11 to float
+  %26 = fadd float %25, %20
+  %27 = sitofp i32 %24 to float
+  %28 = sitofp i32 %5 to float
+  %29 = fsub float %27, %28
+  %30 = sitofp i32 %22 to float
+  %31 = sitofp i32 %7 to float
+  %32 = fsub float %30, %31
+  %33 = sitofp i32 %23 to float
+  %34 = sitofp i32 %8 to float
+  %35 = fsub float %33, %34
+  %36 = or i32 %9, 1
+  %37 = sdiv i32 %21, %36
+  %38 = or i32 %23, 1
+  %39 = sdiv i32 %23, %38
+  %40 = add i32 %37, %4
+  %41 = add i32 %39, %12
+  %42 = sitofp i32 %17 to float
+  %43 = fmul float %35, %42
+  br label %BB_1_10_10
+
+BB_3_10_10:                                       ; preds = %BB_0_10_10
+  %44 = add i32 %input_5, %input_0
+  %45 = sub i32 %input_1, %input_3
+  %46 = sitofp i32 %input_2 to float
+  %47 = sitofp i32 %input_4 to float
+  %48 = fsub float %46, %47
+  %49 = mul i32 %45, %input_3
+  %50 = or i32 %input_3, 1
+  %51 = sdiv i32 576, %50
+  %52 = add i32 %input_5, 175
+  %53 = sitofp i32 631 to float
+  %54 = sitofp i32 %input_5 to float
+  %55 = fsub float %53, %54
+  %56 = sitofp i32 175 to float
+  %57 = sitofp i32 565 to float
+  %58 = fadd float %56, %57
+  %59 = sitofp i32 175 to float
+  %60 = sitofp i32 175 to float
+  %61 = fsub float %59, %60
+  %62 = sitofp i32 643 to float
+  %63 = sitofp i32 643 to float
+  %64 = fadd float %62, %63
+  %65 = sitofp i32 %44 to float
+  %66 = sitofp i32 %49 to float
+  %67 = fsub float %65, %66
+  %68 = fptosi float %61 to i32
+  %69 = mul i32 %68, %45
+  %70 = sitofp i32 %69 to float
+  %71 = fmul float %70, %48
+  %72 = add i32 %51, %input_3
+  %73 = sitofp i32 %52 to float
+  %74 = fadd float %73, %58
+  %75 = fsub float %55, %64
+  %76 = add i32 %72, %input_1
+  switch i32 %input_branch_147169984_0, label %BB_4_10_10 [
+    i32 1, label %BB_5_10_10
+  ]
+
+BB_4_10_10:                                       ; preds = %BB_3_10_10
+  %77 = fptosi float %75 to i32
+  %78 = or i32 %77, 1
+  %79 = sdiv i32 %76, %78
+  %80 = sitofp i32 742 to float
+  %81 = fadd float %80, %71
+  %82 = fmul float %67, %67
+  %83 = sitofp i32 73 to float
+  %84 = sitofp i32 443 to float
+  %85 = fmul float %83, %84
+  %86 = fptosi float %85 to i32
+  %87 = add i32 %79, %86
+  %88 = fptosi float %81 to i32
+  %89 = or i32 %88, 1
+  %90 = sitofp i32 %89 to float
+  %91 = fdiv float %82, %90
+  %92 = fptosi float %91 to i32
+  %93 = add i32 %92, %87
+  %94 = sitofp i32 %93 to float
+  %95 = fsub float %94, %71
+  %96 = fptosi float %95 to i32
+  %97 = fptosi float %74 to i32
+  %98 = sub i32 %96, %97
+  %99 = sitofp i32 %98 to float
+  %100 = sitofp i32 %76 to float
+  %101 = fmul float %99, %100
+  %102 = fptosi float %101 to i32
+  %103 = fptosi float %75 to i32
+  %104 = add i32 %102, %103
+  switch i32 %input_branch_3075957808_0, label %BB_6_10_10 [
+    i32 1, label %BB_7_10_10
+  ]
+
+BB_5_10_10:                                       ; preds = %BB_3_10_10
+  %105 = sitofp i32 %76 to float
+  %106 = sitofp i32 73 to float
+  %107 = fsub float %105, %106
+  %108 = sitofp i32 %76 to float
+  %109 = sitofp i32 976 to float
+  %110 = fmul float %108, %109
+  %111 = fptosi float %71 to i32
+  %112 = sub i32 73, %111
+  %113 = fsub float %74, %67
+  %114 = fmul float %107, %74
+  %115 = fptosi float %113 to i32
+  %116 = fptosi float %74 to i32
+  %117 = sub i32 %115, %116
+  %118 = mul i32 73, 73
+  %119 = sitofp i32 443 to float
+  %120 = fmul float %119, %113
+  %121 = add i32 645, 458
+  %122 = sitofp i32 684 to float
+  %123 = sitofp i32 242 to float
+  %124 = fadd float %122, %123
+  %125 = sitofp i32 %117 to float
+  %126 = fsub float %110, %125
+  %127 = fptosi float %113 to i32
+  %128 = or i32 %112, 1
+  %129 = sdiv i32 %127, %128
+  %130 = sitofp i32 %121 to float
+  %131 = fadd float %130, %67
+  %132 = fsub float %120, %75
+  %133 = fptosi float %124 to i32
+  %134 = add i32 %133, %118
+  %135 = fptosi float %71 to i32
+  %136 = add i32 %129, %135
+  br label %BB_8_10_10
+
+BB_6_10_10:                                       ; preds = %BB_4_10_10
+  %137 = or i32 %104, 1
+  %138 = sdiv i32 %104, %137
+  %139 = sitofp i32 641 to float
+  %140 = sitofp i32 %104 to float
+  %141 = fsub float %139, %140
+  %142 = sitofp i32 202 to float
+  %143 = fsub float %141, %142
+  %144 = sitofp i32 247 to float
+  %145 = fsub float %141, %144
+  %146 = add i32 %138, %104
+  %147 = sitofp i32 %104 to float
+  %148 = fadd float %147, %141
+  %149 = fptosi float %141 to i32
+  %150 = add i32 %104, %149
+  %151 = fmul float %141, %141
+  br label %BB_9_10_10
+
+BB_7_10_10:                                       ; preds = %BB_4_10_10
+  %152 = or i32 %104, 1
+  %153 = sdiv i32 %104, %152
+  %154 = sitofp i32 %104 to float
+  %155 = sitofp i32 73 to float
+  %156 = fptosi float %155 to i32
+  %157 = or i32 %156, 1
+  %158 = sitofp i32 %157 to float
+  %159 = fdiv float %154, %158
+  %160 = sitofp i32 767 to float
+  %161 = sitofp i32 430 to float
+  %162 = fadd float %160, %161
+  %163 = fptosi float %159 to i32
+  %164 = add i32 %163, 742
+  %165 = sitofp i32 %104 to float
+  %166 = fmul float %165, %159
+  %167 = sitofp i32 %153 to float
+  %168 = sitofp i32 %104 to float
+  %169 = fsub float %167, %168
+  %170 = sitofp i32 %104 to float
+  %171 = fsub float %159, %170
+  %172 = fptosi float %159 to i32
+  %173 = add i32 %153, %172
+  br label %BB_10_10_10
+
+BB_8_10_10:                                       ; preds = %BB_5_10_10
+  %174 = sitofp i32 %136 to float
+  %175 = sitofp i32 976 to float
+  %176 = fadd float %174, %175
+  %177 = fptosi float %131 to i32
+  %178 = mul i32 %134, %177
+  %179 = fptosi float %131 to i32
+  %180 = fptosi float %131 to i32
+  %181 = sub i32 %179, %180
+  %182 = sitofp i32 645 to float
+  %183 = sitofp i32 458 to float
+  %184 = fsub float %182, %183
+  %185 = sitofp i32 684 to float
+  %186 = sitofp i32 242 to float
+  %187 = fsub float %185, %186
+  %188 = fptosi float %176 to i32
+  %189 = add i32 %188, %178
+  %190 = fptosi float %114 to i32
+  %191 = or i32 %190, 1
+  %192 = sdiv i32 %181, %191
+  %193 = fptosi float %126 to i32
+  %194 = or i32 %193, 1
+  %195 = sdiv i32 %192, %194
+  %196 = sitofp i32 %134 to float
+  %197 = fsub float %184, %196
+  %198 = fptosi float %187 to i32
+  %199 = mul i32 %198, 443
+  %200 = sitofp i32 %189 to float
+  %201 = fadd float %197, %200
+  %202 = fptosi float %114 to i32
+  %203 = or i32 %202, 1
+  %204 = sdiv i32 %199, %203
+  %205 = fptosi float %201 to i32
+  %206 = fptosi float %132 to i32
+  %207 = add i32 %205, %206
+  %208 = sitofp i32 %195 to float
+  %209 = fsub float %208, %131
+  %210 = sitofp i32 %204 to float
+  %211 = sitofp i32 %136 to float
+  %212 = fmul float %210, %211
+  switch i32 %input_branch_3075957808_01, label %BB_11_10_10 [
+    i32 1, label %BB_12_10_10
+  ]
+
+BB_9_10_10:                                       ; preds = %BB_6_10_10
+  %213 = fptosi float %151 to i32
+  %214 = sub i32 %213, 576
+  %215 = sitofp i32 175 to float
+  %216 = fsub float %215, %143
+  %217 = fptosi float %148 to i32
+  %218 = mul i32 %217, 175
+  %219 = fptosi float %216 to i32
+  %220 = fptosi float %145 to i32
+  %221 = mul i32 %219, %220
+  %222 = add i32 %150, 643
+  %223 = sitofp i32 565 to float
+  %224 = sitofp i32 631 to float
+  %225 = fadd float %223, %224
+  %226 = mul i32 %222, %146
+  %227 = sitofp i32 %221 to float
+  %228 = fsub float %227, %151
+  %229 = or i32 %218, 1
+  %230 = sdiv i32 %214, %229
+  %231 = fptosi float %148 to i32
+  %232 = add i32 %230, %231
+  %233 = sitofp i32 %232 to float
+  %234 = sitofp i32 %150 to float
+  %235 = fmul float %233, %234
+  %236 = fptosi float %225 to i32
+  %237 = fptosi float %225 to i32
+  %238 = add i32 %236, %237
+  %239 = sitofp i32 %226 to float
+  %240 = sitofp i32 %146 to float
+  %241 = fsub float %239, %240
+  %242 = sitofp i32 %238 to float
+  %243 = fadd float %242, %143
+  %244 = fptosi float %243 to i32
+  %245 = fptosi float %241 to i32
+  %246 = add i32 %244, %245
+  switch i32 %input_branch_3075957808_02, label %BB_13_10_10 [
+    i32 1, label %BB_14_10_10
+  ]
+
+BB_10_10_10:                                      ; preds = %BB_7_10_10
+  %247 = sitofp i32 %173 to float
+  %248 = fptosi float %162 to i32
+  %249 = or i32 %248, 1
+  %250 = sitofp i32 %249 to float
+  %251 = fdiv float %247, %250
+  %252 = fptosi float %166 to i32
+  %253 = or i32 %252, 1
+  %254 = sdiv i32 %173, %253
+  %255 = fptosi float %166 to i32
+  %256 = or i32 %255, 1
+  %257 = sdiv i32 %164, %256
+  %258 = sitofp i32 641 to float
+  %259 = fadd float %166, %258
+  %260 = fptosi float %169 to i32
+  %261 = fptosi float %171 to i32
+  %262 = add i32 %260, %261
+  %263 = fmul float %169, %169
+  %264 = sitofp i32 175 to float
+  %265 = fmul float %162, %264
+  %266 = fptosi float %171 to i32
+  %267 = sub i32 %266, 565
+  %268 = sitofp i32 %257 to float
+  %269 = fsub float %268, %251
+  %270 = sitofp i32 %254 to float
+  %271 = fsub float %259, %270
+  %272 = sitofp i32 %262 to float
+  %273 = fadd float %272, %263
+  %274 = fptosi float %265 to i32
+  %275 = add i32 %274, %267
+  %276 = fptosi float %269 to i32
+  %277 = fptosi float %273 to i32
+  %278 = add i32 %276, %277
+  %279 = sitofp i32 %275 to float
+  %280 = fmul float %271, %279
+  br label %BB_15_10_10
+
+BB_11_10_10:                                      ; preds = %BB_8_10_10
+  %281 = sitofp i32 %207 to float
+  %282 = fadd float %209, %281
+  %283 = add i32 %207, 767
+  %284 = sitofp i32 %207 to float
+  %285 = fptosi float %209 to i32
+  %286 = or i32 %285, 1
+  %287 = sitofp i32 %286 to float
+  %288 = fdiv float %284, %287
+  %289 = fsub float %212, %212
+  %290 = fptosi float %209 to i32
+  %291 = or i32 %290, 1
+  %292 = sdiv i32 430, %291
+  %293 = sitofp i32 %283 to float
+  %294 = fmul float %289, %293
+  %295 = sitofp i32 %292 to float
+  %296 = fsub float %295, %288
+  %297 = fptosi float %296 to i32
+  %298 = fptosi float %282 to i32
+  %299 = add i32 %297, %298
+  br label %BB_16_10_10
+
+BB_12_10_10:                                      ; preds = %BB_8_10_10
+  %300 = sitofp i32 %207 to float
+  %301 = sitofp i32 %207 to float
+  %302 = fsub float %300, %301
+  %303 = or i32 %207, 1
+  %304 = sdiv i32 247, %303
+  %305 = fptosi float %212 to i32
+  %306 = mul i32 %207, %305
+  %307 = sitofp i32 %306 to float
+  %308 = fadd float %307, %212
+  %309 = fptosi float %212 to i32
+  %310 = add i32 %309, 641
+  %311 = sitofp i32 %304 to float
+  %312 = fmul float %311, %209
+  %313 = fptosi float %209 to i32
+  %314 = fptosi float %209 to i32
+  %315 = add i32 %313, %314
+  %316 = fsub float %209, %209
+  %317 = fptosi float %302 to i32
+  %318 = add i32 %317, %315
+  %319 = sitofp i32 %310 to float
+  %320 = fsub float %316, %319
+  switch i32 %input_branch_3075957808_03, label %BB_17_10_10 [
+    i32 1, label %BB_18_10_10
+  ]
+
+BB_13_10_10:                                      ; preds = %BB_9_10_10
+  %321 = mul i32 641, %246
+  %322 = fptosi float %235 to i32
+  %323 = add i32 %322, %246
+  %324 = fptosi float %228 to i32
+  %325 = fptosi float %235 to i32
+  %326 = add i32 %324, %325
+  %327 = fptosi float %228 to i32
+  %328 = add i32 %327, 247
+  %329 = sitofp i32 %323 to float
+  %330 = sitofp i32 %246 to float
+  %331 = fsub float %329, %330
+  %332 = sitofp i32 %323 to float
+  %333 = sitofp i32 %246 to float
+  %334 = fptosi float %333 to i32
+  %335 = or i32 %334, 1
+  %336 = sitofp i32 %335 to float
+  %337 = fdiv float %332, %336
+  %338 = sitofp i32 %326 to float
+  %339 = sitofp i32 %321 to float
+  %340 = fadd float %338, %339
+  %341 = sitofp i32 %328 to float
+  %342 = fmul float %341, %235
+  %343 = fsub float %337, %228
+  %344 = fptosi float %331 to i32
+  %345 = add i32 %344, %246
+  switch i32 %input_branch_147170544_0, label %BB_19_10_10 [
+    i32 1, label %BB_20_10_10
+  ]
+
+BB_14_10_10:                                      ; preds = %BB_9_10_10
+  %346 = sitofp i32 %246 to float
+  %347 = fptosi float %346 to i32
+  %348 = or i32 %347, 1
+  %349 = sitofp i32 %348 to float
+  %350 = fdiv float %228, %349
+  %351 = fptosi float %228 to i32
+  %352 = add i32 %351, 742
+  %353 = add i32 767, 430
+  %354 = sitofp i32 %353 to float
+  %355 = sitofp i32 %246 to float
+  %356 = fsub float %354, %355
+  %357 = sitofp i32 %352 to float
+  %358 = fadd float %350, %357
+  %359 = sitofp i32 %353 to float
+  %360 = fsub float %235, %359
+  %361 = fmul float %360, %228
+  %362 = fptosi float %356 to i32
+  %363 = fptosi float %358 to i32
+  %364 = add i32 %362, %363
+  br label %BB_21_10_10
+
+BB_15_10_10:                                      ; preds = %BB_10_10_10
+  %365 = sitofp i32 %278 to float
+  %366 = fsub float %280, %365
+  %367 = add i32 767, 430
+  %368 = sitofp i32 %278 to float
+  %369 = fmul float %366, %368
+  %370 = sitofp i32 %367 to float
+  %371 = fsub float %370, %280
+  %372 = sitofp i32 %367 to float
+  %373 = sitofp i32 %367 to float
+  %374 = fadd float %372, %373
+  %375 = fptosi float %371 to i32
+  %376 = fptosi float %374 to i32
+  %377 = add i32 %375, %376
+  br label %BB_22_10_10
+
+BB_16_10_10:                                      ; preds = %BB_11_10_10
+  %378 = sitofp i32 %299 to float
+  %379 = fadd float %294, %378
+  %380 = mul i32 %299, %299
+  %381 = sitofp i32 %380 to float
+  %382 = fsub float %381, %294
+  %383 = fptosi float %294 to i32
+  %384 = or i32 767, 1
+  %385 = sdiv i32 %383, %384
+  %386 = fptosi float %294 to i32
+  %387 = add i32 430, %386
+  %388 = fptosi float %379 to i32
+  %389 = add i32 %388, %299
+  %390 = sitofp i32 %385 to float
+  %391 = sitofp i32 %387 to float
+  %392 = fmul float %390, %391
+  br label %BB_23_10_10
+
+BB_17_10_10:                                      ; preds = %BB_12_10_10
+  %393 = sitofp i32 742 to float
+  %394 = fmul float %393, %312
+  %395 = sitofp i32 73 to float
+  %396 = sitofp i32 443 to float
+  %397 = fadd float %395, %396
+  %398 = sitofp i32 %318 to float
+  %399 = fadd float %398, %397
+  %400 = fptosi float %397 to i32
+  %401 = fptosi float %320 to i32
+  %402 = add i32 %400, %401
+  %403 = fptosi float %399 to i32
+  %404 = mul i32 %403, %318
+  %405 = fptosi float %394 to i32
+  %406 = add i32 %402, %405
+  %407 = fptosi float %308 to i32
+  %408 = mul i32 %404, %407
+  %409 = sitofp i32 %406 to float
+  %410 = sitofp i32 %318 to float
+  %411 = fsub float %409, %410
+  %412 = fptosi float %411 to i32
+  %413 = fptosi float %312 to i32
+  %414 = add i32 %412, %413
+  %415 = sitofp i32 %408 to float
+  %416 = fmul float %415, %320
+  br label %BB_24_10_10
+
+BB_18_10_10:                                      ; preds = %BB_12_10_10
+  %417 = fptosi float %308 to i32
+  %418 = add i32 %417, %318
+  %419 = sitofp i32 %318 to float
+  %420 = sitofp i32 643 to float
+  %421 = fsub float %419, %420
+  %422 = fptosi float %320 to i32
+  %423 = fptosi float %312 to i32
+  %424 = or i32 %423, 1
+  %425 = sdiv i32 %422, %424
+  %426 = sitofp i32 576 to float
+  %427 = fadd float %312, %426
+  %428 = fsub float %421, %320
+  %429 = fptosi float %320 to i32
+  %430 = mul i32 175, %429
+  %431 = fptosi float %320 to i32
+  %432 = mul i32 641, %431
+  %433 = sitofp i32 641 to float
+  %434 = fsub float %433, %308
+  %435 = or i32 631, 1
+  %436 = sdiv i32 565, %435
+  %437 = add i32 %425, %318
+  %438 = sitofp i32 %418 to float
+  %439 = fmul float %434, %438
+  %440 = sitofp i32 %430 to float
+  %441 = fsub float %440, %312
+  %442 = fptosi float %427 to i32
+  %443 = add i32 %442, %432
+  %444 = sitofp i32 %436 to float
+  %445 = fadd float %444, %308
+  %446 = fptosi float %439 to i32
+  %447 = fptosi float %441 to i32
+  %448 = fptosi float %445 to i32
+  %449 = fptosi float %428 to i32
+  br label %BB_2_10_10
+
+BB_19_10_10:                                      ; preds = %BB_13_10_10
+  %450 = mul i32 458, %345
+  %451 = sitofp i32 %450 to float
+  %452 = fsub float %451, %342
+  %453 = fptosi float %342 to i32
+  %454 = add i32 %453, 645
+  %455 = fptosi float %342 to i32
+  %456 = or i32 %455, 1
+  %457 = sdiv i32 976, %456
+  %458 = sitofp i32 242 to float
+  %459 = fadd float %458, %342
+  %460 = sitofp i32 684 to float
+  %461 = fsub float %340, %460
+  %462 = fptosi float %340 to i32
+  %463 = fptosi float %340 to i32
+  %464 = add i32 %462, %463
+  %465 = sitofp i32 73 to float
+  %466 = sitofp i32 443 to float
+  %467 = fsub float %465, %466
+  %468 = sitofp i32 %457 to float
+  %469 = sitofp i32 %345 to float
+  %470 = fadd float %468, %469
+  %471 = sitofp i32 %454 to float
+  %472 = fmul float %467, %471
+  %473 = fptosi float %459 to i32
+  %474 = fptosi float %467 to i32
+  %475 = add i32 %473, %474
+  %476 = fsub float %461, %343
+  %477 = or i32 %464, 1
+  %478 = sdiv i32 %464, %477
+  %479 = fptosi float %340 to i32
+  %480 = add i32 %478, %479
+  %481 = fptosi float %472 to i32
+  %482 = fptosi float %452 to i32
+  %483 = fptosi float %470 to i32
+  %484 = fptosi float %476 to i32
+  br label %BB_2_10_10
+
+BB_20_10_10:                                      ; preds = %BB_13_10_10
+  %485 = fptosi float %343 to i32
+  %486 = add i32 %345, %485
+  %487 = fptosi float %340 to i32
+  %488 = or i32 %345, 1
+  %489 = sdiv i32 %487, %488
+  %490 = add i32 641, %345
+  %491 = fsub float %342, %340
+  %492 = fptosi float %342 to i32
+  %493 = or i32 %492, 1
+  %494 = sitofp i32 %493 to float
+  %495 = fdiv float %343, %494
+  %496 = fmul float %342, %342
+  %497 = sitofp i32 643 to float
+  %498 = fmul float %342, %497
+  %499 = sitofp i32 175 to float
+  %500 = fadd float %499, %343
+  %501 = fptosi float %340 to i32
+  %502 = sub i32 %501, 576
+  %503 = or i32 631, 1
+  %504 = sdiv i32 565, %503
+  %505 = fptosi float %495 to i32
+  %506 = add i32 %489, %505
+  %507 = sitofp i32 %490 to float
+  %508 = fmul float %507, %496
+  %509 = sitofp i32 %502 to float
+  %510 = fadd float %498, %509
+  %511 = sitofp i32 %504 to float
+  %512 = fsub float %500, %511
+  %513 = fptosi float %508 to i32
+  %514 = fptosi float %512 to i32
+  %515 = fptosi float %510 to i32
+  %516 = fptosi float %491 to i32
+  br label %BB_2_10_10
+
+BB_21_10_10:                                      ; preds = %BB_14_10_10
+  %517 = sitofp i32 %364 to float
+  %518 = fsub float %517, %361
+  %519 = or i32 %364, 1
+  %520 = sdiv i32 %364, %519
+  %521 = fptosi float %361 to i32
+  %522 = add i32 %364, %521
+  %523 = sitofp i32 641 to float
+  %524 = fptosi float %523 to i32
+  %525 = or i32 %524, 1
+  %526 = sitofp i32 %525 to float
+  %527 = fdiv float %361, %526
+  %528 = sitofp i32 175 to float
+  %529 = fmul float %361, %528
+  %530 = sitofp i32 202 to float
+  %531 = fadd float %530, %527
+  %532 = fptosi float %527 to i32
+  %533 = add i32 247, %532
+  %534 = fptosi float %527 to i32
+  %535 = add i32 %520, %534
+  %536 = sitofp i32 %520 to float
+  %537 = sitofp i32 %520 to float
+  %538 = fsub float %536, %537
+  %539 = sitofp i32 %522 to float
+  %540 = fmul float %539, %529
+  %541 = fptosi float %540 to i32
+  %542 = fptosi float %518 to i32
+  %543 = fptosi float %531 to i32
+  %544 = fptosi float %538 to i32
+  br label %BB_2_10_10
+
+BB_22_10_10:                                      ; preds = %BB_15_10_10
+  %545 = fptosi float %369 to i32
+  %546 = fptosi float %369 to i32
+  %547 = or i32 %546, 1
+  %548 = sdiv i32 %545, %547
+  %549 = sitofp i32 73 to float
+  %550 = fsub float %369, %549
+  %551 = fptosi float %369 to i32
+  %552 = add i32 443, %551
+  %553 = sitofp i32 767 to float
+  %554 = sitofp i32 430 to float
+  %555 = fadd float %553, %554
+  %556 = add i32 %548, 742
+  %557 = mul i32 645, 458
+  %558 = add i32 %548, %377
+  %559 = sitofp i32 %557 to float
+  %560 = sitofp i32 %377 to float
+  %561 = fsub float %559, %560
+  %562 = sitofp i32 %557 to float
+  %563 = fsub float %562, %369
+  %564 = sitofp i32 %552 to float
+  %565 = fmul float %550, %564
+  %566 = fptosi float %565 to i32
+  %567 = fptosi float %563 to i32
+  %568 = fptosi float %555 to i32
+  %569 = fptosi float %561 to i32
+  br label %BB_2_10_10
+
+BB_23_10_10:                                      ; preds = %BB_16_10_10
+  %570 = fptosi float %382 to i32
+  %571 = or i32 %570, 1
+  %572 = sdiv i32 %389, %571
+  %573 = fptosi float %392 to i32
+  %574 = add i32 %389, %573
+  %575 = sitofp i32 641 to float
+  %576 = fptosi float %575 to i32
+  %577 = or i32 %576, 1
+  %578 = sitofp i32 %577 to float
+  %579 = fdiv float %392, %578
+  %580 = sitofp i32 175 to float
+  %581 = fmul float %392, %580
+  %582 = sitofp i32 631 to float
+  %583 = fadd float %582, %392
+  %584 = fadd float %583, %382
+  %585 = sitofp i32 565 to float
+  %586 = fadd float %382, %585
+  %587 = add i32 247, 247
+  %588 = sitofp i32 %389 to float
+  %589 = fsub float %586, %588
+  %590 = fptosi float %579 to i32
+  %591 = add i32 %572, %590
+  %592 = sitofp i32 %574 to float
+  %593 = fmul float %592, %581
+  %594 = fsub float %392, %583
+  %595 = fptosi float %593 to i32
+  %596 = fptosi float %589 to i32
+  %597 = fptosi float %584 to i32
+  %598 = fptosi float %594 to i32
+  br label %BB_2_10_10
+
+BB_24_10_10:                                      ; preds = %BB_17_10_10
+  %599 = fptosi float %416 to i32
+  %600 = fptosi float %416 to i32
+  %601 = or i32 %600, 1
+  %602 = sdiv i32 %599, %601
+  %603 = sitofp i32 73 to float
+  %604 = fsub float %416, %603
+  %605 = fptosi float %416 to i32
+  %606 = add i32 443, %605
+  %607 = sitofp i32 767 to float
+  %608 = sitofp i32 430 to float
+  %609 = fadd float %607, %608
+  %610 = add i32 %602, 742
+  %611 = mul i32 645, 458
+  %612 = add i32 %602, %414
+  %613 = sitofp i32 %611 to float
+  %614 = sitofp i32 %414 to float
+  %615 = fsub float %613, %614
+  %616 = sitofp i32 %611 to float
+  %617 = fsub float %616, %416
+  %618 = sitofp i32 %606 to float
+  %619 = fmul float %604, %618
+  %620 = fptosi float %619 to i32
+  %621 = fptosi float %617 to i32
+  %622 = fptosi float %609 to i32
+  %623 = fptosi float %615 to i32
+  br label %BB_2_10_10
+}

@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/blowfish
+set test "blowfish"
+
+set expected {Result: 5200}
+
+run-test-on-board $test $expected
+
+cd ../..

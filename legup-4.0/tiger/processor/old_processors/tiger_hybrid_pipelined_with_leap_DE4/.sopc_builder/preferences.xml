@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <systemtable filter="All Interfaces">
+  <columns>
+   <connections preferredWidth="239" />
+   <irq preferredWidth="34" />
+   <inputclock preferredWidth="153" />
+   <name preferredWidth="222" />
+   <export visible="0" />
+  </columns>
+ </systemtable>
+ <clocktable>
+  <columns>
+   <clockname preferredWidth="293" />
+   <clocksource preferredWidth="290" />
+   <frequency preferredWidth="290" />
+   <pipeline visible="0" preferredWidth="58" />
+  </columns>
+ </clocktable>
+ <window width="1397" height="882" x="126" y="111" />
+ <library
+   expandedCategories="Library,Library/Memories and Memory Controllers,Project" />
+ <debug showDebugMenu="0" />
+</preferences>

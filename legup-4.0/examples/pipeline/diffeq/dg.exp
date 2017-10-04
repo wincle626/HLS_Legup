@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/diffeq
+set test "pipeline/diffeq"
+set expected {return_val=\s*1461495984\s+.*Cycles:\s+57\s+}
+
+run-test $test $expected
+
+cd ../..

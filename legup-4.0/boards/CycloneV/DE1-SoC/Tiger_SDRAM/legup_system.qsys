@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+   }
+   element DCache
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element DCache.cache_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element JTAG_UART
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+   }
+   element JTAG_UART.avalon_jtag_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element JTAG_to_FPGA_Bridge
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element Leap_Profiler
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+   element Leap_Profiler.from_cpu
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element Leap_Profiler.leapslave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element Leap_Sim_Control
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element Leap_Sim_Control.bridge_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element SDRAM
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element SDRAM.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element Tiger_ICache
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element Tiger_ICache.icache_slave
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element Tiger_MIPS
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element clk
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="5CSEMA5F31C6" />
+ <parameter name="deviceFamily" value="Cyclone V" />
+ <parameter name="deviceSpeedGrade" value="Unknown" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface name="clk" internal="clk.clk_in" type="clock" dir="end" />
+ <interface
+   name="leap_debug_port"
+   internal="Leap_Profiler.debug_port"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="leap_profiling_signals"
+   internal="Leap_Profiler.profiling_signals"
+   type="conduit"
+   dir="end" />
+ <interface name="reset" internal="clk.clk_in_reset" type="reset" dir="end" />
+ <interface name="sdram_wire" internal="SDRAM.wire" type="conduit" dir="end" />
+ <module name="DCache" kind="legup_dm_wt_cache" version="1.0" enabled="1" />
+ <module
+   name="JTAG_UART"
+   kind="altera_avalon_jtag_uart"
+   version="15.0"
+   enabled="1">
+  <parameter name="allowMultipleConnections" value="false" />
+  <parameter name="avalonSpec" value="2.0" />
+  <parameter name="clkFreq" value="50000000" />
+  <parameter name="hubInstanceID" value="0" />
+  <parameter name="readBufferDepth" value="64" />
+  <parameter name="readIRQThreshold" value="8" />
+  <parameter name="simInputCharacterStream" value="" />
+  <parameter name="simInteractiveOptions">NO_INTERACTIVE_WINDOWS</parameter>
+  <parameter name="useRegistersForReadBuffer" value="false" />
+  <parameter name="useRegistersForWriteBuffer" value="false" />
+  <parameter name="useRelativePathForSimFile" value="false" />
+  <parameter name="writeBufferDepth" value="64" />
+  <parameter name="writeIRQThreshold" value="8" />
+ </module>
+ <module
+   name="JTAG_to_FPGA_Bridge"
+   kind="altera_jtag_avalon_master"
+   version="15.0"
+   enabled="1">
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="Unknown" />
+  <parameter name="COMPONENT_CLOCK" value="0" />
+  <parameter name="FAST_VER" value="0" />
+  <parameter name="FIFO_DEPTHS" value="2" />
+  <parameter name="PLI_PORT" value="50000" />
+  <parameter name="USE_PLI" value="0" />
+ </module>
+ <module name="Leap_Profiler" kind="leap_profiler" version="1.0" enabled="1">
+  <parameter name="STARTING_PC" value="1073741856" />
+  <parameter name="prof_param_CW" value="32" />
+  <parameter name="prof_param_N2" value="8" />
+  <parameter name="prof_param_S2" value="5" />
+ </module>
+ <module
+   name="Leap_Sim_Control"
+   kind="leap_sim_controller"
+   version="1.0"
+   enabled="1">
+  <parameter name="N2" value="8" />
+  <parameter name="STARTING_PC" value="1073741856" />
+ </module>
+ <module
+   name="SDRAM"
+   kind="altera_avalon_new_sdram_controller"
+   version="15.0"
+   enabled="1">
+  <parameter name="TAC" value="5.5" />
+  <parameter name="TMRD" value="3" />
+  <parameter name="TRCD" value="20.0" />
+  <parameter name="TRFC" value="70.0" />
+  <parameter name="TRP" value="20.0" />
+  <parameter name="TWR" value="14.0" />
+  <parameter name="casLatency" value="3" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="columnWidth" value="10" />
+  <parameter name="componentName" value="legup_system_SDRAM" />
+  <parameter name="dataWidth" value="16" />
+  <parameter name="generateSimulationModel" value="true" />
+  <parameter name="initNOPDelay" value="0.0" />
+  <parameter name="initRefreshCommands" value="2" />
+  <parameter name="masteredTristateBridgeSlave" value="0" />
+  <parameter name="model">single_Micron_MT48LC4M32B2_7_chip</parameter>
+  <parameter name="numberOfBanks" value="4" />
+  <parameter name="numberOfChipSelects" value="1" />
+  <parameter name="pinsSharedViaTriState" value="false" />
+  <parameter name="powerUpDelay" value="100.0" />
+  <parameter name="refreshPeriod" value="15.625" />
+  <parameter name="registerDataIn" value="true" />
+  <parameter name="rowWidth" value="13" />
+ </module>
+ <module name="Tiger_ICache" kind="tiger_icache" version="1.0" enabled="1" />
+ <module name="Tiger_MIPS" kind="tiger_mips" version="1.0" enabled="1">
+  <parameter name="RESET_ADDRESS" value="1073741824" />
+ </module>
+ <module name="clk" kind="clock_source" version="15.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Leap_Sim_Control.bridge_master"
+   end="Leap_Profiler.leapslave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="DCache.cache_master"
+   end="SDRAM.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Tiger_MIPS.data_master"
+   end="JTAG_UART.avalon_jtag_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0xff201000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Tiger_MIPS.data_master"
+   end="DCache.cache_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Tiger_ICache.icache_master"
+   end="SDRAM.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Tiger_MIPS.instruction_master"
+   end="Leap_Profiler.from_cpu">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="JTAG_to_FPGA_Bridge.master"
+   end="JTAG_UART.avalon_jtag_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0xff201000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="JTAG_to_FPGA_Bridge.master"
+   end="Leap_Sim_Control.bridge_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x80000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="JTAG_to_FPGA_Bridge.master"
+   end="SDRAM.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="15.0"
+   start="Leap_Profiler.to_memory"
+   end="Tiger_ICache.icache_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection kind="clock" version="15.0" start="clk.clk" end="DCache.clk" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="JTAG_to_FPGA_Bridge.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="SDRAM.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="JTAG_UART.clk" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="Tiger_MIPS.clock" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="Leap_Profiler.clock" />
+ <connection
+   kind="clock"
+   version="15.0"
+   start="clk.clk"
+   end="Leap_Sim_Control.clock" />
+ <connection kind="clock" version="15.0" start="clk.clk" end="Tiger_ICache.clock" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="JTAG_to_FPGA_Bridge.clk_reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="Tiger_MIPS.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="Leap_Profiler.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="Leap_Sim_Control.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="Tiger_ICache.reset" />
+ <connection kind="reset" version="15.0" start="clk.clk_reset" end="DCache.reset" />
+ <connection kind="reset" version="15.0" start="clk.clk_reset" end="SDRAM.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="clk.clk_reset"
+   end="JTAG_UART.reset" />
+ <connection
+   kind="reset"
+   version="15.0"
+   start="Leap_Profiler.leap_processor_reset"
+   end="Tiger_MIPS.reset" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

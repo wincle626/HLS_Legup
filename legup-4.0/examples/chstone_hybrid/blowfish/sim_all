@@ -1,0 +1,5 @@
+#!/bin/bash
+
+make cleanall
+./sim_all_functions | tee sim_all_functions.log
+cat sim_all_functions.log | grep -E 'Benchmark =|Accelerator Function|counter =|# 0|Assertion' > sim_results.log

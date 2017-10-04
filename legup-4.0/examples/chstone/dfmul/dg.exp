@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/dfmul
+set test "dfmul"
+set expected {return_val=\s+20\s+}
+set gxexpected {reg: v0 = 0x0000000000000014}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

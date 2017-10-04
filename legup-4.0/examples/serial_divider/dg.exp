@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd serial_divider
+set test "serial_divider"
+set expected {return_val=\s+4\s+}
+set gxexpected {reg: v0 = 0x0000000000000004}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

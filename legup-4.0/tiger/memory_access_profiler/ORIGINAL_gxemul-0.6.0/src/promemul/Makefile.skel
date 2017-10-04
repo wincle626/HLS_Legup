@@ -1,0 +1,21 @@
+#
+#  Makefile for GXemul src/promemul
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(DINCLUDE)
+
+OBJS=arcbios.o dec_prom.o dreamcast.o dreamcast_scramble.o \
+	mvmeprom.o of.o ps2_bios.o sh_ipl_g.o yamon.o
+
+all: $(OBJS)
+	../../experiments/make_index.sh
+
+$(OBJS): Makefile
+
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+

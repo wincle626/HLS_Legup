@@ -1,0 +1,20 @@
+#
+#  Makefile for GXemul src/components/cpu
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(CPEDANTIC) $(INCLUDE2)
+LIBS=$(OTHERLIBS)
+
+OBJS=CPUComponent.o CPUDyntransComponent.o M88K_CPUComponent.o \
+	MIPS_CPUComponent.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+clean:
+	rm -f $(OBJS)
+
+clean_all: clean
+	rm -f Makefile
+

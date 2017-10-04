@@ -1,0 +1,142 @@
+#ifndef IMPACTSR_H
+#define IMPACTSR_H
+
+/*
+ *  Copyright (C) 2004 by Stanislaw Skowronek.  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright  
+ *     notice, this list of conditions and the following disclaimer in the 
+ *     documentation and/or other materials provided with the distribution.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE   
+ *  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ *  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ *  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ *  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ *  SUCH DAMAGE.
+ */
+
+/* Convenient access macros */
+#define IMPACTSR_REG64(vma,off)		(*(volatile unsigned long *)((vma)+(off)))
+#define IMPACTSR_REG32(vma,off)		(*(volatile unsigned int *)((vma)+(off)))
+#define IMPACTSR_REG16(vma,off)		(*(volatile unsigned short *)((vma)+(off)))
+#define IMPACTSR_REG8(vma,off)		(*(volatile unsigned char *)((vma)+(off)))
+
+/* ImpactSR (HQ4) register offsets */
+#define IMPACTSR_CFIFO(vma)		IMPACTSR_REG64(vma,0x20400)
+#define IMPACTSR_CFIFOW(vma)		IMPACTSR_REG32(vma,0x20400)
+#define IMPACTSR_CFIFOP(vma)		IMPACTSR_REG64(vma,0x130400)
+#define IMPACTSR_CFIFOPW(vma)		IMPACTSR_REG32(vma,0x130400)
+
+#define IMPACTSR_STATUS(vma)		IMPACTSR_REG32(vma,0x20000)
+#define IMPACTSR_FIFOSTATUS(vma)	IMPACTSR_REG32(vma,0x20008)
+#define IMPACTSR_GIOSTATUS(vma)		IMPACTSR_REG32(vma,0x20100)
+#define IMPACTSR_DMABUSY(vma)		IMPACTSR_REG32(vma,0x20200)
+
+#define IMPACTSR_RESTATUS(vma)		IMPACTSR_REG32(vma,0x2c578)
+
+#define IMPACTSR_CFIFO_HW(vma)		IMPACTSR_REG32(vma,0x40000)
+#define IMPACTSR_CFIFO_LW(vma)		IMPACTSR_REG32(vma,0x40008)
+#define IMPACTSR_CFIFO_DELAY(vma)	IMPACTSR_REG32(vma,0x40010)
+#define IMPACTSR_DFIFO_HW(vma)		IMPACTSR_REG32(vma,0x40020)
+#define IMPACTSR_DFIFO_LW(vma)		IMPACTSR_REG32(vma,0x40028)
+#define IMPACTSR_DFIFO_DELAY(vma)	IMPACTSR_REG32(vma,0x40030)
+
+#define IMPACTSR_XMAP_PP1SELECT(vma)	IMPACTSR_REG8(vma,0x71c08)
+#define IMPACTSR_XMAP_INDEX(vma)	IMPACTSR_REG8(vma,0x71c88)
+#define IMPACTSR_XMAP_CONFIG(vma)	IMPACTSR_REG32(vma,0x71d00)
+#define IMPACTSR_XMAP_CONFIGB(vma)	IMPACTSR_REG8(vma,0x71d08)
+#define IMPACTSR_XMAP_BUF_SELECT(vma)	IMPACTSR_REG32(vma,0x71d80)
+#define IMPACTSR_XMAP_MAIN_MODE(vma)	IMPACTSR_REG32(vma,0x71e00)
+#define IMPACTSR_XMAP_OVERLAY_MODE(vma)	IMPACTSR_REG32(vma,0x71e80)
+#define IMPACTSR_XMAP_DIB(vma)		IMPACTSR_REG32(vma,0x71f00)
+#define IMPACTSR_XMAP_DIB_DW(vma)	IMPACTSR_REG32(vma,0x71f40)
+#define IMPACTSR_XMAP_RE_RAC(vma)	IMPACTSR_REG32(vma,0x71f80)
+
+#define IMPACTSR_VC3_INDEX(vma)		IMPACTSR_REG8(vma,0x72008)
+#define IMPACTSR_VC3_INDEXDATA(vma)	IMPACTSR_REG32(vma,0x72038)
+#define IMPACTSR_VC3_DATA(vma)		IMPACTSR_REG16(vma,0x720b0)
+#define IMPACTSR_VC3_RAM(vma)		IMPACTSR_REG16(vma,0x72190)
+
+/* FIFO status */
+#define IMPACTSR_CFIFO_MAX		128
+#define IMPACTSR_BFIFO_MAX		16
+
+/* Commands for CFIFO */
+#define IMPACTSR_CMD_WRITERSS(reg,val)	(((0x00180004L|((reg)<<8))<<32)|((unsigned)(val)&0xffffffff))
+#define IMPACTSR_CMD_EXECRSS(reg,val)	(((0x001c0004L|((reg)<<8))<<32)|((unsigned)(val)&0xffffffff))
+
+#define IMPACTSR_CMD_GLINE_XSTARTF(v)	IMPACTSR_CMD_WRITERSS(0x00c,v)
+#define IMPACTSR_CMD_IR_ALIAS(v)	IMPACTSR_CMD_EXECRSS(0x045,v)
+#define IMPACTSR_CMD_BLOCKXYSTARTI(x,y)	IMPACTSR_CMD_WRITERSS(0x046,((x)<<16)|(y))
+#define IMPACTSR_CMD_BLOCKXYENDI(x,y)	IMPACTSR_CMD_WRITERSS(0x047,((x)<<16)|(y))
+#define IMPACTSR_CMD_PACKEDCOLOR(v)	IMPACTSR_CMD_WRITERSS(0x05b,v)
+#define IMPACTSR_CMD_RED(v)		IMPACTSR_CMD_WRITERSS(0x05c,v)
+#define IMPACTSR_CMD_ALPHA(v)		IMPACTSR_CMD_WRITERSS(0x05f,v)
+#define IMPACTSR_CMD_CHAR(v)		IMPACTSR_CMD_EXECRSS(0x070,v)
+#define IMPACTSR_CMD_CHAR_H(v)		IMPACTSR_CMD_WRITERSS(0x070,v)
+#define IMPACTSR_CMD_CHAR_L(v)		IMPACTSR_CMD_EXECRSS(0x071,v)
+#define IMPACTSR_CMD_XFRCONTROL(v)	IMPACTSR_CMD_WRITERSS(0x102,v)
+#define IMPACTSR_CMD_FILLMODE(v)	IMPACTSR_CMD_WRITERSS(0x110,v)
+#define IMPACTSR_CMD_CONFIG(v)		IMPACTSR_CMD_WRITERSS(0x112,v)
+#define IMPACTSR_CMD_XYWIN(x,y)		IMPACTSR_CMD_WRITERSS(0x115,((y)<<16)|(x))
+#define IMPACTSR_CMD_BKGRD_RG(v)	IMPACTSR_CMD_WRITERSS(0x140,((v)<<8))
+#define IMPACTSR_CMD_BKGRD_BA(v)	IMPACTSR_CMD_WRITERSS(0x141,((v)<<8))
+#define IMPACTSR_CMD_WINMODE(v)		IMPACTSR_CMD_WRITERSS(0x14f,v)
+#define IMPACTSR_CMD_XFRSIZE(x,y)	IMPACTSR_CMD_WRITERSS(0x153,((y)<<16)|(x))
+#define IMPACTSR_CMD_XFRMASKLO(v)	IMPACTSR_CMD_WRITERSS(0x156,v)
+#define IMPACTSR_CMD_XFRMASKHI(v)	IMPACTSR_CMD_WRITERSS(0x157,v)
+#define IMPACTSR_CMD_XFRCOUNTERS(x,y)	IMPACTSR_CMD_WRITERSS(0x158,((y)<<16)|(x))
+#define IMPACTSR_CMD_XFRMODE(v)		IMPACTSR_CMD_WRITERSS(0x159,v)
+#define IMPACTSR_CMD_RE_TOGGLECNTX(v)	IMPACTSR_CMD_WRITERSS(0x15f,v)
+#define IMPACTSR_CMD_PIXCMD(v)		IMPACTSR_CMD_WRITERSS(0x160,v)
+#define IMPACTSR_CMD_PP1FILLMODE(m,o)	IMPACTSR_CMD_WRITERSS(0x161,(m)|(o<<26))
+#define IMPACTSR_CMD_COLORMASKMSBS(v)	IMPACTSR_CMD_WRITERSS(0x162,v)
+#define IMPACTSR_CMD_COLORMASKLSBSA(v)	IMPACTSR_CMD_WRITERSS(0x163,v)
+#define IMPACTSR_CMD_COLORMASKLSBSB(v)	IMPACTSR_CMD_WRITERSS(0x164,v)
+#define IMPACTSR_CMD_DRBPOINTERS(v)	IMPACTSR_CMD_WRITERSS(0x16d,v)
+
+#define	IMPACTSR_CMD_HQ_PIXELFORMAT(v)	(0x000c000400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_SCANWIDTH(v)	(0x000a020400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_DMATYPE(v)	(0x000a060400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_LIST_0(v)	(0x0008000400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_WIDTH(v)	(0x0008040400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_OFFSET(v)	(0x0008050400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_STARTADDR(v)	(0x0008060400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_LINECNT(v)	(0x0008070400000000L|((unsigned)(v)&0xffffffff))
+#define	IMPACTSR_CMD_HQ_PG_WIDTHA(v)	(0x0008080400000000L|((unsigned)(v)&0xffffffff))
+#define IMPACTSR_CMD_HQ_TXBASE(p)	(0x00482008|((p)<<9))
+#define IMPACTSR_CMD_HQ_TXMAX(p,v)	(0x0048300400000000L|((unsigned)(v)&0xffffffff)|((unsigned long)(p)<<40))
+#define IMPACTSR_CMD_HQ_PGBITS(p,v)	(0x00482b0400000000L|((unsigned)(v)&0xffffffff)|((unsigned long)(p)<<40))
+#define IMPACTSR_CMD_HQ_PGSIZE(v)	(0x00482a0400000000L|((unsigned)(v)&0xffffffff))
+#define IMPACTSR_CMD_HQ_STACKPTR(v)	(0x00483a0400000000L|((unsigned)(v)&0xffffffff))
+
+/* Logic operations for the PP1 (SI=source invert, DI=dest invert, RI=result invert) */
+#define IMPACTSR_LO_COPY	0
+#define IMPACTSR_LO_DIAND	1
+#define IMPACTSR_LO_AND		2
+#define IMPACTSR_LO_CLEAR	3
+#define IMPACTSR_LO_OR		4
+#define IMPACTSR_LO_XOR		5
+#define IMPACTSR_LO_NOP		6
+#define IMPACTSR_LO_SIAND	7
+#define IMPACTSR_LO_DIOR	8
+#define IMPACTSR_LO_RINOP	9
+#define IMPACTSR_LO_RIXOR	10
+#define IMPACTSR_LO_RIOR	11
+#define IMPACTSR_LO_SET		12
+#define IMPACTSR_LO_RIAND	13
+#define IMPACTSR_LO_SIOR	14
+#define IMPACTSR_LO_RICOPY	15
+
+#endif /* IMPACTSR_H */

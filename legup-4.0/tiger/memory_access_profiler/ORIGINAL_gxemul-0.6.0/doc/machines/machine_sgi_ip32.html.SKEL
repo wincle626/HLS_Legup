@@ -1,0 +1,68 @@
+
+The <tt>sgi_ip32</tt> machine template tries to emulate an
+<a href="http://en.wikipedia.org/wiki/SGI_O2">SGI O2</a> machine,
+for experiments with <a href="http://www.netbsd.org/ports/sgimips/">NetBSD/sgimips</a>,
+<a href="http://openbsd.org/sgi.html">OpenBSD/sgi</a>, Linux for O2,
+and possibly also SGI O2 PROMs and/or IRIX in the future.
+
+
+<p><br>
+<h3>Experimenting with a PROM from a real SGI O2:</h3>
+
+This requires that you dump the PROM memory range from your real SGI O2
+machine into a file. Using a serial console hooked up to your O2, executing
+the PROM command
+<pre>
+	&gt;&gt; <b>dump -b 0xBFC00000:0xBFC80000</b>
+</pre>
+will dump 512 KB of the PROM range. Make sure you capture all the output
+into a file, and then convert the result into a raw binary. (If you don't have
+time to write a converter tool yourself, there is an example converter in
+the GXemul source code distribution: <tt>experiments/sgiprom_to_bin</tt>.)
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="../sgi-o2-real.jpg"><img src="../sgi-o2-real_small.jpg"></a>
+&nbsp;&nbsp;&nbsp;
+<a href="../20050817-sgi-o2-success-7.png"><img src="../20050817-sgi-o2-success-7_small.png"></a>
+&nbsp;&nbsp;&nbsp;
+<a href="../20050817-sgi-o2-success-8.png"><img src="../20050817-sgi-o2-success-8_small.png"></a>
+
+<p>The photo on the left is from the real machine. The other two are
+screenshots of the PROM running experimentally in and older version of GXemul,
+using <tt>-Y2</tt> framebuffer scaledown.
+
+<p><font color="#ff0000">
+NOTE: Running the O2 PROM image broke somewhere between release
+0.3.8 and 0.4.0. (Running with graphics broke between 0.3.7 and 0.3.8.)
+The goal is to write a new SGI O2 emulation mode using the new 0.6.0
+framework, which will be able to run the PROM image.</font>
+
+<p>Assuming you have extracted the PROM from your real machine into a
+file called <tt>prom</tt>, the following example shows how to start up the
+emulator in the paused state with the PROM image:
+
+<pre>
+$ <b>gxemul -V -e sgi_ip32 raw:0xffffffffbfc00000:prom</b>
+GXemul (unknown version)      Copyright (C) 2003-2009  Anders Gavare
+
+  mainbus0
+  |-- ram0  (128 MB at offset 0)
+  |-- prom0  (512 KB at offset 0x1fc00000)
+  \-- cpu0  (R5000, 100 MHz)
+
+cpu0: raw:0xffffffffbfc00000:prom loaded
+      Raw file: entry point 0xffffffffbfc00000
+      loadable chunk: vaddr 0xffffffffbfc00000, 524288 bytes
+
+GXemul>
+</pre>
+
+<font color="#ff0000">NOTE: RUNNING THE PROM DOES NOT WORK YET! These are preliminary
+instructions on how it may work when the new GXemul framework, and the SGI O2
+emulation in that framework, is complete enough.</font>
+
+
+<p><hr>
+</body>
+</html>

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/no_fdiv_2
+set test "no_fdiv_2"
+set expected {return_val=\s+780}
+
+run-test $test $expected
+
+cd ../..

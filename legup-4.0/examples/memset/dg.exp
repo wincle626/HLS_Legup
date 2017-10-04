@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd memset
+set test "memset"
+set expected {return_val=\s+400\s+}
+set gxexpected {reg: v0 = 0x0000000000000190}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

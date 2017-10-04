@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# $1 --> number of repetitions, $2... instructions to create assembly for
+function create_mult() {
+	NUM=$1
+	shift
+	while [ $# -gt 0 ]; do
+		create_assembly $1 $NUM	
+		shift
+	done
+}
+
+
+if [ "$1" = "--help" -o "$1" = "" ]; then
+	echo "HELP MENU:"
+	echo "	./create_multiple_assembly <count> --all               - create on assembly file for each instruction"
+	echo "	./create_multiple_assembly <count> <op1> [<op2>...]    - create 'count' assembly files for list of instructions"
+	echo "	./create_multiple_assembly --help                      - display this message"
+
+elif [ "$2" = "--all" ]; then
+	create_mult $1 add addu and or sllv slt sltu srlv sub subu xor addi addiu andi ori sll slti sltiu sra srl xori div divu mult multu lb lw sb sw lui bgez bgezal bgtz blez bltz bltzal beq bne j jal jalr jr lbu mfhi mflo
+
+else
+	create_mult $*
+fi

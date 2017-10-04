@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd dhrystone
+set test "dhrystone_slow"
+
+set expected {return_val=\s+19\s+}
+set gxexpected {reg: v0 = 0x0000000000000013}
+
+run-test-full $test $expected $gxexpected
+
+cd ..

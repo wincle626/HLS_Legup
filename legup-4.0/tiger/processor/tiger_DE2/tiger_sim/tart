@@ -1,0 +1,205 @@
+onerror {resume}
+quietly WaveActivateNextPane {} 0
+add wave -noupdate -label clk /test_bench/DUT/the_tiger_top_0/tiger_top_0/clk
+add wave -noupdate -label reset_n /test_bench/DUT/the_tiger_top_0/tiger_top_0/reset
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/avm_instructionMaster_waitrequest
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/iCacheStall
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/dCacheStall
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/clk
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/reset_n
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/dcacheRead
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/dcacheWrite
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/dcacheAddress
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/dcacheWriteData
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/dcacheReadData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/canRead
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/canWrite
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/canFlush
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/readDataValid
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheQ
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheTag
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/validBit
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/writeData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/savedTag
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/fetchDone
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/bypassCache
+add wave -noupdate -label dcache_cacheHit /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheHit
+add wave -noupdate -label dcache_state -radix decimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/state
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelADDR_read
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelADDR_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelADDR_writedata
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelADDR_readdata
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelDATA_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelDATA_writedata
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_byteenable
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheQData
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheWriteData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/savedBlockWord
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/savedByte
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheAddress
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheWrite
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/accel_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/address
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/writeDataWord
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/fetchData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/fetchWord
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/avs_accelADDR_begintransfer
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/avs_accelDATA_begintransfer
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/address
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/clken
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/clock
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/data
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/wren
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/q
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheMemIns/sub_wire0
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/finish
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/return_val
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/start
+add wave -noupdate -label pc -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/core/pc
+add wave -noupdate -label ins -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/ins
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_readdata
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_writedata
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_write
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_ADDR_read
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_DATA_waitrequest
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_SIZE_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_DATA_address
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_DATA_writedata
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_DATA_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_SIZE_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_SIZE_writedata
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avm_SIZE_write
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/cacheHit
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/stall
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_read
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_address
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_readdata
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_readdatavalid
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_writedata
+add wave -noupdate -radix binary /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/state
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avm_dataMaster_waitrequest
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/memRead
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/memWrite
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/memAddress
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/memWriteData
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/memReadData
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelADDR_waitrequest
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelDATA_waitrequest
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem_accelerator
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/stall_accel
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/fetchDone
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/not_in_IDLE
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/fetchDone_dly
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/stall_cpu_for_accel
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/stall_accel_until_fetchDone
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/csi_clockreset_clk
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/csi_clockreset_reset
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avs_s1_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avs_s1_read
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avs_s1_write
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avs_s1_writedata
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/avs_s1_readdata
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/finish
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/return_val
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_address
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_out
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/data_from_memory
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/sdram_data
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/data_to_memory
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/done
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/read_status_asserted
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/read_data_asserted
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/sdram_data_ready
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/data_from_sdram
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/write_enable
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/s
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/s_ready
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/LARc
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/LARc_ready
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/parameter_ready
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/InsCache/memRead
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/memory_controller_size
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/flag_to_sdram
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelSIZE_begintransfer
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelSIZE_write
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelSIZE_writedata
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/avs_accelSIZE_waitrequest
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem8
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem16
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem8_accel
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem16_accel
+add wave -noupdate /test_bench/DUT/the_tiger_top_0/tiger_top_0/DataCache/mem64_accel
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/memory_controller_out
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_start
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_finish
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_memory_controller_out
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_s
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_L_ACF
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_start
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_finish
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_memory_controller_out
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_L_ACF
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_r
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_start
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_finish
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_memory_controller_out
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_LAR
+add wave -noupdate -radix decimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/cur_state
+add wave -noupdate -radix unsigned /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/cur_state
+add wave -noupdate -radix decimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Reflection_coefficients_inst/cur_state
+add wave -noupdate -radix decimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Quantization_and_coding_inst/cur_state
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_address
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_write_enable
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_waitrequest
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_in
+add wave -noupdate -radix hexadecimal /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_out
+add wave -noupdate /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/memory_controller_size
+add wave -noupdate -radix unsigned /test_bench/DUT/the_gsm_DMA_0/gsm_dma_0/Gsm_LPC_Analysis_inst/Autocorrelation_inst/cur_state
+TreeUpdate [SetDefaultTree]
+WaveRestoreCursors {{Cursor 1} {276351568 ps} 1} {{Cursor 2} {277954056 ps} 0} {{Cursor 3} {117152592 ps} 0} {{Cursor 4} {1049538777 ps} 0} {{Cursor 5} {432092581 ps} 0}
+configure wave -namecolwidth 705
+configure wave -valuecolwidth 102
+configure wave -justifyvalue left
+configure wave -signalnamewidth 0
+configure wave -snapdistance 10
+configure wave -datasetprefix 0
+configure wave -rowmargin 4
+configure wave -childrowmargin 2
+configure wave -gridoffset 0
+configure wave -gridperiod 1
+configure wave -griddelta 40
+configure wave -timeline 0
+configure wave -timelineunits ns
+update
+WaveRestoreZoom {1049292132 ps} {1049851684 ps}

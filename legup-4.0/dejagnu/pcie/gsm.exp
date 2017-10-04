@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/chstone/gsm
+set test "gsm"
+
+set pcieexpected {#\s+avm_mem_readdata:\s+d7d007602a600050\n#\s+avm_mem_readdata:\s+8de0500074101dc0\n#\s+avm_mem_readdata:\s+064082f08b90b600\n#\s+avm_mem_readdata:\s+a990bc00f3f03d80\n#\s+avm_mem_readdata:\s+c0700ef0cc201a90\n#\s+avm_mem_readdata:\s+ff409620cf10f9e0\n#\s+avm_mem_readdata:\s+3ba0892012609c10\n#\s+avm_mem_readdata:\s+13802c702ca0fa90\n#\s+avm_mem_readdata:\s+841023a0f8901ec0\n#\s+avm_mem_readdata:\s+7eb04640c8b09d70\n#\s+avm_mem_readdata:\s+1ee0ab90c1c0cf70\n#\s+avm_mem_readdata:\s+56700e206dd006a0\n#\s+avm_mem_readdata:\s+23e03060b170ea40\n#\s+avm_mem_readdata:\s+ba50543030c0a020\n#\s+avm_mem_readdata:\s+44f027004f30cab0\n#\s+avm_mem_readdata:\s+9620d6d0bc50d340\n#\s+avm_mem_readdata:\s+1c0009d06be000d0\n#\s+avm_mem_readdata:\s+f6c07550a8508be0\n#\s+avm_mem_readdata:\s+23809c3001303210\n#\s+avm_mem_readdata:\s+c7f0b0b0e6607160\n#\s+avm_mem_readdata:\s+8a80f1a0ab30e280\n#\s+avm_mem_readdata:\s+69f021808700f390\n#\s+avm_mem_readdata:\s+bd10a8e0ee000d50\n#\s+avm_mem_readdata:\s+5630c6e0fbc035e0\n#\s+avm_mem_readdata:\s+dee041307f80cb10\n#\s+avm_mem_readdata:\s+1a3051102900ce40\n#\s+avm_mem_readdata:\s+b2700ed086e09720\n#\s+avm_mem_readdata:\s+cc507ea089a0b030\n#\s+avm_mem_readdata:\s+e0c0096047502330\n#\s+avm_mem_readdata:\s+74801bd0e920c610\n#\s+avm_mem_readdata:\s+85c070a046208370\n#\s+avm_mem_readdata:\s+ea302ff094907c50\n#\s+avm_mem_readdata:\s+3d40a7f023f0a9a0\n#\s+avm_mem_readdata:\s+cdd0a3401c30d010\n#\s+avm_mem_readdata:\s+35d043c01d60e920\n#\s+avm_mem_readdata:\s+6830da50ba70f3f0\n#\s+avm_mem_readdata:\s+72e00c7009b01ee0\n#\s+avm_mem_readdata:\s+e0e05e10f530b100\n#\s+avm_mem_readdata:\s+e600c610d160d740\n#\s+avm_mem_readdata:\s+3b3028e00fb07d40\n#\s+avm_mem_readdata:\s+000d001600210020\n#\s+avm_mem_readdata:\s+0002000300050007\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../../examples

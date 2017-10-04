@@ -1,0 +1,102 @@
+#
+#  Makefile for GXemul src
+#
+
+all: do_include
+	$(MAKE) the_rest
+
+the_rest: do_components do_console do_cpus do_debugger do_devices do_disk \
+	do_file do_machines do_main do_net do_old_main do_plugins \
+	do_promemul do_symbol do_ui
+
+do_include:
+	cd include; $(MAKE)
+
+do_components:
+	cd components; $(MAKE)
+
+do_console:
+	cd console; $(MAKE)
+
+do_cpus:
+	cd cpus; $(MAKE)
+
+do_debugger:
+	cd debugger; $(MAKE)
+
+do_devices:
+	cd devices; $(MAKE)
+
+do_disk:
+	cd disk; $(MAKE)
+
+do_file:
+	cd file; $(MAKE)
+
+do_machines:
+	cd machines; $(MAKE)
+
+do_main:
+	cd main; $(MAKE)
+
+do_net:
+	cd net; $(MAKE)
+
+do_old_main:
+	cd old_main; $(MAKE)
+
+do_plugins:
+	cd plugins; $(MAKE)
+
+do_promemul:
+	cd promemul; $(MAKE)
+
+do_symbol:
+	cd symbol; $(MAKE)
+
+do_ui:
+	cd ui; $(MAKE)
+
+
+$(OBJS): Makefile
+
+
+clean:
+	rm -f $(OBJS) *core
+	cd include; $(MAKE) clean
+	cd components; $(MAKE) clean
+	cd console; $(MAKE) clean
+	cd cpus; $(MAKE) clean
+	cd debugger; $(MAKE) clean
+	cd devices; $(MAKE) clean
+	cd disk; $(MAKE) clean
+	cd file; $(MAKE) clean
+	cd machines; $(MAKE) clean
+	cd main; $(MAKE) clean
+	cd net; $(MAKE) clean
+	cd old_main; $(MAKE) clean
+	cd plugins; $(MAKE) clean
+	cd promemul; $(MAKE) clean
+	cd symbol; $(MAKE) clean
+	cd ui; $(MAKE) clean
+
+clean_all: clean
+	cd include; $(MAKE) clean_all
+	cd components; $(MAKE) clean_all
+	cd console; $(MAKE) clean_all
+	cd cpus; $(MAKE) clean_all
+	cd debugger; $(MAKE) clean_all
+	cd devices; $(MAKE) clean_all
+	cd disk; $(MAKE) clean_all
+	cd file; $(MAKE) clean_all
+	cd machines; $(MAKE) clean_all
+	cd main; $(MAKE) clean_all
+	cd net; $(MAKE) clean_all
+	cd old_main; $(MAKE) clean_all
+	cd plugins; $(MAKE) clean_all
+	cd promemul; $(MAKE) clean_all
+	cd symbol; $(MAKE) clean_all
+	cd ui; $(MAKE) clean_all
+	rm -f Makefile
+
+

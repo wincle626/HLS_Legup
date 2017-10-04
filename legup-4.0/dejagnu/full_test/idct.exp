@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/idct
+set test "idct"
+set expected {return_val=\s*4294946484\s+}
+set gxexpected {reg: v0 = 0xffffffffffffaeb4}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

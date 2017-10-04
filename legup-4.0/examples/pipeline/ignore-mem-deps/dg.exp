@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd pipeline/ignore-mem-deps
+set test "pipeline/ignore-mem-deps"
+
+set expected {return_val=\s+1477\s+.*Cycles:\s+23273\s+}
+
+run-test $test $expected
+
+cd ../..

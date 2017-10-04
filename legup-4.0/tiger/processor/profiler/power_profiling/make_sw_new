@@ -1,0 +1,69 @@
+#!/bin/bash
+
+NUM_INSTRS=500	# later can introduce loops
+
+# Instruction Classes
+MEM_OFFSET="lw,sb,sw,lbu"		# D = F(S,Imm)
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%.*}
+	OUT_NAME="$NAME"
+
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+
+# Make sw.s
+if [ "1" = "1" ]; then
+	FILE=assembly/sw.s
+	echo -e "\t.text\n\t.globl\tmain\n\t.ent\tmain\nmain:" > $FILE
+	for i in `seq 1 $NUM_INSTRS`; do	
+		RAND1=`rand 1000000`
+		RAND2=`rand 1000000`
+		RAND3=`rand 1000000`
+		R1=`rand 20`
+		let "R1 += 5"
+		R2=`rand 20`
+		let "R2 += 5"
+		echo -e "\tli \$${R1}, ${RAND1}" >> $FILE
+		echo -e "\tli \$${R2}, ${RAND2}" >> $FILE
+		echo -e "\tsw \$${R1}, ${RAND3}(\$${R2})" >> $FILE
+	done
+	echo -e "\tjr \$ra\n\t.end\tmain" >> $FILE
+	assemble $FILE
+fi
+
+# Make Others
+if [ "1" = "0" ]; then
+	INSTR_LIST=${MEM_OFFSET//,/ }
+	for op in $(echo $INSTR_LIST); do
+		sed "s|lb \$9,|${op} \$9,|g" assembly/lb.li.s > assembly/${op}.li.s
+		assemble assembly/${op}.li.s
+	done
+
+	# Make li.lb.s
+	#grep -v "lb \$9," assembly/lb.li.s > assembly/li.lb.s
+
+	# since these have a nop after the instr, just replace with nop (same as removing lb, then inserting nop)
+	sed "s|lb \$9,.*|nop|g" assembly/lb.li.s > assembly/li.lb.s
+	assemble assembly/li.lb.s
+fi

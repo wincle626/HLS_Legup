@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/vector_add
+set test "vector_add"
+
+set pcieexpected {avm_mem_readdata:\s+2b27231f1b17130f\n#\s+avm_mem_readdata:\s+4b47433f3b37332f}
+run-test-pcie $test $pcieexpected
+
+cd ../../../examples

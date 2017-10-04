@@ -1,0 +1,12 @@
+load_lib legup.exp
+
+cd function_pointer
+set test "function_pointer"
+set expected {LegUp does not support function pointers}
+set gxexpected {reg: v0 = 0x0000000000000003}
+
+
+run-test-legup-error $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/global_fp
+set test "global_fp"
+set expected {return_val=\s+2\s+}
+
+run-test $test $expected
+
+cd ../..

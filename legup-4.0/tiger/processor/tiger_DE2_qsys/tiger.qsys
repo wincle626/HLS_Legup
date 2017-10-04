@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element $${FILENAME}
+   {
+   }
+   element clk
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element data_cache_0
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element jtag_to_ava_master_bridge
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element tiger_top_0.leapSlave
+   {
+      datum baseAddress
+      {
+         value = "33554432";
+         type = "long";
+      }
+   }
+   element pipeline_bridge_MEMORY
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pipeline_bridge_PERIPHERALS
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element sdram.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "2048";
+         type = "long";
+      }
+   }
+   element sdram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{output_language=VERILOG, output_directory=C:\\Documents and Settings\\James\\Desktop\\mips_cache_on_avalon_clock2X}";
+         type = "String";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element tiger_top_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element uart_0
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="EP2C35F672C6" />
+ <parameter name="deviceFamily" value="Cyclone II" />
+ <parameter name="deviceSpeedGrade" value="Unknown" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="maxAdditionalLatency" value="0" />
+ <parameter name="projectName" value="tiger_top.qpf" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="1" />
+ <parameter name="timeStamp" value="1371498402205" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="clk_clk_in_reset"
+   internal="clk.clk_in_reset"
+   type="reset"
+   dir="end">
+  <port name="reset_n" internal="reset_n" />
+ </interface>
+ <interface name="sdram_wire" internal="sdram.wire" type="conduit" dir="end">
+  <port name="zs_addr_from_the_sdram" internal="zs_addr" />
+  <port name="zs_ba_from_the_sdram" internal="zs_ba" />
+  <port name="zs_cas_n_from_the_sdram" internal="zs_cas_n" />
+  <port name="zs_cke_from_the_sdram" internal="zs_cke" />
+  <port name="zs_cs_n_from_the_sdram" internal="zs_cs_n" />
+  <port name="zs_dq_to_and_from_the_sdram" internal="zs_dq" />
+  <port name="zs_dqm_from_the_sdram" internal="zs_dqm" />
+  <port name="zs_ras_n_from_the_sdram" internal="zs_ras_n" />
+  <port name="zs_we_n_from_the_sdram" internal="zs_we_n" />
+ </interface>
+ <interface name="clk_clk_in" internal="clk.clk_in" type="clock" dir="end">
+  <port name="clk" internal="in_clk" />
+ </interface>
+ <interface
+   name="uart_0_external_connection"
+   internal="uart_0.external_connection"
+   type="conduit"
+   dir="end">
+  <port name="rxd_to_the_uart_0" internal="rxd" />
+  <port name="txd_from_the_uart_0" internal="txd" />
+ </interface>
+ <interface
+   name="tiger_top_0_conduit_end_0"
+   internal="tiger_top_0.conduit_end_0"
+   type="conduit"
+   dir="end">
+  <port name="coe_exe_start_from_the_tiger_top_0" internal="coe_exe_start" />
+  <port name="coe_exe_end_from_the_tiger_top_0" internal="coe_exe_end" />
+  <port
+     name="coe_debug_select_to_the_tiger_top_0"
+     internal="coe_debug_select" />
+  <port
+     name="coe_debug_lights_from_the_tiger_top_0"
+     internal="coe_debug_lights" />
+ </interface>
+ <module kind="clock_source" version="13.0" enabled="1" name="clk">
+  <parameter name="clockFrequency" value="200000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   kind="altera_avalon_new_sdram_controller"
+   version="13.0.1"
+   enabled="1"
+   name="sdram">
+  <parameter name="TAC" value="5.5" />
+  <parameter name="TRCD" value="20.0" />
+  <parameter name="TRFC" value="70.0" />
+  <parameter name="TRP" value="20.0" />
+  <parameter name="TWR" value="14.0" />
+  <parameter name="casLatency" value="3" />
+  <parameter name="columnWidth" value="8" />
+  <parameter name="dataWidth" value="16" />
+  <parameter name="generateSimulationModel" value="true" />
+  <parameter name="initRefreshCommands" value="2" />
+  <parameter name="model" value="custom" />
+  <parameter name="numberOfBanks" value="4" />
+  <parameter name="numberOfChipSelects" value="1" />
+  <parameter name="pinsSharedViaTriState" value="false" />
+  <parameter name="powerUpDelay" value="100.0" />
+  <parameter name="refreshPeriod" value="15.625" />
+  <parameter name="rowWidth" value="12" />
+  <parameter name="masteredTristateBridgeSlave" value="0" />
+  <parameter name="TMRD" value="3" />
+  <parameter name="initNOPDelay" value="0.0" />
+  <parameter name="registerDataIn" value="true" />
+  <parameter name="clockRate" value="200000000" />
+  <parameter name="componentName" value="$${FILENAME}_sdram" />
+ </module>
+ <module
+   kind="altera_jtag_avalon_master"
+   version="13.0"
+   enabled="1"
+   name="jtag_to_ava_master_bridge">
+  <parameter name="USE_PLI" value="0" />
+  <parameter name="PLI_PORT" value="50000" />
+  <parameter name="COMPONENT_CLOCK" value="0" />
+  <parameter name="FAST_VER" value="0" />
+  <parameter name="FIFO_DEPTHS" value="2" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+  <parameter name="AUTO_DEVICE" value="EP2C35F672C6" />
+ </module>
+ <module kind="altera_avalon_uart" version="13.0.1" enabled="1" name="uart_0">
+  <parameter name="baud" value="115200" />
+  <parameter name="dataBits" value="8" />
+  <parameter name="fixedBaud" value="true" />
+  <parameter name="parity" value="NONE" />
+  <parameter name="simCharStream" value="" />
+  <parameter name="simInteractiveInputEnable" value="false" />
+  <parameter name="simInteractiveOutputEnable" value="false" />
+  <parameter name="simTrueBaud" value="false" />
+  <parameter name="stopBits" value="1" />
+  <parameter name="syncRegDepth" value="2" />
+  <parameter name="useCtsRts" value="false" />
+  <parameter name="useEopRegister" value="false" />
+  <parameter name="useRelativePathForSimFile" value="false" />
+  <parameter name="clockRate" value="200000000" />
+ </module>
+ <module kind="tiger_top" version="1.0" enabled="1" name="tiger_top_0">
+  <parameter name="prof_param_N2" value="8" />
+  <parameter name="prof_param_S2" value="5" />
+  <parameter name="prof_param_CW" value="32" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="200000000" />
+ </module>
+ <module
+   kind="altera_avalon_mm_bridge"
+   version="13.0"
+   enabled="1"
+   name="pipeline_bridge_PERIPHERALS">
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="SYMBOL_WIDTH" value="8" />
+  <parameter name="ADDRESS_WIDTH" value="12" />
+  <parameter name="ADDRESS_UNITS" value="SYMBOLS" />
+  <parameter name="MAX_BURST_SIZE" value="1" />
+  <parameter name="MAX_PENDING_RESPONSES" value="1" />
+  <parameter name="LINEWRAPBURSTS" value="0" />
+  <parameter name="PIPELINE_COMMAND" value="1" />
+  <parameter name="PIPELINE_RESPONSE" value="0" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="200000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+ </module>
+ <module
+   kind="altera_avalon_mm_bridge"
+   version="13.0"
+   enabled="0"
+   name="pipeline_bridge_MEMORY">
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="SYMBOL_WIDTH" value="8" />
+  <parameter name="ADDRESS_WIDTH" value="24" />
+  <parameter name="ADDRESS_UNITS" value="SYMBOLS" />
+  <parameter name="MAX_BURST_SIZE" value="64" />
+  <parameter name="MAX_PENDING_RESPONSES" value="10" />
+  <parameter name="LINEWRAPBURSTS" value="0" />
+  <parameter name="PIPELINE_COMMAND" value="1" />
+  <parameter name="PIPELINE_RESPONSE" value="0" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="200000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+ </module>
+ <module kind="data_cache" version="1.0" enabled="1" name="data_cache_0">
+  <parameter name="AUTO_CLOCKRESET_CLOCK_RATE" value="200000000" />
+ </module>
+ <connection
+   kind="clock"
+   version="13.0"
+   start="clk.clk"
+   end="jtag_to_ava_master_bridge.clk" />
+ <connection kind="clock" version="13.0" start="clk.clk" end="uart_0.clk" />
+ <connection kind="clock" version="13.0" start="clk.clk" end="tiger_top_0.clock" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="clk.clk"
+   end="pipeline_bridge_PERIPHERALS.clk" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="tiger_top_0.procMaster"
+   end="pipeline_bridge_PERIPHERALS.s0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0xf0000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="pipeline_bridge_PERIPHERALS.m0"
+   end="uart_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0800" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="clock"
+   version="13.0"
+   start="clk.clk"
+   end="pipeline_bridge_MEMORY.clk" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="tiger_top_0.instructionMaster"
+   end="pipeline_bridge_MEMORY.s0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="pipeline_bridge_MEMORY.m0"
+   end="sdram.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00800000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection kind="reset" version="13.0" start="clk.clk_reset" end="sdram.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="sdram.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk.clk_reset"
+   end="jtag_to_ava_master_bridge.clk_reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="jtag_to_ava_master_bridge.clk_reset" />
+ <connection kind="reset" version="13.0" start="clk.clk_reset" end="uart_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="uart_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk.clk_reset"
+   end="tiger_top_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="tiger_top_0.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk.clk_reset"
+   end="pipeline_bridge_PERIPHERALS.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="pipeline_bridge_PERIPHERALS.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk.clk_reset"
+   end="pipeline_bridge_MEMORY.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="pipeline_bridge_MEMORY.reset" />
+ <connection
+   kind="clock"
+   version="13.0"
+   start="clk.clk"
+   end="data_cache_0.clockreset" />
+ <connection kind="clock" version="13.0" start="clk.clk" end="sdram.clk" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk.clk_reset"
+   end="data_cache_0.clockreset_reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master_reset"
+   end="data_cache_0.clockreset_reset" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="data_cache_0.dataMaster0"
+   end="pipeline_bridge_MEMORY.s0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="tiger_top_0.instructionMaster"
+   end="sdram.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00800000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="jtag_to_ava_master_bridge.master"
+   end="sdram.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00800000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
+</system>

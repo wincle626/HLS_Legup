@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Configuration files</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Configuration files</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#intro">Introduction</a>
+  <li><a href="#config">Configuration file syntax</a>
+  <li><a href="#minimal">A minimal example</a>
+</ul>
+
+
+
+
+<p><br>
+<a name="intro"></a>
+<h3>Introduction:</h3>
+
+GXemul can be started by entering machine settings directly on the command 
+line, or by reading a configuration file (a "configuration script").
+
+<p><font color="#ff0000">NOTE/TODO: This section is about the legacy configuration
+file format. It should be rewritten some day.</font>
+
+<p>Configuration files in GXemul are useful/necessary for three reasons:
+
+<p><ol>
+  <li>It can be difficult to remember long command lines with
+	lots of options.
+  <li>Some settings cannot be fully controlled on the command line. They can
+	only be set using configuration files.
+  <li>Complex setups of multiple machines, or complex network setups,
+	are not supported on the command line.
+</ol>
+
+
+
+
+
+
+
+
+<p><br>
+<a name="config"></a>
+<h3>Configuration file syntax:</h3>
+
+Configuration files are simple text files.  I don't have time to write
+down a formal syntax right now, so I hope that conveying the syntax
+through an example is good enough:
+
+<p>
+<table border="0"><tr><td width="40">&nbsp;</td><td>
+<pre>
+<font color="#2020cf">!  This is an example configuration file for GXemul.
+!  Anything following an exclamation mark (and also the exclamation
+!  mark itself) is ignored.
+!
+!  Almost all settings are optional.</font>
+
+<b>name(<font color="#ff003f">"my test emul"</font>)</b>	 <font color="#2020cf">!  Optional name of this emulation</font>
+
+<font color="#2020cf">!  This creates an ethernet network:</font>
+<b>net(</b>
+	<b>ipv4net(<font color="#ff003f">"10.2.0.0"</font>)</b>  <font color="#2020cf">!  The default is 10.0.0.0/8, but</font>
+	<b>ipv4len(16)</b>          <font color="#2020cf">!  it can be overridden like this.</font>
+	<font color="#2020cf">!  local_port(12345)</font>
+	<font color="#2020cf">!  add_remote("localhost:12346")</font>
+<b>)</b>
+
+<font color="#2020cf">!  This creates a machine:</font>
+<b>machine(</b>
+	<b>name(<font color="#ff003f">"My test machine"</font>)</b>
+
+	<font color="#2020cf">! serial_nr(123)    ! Useful when emulating multiple machines</font>
+	<font color="#2020cf">                    ! on multiple hosts, and they need to have</font>
+	<font color="#2020cf">                    ! unique MAC addresses, etc.</font>
+
+	<b>type(<font color="#ff003f">"dec"</font>)</b>		<font color="#2020cf">!  This is actually not optional</font>
+	<b>subtype(<font color="#ff003f">"5000/200"</font>)</b>
+
+	<b>cpu(<font color="#ff003f">"R3000"</font>)</b>    <font color="#2020cf">!  Normally set implicitly to a reasonable</font>
+			<font color="#2020cf">!  value, depending on <i>type</i> and <i>subtype</i></font>
+
+	<font color="#2020cf">! ncpus(4)</font>
+	<font color="#2020cf">! use_random_bootstrap_cpu(yes)</font>
+
+	<b>memory(128)</b>	<font color="#2020cf">!  128 MB memory. This overrides</font>
+			<font color="#2020cf">!  the default amount of memory for</font>
+			<font color="#2020cf">!  this machine type.</font>
+
+	<font color="#2020cf">! random_mem_contents(yes)</font>
+
+	<font color="#2020cf">! prom_emulation(no)</font>
+
+	<font color="#2020cf">! byte_order(big)    !  Normally set implicitly (because</font>
+			     <font color="#2020cf">!  of <i>type</i> and <i>subtype</i>, or decided</font>
+			     <font color="#2020cf">!  from the file loaded with <i>load</i></font>
+
+	<b>load(<font color="#ff003f">"netbsd-INSTALL"</font>)</b>
+	<b>bootname(<font color="#ff003f">"netbsd"</font>)</b>
+	<b>bootarg(<font color="#ff003f">"-a"</font>)</b>
+
+	<font color="#2020cf">! n_gfx_cards(2)         !  for DECstation dual/tripple-head</font>
+	<font color="#2020cf">! emulated_hz(10000000)  !  for setting the emulated clock speed (mostly fake)</font>
+
+	<font color="#2020cf">! add_x11_display("otherbox:0")  !  for dual/tripple-head etc</font>
+	<font color="#2020cf">! add_x11_display("thisbox:0")</font>
+
+	<font color="#2020cf">{
+	    Devices can be added like this:
+
+	    device("ns16550 addr=0x18000800 addr_mult=4")
+
+	    The name comes first, followed by optional parameters.
+	    Remember to use 0x for hexadecimal values.
+	}</font>
+
+	<font color="#2020cf">! force_netboot(yes)</font>
+	<font color="#2020cf">! start_paused(yes)</font>
+
+	<b>disk(<font color="#ff003f">"nbsd.img"</font>)</b>
+	<b>disk(<font color="#ff003f">"6c:cdrom.iso"</font>)</b>
+
+	<b>use_x11(yes)</b>
+	<b>x11_scaledown(2)</b>
+
+	<font color="#2020cf">! slow_serial_interrupts_hack_for_linux(yes)</font>
+
+	<font color="#2020cf">{
+	    Long comments spanning multiple lines should be surrounded
+	    with tuborg parentheses.
+
+	    {  Long comments can be nested.  }
+<!--
+	<b><i>... TODO ...
+	  -i        display each instruction as it is executed
+	  -J        disable some speed tricks
+	  -m nr     run at most nr instructions (on any cpu)
+	  -N        display nr of instructions/second average, at regular intervals
+	  -p pc     add a breakpoint (remember to use the '0x' prefix for hex!)
+	  -r        register dumps before every instruction
+	  -t        show function trace tree
+	</i></b>-->
+	}</font>
+
+<b>)</b>
+
+<font color="#2020cf">!  Multiple machine definitions are allowed.</font>
+<b>machine(</b>
+	<b>name(<font color="#ff003f">"another machine"</font>)</b>
+	<b>type(<font color="#ff003f">"hpcmips"</font>)</b>
+	<b>subtype(<font color="#ff003f">"be300"</font>)</b>
+
+	<i>...</i>
+<b>)</b>
+</pre>
+</td></tr></table>
+
+<p>
+Starting the emulator with a configuration file is as simple as
+
+<pre>
+	$ <b>gxemul @myconfig</b>
+</pre>
+
+if <b>myconfig</b> is the name of the configuration file.
+
+
+
+
+
+
+
+
+<p><br>
+<a name="minimal"></a>
+<h3>A minimal example:</h3>
+
+Here is an example of what a minimal configuration file might look like:
+
+<p><table border="0"><tr><td width="40">&nbsp;</td><td><pre>
+<b>machine(</b>
+    <b>subtype(<font color="#ff003f">"3max"</font>)</b>
+    <b>load(<font color="#ff003f">"netbsd-pmax-INSTALL-2.0"</font>)</b>
+<b>)</b>
+</pre>
+</td></tr></table>
+
+<p>For most machine types, <tt>type</tt> is needed. If only
+<tt>subtype</tt> is specified, and the name is unique (i.e. there is only
+one major type which has such a subtype), then the <tt>type</tt> can be
+omitted. Also, adding a <tt>net</tt> is quite useful, especially for
+netbooting kernels.
+
+
+
+
+
+
+
+
+
+</p>
+
+</body>
+</html>

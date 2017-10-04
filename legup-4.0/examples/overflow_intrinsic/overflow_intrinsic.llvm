@@ -1,0 +1,30 @@
+%0 = type { i32, i1 }
+
+@a = private constant [6 x i8] c"a=%d\0A\00", align 1 ;
+@sum = private constant [8 x i8] c"sum=%d\0A\00", align 1 ;
+@carry = private constant [10 x i8] c"carry=%d\0A\00", align 1 ;
+
+define i32 @main() nounwind {
+bb1:
+  ; biggest possible 32 bit integer 4294967295
+  %a = sext i1 1 to i32
+
+  ; add 2 to %a causing an overflow
+  %uadd.i = call %0 @llvm.uadd.with.overflow.i32(i32 %a, i32 2) nounwind
+  %sum = extractvalue %0 %uadd.i, 0
+  %carry = extractvalue %0 %uadd.i, 1
+  %carry.zext = zext i1 %carry to i32
+
+  ; sum will be 1, carry will be 1
+  %0 = call i32 (i8*, ...)* @printf(i8* noalias getelementptr inbounds ([6 x i8]* @a, i64 0, i64 0), i32 %a) nounwind ; <i32> [#uses=0]
+  %1 = call i32 (i8*, ...)* @printf(i8* noalias getelementptr inbounds ([8 x i8]* @sum, i64 0, i64 0), i32 %sum) nounwind ; <i32> [#uses=0]
+  %2 = call i32 (i8*, ...)* @printf(i8* noalias getelementptr inbounds ([10 x i8]* @carry, i64 0, i64 0), i32 %carry.zext) nounwind ; <i32> [#uses=0]
+
+  ; should return 1
+  ret i32 %sum
+}
+
+declare i32 @printf(i8* noalias, ...)
+
+declare %0 @llvm.uadd.with.overflow.i32(i32, i32) nounwind readnone
+

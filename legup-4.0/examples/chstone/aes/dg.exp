@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd chstone/aes
+set test "aes"
+set expected {return_val=\s+32\s+}
+set gxexpected {reg: v0 = 0x0000000000000020}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

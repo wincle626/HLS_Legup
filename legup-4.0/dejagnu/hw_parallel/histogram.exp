@@ -1,0 +1,15 @@
+load_lib legup.exp
+
+set expected {# Result:\s+5\s+}
+
+cd ../examples/parallel/openmp/histogram
+
+set test "histogram OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/histogram
+
+set test "histogram Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

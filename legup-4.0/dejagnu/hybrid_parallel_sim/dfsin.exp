@@ -1,0 +1,35 @@
+load_lib legup.exp
+
+set hybridexpected {# Sum: 144}
+
+cd ../examples/parallel/single/dfsin
+set test "dfsin Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/dfsin
+set test "dfsin Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set expected {# Sum:\s+144\s+}
+set test "dfsin Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/dfsin_2
+set test "dfsin_2 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "dfsin_2 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dfsin_3
+set test "dfsin_3 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "dfsin_3 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../dfsin_4
+set test "dfsin_4 Pthreads+OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+set test "dfsin_4 Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>newForm</class>
+ <widget class="QMainWindow" name="newForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>958</width>
+    <height>702</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Inspect - LegUp HLS Source-Level Debugger 1.0</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Debugging.png</normaloff>Debugging.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabDebug">
+       <attribute name="title">
+        <string>Debug View</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QSplitter" name="splitter">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QPushButton" name="pushButtonSingleStepping">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Step</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonContinue">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>120</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Run/Continue</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QRadioButton" name="radioButtonStepInto">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Cycle-Step</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButtonStepOver">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Statement-Step</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>258</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Current State:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelCurrentState">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QLabel" name="labelHighLevel">
+                <property name="text">
+                 <string>C Code</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QTextEdit" name="textEditLineNumber">
+                  <property name="maximumSize">
+                   <size>
+                    <width>50</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="lineWrapMode">
+                   <enum>QTextEdit::NoWrap</enum>
+                  </property>
+                  <property name="readOnly">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="textEditHighLevel">
+                  <property name="minimumSize">
+                   <size>
+                    <width>300</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="lineWrapMode">
+                   <enum>QTextEdit::NoWrap</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QLabel" name="labelIR">
+                <property name="text">
+                 <string>IR Instruction</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTreeWidget" name="treeWidgetIR">
+                <attribute name="headerVisible">
+                 <bool>false</bool>
+                </attribute>
+                <column>
+                 <property name="text">
+                  <string notr="true">1</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QLabel" name="labelHardware">
+                <property name="text">
+                 <string>Verilog Code</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QListWidget" name="listWidgetHardware"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <widget class="QLabel" name="labelWatch">
+                <property name="text">
+                 <string>HW Signals</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <item>
+                   <widget class="QTreeWidget" name="treeWidgetWatch">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Sunken</enum>
+                    </property>
+                    <property name="lineWidth">
+                     <number>1</number>
+                    </property>
+                    <property name="verticalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAsNeeded</enum>
+                    </property>
+                    <property name="horizontalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAlwaysOn</enum>
+                    </property>
+                    <property name="rootIsDecorated">
+                     <bool>true</bool>
+                    </property>
+                    <attribute name="headerVisible">
+                     <bool>false</bool>
+                    </attribute>
+                    <column>
+                     <property name="text">
+                      <string notr="true">1</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="labelWatch_3">
+                    <property name="text">
+                     <string>HW Variables</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTreeWidget" name="treeWidgetHWValues">
+                    <property name="alternatingRowColors">
+                     <bool>true</bool>
+                    </property>
+                    <property name="headerHidden">
+                     <bool>true</bool>
+                    </property>
+                    <column>
+                     <property name="text">
+                      <string notr="true">1</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="labelWatchSWVariables">
+                    <property name="text">
+                     <string>SW Variables</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTableWidget" name="tableWidgetSWVariables">
+                    <property name="horizontalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAlwaysOn</enum>
+                    </property>
+                    <attribute name="horizontalHeaderDefaultSectionSize">
+                     <number>140</number>
+                    </attribute>
+                    <attribute name="horizontalHeaderMinimumSectionSize">
+                     <number>80</number>
+                    </attribute>
+                    <attribute name="horizontalHeaderStretchLastSection">
+                     <bool>true</bool>
+                    </attribute>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabDiscrepanyLog">
+       <attribute name="title">
+        <string>Discrepancy Log</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QTableWidget" name="plainTableEditLog"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabSourceCode">
+       <attribute name="title">
+        <string>C Source File</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QTextEdit" name="textEditCSource">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="lineWrapMode">
+           <enum>QTextEdit::NoWrap</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabVerilogCode">
+       <attribute name="title">
+        <string>Verilog File</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="QTextEdit" name="textEditVerilogFile">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="lineWrapMode">
+           <enum>QTextEdit::NoWrap</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>958</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen_Connection"/>
+    <addaction name="actionLoad_Design"/>
+    <addaction name="actionRun_Reference_Sim"/>
+    <addaction name="actionRun_On_Chip"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionView_IR_Instructions"/>
+    <addaction name="actionView_verilog_Code"/>
+    <addaction name="actionView_Watch_Signals"/>
+   </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionReBuildCode"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionSelect_Signals"/>
+    <addaction name="actionAutomatic_Signal_Selection"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuDebug"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionView_IR_Instructions">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>View IR Instructions</string>
+   </property>
+  </action>
+  <action name="actionView_verilog_Code">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>View verilog Code</string>
+   </property>
+  </action>
+  <action name="actionView_Watch_Signals">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Watch Variables and Signals</string>
+   </property>
+  </action>
+  <action name="actionOpen_Connection">
+   <property name="text">
+    <string>Open Connection</string>
+   </property>
+  </action>
+  <action name="actionLoad_Design">
+   <property name="text">
+    <string>Load Design</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionReBuildCode">
+   <property name="text">
+    <string>ReBuild Code</string>
+   </property>
+  </action>
+  <action name="actionRun_On_Chip">
+   <property name="text">
+    <string>Run On-Chip</string>
+   </property>
+  </action>
+  <action name="actionSelect_Signals">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select Signals</string>
+   </property>
+  </action>
+  <action name="actionAutomatic_Signal_Selection">
+   <property name="text">
+    <string>Automatic Signal Selection</string>
+   </property>
+  </action>
+  <action name="actionRun_Reference_Sim">
+   <property name="text">
+    <string>Run Reference Sim</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionView_IR_Instructions</sender>
+   <signal>changed()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionView_IR_Instructions_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionView_verilog_Code</sender>
+   <signal>changed()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionView_HW_Info_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionView_Watch_Signals</sender>
+   <signal>changed()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionView_Watch_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen_Connection</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>pushButtonOpenConnection_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoad_Design</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>pushButtonLoadDesign_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>pushButtonExit_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionReBuildCode</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionReBuildCode_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>307</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect_Signals</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionSelectSignals_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>306</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonSingleStepping</sender>
+   <signal>clicked()</signal>
+   <receiver>newForm</receiver>
+   <slot>pushButtonSingleStepping_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>95</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>174</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonContinue</sender>
+   <signal>clicked()</signal>
+   <receiver>newForm</receiver>
+   <slot>pushButtonContinue_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>44</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textEditLineNumber</sender>
+   <signal>cursorPositionChanged()</signal>
+   <receiver>newForm</receiver>
+   <slot>textEditLineNumbers_CursorPositionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>24</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textEditHighLevel</sender>
+   <signal>cursorPositionChanged()</signal>
+   <receiver>newForm</receiver>
+   <slot>textEditHighLevel_CursorPositionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>175</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButtonStepInto</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>newForm</receiver>
+   <slot>radioButtonStepInto_Toggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>480</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidgetIR</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>newForm</receiver>
+   <slot>treeWidgetIR_itemClicked(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>549</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>589</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRun_On_Chip</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionRunOnChip_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>712</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAutomatic_Signal_Selection</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionAutomaticSignalSelection_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRun_Reference_Sim</sender>
+   <signal>triggered()</signal>
+   <receiver>newForm</receiver>
+   <slot>actionRunReferenceSim_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>478</x>
+     <y>350</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plainTableEditLog</sender>
+   <signal>itemClicked(QTableWidgetItem*)</signal>
+   <receiver>newForm</receiver>
+   <slot>plainTableEditLog_itemClicked(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>389</x>
+     <y>108</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>437</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>pushButtonOpenConnection_clicked()</slot>
+  <slot>pushButtonExamine_clicked()</slot>
+  <slot>pushButtonRun_clicked()</slot>
+  <slot>pushButtonLoadDesign_clicked()</slot>
+  <slot>pushButtonSingleStepping_clicked()</slot>
+  <slot>pushButtonExit_clicked()</slot>
+  <slot>treeWidgetIR_itemClicked(QTreeWidgetItem*,int)</slot>
+  <slot>actionView_IR_Instructions_changed()</slot>
+  <slot>actionView_HW_Info_changed()</slot>
+  <slot>actionView_Watch_changed()</slot>
+  <slot>radioButtonStepInto_Toggled(bool)</slot>
+  <slot>textEditHighLevel_CursorPositionChanged()</slot>
+  <slot>textEditLineNumbers_CursorPositionChanged()</slot>
+  <slot>pushButtonContinue_clicked()</slot>
+  <slot>actionReBuildCode_clicked()</slot>
+  <slot>actionRunOnChip_clicked()</slot>
+  <slot>actionSelectSignals_clicked()</slot>
+  <slot>actionAutomaticSignalSelection_clicked()</slot>
+  <slot>actionRunReferenceSim_clicked()</slot>
+  <slot>plainTableEditLog_itemClicked(QTableWidgetItem*)</slot>
+ </slots>
+</ui>

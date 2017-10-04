@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <systemtable filter="All">
+  <columns>
+   <connections preferredWidth="143" />
+   <irq preferredWidth="34" />
+   <inputclock preferredWidth="57" />
+   <name preferredWidth="263" />
+   <export visible="0" />
+  </columns>
+ </systemtable>
+ <clocktable>
+  <columns>
+   <clockname preferredWidth="244" />
+   <clocksource preferredWidth="243" />
+   <frequency preferredWidth="224" />
+   <pipeline visible="0" preferredWidth="58" />
+  </columns>
+ </clocktable>
+ <window width="1617" height="991" x="64" y="-4" />
+ <library
+   expandedCategories="Library/Memories and Memory Controllers/External Memory Interfaces/Memory Models,Library/Memories and Memory Controllers/External Memory Interfaces/RLDRAM II Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces/DDR2 Interfaces,Library/Memories and Memory Controllers,Project,Library,Library/Memories and Memory Controllers/External Memory Interfaces/SDRAM Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces/DDR Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces/QDR II Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces/Flash Interfaces,Library/Memories and Memory Controllers/External Memory Interfaces/Pattern Generators,Library/Memories and Memory Controllers/External Memory Interfaces/DDR3 Interfaces" />
+ <debug showDebugMenu="0" />
+</preferences>

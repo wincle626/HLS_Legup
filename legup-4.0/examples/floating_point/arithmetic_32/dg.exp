@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/arithmetic_32
+set test "arithmetic+32"
+set expected {return_val=\s+123\s+}
+
+run-test $test $expected
+
+cd ../..

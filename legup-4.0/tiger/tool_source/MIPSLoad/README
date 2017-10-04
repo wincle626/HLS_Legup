@@ -1,0 +1,14 @@
+This is the MIPSLoad program which is used to load programs on the
+processor system and run them.  To build it run the build script.
+MIPSLoad takes 2 required arguments, an executable name, and the
+address of the MIPS Communication Server (usually localhost) and 1
+option argument -r, giving that argument will cause the program to
+start running after it is loaded, without the -r argument after
+loading it stays in the debug stub so the debugger can be used.
+
+So you will run MIPSLoad something like: MIPSLoad prog.elf localhost
+or MIPSLoad prog.elf localhost -r
+
+MIPSLoad sets the stack pointer to 0x01000000, if you don't use the
+normal setup with 8mb SDRAM located at 0x800000 then you may wish to
+change this (this will also need changing in the debugging stub).

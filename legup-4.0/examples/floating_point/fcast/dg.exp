@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd floating_point/fcast
+set test "fcast"
+set expected {return_val=\s+88\s+}
+
+run-test $test $expected
+
+cd ../..

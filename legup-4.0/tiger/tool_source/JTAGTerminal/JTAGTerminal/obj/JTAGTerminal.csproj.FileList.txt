@@ -1,0 +1,5 @@
+bin\Debug\JTAGTerminal.exe
+bin\Debug\JTAGTerminal.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\JTAGTerminal.exe
+obj\Debug\JTAGTerminal.pdb

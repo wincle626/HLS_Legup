@@ -1,0 +1,20 @@
+#
+#  Makefile for GXemul src/old_main (from GXemul 0.4.x)
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(XINCLUDE) $(DINCLUDE)
+
+OBJS=emul.o emul_parse.o float_emul.o interrupt.o main.o memory.o misc.o \
+	settings.o timer.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+
+

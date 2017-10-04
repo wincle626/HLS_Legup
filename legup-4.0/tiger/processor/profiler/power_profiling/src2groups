@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# ~/legup/examples/hierarchy_test/hierarchy_test.src
+
+function displayer() {
+	while read data; do
+		sed -i "s|${data}|_${data}|" $1
+	done
+}
+
+function update_file() {
+	while read data; do
+		LINE=`echo $data | grep '8[0-9a-f]\{5\}:'`
+		if [ "$LINE" = "" ]; then
+			echo "$data" >> $1
+		else
+			INSTR=`echo $data | grep -o ':.*[a-z0-9]\{8\}' | tr -d ': '`
+			GROUP=`./get_group $INSTR`
+			echo "$GROUP $data" >> $1
+		fi
+	done
+}
+
+cp $1 .
+FILE=${1##*/}
+echo > $FILE
+grep 'Disassembly of section \.[^t]'  --max-count=1 -B 20000 $1 | update_file $FILE #grep '  8[0-9a-f]\{5\}:' | displayer $FILE

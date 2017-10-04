@@ -1,0 +1,26 @@
+load_lib legup.exp
+
+set expected {# Result:\s+36\s+}
+
+cd ../examples/parallel/openmp/matrixmult
+
+set test "matrixmult OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/matrixmult
+set test "matrixmult Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/matrixmult_pipeline
+set test "matrixmult_pipeline Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/matrixmult
+set test "matrixmult Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads+openmp/matrixmult_volatile
+set test "matrixmult_volatile Pthreads+OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

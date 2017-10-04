@@ -1,0 +1,57 @@
+#!/usr/local/bin/expect
+
+set timeout 4000
+spawn ./gxemul -E landisk -q -d obsd_landisk.img -d bd:../../emul/sh/openbsd_landisk_4.5.iso -j 4.5/landisk/bsd.rd
+
+set  send_slow  {1 .5}
+
+expect "(I)nstall"
+send -s "i\r"
+expect "vt220"
+send -s "xterm\r"
+expect "Proceed with install"
+send -s "yes\r"
+expect "Which one is the root disk"
+send -s "wd0\r"
+expect "of wd0 for OpenBSD"
+send -s "yes\r"
+expect "Initial label editor"
+send -s "d a\ra a\r63\r3500000\r4.2BSD\r/\ra b\r\r\rswap\rw\rq\r"
+expect "Available disks are: wd1"
+send -s "done\r"
+expect "Are you really sure that"
+send -s "yes\r"
+expect "System hostname"
+send -s "autotest\r"
+expect "Configure the network"
+send -s "no\r"
+expect "Password for root account"
+send -s "123456\r"
+expect "again"
+send -s "123456\r"
+expect "Location of sets"
+send -s "disk\r"
+expect "Is the disk partition already mounted"
+send -s "no\r"
+expect "Which one contains the install media"
+send -s "wd1\r"
+expect "Pathname to the sets"
+send -s "\r"
+expect "Set name"
+send -s "done\r"
+expect "Ready to install sets"
+send -s "yes\r"
+
+expect "Location of sets"
+send -s "done\r"
+expect "sshd"
+send -s "\r"
+expect "ntpd"
+send -s "\r"
+expect "timezone"
+send -s "Europe/Stockholm\r"
+expect "reset the machine and boot from the disk"
+send -s "sync\r"
+expect "# "
+
+close

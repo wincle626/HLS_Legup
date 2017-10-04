@@ -1,0 +1,68 @@
+Memory access profiler by Kevin Nam
+
+## INTRODUCTION ##
+
+This program was written for the LegUp HLS Suite. It checks whether a function is memory-independent with other
+functions or other invocations of itself, to see if the function can be parallelized.
+
+To do this, it takes the instruction trace of the program we want to analyze. Then it builds a hash table of
+all the accessed memory addresses. For each address, we build a list of all the functions that access it.
+
+Once we have this table, we go through each address and check if there are memory dependencies.
+
+## USAGE ##
+
+First get the instruction trace using GXEMUL. Due to problems with how gxemul's instruction trace was outputted (printfs),
+GXEMUL code was modified to write the output to a file rather than print to terminal. Replace "main.cc" with the modified
+one, in /src/old_main/. Then build GXEMUL. Now the instruction trace will be saved to a file called "gxemuldump"
+
+Once you have this file, you can run the profiler:
+
+./mem_access_profiler <instruction trace file> <access threshhold (integer)> <function name>
+
+argv[1] is the instruction trace file
+argv[2] is the number of accesses above which the address will be printed out.
+        ex if you choose 10, then all the addresses where more than 10 different functions access
+        it will be printed out. This is useful if you want to find what variable(s) might be
+		causing the memory dependencies. Once you have the address, you can check the .src file
+		of the program to find the variable name
+argv[3] is the name of the function you want to analyze
+
+Once the profiler finished running, the results will be saved to a text file.
+
+The text file might look like this:
+________________________________________________________________________
+------------- Checking for function: logscl -------------
+stack conflict with other: 0
+stack conflict with self: 0
+heap conflict with other: 0
+heap conflict with self: 0
+heap dependency conflict with self: 0
+stack dependency conflict with self: 0
+----------------------- DONE FOR: logscl -----------------------
+
+Invocation count of this function: 100
+________________________________________________________________________
+
+here, logscl is the function that was checked. This function was invoked 100 times, and has no memory dependencies ie. parallelizable.
+
+Another result might look like:
+________________________________________________________________________
+------------- Checking for function: encode -------------
+Heap conflict with other at: 80033274
+Heap conflict with self at: 80033274
+Heap conflict with other at: 80032eb0
+Heap conflict with self at: 80032eb0
+stack conflict with other: 0
+stack conflict with self: 0
+heap conflict with other: 1
+heap conflict with self: 1
+heap dependency conflict with self: 1
+stack dependency conflict with self: 0
+----------------------- DONE FOR: encode -----------------------
+
+Invocation count of this function: 50
+________________________________________________________________________
+
+Here, there are memory dependencies, ie. the function is not parallelizable. 
+the 1s indicate TRUE not the number of conflicts. 

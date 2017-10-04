@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/dependency
+set test "pipeline/dependency"
+set expected {return_val=\s+4950\s+.*Cycles:\s+128285\s+}
+
+run-test $test $expected
+
+cd ../..

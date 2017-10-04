@@ -1,0 +1,57 @@
+Reading /home/choijon5/modeltech/tcl/vsim/pref.tcl 
+Reading /home/choijon5/legup_lastest/legup/tiger/processor/tiger_modified_counter_stall_fix/tiger_sim/modelsim.tcl 
+/home/choijon5/altera/10.1/quartus//sopc_builder
+/home/choijon5/altera/10.1/quartus//linux/perl
+Sopc_Builder Directory: /home/choijon5/altera/10.1/quartus//sopc_builder 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+@@ 
+@@ setup_sim.do 
+@@ 
+@@ Defined aliases: 
+@@ 
+@@ s -- Load all design (HDL) files. 
+@@ re-vlog/re-vcom and re-vsim the design. 
+@@ 
+@@ s_cycloneiv -- For Modelsim SE, compile Cyclone IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixiv -- For Modelsim SE, compile Stratix IV models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ s_stratixv -- For Modelsim SE, compile Stratix V models. (Ignored 
+@@ in Modelsim AE.) 
+@@ 
+@@ w -- Sets-up waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for display during 
+@@ simulation. This command opens a wave- 
+@@ window containing all such signals. 
+@@ 
+@@ l -- Sets-up list waveforms for this design 
+@@ Each SOPC-Builder component may have 
+@@ signals 'marked' for listing during 
+@@ simulation. This command opens a list- 
+@@ window containing all such signals. 
+@@ 
+@@ h -- print this message 
+@@ 
+@@ 
+
+# 6.6d
+
+# do ../run_sim_nowave.tcl 
+# ** Error: (vdel-7) Failed to open ini file "../../../modelsim.ini.in" in read mode.
+# No such file or directory. (errno = ENOENT)
+# ** Error: /home/choijon5/modeltech/linux/vdel failed.
+# Error in macro ./../run_sim_nowave.tcl line 5
+# /home/choijon5/modeltech/linux/vdel failed.
+#     while executing
+# "error [FixExecError $msg]"
+#     (procedure "vdel" line 6)
+#     invoked from within
+# "vdel -lib work -all"
+#     invoked from within
+# "if {[file exists work]} {
+# 	vdel -lib work -all;
+# }"
+ModelSim> 

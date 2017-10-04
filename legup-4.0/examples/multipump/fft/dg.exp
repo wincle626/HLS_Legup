@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd multipump/fft
+set test "fft"
+set expected {return_val=\s+87100\s+}
+set gxexpected {reg: v0 = 0x000000000001543c}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

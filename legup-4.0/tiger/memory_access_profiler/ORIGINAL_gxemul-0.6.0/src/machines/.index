@@ -1,0 +1,23 @@
+machine_algor.cc  Algorithmic P4032 and P5064 evaluation boards
+machine_arc.cc  ARC (Advanced RISC Computing) machines
+machine_cats.cc  Simtec Electronics' CATS board
+machine_cobalt.cc  Cobalt (MIPS-based)
+machine_dreamcast.cc  SEGA Dreamcast
+machine_evbmips.cc  MIPS evaluation boards (e.g. Malta)
+machine_hpcarm.cc  Handheld ARM-based machines
+machine_hpcmips.cc  Handheld MIPS-based machines
+machine_hpcsh.cc  Handheld SuperH-based machines
+machine_iq80321.cc  Intel IQ80321 (ARM)
+machine_iyonix.cc  A Iyonix machine
+machine_landisk.cc  I-O DATA LanDisk USL-5P
+machine_macppc.cc  Generic PowerPC-based Macintosh machines
+machine_mvme88k.cc  MVME88K machines (MVME187)
+machine_mvmeppc.cc  MVMEPPC machines
+machine_netwinder.cc  NetWinder
+machine_playstation2.cc  Sony PlayStation 2
+machine_pmax.cc  Digital DECstation ("PMAX") machines
+machine_pmppc.cc  Artesyn's PM/PPC board
+machine_prep.cc  Machines conforming to the PowerPC Reference Platform specs
+machine_qemu.cc  Machine mimicing QEMU's default MIPS emulation mode
+machine_sgi.cc  Silicon Graphics' MIPS-based machines
+machine_test.cc  Various test machines

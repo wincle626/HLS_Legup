@@ -1,0 +1,19 @@
+Replace the compiler target name with the name on your system.
+
+
+MIPS (64-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -O3 -DMIPS mp.c -mips64 -mabi=64 -c -o mp_mips.o
+mips64-unknown-elf-ld -Ttext 0xa800000000030000 -e f mp_mips.o -o mp_mips --oformat=elf64-bigmips
+file mp_mips
+../../gxemul -E testmips -n 8 mp_mips
+
+
+MIPS (32-bit)
+-------------
+mips64-unknown-elf-gcc -I../../src/include/testmachine -g -O3 -DMIPS mp.c -mips32r2 -mabi=32 -c -o mp_mips32.o
+mips64-unknown-elf-ld -Ttext 0x80030000 -e f mp_mips32.o -o mp_mips32
+file mp_mips32
+../../gxemul -E testmips -C 4KEc -n 8 mp_mips32
+
+

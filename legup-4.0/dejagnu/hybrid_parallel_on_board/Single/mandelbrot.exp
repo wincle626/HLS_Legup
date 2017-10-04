@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+set hybridexpected {Count: 12013}
+
+cd ../examples/parallel/single/mandelbrot
+set test "mandelbrot Single"
+run-test-hybrid-once-on-board $test $hybridexpected
+
+
+cd ../../../

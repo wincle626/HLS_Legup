@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+set hybridexpected {Result: 4}
+
+cd ../examples/parallel/pthreads/barrier
+set test "barrier Pthreads"
+run-test-hybrid-once-on-board $test $hybridexpected
+
+cd ../../../

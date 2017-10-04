@@ -1,0 +1,15 @@
+<session jtag_chain="USB-Blaster [USB-0]" jtag_device="@1: EP2C35 (0x020B40DD)" sof_file="">
+  <display_tree gui_logging_enabled="0"/>
+  <global_info>
+    <single attribute="active instance" value="0"/>
+    <single attribute="lock mode" value="36110"/>
+    <multi attribute="window position" size="9" value="1252,670,398,124,356,50,124,0,51"/>
+  </global_info>
+  <instance entity_name="sld_signaltap" is_auto_node="yes" name="auto_signaltap_0" source_file="sld_signaltap.vhd">
+    <node_ip_info instance_id="0" mfg_id="110" node_id="0" version="6"/>
+    <position_info>
+      <single attribute="active tab" value="1"/>
+    </position_info>
+  </instance>
+  <mnemonics/>
+</session>

@@ -1,0 +1,10 @@
+These scripts were run on scinet from the directory:
+    /scratch/j/janders/acanis
+
+The version of legup to test was checked out into:
+    /scratch/j/janders/acanis/legup
+
+To run the benchmarks on scinet and store the result in
+"legup-without-chaining" run: 
+    /scratch/j/janders/acanis$ ./launch.sh legup-without-chaining
+

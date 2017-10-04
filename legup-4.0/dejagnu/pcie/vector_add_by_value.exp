@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/vector_add_by_value
+set test "vector_add_by_value"
+
+set pcieexpected {.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*15\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*19\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*23\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*27\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*31\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*35\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*39\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*43\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*47\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*51\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*55\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*59\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*63\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*67\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*71\n.*\n?# At t=\s+\d+ clk=1 finish=1 return_val=\s*75\n}
+run-test-pcie $test $pcieexpected
+
+cd ../../../examples

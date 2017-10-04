@@ -1,0 +1,13 @@
+load_lib legup.exp
+
+set hybridexpected {# Result: 24000}
+
+cd ../examples/parallel/openmp/perfecthash
+set test "perfecthash OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+cd ../../pthreads/perfecthash
+set test "perfecthash Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../../

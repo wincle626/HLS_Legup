@@ -1,0 +1,5 @@
+cp onchip_mem.v.copy onchip_mem.v
+
+cp tiger_inst.v.copy tiger_inst.v
+
+vsim -c -do "run_sim_nowave.tcl"

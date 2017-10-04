@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+set hybridexpected {Count: 12013}
+
+cd ../examples/parallel/openmp/mandelbrot
+set test "mandelbrot OpenMP"
+run-test-hybridparallel-once-on-board $test $hybridexpected
+
+
+cd ../../../

@@ -1,0 +1,223 @@
+<sld_project_info>
+  <hub_info ir_width="2" node_count="3"/>
+  <node_info>
+    <node hpath="tiger:tiger_sopc|tiger_top_0:the_tiger_top_0|tiger_top:tiger_top_0|tiger_debug:debug_controller|VJT:VJTInst|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst" instance_id="39" mfg_id="110" node_id="8" sld_node_info="0x406E27" version="0">
+      <parameters>
+        <parameter name="sld_mfg_id" type="dec" value="110"/>
+        <parameter name="sld_type_id" type="dec" value="8"/>
+        <parameter name="sld_version" type="dec" value="0"/>
+        <parameter name="sld_instance_index" type="dec" value="39"/>
+        <parameter name="sld_auto_instance_index" type="string" value="NO"/>
+        <parameter name="sld_ir_width" type="dec" value="1"/>
+        <parameter name="SLD_NODE_INFO" type="dec" value="4222503"/>
+      </parameters>
+      <inputs>
+        <port name="usr_tdo" source="tiger:tiger_sopc|tiger_top_0:the_tiger_top_0|tiger_top:tiger_top_0|tiger_debug:debug_controller|VJT:VJTInst|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|tdo"/>
+        <port name="usr_ir_out[0]" source="tiger:tiger_sopc|tiger_top_0:the_tiger_top_0|tiger_top:tiger_top_0|tiger_debug:debug_controller|VJT:VJTInst|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|ir_out[0]"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_" source="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_"/>
+      </inputs>
+      <outputs>
+        <port name="usr_tck"/>
+        <port name="usr_tdi"/>
+        <port name="usr_ir_in[0]"/>
+        <port name="usr_virtual_state_cdr"/>
+        <port name="usr_virtual_state_sdr"/>
+        <port name="usr_virtual_state_e1dr"/>
+        <port name="usr_virtual_state_pdr"/>
+        <port name="usr_virtual_state_e2dr"/>
+        <port name="usr_virtual_state_udr"/>
+        <port name="usr_virtual_state_cir"/>
+        <port name="usr_virtual_state_uir"/>
+        <port name="usr_tms"/>
+        <port name="usr_jtag_state_tlr"/>
+        <port name="usr_jtag_state_rti"/>
+        <port name="usr_jtag_state_sdrs"/>
+        <port name="usr_jtag_state_cdr"/>
+        <port name="usr_jtag_state_sdr"/>
+        <port name="usr_jtag_state_e1dr"/>
+        <port name="usr_jtag_state_pdr"/>
+        <port name="usr_jtag_state_e2dr"/>
+        <port name="usr_jtag_state_udr"/>
+        <port name="usr_jtag_state_sirs"/>
+        <port name="usr_jtag_state_cir"/>
+        <port name="usr_jtag_state_sir"/>
+        <port name="usr_jtag_state_e1ir"/>
+        <port name="usr_jtag_state_pir"/>
+        <port name="usr_jtag_state_e2ir"/>
+        <port name="usr_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdo"/>
+        <port name="jtag.bp.tiger_sopc_the_tiger_top_0_tiger_top_0_debug_controller_VJTInst_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_out_0_"/>
+      </outputs>
+    </node>
+    <node hpath="tiger:tiger_sopc|tigers_jtag_uart:the_tigers_jtag_uart|vJTAGUart:tigers_jtag_uart|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst" instance_id="0" mfg_id="110" node_id="8" sld_node_info="0x406E00" version="0">
+      <parameters>
+        <parameter name="sld_mfg_id" type="dec" value="110"/>
+        <parameter name="sld_type_id" type="dec" value="8"/>
+        <parameter name="sld_version" type="dec" value="0"/>
+        <parameter name="sld_instance_index" type="dec" value="0"/>
+        <parameter name="sld_auto_instance_index" type="string" value="YES"/>
+        <parameter name="sld_ir_width" type="dec" value="2"/>
+        <parameter name="SLD_NODE_INFO" type="dec" value="4222464"/>
+      </parameters>
+      <inputs>
+        <port name="usr_tdo" source="tiger:tiger_sopc|tigers_jtag_uart:the_tigers_jtag_uart|vJTAGUart:tigers_jtag_uart|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|tdo"/>
+        <port name="usr_ir_out[0]" source="tiger:tiger_sopc|tigers_jtag_uart:the_tigers_jtag_uart|vJTAGUart:tigers_jtag_uart|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|ir_out[0]"/>
+        <port name="usr_ir_out[1]" source="tiger:tiger_sopc|tigers_jtag_uart:the_tigers_jtag_uart|vJTAGUart:tigers_jtag_uart|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|ir_out[1]"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_1_" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_1_"/>
+      </inputs>
+      <outputs>
+        <port name="usr_tck"/>
+        <port name="usr_tdi"/>
+        <port name="usr_ir_in[0]"/>
+        <port name="usr_ir_in[1]"/>
+        <port name="usr_virtual_state_cdr"/>
+        <port name="usr_virtual_state_sdr"/>
+        <port name="usr_virtual_state_e1dr"/>
+        <port name="usr_virtual_state_pdr"/>
+        <port name="usr_virtual_state_e2dr"/>
+        <port name="usr_virtual_state_udr"/>
+        <port name="usr_virtual_state_cir"/>
+        <port name="usr_virtual_state_uir"/>
+        <port name="usr_tms"/>
+        <port name="usr_jtag_state_tlr"/>
+        <port name="usr_jtag_state_rti"/>
+        <port name="usr_jtag_state_sdrs"/>
+        <port name="usr_jtag_state_cdr"/>
+        <port name="usr_jtag_state_sdr"/>
+        <port name="usr_jtag_state_e1dr"/>
+        <port name="usr_jtag_state_pdr"/>
+        <port name="usr_jtag_state_e2dr"/>
+        <port name="usr_jtag_state_udr"/>
+        <port name="usr_jtag_state_sirs"/>
+        <port name="usr_jtag_state_cir"/>
+        <port name="usr_jtag_state_sir"/>
+        <port name="usr_jtag_state_e1ir"/>
+        <port name="usr_jtag_state_pir"/>
+        <port name="usr_jtag_state_e2ir"/>
+        <port name="usr_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdo"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_out_0_"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_tigers_jtag_uart_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_out_1_"/>
+      </outputs>
+    </node>
+    <node hpath="tiger:tiger_sopc|tigers_jtag_uart_1:the_tigers_jtag_uart_1|vJTAGUart:tigers_jtag_uart_1|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|sld_virtual_jtag_impl:sld_virtual_jtag_impl_inst" instance_id="1" mfg_id="110" node_id="8" sld_node_info="0x406E01" version="0">
+      <parameters>
+        <parameter name="sld_mfg_id" type="dec" value="110"/>
+        <parameter name="sld_type_id" type="dec" value="8"/>
+        <parameter name="sld_version" type="dec" value="0"/>
+        <parameter name="sld_instance_index" type="dec" value="0"/>
+        <parameter name="sld_auto_instance_index" type="string" value="YES"/>
+        <parameter name="sld_ir_width" type="dec" value="2"/>
+        <parameter name="SLD_NODE_INFO" type="dec" value="4222464"/>
+      </parameters>
+      <inputs>
+        <port name="usr_tdo" source="tiger:tiger_sopc|tigers_jtag_uart_1:the_tigers_jtag_uart_1|vJTAGUart:tigers_jtag_uart_1|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|tdo"/>
+        <port name="usr_ir_out[0]" source="tiger:tiger_sopc|tigers_jtag_uart_1:the_tigers_jtag_uart_1|vJTAGUart:tigers_jtag_uart_1|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|ir_out[0]"/>
+        <port name="usr_ir_out[1]" source="tiger:tiger_sopc|tigers_jtag_uart_1:the_tigers_jtag_uart_1|vJTAGUart:tigers_jtag_uart_1|VJT2:VJTIns|sld_virtual_jtag:sld_virtual_jtag_component|sld_virtual_jtag_basic:sld_virtual_jtag_basic_inst|ir_out[1]"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tck"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_raw_tms"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdi"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_tlr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_rti"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdrs"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pdr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2dr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_udr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sirs"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_cir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_sir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e1ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_pir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_e2ir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_usr1"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_clr"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ena"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_0_"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_1_" source="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_in_1_"/>
+      </inputs>
+      <outputs>
+        <port name="usr_tck"/>
+        <port name="usr_tdi"/>
+        <port name="usr_ir_in[0]"/>
+        <port name="usr_ir_in[1]"/>
+        <port name="usr_virtual_state_cdr"/>
+        <port name="usr_virtual_state_sdr"/>
+        <port name="usr_virtual_state_e1dr"/>
+        <port name="usr_virtual_state_pdr"/>
+        <port name="usr_virtual_state_e2dr"/>
+        <port name="usr_virtual_state_udr"/>
+        <port name="usr_virtual_state_cir"/>
+        <port name="usr_virtual_state_uir"/>
+        <port name="usr_tms"/>
+        <port name="usr_jtag_state_tlr"/>
+        <port name="usr_jtag_state_rti"/>
+        <port name="usr_jtag_state_sdrs"/>
+        <port name="usr_jtag_state_cdr"/>
+        <port name="usr_jtag_state_sdr"/>
+        <port name="usr_jtag_state_e1dr"/>
+        <port name="usr_jtag_state_pdr"/>
+        <port name="usr_jtag_state_e2dr"/>
+        <port name="usr_jtag_state_udr"/>
+        <port name="usr_jtag_state_sirs"/>
+        <port name="usr_jtag_state_cir"/>
+        <port name="usr_jtag_state_sir"/>
+        <port name="usr_jtag_state_e1ir"/>
+        <port name="usr_jtag_state_pir"/>
+        <port name="usr_jtag_state_e2ir"/>
+        <port name="usr_jtag_state_uir"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_tdo"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_out_0_"/>
+        <port name="jtag.bp.tiger_sopc_the_tigers_jtag_uart_1_tigers_jtag_uart_1_VJTIns_sld_virtual_jtag_component_sld_virtual_jtag_basic_inst_sld_virtual_jtag_impl_inst_ir_out_1_"/>
+      </outputs>
+    </node>
+  </node_info>
+</sld_project_info>

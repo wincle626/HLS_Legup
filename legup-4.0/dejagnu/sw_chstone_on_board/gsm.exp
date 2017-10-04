@@ -1,0 +1,10 @@
+load_lib legup.exp
+
+cd chstone/gsm
+set test "gsm"
+
+set expected {Result: 168}
+
+run-test-on-board $test $expected
+
+cd ../..

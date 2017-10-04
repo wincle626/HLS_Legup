@@ -1,0 +1,62 @@
+$Id: README,v 1.5 2007-05-20 10:49:11 debug Exp $
+
+How to add new machine types to GXemul:
+---------------------------------------
+
+The easiest way is to simply copy an existing machine (e.g. machine_landisk.c)
+into whatever you want the new machine to be called (machine_foo.c), update
+Makefile.skel to include machine_foo.o in the list of object files to build,
+and then change the contents of machine_foo.c.
+
+A machine_*.c file may contain more than one machine specification (e.g.
+machine_test.c contains several "bare" and "test" machines), but usually it is
+best to think of these files as containing one machine per file.
+
+The main code parts are:
+
+	MACHINE_SETUP(my_machine_name)
+	{       
+		machine->machine_name = "My Machine Name";
+
+		...
+
+		/*  add devices and busses here  */
+
+		if (!machine->prom_emulation)
+			return;
+
+		/*  add prom emulation stuff here, e.g. register
+		    contents and memory contents at startup  */
+	}
+
+	MACHINE_DEFAULT_CPU(my_machine_name)
+	{
+		/*  Replace 5Kc with the name of the CPU in
+		    the machine you are emulating:  */
+		machine->cpu_name = strdup("5Kc");
+	}
+
+	MACHINE_DEFAULT_RAM(my_machine_name)
+	{
+		/*  Set this to the amount of RAM in MB that
+		    the machine mode will use by default, unless
+		    overridden with the -M option:  */
+		machine->physical_ram_in_mb = 64;
+	}
+
+	MACHINE_REGISTER(my_machine_name)
+	{
+		/*  Register the machine name. Change ARCH_MIPS to
+		    the desired architecture, and make sure that
+		    MACHINE_MY_MACHINE is defined in
+		    src/include/machine.h!  */
+		MR_DEFAULT(my_machine_name, "My Machine Name",
+		    ARCH_MIPS, MACHINE_MY_MACHINE);
+
+		me->set_default_ram = machine_default_ram_my_machine_name;
+
+		/*  Add an alias. This is what will show up in the
+		    -H list, and is used by the -E option:  */
+		machine_entry_add_alias(me, "my_machine_name");
+	}
+

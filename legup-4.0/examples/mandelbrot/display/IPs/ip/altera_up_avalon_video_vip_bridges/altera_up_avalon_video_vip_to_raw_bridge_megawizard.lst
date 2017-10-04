@@ -1,0 +1,11 @@
+[University Program|Audio & Video|Video]
+VIP Bridge: VIP to RAW = "%t" "%w/../../../../altera/common/lib/megawizard.pl" --wizard_file:"%w/altera_up_avalon_video_vip_to_raw_bridge_hw.tcl" --wizard:altera_up_avalon_video_vip_to_raw_bridge --early_gen:on %f %o %h
+<INFO>
+<QIP_FILE_ENABLED/>
+<ACCEPT_OTHER_CNX VALUE="ON"/>
+<LANGUAGES   AHDL="OFF" />
+<PINPLAN SUPPORTED="OFF"/>
+<ALIAS>VIP Bridge: VIP to RAW</ALIAS>
+
+</INFO>
+

@@ -1,0 +1,31 @@
+libLLVMAnalysis.a: libLLVMCore.a libLLVMSupport.a libLLVMTarget.a
+libLLVMArchive.a: libLLVMBitReader.a libLLVMCore.a libLLVMSupport.a
+libLLVMAsmParser.a: libLLVMCore.a libLLVMSupport.a
+libLLVMAsmPrinter.a: libLLVMAnalysis.a libLLVMCodeGen.a libLLVMCore.a libLLVMMC.a libLLVMMCParser.a libLLVMSupport.a libLLVMTarget.a
+libLLVMBitReader.a: libLLVMCore.a libLLVMSupport.a
+libLLVMBitWriter.a: libLLVMCore.a libLLVMSupport.a
+libLLVMCodeGen.a: libLLVMAnalysis.a libLLVMCore.a libLLVMMC.a libLLVMScalarOpts.a libLLVMSupport.a libLLVMTarget.a libLLVMTransformUtils.a
+libLLVMCore.a: libLLVMSupport.a
+libLLVMExecutionEngine.a: libLLVMCore.a libLLVMMC.a libLLVMSupport.a libLLVMTarget.a
+libLLVMInstCombine.a: libLLVMAnalysis.a libLLVMCore.a libLLVMSupport.a libLLVMTarget.a libLLVMTransformUtils.a
+libLLVMInstrumentation.a: libLLVMAnalysis.a libLLVMCore.a libLLVMSupport.a libLLVMTransformUtils.a
+libLLVMInterpreter.a: libLLVMCodeGen.a libLLVMCore.a libLLVMExecutionEngine.a libLLVMSupport.a libLLVMTarget.a
+libLLVMJIT.a: libLLVMCodeGen.a libLLVMCore.a libLLVMExecutionEngine.a libLLVMMC.a libLLVMSupport.a libLLVMTarget.a
+libLLVMLinker.a: libLLVMArchive.a libLLVMBitReader.a libLLVMCore.a libLLVMSupport.a libLLVMTransformUtils.a
+libLLVMMC.a: libLLVMSupport.a
+libLLVMMCDisassembler.a: libLLVMMC.a libLLVMMCParser.a libLLVMMipsDesc.a libLLVMMipsInfo.a libLLVMSupport.a libLLVMTarget.a
+libLLVMMCJIT.a: libLLVMCore.a libLLVMExecutionEngine.a libLLVMRuntimeDyld.a libLLVMSupport.a libLLVMTarget.a
+libLLVMMCParser.a: libLLVMMC.a libLLVMSupport.a
+libLLVMMipsAsmPrinter.a: libLLVMMC.a libLLVMSupport.a
+libLLVMMipsCodeGen.a: libLLVMAsmPrinter.a libLLVMCodeGen.a libLLVMCore.a libLLVMMC.a libLLVMMipsAsmPrinter.a libLLVMMipsDesc.a libLLVMMipsInfo.a libLLVMSelectionDAG.a libLLVMSupport.a libLLVMTarget.a
+libLLVMMipsDesc.a: libLLVMMC.a libLLVMMipsInfo.a libLLVMSupport.a
+libLLVMMipsInfo.a: libLLVMMC.a libLLVMSupport.a libLLVMTarget.a
+libLLVMObject.a: libLLVMSupport.a
+libLLVMRuntimeDyld.a: libLLVMObject.a libLLVMSupport.a
+libLLVMScalarOpts.a: libLLVMAnalysis.a libLLVMCore.a libLLVMInstCombine.a libLLVMSupport.a libLLVMTarget.a libLLVMTransformUtils.a
+libLLVMSelectionDAG.a: libLLVMAnalysis.a libLLVMCodeGen.a libLLVMCore.a libLLVMMC.a libLLVMSupport.a libLLVMTarget.a libLLVMTransformUtils.a
+libLLVMSupport.a:
+libLLVMTarget.a: libLLVMCore.a libLLVMMC.a libLLVMSupport.a
+libLLVMTransformUtils.a: libLLVMAnalysis.a libLLVMCore.a libLLVMSupport.a libLLVMTarget.a libLLVMipa.a
+libLLVMipa.a: libLLVMAnalysis.a libLLVMCore.a libLLVMSupport.a
+libLLVMipo.a: libLLVMAnalysis.a libLLVMCore.a libLLVMInstCombine.a libLLVMScalarOpts.a libLLVMSupport.a libLLVMTarget.a libLLVMTransformUtils.a libLLVMipa.a

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Dynamic Translation</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Dynamic Translation</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2005-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#staticvsdynamic">Static vs. dynamic</a>
+  <li><a href="#ir">Executable Intermediate Representation</a>
+  <li><a href="#performance">Performance</a>
+  <li><a href="#instrcomb">Instruction Combinations</a>
+  <li><a href="#native">Native Code Generation Back-ends</a>
+</ul>
+
+
+
+
+<p><br>
+<a name="staticvsdynamic"></a>
+<h3>Static vs. dynamic:</h3>
+
+<p>In order to support guest operating systems, which can overwrite old 
+code pages in memory with new code, it is necessary to translate code 
+dynamically. It is not possible to do a "one-pass" (static) translation.
+Self-modifying code and Just-in-Time compilers running inside 
+the emulator are other things that would not work with a static 
+translator. GXemul is a dynamic translator. However, it does not 
+necessarily translate into native code, like some other emulators.
+
+
+<p><br>
+<a name="ir"></a>
+<h3>Executable Intermediate Representation:</h3>
+
+<p>Dynamic translators usually translate from the emulated architecture
+(e.g. MIPS) into a kind of <i>intermediate representation</i> (IR), and then
+to native code (e.g. AMD64 or x86 code) which can be executed by the host.
+Since one of the main goals for GXemul is to keep everything as portable as
+possible, the IR is something which can be executed regardless of whether
+the final step (translation from IR to native code) has been implemented
+or not.
+
+<p>The IR in GXemul consists of arrays of pointers to functions, and a few 
+arguments which are passed along to those functions. The functions are 
+implemented in either manually hand-coded C/C++, or automatically generated
+C/C++. In any case, this is all statically linked into the GXemul binary at link 
+time.
+
+<p>Here is a simplified diagram of how these arrays work.
+
+<p><center><img src="simplified_dyntrans.png"></center>
+
+<p>There is one instruction call slot for every possible program counter
+location. In the traditional MIPS case, instruction words are 32 bits in length,
+and pages are 4 KB large, resulting in 1024 instruction call
+slots. After the last of these instruction calls, there is an additional
+call to a special "end of page" function (which doesn't count as an executed
+instruction). This function switches to the first instruction
+on the next virtual page (which might cause exceptions, etc).
+
+<p>The complexity of individual instructions vary. A simple example of
+what an instruction can look like is the MIPS <tt>addiu</tt> instruction:
+<pre>
+	X(addiu)
+	{
+	        reg(ic->arg[1]) = (int32_t)
+	            ((int32_t)reg(ic->arg[0]) + (int32_t)ic->arg[2]);
+	}
+</pre>
+
+<p>It stores the result of a 32-bit addition of the register at arg[0]
+with the immediate value arg[2] (treating both as signed 32-bit
+integers) into register arg[1]. If the emulated CPU is a 64-bit CPU,
+then this will store a correctly sign-extended value into arg[1].
+If it is a 32-bit CPU, then only the lowest 32 bits will be stored,
+and the high part ignored. <tt>X(addiu)</tt> is expanded to
+<tt>mips_instr_addiu</tt> in the 64-bit case, and <tt>mips32_instr_addiu</tt>
+in the 32-bit case. Both are compiled into the GXemul executable; no code 
+is created during run-time.
+
+
+<p><br>
+<a name="performance"></a>
+<h3>Performance:</h3>
+
+<p>The performance of using this kind of executable IR is obviously lower
+than what can be achieved by emulators using native code generation, but
+can be significantly higher than using a naive fetch-decode-execute
+interpretation loop. In my opinion, using an executable IR is an interesting
+compromise.
+
+<p>The overhead per emulated instruction is usually around or below
+approximately 10 host instructions. This is very much dependent on your
+host architecture and what compiler and compiler switches you are using.
+Added to this instruction count is (of course) also the C/C++ code used to
+implement each specific instruction.
+
+
+<p><br>
+<a name="instrcomb"></a>
+<h3>Instruction Combinations:</h3>
+
+<p>Short, common instruction sequences can sometimes be replaced by a 
+"compound" instruction. An example could be a compare instruction followed 
+by a conditional branch instruction. The advantages of instruction 
+combinations are that
+<ul>
+  <li>the amortized overhead per instruction is slightly reduced, and
+  <p>
+  <li>the host's compiler can make a good job at optimizing the common
+	instruction sequence.
+</ul>
+
+<p>The special cases where instruction combinations give the most gain
+are in the cores of string/memory manipulation functions such as 
+<tt>memset()</tt> or <tt>strlen()</tt>. The core loop can then (at least
+to some extent) be replaced by a native call to the equivalent function.
+
+<p>The implementations of compound instructions still keep track of the
+number of executed instructions, etc. When single-stepping, these
+translations are invalidated, and replaced by normal instruction calls
+(one per emulated instruction).
+
+
+<p><br>
+<a name="native"></a>
+<h3>Native Code Generation Back-ends:</h3>
+
+<p>In theory, it will be possible to implement native code generation,
+similar to what is used in high-performance emulators such as <a
+href="http://www.nongnu.org/qemu/">QEMU</a>, as long as that generated code
+abides to the C or C++ ABI on the host.
+
+<p>However, since I wanted to make sure that GXemul works without such 
+native code back-ends first, there are no implemented backends in this release.
+
+
+
+
+
+</body>
+</html>

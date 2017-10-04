@@ -1,0 +1,91 @@
+load_lib legup.exp
+
+set d [pwd]
+
+cd debug/array
+set test "array"
+set expected {return_val=\s+156\s+}
+
+run-test $test $expected
+run-test-debugger-sim $test $d
+
+cd ../..
+
+
+cd debug/qsort
+set test "qsort"
+set expected {return_val=\s+19\s+}
+
+run-test $test $expected
+run-test-debugger-sim $test $d
+
+cd ../..
+
+
+cd debug/O3/qsort
+set test "O3-qsort"
+set expected {return_val=\s+19\s+}
+
+run-test $test $expected
+run-test-debugger-sim $test $d
+
+cd ../../..
+
+
+# Test a few chstone circuits
+
+cd debug/chstone/adpcm
+set test "adpcm"
+set expected {return_val=\s+150\s+}
+set gxexpected {reg: v0 = 0x0000000000000096}
+
+run-test $test $expected
+
+cd ../../..
+
+cd debug/O3/chstone/adpcm
+set test "adpcm"
+set expected {return_val=\s+150\s+}
+set gxexpected {reg: v0 = 0x0000000000000096}
+
+run-test $test $expected
+
+cd ../../../..
+
+
+cd debug/chstone/dfdiv
+set test "dfdiv"
+set expected {return_val=\s+22\s+}
+set gxexpected {reg: v0 = 0x0000000000000016}
+
+run-test $test $expected
+
+cd ../../..
+
+cd debug/O3/chstone/dfdiv
+set test "dfdiv"
+set expected {return_val=\s+22\s+}
+set gxexpected {reg: v0 = 0x0000000000000016}
+
+run-test $test $expected
+
+cd ../../../..
+
+
+cd debug/chstone/sha
+set test "sha"
+set expected {return_val=\s+5\s+}
+set gxexpected {reg: v0 = 0x0000000000000005}
+
+run-test $test $expected
+
+cd ../../..
+
+cd debug/O3/chstone/sha
+set test "sha"
+set expected {return_val=\s+5\s+}
+set gxexpected {reg: v0 = 0x0000000000000005}
+
+run-test $test $expected
+
+cd ../../../..

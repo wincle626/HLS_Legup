@@ -1,0 +1,393 @@
+set_global_assignment -entity "legup_system" -library "legup_system" -name IP_TOOL_NAME "Qsys"
+set_global_assignment -entity "legup_system" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -library "legup_system" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../legup_system.sopcinfo"]
+set_global_assignment -entity "legup_system" -library "legup_system" -name SLD_INFO "QSYS_NAME legup_system HAS_SOPCINFO 1 GENERATION_ID 1425864689"
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "../../legup_system.cmp"]
+set_global_assignment -library "legup_system" -name SLD_FILE [file join $::quartus(qip_path) "legup_system.regmap"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "legup_system_Arm_A9_HPS_hps.svd"]
+set_global_assignment -library "legup_system" -name SLD_FILE [file join $::quartus(qip_path) "legup_system.debuginfo"]
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "../../legup_system.qsys"]
+set_instance_assignment -name HPS_LOCATION PIN_P19A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TX_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P19B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TXD0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P19A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TXD1[0]
+set_instance_assignment -name HPS_LOCATION PIN_P19B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TXD2[0]
+set_instance_assignment -name HPS_LOCATION PIN_P20A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TXD3[0]
+set_instance_assignment -name HPS_LOCATION PIN_P20B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RXD0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P20A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_MDIO[0]
+set_instance_assignment -name HPS_LOCATION PIN_P20B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_MDC[0]
+set_instance_assignment -name HPS_LOCATION PIN_P21A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RX_CTL[0]
+set_instance_assignment -name HPS_LOCATION PIN_P21B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_TX_CTL[0]
+set_instance_assignment -name HPS_LOCATION PIN_P21A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RX_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P21B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RXD1[0]
+set_instance_assignment -name HPS_LOCATION PIN_P22A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RXD2[0]
+set_instance_assignment -name HPS_LOCATION PIN_P22B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_emac1_inst_RXD3[0]
+set_instance_assignment -name HPS_LOCATION PIN_P22B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_IO0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P23A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_IO1[0]
+set_instance_assignment -name HPS_LOCATION PIN_P23B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_IO2[0]
+set_instance_assignment -name HPS_LOCATION PIN_P23A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_IO3[0]
+set_instance_assignment -name HPS_LOCATION PIN_P23B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_SS0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P24A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_qspi_inst_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P25A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_CMD[0]
+set_instance_assignment -name HPS_LOCATION PIN_P25A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_D0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P25B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_D1[0]
+set_instance_assignment -name HPS_LOCATION PIN_P27B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P27A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_D2[0]
+set_instance_assignment -name HPS_LOCATION PIN_P27B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_sdio_inst_D3[0]
+set_instance_assignment -name HPS_LOCATION PIN_P28B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P28A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D1[0]
+set_instance_assignment -name HPS_LOCATION PIN_P28B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D2[0]
+set_instance_assignment -name HPS_LOCATION PIN_P29A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D3[0]
+set_instance_assignment -name HPS_LOCATION PIN_P29B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D4[0]
+set_instance_assignment -name HPS_LOCATION PIN_P29A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D5[0]
+set_instance_assignment -name HPS_LOCATION PIN_P29B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D6[0]
+set_instance_assignment -name HPS_LOCATION PIN_P30A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_D7[0]
+set_instance_assignment -name HPS_LOCATION PIN_P30A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P30B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_STP[0]
+set_instance_assignment -name HPS_LOCATION PIN_P31A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_DIR[0]
+set_instance_assignment -name HPS_LOCATION PIN_P31B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_usb1_inst_NXT[0]
+set_instance_assignment -name HPS_LOCATION PIN_P17B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_spim1_inst_CLK[0]
+set_instance_assignment -name HPS_LOCATION PIN_P18A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_spim1_inst_MOSI[0]
+set_instance_assignment -name HPS_LOCATION PIN_P18B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_spim1_inst_MISO[0]
+set_instance_assignment -name HPS_LOCATION PIN_P18A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_spim1_inst_SS0[0]
+set_instance_assignment -name HPS_LOCATION PIN_P14B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_uart0_inst_RX[0]
+set_instance_assignment -name HPS_LOCATION PIN_P14A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_uart0_inst_TX[0]
+set_instance_assignment -name HPS_LOCATION PIN_P15B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_i2c0_inst_SDA[0]
+set_instance_assignment -name HPS_LOCATION PIN_P16A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_i2c0_inst_SCL[0]
+set_instance_assignment -name HPS_LOCATION PIN_P14B1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_i2c1_inst_SDA[0]
+set_instance_assignment -name HPS_LOCATION PIN_P15A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_i2c1_inst_SCL[0]
+set_instance_assignment -name HPS_LOCATION PIN_P30B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO09[0]
+set_instance_assignment -name HPS_LOCATION PIN_P24B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO35[0]
+set_instance_assignment -name HPS_LOCATION PIN_P26A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO40[0]
+set_instance_assignment -name HPS_LOCATION PIN_P26B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO41[0]
+set_instance_assignment -name HPS_LOCATION PIN_P14A0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO48[0]
+set_instance_assignment -name HPS_LOCATION PIN_P15B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO53[0]
+set_instance_assignment -name HPS_LOCATION PIN_P15A1T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO54[0]
+set_instance_assignment -name HPS_LOCATION PIN_P17B0T -entity legup_system_Arm_A9_HPS -to hps_io|border|hps_io_gpio_inst_GPIO61[0]
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALEMAC_X77_Y39_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to emac1_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALQSPI_X87_Y58_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to qspi_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALSDMMC_X87_Y39_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to sdio_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALUSB_X55_Y39_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to usb1_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALSPIMASTER_X87_Y53_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to spim1_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALUART_X87_Y45_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to uart0_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALI2C_X87_Y67_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to i2c0_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALI2C_X87_Y65_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to i2c1_inst
+set_instance_assignment -name HPS_LOCATION HPSPERIPHERALGPIO_X87_Y74_N111 -entity legup_system_Arm_A9_HPS_hps_io_border -to gpio_inst
+set_instance_assignment -name hps_partition on -entity legup_system_Arm_A9_HPS_hps_io_border -library legup_system
+set_instance_assignment -name HPS_LOCATION HPSINTERFACECLOCKSRESETS_X52_Y78_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to clocks_resets
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEDBGAPB_X52_Y80_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to debug_apb
+set_instance_assignment -name HPS_LOCATION HPSINTERFACETPIUTRACE_X52_Y39_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to tpiu
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEBOOTFROMFPGA_X52_Y74_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to boot_from_fpga
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEFPGA2HPS_X52_Y45_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to fpga2hps
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEHPS2FPGALIGHTWEIGHT_X52_Y43_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to hps2fpga_light_weight
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEHPS2FPGA_X52_Y47_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to hps2fpga
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEFPGA2SDRAM_X52_Y53_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to f2sdram
+set_instance_assignment -name HPS_LOCATION HPSINTERFACEINTERRUPTS_X52_Y40_N111 -entity legup_system_Arm_A9_HPS_fpga_interfaces -to interrupts
+
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "legup_system.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_reset_controller.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_reset_synchronizer.v"]
+set_global_assignment -library "legup_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/altera_reset_controller.sdc"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_irq_mapper_001.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_irq_mapper.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_width_adapter.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_address_alignment.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_burst_uncompressor.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_arbitrator.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_rsp_xbar_mux_003.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_rsp_xbar_mux_002.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_rsp_xbar_mux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_rsp_xbar_demux_001.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_rsp_xbar_demux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_cmd_xbar_mux_001.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_cmd_xbar_mux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_cmd_xbar_demux_003.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_cmd_xbar_demux_002.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_cmd_xbar_demux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_burst_adapter.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_traffic_limiter.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_reorder_memory.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_sc_fifo.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_pipeline_base.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_id_router_002.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_id_router_001.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_id_router.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_addr_router_003.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_addr_router_002.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_1_addr_router.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_agent.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_master_agent.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_axi_master_ni.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_translator.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_master_translator.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_rsp_xbar_mux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_rsp_xbar_demux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_cmd_xbar_mux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_cmd_xbar_demux.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_id_router.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_mm_interconnect_0_addr_router.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_axi_slave_ni.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/credit_producer.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_SysID.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_JTAG_UART.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Pushbuttons.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Slider_Switches.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_HEX5_HEX4.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_HEX3_HEX0.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_LEDs.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Onchip_SRAM.v"]
+set_global_assignment -library "legup_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/legup_system_Onchip_SRAM.hex"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_SDRAM.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_SDRAM_test_component.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_JTAG_to_HPS_Bridge.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_JTAG_to_HPS_Bridge_p2b_adapter.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_JTAG_to_HPS_Bridge_b2p_adapter.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_packets_to_master.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_packets_to_bytes.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_bytes_to_packets.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_JTAG_to_HPS_Bridge_timing_adt.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_jtag_interface.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_jtag_dc_streaming.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_jtag_sld_node.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_jtag_streaming.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_pli_streaming.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_clock_crosser.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_idle_remover.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_idle_inserter.v"]
+set_global_assignment -library "legup_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_jtag_interface.sdc"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Arm_A9_HPS.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Arm_A9_HPS_hps_io.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_ldc.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_hhp_qseq_synth_top.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_altdqdqs.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altdq_dqs2_acv_connect_to_hard_phy_cyclonev.sv"]
+set_global_assignment -library "legup_system" -name SOURCE_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.ppf"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_hard_memory_controller_top_cyclonev.sv"]
+set_global_assignment -library "legup_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0.sdc"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_map.tcl"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_parameters.tcl"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset_sync.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_dll_cyclonev.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_memphy.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_reset.v"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing_core.tcl"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_addr_cmd_pads.v"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_report_timing.tcl"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_clock_pair_generator.v"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_ac_init.pre.c"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_ac_init.pre.c"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_defines.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.c"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sdram_io.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/system.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/system.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto_inst_init.pre.c"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/alt_types.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/emif.pre.xml"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/emif.pre.xml"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer_auto.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/tclrpt.pre.h"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/sequencer/sequencer.pre.c"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_acv_hard_io_pads.v"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_pin_assignments.tcl"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_generic_ddio.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_iss_probe.v"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_phy_csr.sv"]
+set_global_assignment -library "legup_system" -name TCL_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_p0_timing.tcl"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_mem_if_oct_cyclonev.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/hps_sdram_pll.sv"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Arm_A9_HPS_hps_io_border.sv"]
+set_instance_assignment -entity "legup_system_Arm_A9_HPS_hps_io_border" -library "legup_system" -name HPS_ISW_FILE [file join $::quartus(qip_path) "submodules/hps.pre.xml"]
+set_global_assignment -library "legup_system" -name MISC_FILE [file join $::quartus(qip_path) "submodules/hps.pre.xml"]
+set_global_assignment -library "legup_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_Arm_A9_HPS_fpga_interfaces.sv"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_System_PLL.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_up_avalon_reset_from_locked_signal.v"]
+set_global_assignment -library "legup_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/legup_system_System_PLL_sys_pll.v"]
+set_global_assignment -library "legup_system" -name QIP_FILE [file join $::quartus(qip_path) "submodules/legup_system_System_PLL_sys_pll.qip"]
+
+set_global_assignment -entity "altera_reset_controller" -library "legup_system" -name IP_TOOL_NAME "altera_reset_controller"
+set_global_assignment -entity "altera_reset_controller" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_reset_controller" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_irq_mapper_001" -library "legup_system" -name IP_TOOL_NAME "altera_irq_mapper"
+set_global_assignment -entity "legup_system_irq_mapper_001" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_irq_mapper_001" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_irq_mapper" -library "legup_system" -name IP_TOOL_NAME "altera_irq_mapper"
+set_global_assignment -entity "legup_system_irq_mapper" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_irq_mapper" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_interconnect_wrapper"
+set_global_assignment -entity "legup_system_mm_interconnect_1" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_width_adapter" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_width_adapter"
+set_global_assignment -entity "altera_merlin_width_adapter" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_width_adapter" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_003" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_003" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_003" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_002" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_002" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux_002" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux_001" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux_001" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux_001" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux_001" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux_001" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux_001" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_003" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_003" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_003" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_002" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_002" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux_002" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_burst_adapter" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_burst_adapter"
+set_global_assignment -entity "altera_merlin_burst_adapter" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_burst_adapter" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_traffic_limiter" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_traffic_limiter"
+set_global_assignment -entity "altera_merlin_traffic_limiter" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_traffic_limiter" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_002" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_002" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_002" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_001" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_001" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router_001" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_id_router" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_003" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_003" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_003" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_002" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_002" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router_002" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_1_addr_router" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_avalon_sc_fifo" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_sc_fifo"
+set_global_assignment -entity "altera_avalon_sc_fifo" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_avalon_sc_fifo" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_slave_agent" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_slave_agent"
+set_global_assignment -entity "altera_merlin_slave_agent" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_slave_agent" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_master_agent" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_master_agent"
+set_global_assignment -entity "altera_merlin_master_agent" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_master_agent" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_axi_master_ni" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_axi_master_ni"
+set_global_assignment -entity "altera_merlin_axi_master_ni" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_axi_master_ni" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_slave_translator" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_slave_translator"
+set_global_assignment -entity "altera_merlin_slave_translator" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_slave_translator" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_master_translator" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_master_translator"
+set_global_assignment -entity "altera_merlin_master_translator" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_master_translator" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_interconnect_wrapper"
+set_global_assignment -entity "legup_system_mm_interconnect_0" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_mux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_rsp_xbar_demux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_multiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_mux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_cmd_xbar_demux" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_id_router" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_0_id_router" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_id_router" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_mm_interconnect_0_addr_router" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_router"
+set_global_assignment -entity "legup_system_mm_interconnect_0_addr_router" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_mm_interconnect_0_addr_router" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_merlin_axi_slave_ni" -library "legup_system" -name IP_TOOL_NAME "altera_merlin_axi_slave_ni"
+set_global_assignment -entity "altera_merlin_axi_slave_ni" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_merlin_axi_slave_ni" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_SysID" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_sysid_qsys"
+set_global_assignment -entity "legup_system_SysID" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_SysID" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_JTAG_UART" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_jtag_uart"
+set_global_assignment -entity "legup_system_JTAG_UART" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_JTAG_UART" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_Pushbuttons" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_pio"
+set_global_assignment -entity "legup_system_Pushbuttons" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_Pushbuttons" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_Slider_Switches" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_pio"
+set_global_assignment -entity "legup_system_Slider_Switches" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_Slider_Switches" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_HEX5_HEX4" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_pio"
+set_global_assignment -entity "legup_system_HEX5_HEX4" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_HEX5_HEX4" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_HEX3_HEX0" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_pio"
+set_global_assignment -entity "legup_system_HEX3_HEX0" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_HEX3_HEX0" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_LEDs" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_pio"
+set_global_assignment -entity "legup_system_LEDs" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_LEDs" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_Onchip_SRAM" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_onchip_memory2"
+set_global_assignment -entity "legup_system_Onchip_SRAM" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_Onchip_SRAM" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_SDRAM" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_new_sdram_controller"
+set_global_assignment -entity "legup_system_SDRAM" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_SDRAM" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge" -library "legup_system" -name IP_TOOL_NAME "altera_jtag_avalon_master"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_p2b_adapter" -library "legup_system" -name IP_TOOL_NAME "channel_adapter"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_p2b_adapter" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_p2b_adapter" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_b2p_adapter" -library "legup_system" -name IP_TOOL_NAME "channel_adapter"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_b2p_adapter" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_b2p_adapter" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_avalon_packets_to_master" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_packets_to_master"
+set_global_assignment -entity "altera_avalon_packets_to_master" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_avalon_packets_to_master" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_avalon_st_packets_to_bytes" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_st_packets_to_bytes"
+set_global_assignment -entity "altera_avalon_st_packets_to_bytes" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_avalon_st_packets_to_bytes" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_avalon_st_bytes_to_packets" -library "legup_system" -name IP_TOOL_NAME "altera_avalon_st_bytes_to_packets"
+set_global_assignment -entity "altera_avalon_st_bytes_to_packets" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_avalon_st_bytes_to_packets" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_timing_adt" -library "legup_system" -name IP_TOOL_NAME "timing_adapter"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_timing_adt" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_JTAG_to_HPS_Bridge_timing_adt" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "altera_avalon_st_jtag_interface" -library "legup_system" -name IP_TOOL_NAME "altera_jtag_dc_streaming"
+set_global_assignment -entity "altera_avalon_st_jtag_interface" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "altera_avalon_st_jtag_interface" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_Arm_A9_HPS" -library "legup_system" -name IP_TOOL_NAME "altera_hps"
+set_global_assignment -entity "legup_system_Arm_A9_HPS" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_Arm_A9_HPS" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_Arm_A9_HPS_hps_io" -library "legup_system" -name IP_TOOL_NAME "altera_hps_io"
+set_global_assignment -entity "legup_system_Arm_A9_HPS_hps_io" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_Arm_A9_HPS_hps_io" -library "legup_system" -name IP_TOOL_ENV "Qsys"
+set_global_assignment -entity "legup_system_System_PLL_sys_pll" -library "legup_system" -name IP_TOOL_NAME "altera_pll"
+set_global_assignment -entity "legup_system_System_PLL_sys_pll" -library "legup_system" -name IP_TOOL_VERSION "13.1"
+set_global_assignment -entity "legup_system_System_PLL_sys_pll" -library "legup_system" -name IP_TOOL_ENV "Qsys"

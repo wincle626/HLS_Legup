@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Technical details</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Technical details</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2004-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+This page describes some of the internals of GXemul.
+
+<p>
+<ul>
+  <li><a href="#speed">Speed and emulation modes</a>
+  <li><a href="#net">Networking</a>
+  <li><a href="#devices">Emulation of hardware devices</a>
+</ul>
+
+
+
+
+
+
+<p><br>
+<a name="speed"></a>
+<h3>Speed and emulation modes</h3>
+
+So, how fast is GXemul? There is no short answer to this. There is 
+especially no answer to the question <b>What is the slowdown factor?</b>, 
+because the host architecture and emulated architecture can usually not be 
+compared just like that.
+
+<p>Performance depends on several factors, including (but not limited to)  
+host architecture, target architecture, host clock speed, which compiler
+and compiler flags were used to build the emulator, what the workload is,
+what additional runtime flags are given to the emulator, and so on.
+
+<p>Devices are generally not timing-accurate: for example, if an emulated
+operating system tries to read a block from disk, from its point of view
+the read was instantaneous (no waiting). So 1 MIPS in an emulated OS might
+have taken more than one million instructions on a real machine.
+
+<p>Also, if the emulator says it has executed 1 million instructions, and 
+the CPU family in question was capable of scalar execution (i.e. one cycle 
+per instruction), it might still have taken more than 1 million cycles on 
+a real machine because of cache misses and similar micro-architectural 
+penalties that are not simulated by GXemul.
+
+<p>Because of these issues, it is in my opinion best to measure
+performance as the actual (real-world) time it takes to perform a task
+with the emulator, e.g.:
+
+<ul>
+  <li>"How long does it take to install NetBSD onto a disk image?"
+  <li>"How long does it take to compile XYZ inside NetBSD
+	in the emulator?".
+</ul>
+
+<p>So, how fast is it? :-)&nbsp;&nbsp;&nbsp;Answer: it varies.
+
+
+
+
+
+
+
+<p><br>
+<a name="net"></a>
+<h3>Networking</h3>
+
+<font color="#ff0000">NOTE/TODO: This section is very old.</font>
+
+<p>Running an entire operating system under emulation is very interesting
+in itself, but for several reasons, running a modern OS without access to
+TCP/IP networking is a bit akward. Hence, I feel the need to implement
+TCP/IP (networking) support in the emulator.
+
+<p>
+As far as I have understood it, there seems to be two different ways to go:
+
+<ol>
+  <li>Forward ethernet packets from the emulated ethernet controller to
+	the host machine's ethernet controller, and capture incoming 
+	packets on the host's controller, giving them back to the
+	emulated OS. Characteristics are:
+	<ul>
+	  <li>Requires <i>direct</i> access to the host's NIC, which
+		means on most platforms that the emulator cannot be
+		run as a normal user!
+	  <li>Reduced portability, as not every host operating system
+		uses the same programming interface for dealing with
+		hardware ethernet controllers directly.
+	  <li>When run on a switched network, it might be problematic to
+		connect from the emulated OS to the OS running on the
+		host, as packets sent out on the host's NIC are not
+		received by itself. (?)
+	  <li>All specific networking protocols will be handled by the
+		physical network.
+	</ul>
+  <p>
+  or
+  <p>
+  <li>Whenever the emulated ethernet controller wishes to send a packet,
+	the emulator looks at the packet and creates a response. Packets
+	that can have an immediate response never go outside the emulator,
+	other packet types have to be converted into suitable other
+	connection types (UDP, TCP, etc). Characteristics:
+	<ul>
+	  <li>Each packet type sent out on the emulated NIC must be handled.
+		This means that I have to do a lot of coding.
+		(I like this, because it gives me an opportunity to
+		learn about networking protocols.)
+	  <li>By not relying on access to the host's NIC directly,
+		portability is maintained. (It would be sad if the networking
+		portion of a portable emulator isn't as portable as the
+		rest of the emulator.)
+	  <li>The emulator can be run as a normal user process, does
+		not require root privilegies.
+	  <li>Connecting from the emulated OS to the host's OS should
+		not be problematic.
+	  <li>The emulated OS will experience the network just as a single
+		machine behind a NAT gateway/firewall would. The emulated
+		OS is thus automatically protected from the outside world.
+	</ul>
+</ol>
+
+<p>
+Some emulators/simulators use the first approach, while others use the 
+second. I think that SIMH and QEMU are examples of emulators using the 
+first and second approach, respectively.
+
+<p>
+Since I have choosen the second kind of implementation, I have to write 
+support explicitly for any kind of network protocol that should be
+supported. As of 2004-07-09, the following has been implemented and seems 
+to work under at least NetBSD/pmax and OpenBSD/pmax under DECstation 5000/200
+emulation (-E dec -e 3max):
+
+<p>
+<ul>
+  <li>ARP requests sent out from the emulated NIC are interpreted,
+	and converted to ARP responses. (This is used by the emulated OS
+	to find out the MAC address of the gateway.)
+  <li>ICMP echo requests (that is the kind of packet produced by the
+	<b><tt>ping</tt></b> program) are interpreted and converted to ICMP echo
+	replies, <i>regardless of the IP address</i>. This means that
+	running ping from within the emulated OS will <i>always</i>
+	receive a response. The ping packets never leave the emulated
+	environment.
+  <li>UDP packets are interpreted and passed along to the outside world.
+	If the emulator receives an UDP packet from the outside world, it
+	is converted into an UDP packet for the emulated OS. (This is not
+	implemented very well yet, but seems to be enough for nameserver
+	lookups, tftp file transfers, and NFS mounts using UDP.)
+  <li>TCP packets are interpreted one at a time, similar to how UDP 
+	packets are handled (but more state is kept for each connection).
+	<font color="#ff0000">NOTE: Much of the TCP handling code is very
+	ugly and hardcoded.</font>
+<!--
+  <li>RARP is not implemented yet. (I haven't needed it so far.)
+-->
+</ul>
+
+<p>
+The gateway machine, which is the only "other" machine that the emulated 
+OS sees on its emulated network, works as a NAT-style firewall/gateway. It 
+usually has a fixed IPv4 address of <tt>10.0.0.254</tt>. An OS running in 
+the emulator would usually have an address of the form <tt>10.x.x.x</tt>;
+a typical choice would be <tt>10.0.0.1</tt>.
+
+<p>
+Inside emulated NetBSD/pmax or OpenBSD/pmax, running the following 
+commands should configure the emulated NIC:
+<pre>
+	# <b>ifconfig le0 10.0.0.1</b>
+	# <b>route add default 10.0.0.254</b>
+	add net default: gateway 10.0.0.254
+</pre>
+
+<p>
+If you want nameserver lookups to work, you need a valid /etc/resolv.conf 
+as well:
+<pre>
+	# <b>echo nameserver 129.16.1.3 > /etc/resolv.conf</b>
+</pre>
+(But replace <tt>129.16.1.3</tt> with the actual real-world IP address of 
+your nearest nameserver.)
+
+<p>
+Now, host lookups should work:
+<pre>
+	# <b>host -a www.netbsd.org</b>
+	Trying null domain
+	rcode = 0 (Success), ancount=2
+	The following answer is not authoritative:
+	The following answer is not verified as authentic by the server:
+	www.netbsd.org  86400 IN        AAAA    2001:4f8:4:7:290:27ff:feab:19a7
+	www.netbsd.org  86400 IN        A       204.152.184.116
+	For authoritative answers, see:
+	netbsd.org      83627 IN        NS      uucp-gw-2.pa.dec.com
+	netbsd.org      83627 IN        NS      ns.netbsd.org
+	netbsd.org      83627 IN        NS      adns1.berkeley.edu
+	netbsd.org      83627 IN        NS      adns2.berkeley.edu
+	netbsd.org      83627 IN        NS      uucp-gw-1.pa.dec.com
+	Additional information:
+	ns.netbsd.org   83627 IN        A       204.152.184.164
+	uucp-gw-1.pa.dec.com	172799 IN	A	204.123.2.18
+	uucp-gw-2.pa.dec.com	172799 IN	A	204.123.2.19
+</pre>
+
+<p>
+At this point, UDP and TCP should (mostly) work.
+
+<p>
+Here is an example of how to configure a server machine and an emulated 
+client machine for sharing files via NFS:
+
+<p>
+(This is very useful if you want to share entire directory trees
+between the emulated environment and another machine. These instruction
+will work for FreeBSD, if you are running something else, use your
+imagination to modify them.)
+
+<p>
+<ul>
+  <li>On the server, add a line to your /etc/exports file, exporting
+	the files you wish to use in the emulator:<pre>
+	<b>/tftpboot -mapall=nobody -ro 123.11.22.33</b>
+</pre>
+	where 123.11.22.33 is the IP address of the machine running the
+	emulator process, as seen from the outside world.
+  <p>
+  <li>Then start up the programs needed to serve NFS via UDP. Note the
+	-n argument to mountd. This is needed to tell mountd to accept
+	connections from unprivileged ports (because the emulator does
+	not need to run as root).<pre>
+	# <b>portmap</b>
+	# <b>nfsd -u</b>       &lt;--- u for UDP
+	# <b>mountd -n</b>
+</pre>
+  <li>In the guest OS in the emulator, once you have ethernet and IPv4
+	configured so that you can use UDP, mounting the filesystem
+	should now be possible:  (this example is for NetBSD/pmax
+	or OpenBSD/pmax)<pre>
+	# <b>mount -o ro,-r=1024,-w=1024,-U,-3 my.server.com:/tftpboot /mnt</b>
+    or
+	# <b>mount my.server.com:/tftpboot /mnt</b>
+</pre>
+	If you don't supply the read and write sizes, there is a risk
+	that the default values are too large. The emulator currently
+	does not handle fragmentation/defragmentation of <i>outgoing</i>
+	packets, so going above the ethernet frame size (1518) is a very
+	bad idea. Incoming packets (reading from nfs) should work, though,
+	for example during an NFS install.
+</ul>
+
+The example above uses read-only mounts. That is enough for things like
+letting NetBSD/pmax or OpenBSD/pmax install via NFS, without the need for
+a CDROM ISO image. You can use a read-write mount if you wish to share
+files in both directions, but then you should be aware of the 
+fragmentation issue mentioned above.
+
+
+
+
+
+
+
+<p><br>
+<a name="devices"></a>
+<h3>Emulation of hardware devices</h3>
+
+<font color="#ff0000">NOTE/TODO: This section is very old, and is about
+the legacy framework. New machines and devices should be implemented using the
+new <a href="doxygen/html/classComponent.html">Component</a> framework.</font>
+
+<p>Each file called <tt>dev_*.c</tt> in the 
+<a href="../src/devices/"><tt>src/devices/</tt></a> directory is
+responsible for one hardware device. These are used from
+<a href="../src/machines/"><tt>src/machines</tt></a><tt>/machine_*.c</tt>,
+when initializing which hardware a particular machine model will be using,
+or when adding devices to a machine using the <tt>device()</tt> command in
+<a href="configfiles.html">configuration files</a>.
+
+<p>(I'll be using the name "<tt>foo</tt>" as the name of the device in all
+these examples.  This is pseudo code, it might need some modification to
+actually compile and run.)
+
+<p>Each device should have the following:
+
+<p>
+<ul>
+  <li>A <tt>devinit</tt> function in <tt>src/devices/dev_foo.c</tt>. It
+	would typically look something like this:
+<pre>
+	DEVINIT(foo)
+	{
+	        struct foo_data *d;
+
+		CHECK_ALLOCATION(d = malloc(sizeof(struct foo_data)));
+	        memset(d, 0, sizeof(struct foo_data));
+
+		/*
+		 *  Set up stuff here, for example fill d with useful
+		 *  data. devinit contains settings like address, irq path,
+		 *  and other things.
+		 *
+		 *  ...
+		 */
+
+		INTERRUPT_CONNECT(devinit->interrupt_path, d->irq);
+        
+	        memory_device_register(devinit->machine->memory, devinit->name,
+	            devinit->addr, DEV_FOO_LENGTH,
+	            dev_foo_access, (void *)d, DM_DEFAULT, NULL);
+        
+		/*  This should only be here if the device
+		    has a tick function:  */
+		machine_add_tickfunction(machine, dev_foo_tick, d,
+		    FOO_TICKSHIFT);
+
+		/*  Return 1 if the device was successfully added.  */
+	        return 1;       
+	}       
+</pre><br>
+
+	<p><tt>DEVINIT(foo)</tt> is defined as <tt>int devinit_foo(struct devinit *devinit)</tt>,
+	and the <tt>devinit</tt> argument contains everything that the device driver's
+	initialization function needs.
+
+  <p>
+  <li>At the top of <tt>dev_foo.c</tt>, the <tt>foo_data</tt> struct
+	should be defined.
+<pre>
+	struct foo_data {
+		struct interrupt	irq;
+		/*  ...  */
+	}
+</pre><br>
+	(There is an exception to this rule; some legacy code and other
+	ugly hacks have their device structs defined in
+	<tt>src/include/devices.h</tt> instead of <tt>dev_foo.c</tt>.
+	New code should not add stuff to <tt>devices.h</tt>.)
+  <p>
+  <li>If <tt>foo</tt> has a tick function (that is, something that needs to be
+	run at regular intervals) then <tt>FOO_TICKSHIFT</tt> and a tick 
+	function need to be defined as well:
+<pre>
+	#define FOO_TICKSHIFT		14
+
+	DEVICE_TICK(foo)
+	{
+		struct foo_data *d = extra;
+
+		if (.....)
+			INTERRUPT_ASSERT(d->irq);
+		else
+			INTERRUPT_DEASSERT(d->irq);
+	}
+</pre><br>
+
+  <li>Does this device belong to a standard bus?
+	<ul>
+	  <li>If this device should be detectable as a PCI device, then
+		glue code should be added to
+		<tt>src/devices/bus_pci.c</tt>.
+	  <li>If this is a legacy ISA device which should be usable by
+		any machine which has an ISA bus, then the device should
+		be added to <tt>src/devices/bus_isa.c</tt>.
+	</ul>
+  <p>
+  <li>And last but not least, the device should have an access function.
+	The access function is called whenever there is a load or store
+	to an address which is in the device' memory mapped region. To
+	simplify things a little, a macro <tt>DEVICE_ACCESS(x)</tt>
+	is expanded into<pre>
+	int dev_x_access(struct cpu *cpu, struct memory *mem,
+	    uint64_t relative_addr, unsigned char *data, size_t len,
+	    int writeflag, void *extra)
+</pre>	The access function can look like this:
+<pre>
+	DEVICE_ACCESS(foo)
+	{
+		struct foo_data *d = extra;
+		uint64_t idata = 0, odata = 0;
+
+		if (writeflag == MEM_WRITE)
+			idata = memory_readmax64(cpu, data, len);
+
+		switch (relative_addr) {
+
+		/*  Handle accesses to individual addresses within
+		    the device here.  */
+
+		/*  ...  */
+
+		}
+
+		if (writeflag == MEM_READ)
+			memory_writemax64(cpu, data, len, odata);
+
+		/*  Perhaps interrupts need to be asserted or
+		    deasserted:  */
+		dev_foo_tick(cpu, extra);
+
+		/*  Return successfully.  */
+		return 1;
+	}
+</pre><br>
+</ul>
+
+<p>
+The return value of the access function has until 2004-07-02 been a 
+true/false value; 1 for success, or 0 for device access failure. A device 
+access failure (on MIPS) will result in a DBE exception.
+
+<p>
+Some devices are converted to support arbitrary memory latency
+values. The return value is the number of cycles that the read or 
+write access took. A value of 1 means one cycle, a value of 10 means 10 
+cycles. Negative values are used for device access failures, and the 
+absolute value of the value is then the number of cycles; a value of -5 
+means that the access failed, and took 5 cycles.
+
+<p>
+To be compatible with pre-20040702 devices, a return value of 0 is treated 
+by the caller (in <tt>src/memory_rw.c</tt>) as a value of -1.
+
+
+
+
+
+
+</body>
+</html>

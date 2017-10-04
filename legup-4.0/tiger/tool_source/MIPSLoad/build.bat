@@ -1,0 +1,2 @@
+C:/altera/91/quartus/bin/cygwin/bin/gcc MIPSLoad.c -O3 -o MIPSLoad.exe -lbfd -liberty -L C:\altera\90sp2\quartus\bin\gettext\lib -lintl.dll
+copy MIPSLoad.exe ..\..\windows_tools\tiger_tools\MIPSLoad.exe

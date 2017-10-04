@@ -1,0 +1,23 @@
+# clk
+# sdram
+# tigers_jtag_uart
+set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) vJTAGUart_hw.tcl]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) vJTAGUart.v]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tigers_jtag_uart.v]
+# tigers_jtag_uart_1
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tigers_jtag_uart_1.v]
+# uart_0
+# onchip_mem
+# pipeline_bridge_PERIPHERALS
+# pipeline_bridge_MEMORY
+# tiger_top_0
+set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) tiger_top_hw.tcl]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tiger_top.v]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) tiger_top_0.v]
+# null
+# data_cache_0
+set_global_assignment -name TCL_FILE [file join $::quartus(qip_path) data_cache_hw.tcl]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) data_cache.v]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) data_cache_0.v]
+set_global_assignment -name SOPC_BUILDER_SIGNATURE_ID 001B214EE05300000137B90CC05D 
+ 

@@ -1,0 +1,23 @@
+# Turn off optimizations to avoid a problem on scinet (64-bit machine)
+# clang adds unnecessary functions: __strcspn_c1, __strcspn_c2, ...
+NO_OPT = 1
+
+include $(LEVEL)/Makefile.config
+
+SRCS = ${shell echo *.c}
+OBJS = ${shell echo $(SRCS) | sed 's/\.c/\.bc/g'}
+NAME = ${shell basename `pwd`}
+TARGET = ../$(NAME).bc
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(LLVM_HOME)llvm-link *.bc -o $@
+
+$(OBJS):
+	$(FRONT_END) ${shell basename $@ .bc}.c -c $(CFLAG) $(CLANG_FLAG) -emit-llvm -o $@
+
+clean:
+	rm -f $(TARGET) *.bc
+
+.PHONY : all clean

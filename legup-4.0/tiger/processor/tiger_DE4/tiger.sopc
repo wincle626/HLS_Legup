@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="tiger">
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element clk
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element data_cache_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element ddr2
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{output_language=VERILOG, output_directory=/home/choijon5/legup/tiger/processor/tiger_DE4}";
+         type = "String";
+      }
+   }
+   element jtag_to_ava_master_bridge
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element tiger_top_0.leapSlave
+   {
+      datum baseAddress
+      {
+         value = "2147483648";
+         type = "long";
+      }
+   }
+   element pipeline_bridge_MEMORY
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element pipeline_bridge_PERIPHERALS
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{output_language=VERILOG, output_directory=/home/choijon5/legup/tiger/processor/tiger_DE4}";
+         type = "String";
+      }
+   }
+   element pipeline_bridge_PERIPHERALS.s1
+   {
+      datum baseAddress
+      {
+         value = "4026531840";
+         type = "long";
+      }
+   }
+   element ddr2.s1
+   {
+      datum baseAddress
+      {
+         value = "1073741824";
+         type = "long";
+      }
+   }
+   element uart_0.s1
+   {
+      datum baseAddress
+      {
+         value = "4096";
+         type = "long";
+      }
+   }
+   element pipeline_bridge_MEMORY.s1
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "long";
+      }
+   }
+   element tiger
+   {
+   }
+   element tiger_top_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element uart_0
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="" />
+ <parameter name="deviceFamily" value="STRATIXIV" />
+ <parameter name="deviceSpeedGrade" value="" />
+ <parameter name="fabricMode" value="SOPC" />
+ <parameter name="generateLegacySim" value="true" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="true" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="maxAdditionalLatency" value="0" />
+ <parameter name="projectName" value="tiger_top.qpf" />
+ <parameter name="sopcBorderPoints" value="true" />
+ <parameter name="systemHash" value="-31373812203" />
+ <parameter name="timeStamp" value="1374009409339" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <module kind="clock_source" version="11.1" enabled="1" name="clk">
+  <parameter name="clockFrequency" value="200000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module
+   kind="altera_avalon_pipeline_bridge"
+   version="11.1"
+   enabled="1"
+   name="pipeline_bridge_PERIPHERALS">
+  <parameter name="burstEnable" value="false" />
+  <parameter name="dataWidth" value="32" />
+  <parameter name="downstreamPipeline" value="true" />
+  <parameter name="enableArbiterlock" value="false" />
+  <parameter name="masterAddressWidth" value="13" />
+  <parameter name="maxBurstSize" value="2" />
+  <parameter name="maximumPendingReadTransactions" value="1" />
+  <parameter name="upstreamPipeline" value="false" />
+  <parameter name="waitrequestPipeline" value="false" />
+ </module>
+ <module
+   kind="altera_avalon_pipeline_bridge"
+   version="11.1"
+   enabled="1"
+   name="pipeline_bridge_MEMORY">
+  <parameter name="burstEnable" value="true" />
+  <parameter name="dataWidth" value="256" />
+  <parameter name="downstreamPipeline" value="true" />
+  <parameter name="enableArbiterlock" value="false" />
+  <parameter name="masterAddressWidth" value="31" />
+  <parameter name="maxBurstSize" value="64" />
+  <parameter name="maximumPendingReadTransactions" value="35" />
+  <parameter name="upstreamPipeline" value="false" />
+  <parameter name="waitrequestPipeline" value="false" />
+ </module>
+ <module
+   kind="altera_jtag_avalon_master"
+   version="11.1"
+   enabled="1"
+   name="jtag_to_ava_master_bridge">
+  <parameter name="USE_PLI" value="0" />
+  <parameter name="PLI_PORT" value="50000" />
+  <parameter name="COMPONENT_CLOCK" value="0" />
+  <parameter name="FAST_VER" value="0" />
+  <parameter name="FIFO_DEPTHS" value="2" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Stratix IV" />
+ </module>
+ <module kind="altera_avalon_uart" version="11.1" enabled="1" name="uart_0">
+  <parameter name="baud" value="115200" />
+  <parameter name="clockRate" value="200000000" />
+  <parameter name="dataBits" value="8" />
+  <parameter name="fixedBaud" value="true" />
+  <parameter name="parity" value="NONE" />
+  <parameter name="simCharStream" value="" />
+  <parameter name="simInteractiveInputEnable" value="false" />
+  <parameter name="simInteractiveOutputEnable" value="false" />
+  <parameter name="simTrueBaud" value="false" />
+  <parameter name="stopBits" value="1" />
+  <parameter name="syncRegDepth" value="2" />
+  <parameter name="useCtsRts" value="false" />
+  <parameter name="useEopRegister" value="false" />
+  <parameter name="useRelativePathForSimFile" value="false" />
+ </module>
+ <module kind="altmemddr2" version="11.1" enabled="1" name="ddr2">
+  <parameter name="pipeline_commands" value="false" />
+  <parameter name="debug_en" value="false" />
+  <parameter name="export_debug_port" value="false" />
+  <parameter name="use_generated_memory_model" value="true" />
+  <parameter name="dedicated_memory_clk_phase_label">Dedicated memory clock phase:</parameter>
+  <parameter name="mem_if_clk_mhz" value="400.0" />
+  <parameter name="quartus_project_exists" value="false" />
+  <parameter name="local_if_drate" value="Half" />
+  <parameter name="enable_v72_rsu" value="false" />
+  <parameter name="local_if_clk_mhz_label" value="200.0" />
+  <parameter name="new_variant" value="false" />
+  <parameter name="mem_if_memtype" value="DDR2 SDRAM" />
+  <parameter name="pll_ref_clk_mhz" value="200.0" />
+  <parameter name="mem_if_clk_ps_label" value="(2500 ps)" />
+  <parameter name="family" value="Stratix IV" />
+  <parameter name="project_family" value="Stratix IV" />
+  <parameter name="speed_grade" value="2" />
+  <parameter name="dedicated_memory_clk_phase" value="0" />
+  <parameter name="pll_ref_clk_ps_label" value="(5000 ps)" />
+  <parameter name="avalon_burst_length" value="1" />
+  <parameter name="mem_if_clk_pair_count" value="2" />
+  <parameter name="mem_if_cs_per_dimm" value="1" />
+  <parameter name="pre_latency_label">Fix read latency at:</parameter>
+  <parameter name="dedicated_memory_clk_en" value="false" />
+  <parameter name="mirror_addressing" value="0" />
+  <parameter name="mem_if_bankaddr_width" value="3" />
+  <parameter name="register_control_word_9" value="0000" />
+  <parameter name="mem_if_rowaddr_width" value="14" />
+  <parameter name="mem_dyn_deskew_en" value="false" />
+  <parameter name="post_latency_label">cycles (0 cycles=minimum latency, non-deterministic)</parameter>
+  <parameter name="mem_if_dm_pins_en" value="Yes" />
+  <parameter name="local_if_dwidth_label" value="256" />
+  <parameter name="register_control_word_7" value="0000" />
+  <parameter name="register_control_word_8" value="0000" />
+  <parameter name="mem_if_preset">Custom (DE4_DDR2_800_1GB)</parameter>
+  <parameter name="mem_if_pchaddr_bit" value="10" />
+  <parameter name="WIDTH_RATIO" value="4" />
+  <parameter name="vendor" value="Micron" />
+  <parameter name="register_control_word_3" value="0000" />
+  <parameter name="register_control_word_4" value="0000" />
+  <parameter name="chip_or_dimm" value="Unbuffered DIMM" />
+  <parameter name="register_control_word_5" value="0000" />
+  <parameter name="register_control_word_6" value="0000" />
+  <parameter name="mem_fmax" value="400.0" />
+  <parameter name="register_control_word_0" value="0000" />
+  <parameter name="register_control_word_size" value="4" />
+  <parameter name="register_control_word_1" value="0000" />
+  <parameter name="register_control_word_2" value="0000" />
+  <parameter name="register_control_word_11" value="0000" />
+  <parameter name="register_control_word_10" value="0000" />
+  <parameter name="mem_if_cs_width" value="1" />
+  <parameter name="mem_if_preset_rlat" value="0" />
+  <parameter name="mem_if_cs_per_rank" value="1" />
+  <parameter name="fast_simulation_en" value="SUPERFAST" />
+  <parameter name="register_control_word_15" value="0000" />
+  <parameter name="register_control_word_14" value="0000" />
+  <parameter name="mem_if_dwidth" value="64" />
+  <parameter name="mem_if_dq_per_dqs" value="8" />
+  <parameter name="mem_if_coladdr_width" value="10" />
+  <parameter name="register_control_word_13" value="0000" />
+  <parameter name="register_control_word_12" value="0000" />
+  <parameter name="mem_tiha_ps" value="375" />
+  <parameter name="mem_tdsh_ck" value="0.2" />
+  <parameter name="mem_if_trfc_ns" value="127.5" />
+  <parameter name="mem_tqh_ck" value="0.36" />
+  <parameter name="mem_tisa_ps" value="375" />
+  <parameter name="mem_tdss_ck" value="0.2" />
+  <parameter name="mem_trtp_ns" value="7.5" />
+  <parameter name="mem_if_tinit_us" value="200.0" />
+  <parameter name="mem_if_trcd_ns" value="15.0" />
+  <parameter name="mem_if_twtr_ck" value="3" />
+  <parameter name="mem_trrd_ns" value="7.5" />
+  <parameter name="mem_tdqss_ck" value="0.25" />
+  <parameter name="mem_tqhs_ps" value="300" />
+  <parameter name="mem_tdsa_ps" value="250" />
+  <parameter name="mem_tac_ps" value="400" />
+  <parameter name="mem_tdha_ps" value="250" />
+  <parameter name="mem_if_tras_ns" value="40.0" />
+  <parameter name="mem_if_twr_ns" value="15.0" />
+  <parameter name="mem_tdqsck_ps" value="350" />
+  <parameter name="mem_if_trp_ns" value="15.0" />
+  <parameter name="mem_tdqsq_ps" value="200" />
+  <parameter name="mem_if_tmrd_ns" value="5.0" />
+  <parameter name="mem_tfaw_ns" value="37.5" />
+  <parameter name="mem_if_trefi_us" value="7.8" />
+  <parameter name="mem_tcl_40_fmax" value="267.0" />
+  <parameter name="mem_odt" value="50" />
+  <parameter name="mp_WLH_percent" value="0.6" />
+  <parameter name="mem_drv_str" value="Normal" />
+  <parameter name="mp_DH_percent" value="0.5" />
+  <parameter name="input_period" value="0" />
+  <parameter name="mp_QH_percent" value="0.5" />
+  <parameter name="mp_QHS_percent" value="0.5" />
+  <parameter name="mem_tcl_30_fmax" value="267.0" />
+  <parameter name="ac_clk_select" value="dedicated" />
+  <parameter name="mp_DQSQ_percent" value="0.65" />
+  <parameter name="mp_DS_percent" value="0.6" />
+  <parameter name="pll_reconfig_ports_en" value="false" />
+  <parameter name="mem_btype" value="Sequential" />
+  <parameter name="mp_IS_percent" value="0.7" />
+  <parameter name="mem_tcl" value="6.0" />
+  <parameter name="mp_DQSS_percent" value="0.5" />
+  <parameter name="export_bank_info" value="false" />
+  <parameter name="mp_DSS_percent" value="0.6" />
+  <parameter name="mem_dll_en" value="Yes" />
+  <parameter name="ac_phase" value="240" />
+  <parameter name="mem_if_oct_en" value="true" />
+  <parameter name="mem_tcl_60_fmax" value="400.0" />
+  <parameter name="mp_DSH_percent" value="0.6" />
+  <parameter name="mem_if_dqsn_en" value="true" />
+  <parameter name="enable_mp_calibration" value="true" />
+  <parameter name="mp_IH_percent" value="0.6" />
+  <parameter name="mem_tcl_15_fmax" value="533.0" />
+  <parameter name="dll_external" value="false" />
+  <parameter name="mem_bl" value="8" />
+  <parameter name="mp_WLS_percent" value="0.7" />
+  <parameter name="mem_tcl_50_fmax" value="334.0" />
+  <parameter name="mp_DQSCK_percent" value="0.5" />
+  <parameter name="mem_tcl_25_fmax" value="533.0" />
+  <parameter name="mem_tcl_20_fmax" value="533.0" />
+  <parameter name="cfg_reorder_data" value="false" />
+  <parameter name="ctl_ecc_en" value="false" />
+  <parameter name="ctl_hrb_en" value="false" />
+  <parameter name="ref_clk_source" value="clk" />
+  <parameter name="cfg_data_reordering_type" value="INTER_BANK" />
+  <parameter name="ctl_powerdn_en" value="false" />
+  <parameter name="multicast_wr_en" value="false" />
+  <parameter name="auto_powerdn_cycles" value="0" />
+  <parameter name="ctl_self_refresh_en" value="false" />
+  <parameter name="cfg_starve_limit" value="10" />
+  <parameter name="shared_sys_clk_source" value="" />
+  <parameter name="ctl_latency" value="0" />
+  <parameter name="tool_context" value="SOPC_BUILDER" />
+  <parameter name="mem_addr_mapping" value="CHIP_BANK_ROW_COL" />
+  <parameter name="burst_merge_en" value="false" />
+  <parameter name="user_refresh_en" value="false" />
+  <parameter name="qsys_mode" value="false" />
+  <parameter name="clk_source_sharing_en" value="false" />
+  <parameter name="ctl_lookahead_depth" value="4" />
+  <parameter name="ctl_autopch_en" value="false" />
+  <parameter name="ctl_dynamic_bank_allocation" value="false" />
+  <parameter name="ctl_dynamic_bank_num" value="4" />
+  <parameter name="local_if_type_avalon" value="true" />
+  <parameter name="csr_en" value="false" />
+  <parameter name="ctl_auto_correct_en" value="false" />
+  <parameter name="auto_powerdn_en" value="false" />
+  <parameter name="phy_if_type_afi" value="true" />
+  <parameter name="controller_type" value="ddrx_ctl" />
+  <parameter name="max_local_size" value="64" />
+  <parameter name="mem_srtr" value="Normal" />
+  <parameter name="mem_mpr_loc" value="Predefined Pattern" />
+  <parameter name="dss_tinit_rst_us" value="200.0" />
+  <parameter name="mem_tcl_90_fmax" value="400.0" />
+  <parameter name="mem_rtt_wr" value="Dynamic ODT off" />
+  <parameter name="mem_tcl_100_fmax" value="400.0" />
+  <parameter name="mem_pasr" value="Full Array" />
+  <parameter name="mem_asrm">Manual SR Reference (SRT)</parameter>
+  <parameter name="mem_mpr_oper" value="Predefined Pattern" />
+  <parameter name="mem_tcl_80_fmax" value="400.0" />
+  <parameter name="mem_drv_impedance" value="RZQ/7" />
+  <parameter name="mem_rtt_nom" value="ODT Disabled" />
+  <parameter name="mem_tcl_70_fmax" value="400.0" />
+  <parameter name="mem_wtcl" value="5.0" />
+  <parameter name="mem_dll_pch" value="Fast Exit" />
+  <parameter name="mem_atcl" value="Disabled" />
+  <parameter name="board_settings_valid" value="true" />
+  <parameter name="t_IH" value="0.375" />
+  <parameter name="board_intra_DQS_group_skew" value="0.02" />
+  <parameter name="isi_DQS" value="0.0" />
+  <parameter name="addr_cmd_slew_rate" value="1.0" />
+  <parameter name="board_tpd_inter_DIMM" value="0.05" />
+  <parameter name="board_addresscmd_CK_skew" value="0.0" />
+  <parameter name="t_DS_calculated" value="0.246" />
+  <parameter name="isi_addresscmd_hold" value="0.0" />
+  <parameter name="t_IS" value="0.375" />
+  <parameter name="restore_default_toggle" value="false" />
+  <parameter name="dqs_dqsn_slew_rate" value="4.35" />
+  <parameter name="dq_slew_rate" value="1.39" />
+  <parameter name="board_inter_DQS_group_skew" value="0.02" />
+  <parameter name="isi_addresscmd_setup" value="0.0" />
+  <parameter name="board_minCK_DQS_skew" value="-0.01" />
+  <parameter name="t_IS_calculated" value="0.375" />
+  <parameter name="num_slots_or_devices" value="1" />
+  <parameter name="board_maxCK_DQS_skew" value="0.01" />
+  <parameter name="board_skew_ps" value="20" />
+  <parameter name="t_DH" value="0.231" />
+  <parameter name="ck_ckn_slew_rate" value="2.0" />
+  <parameter name="isi_DQ" value="0.0" />
+  <parameter name="t_IH_calculated" value="0.375" />
+  <parameter name="t_DH_calculated" value="0.231" />
+  <parameter name="t_DS" value="0.246" />
+ </module>
+ <module kind="tiger_top" version="1.0" enabled="1" name="tiger_top_0">
+  <parameter name="prof_param_N2" value="8" />
+  <parameter name="prof_param_S2" value="5" />
+  <parameter name="prof_param_CW" value="32" />
+  <parameter name="AUTO_CLOCK_CLOCK_RATE" value="200000000" />
+ </module>
+ <module kind="data_cache" version="1.0" enabled="1" name="data_cache_0">
+  <parameter name="AUTO_CLOCKRESET_CLOCK_RATE" value="200000000" />
+ </module>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="pipeline_bridge_PERIPHERALS.m1"
+   end="uart_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x1000" />
+ </connection>
+ <connection kind="clock" version="11.1" start="clk.clk" end="ddr2.refclk" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="ddr2.sysclk"
+   end="pipeline_bridge_PERIPHERALS.clk" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="ddr2.sysclk"
+   end="pipeline_bridge_MEMORY.clk" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="ddr2.sysclk"
+   end="jtag_to_ava_master_bridge.clk" />
+ <connection kind="clock" version="11.1" start="ddr2.sysclk" end="uart_0.clk" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="pipeline_bridge_MEMORY.m1"
+   end="ddr2.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="jtag_to_ava_master_bridge.master"
+   end="ddr2.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+ </connection>
+ <connection
+   kind="clock"
+   version="11.1"
+   start="ddr2.sysclk"
+   end="tiger_top_0.clock" />
+ <connection
+   kind="clock"
+   version="11.1"
+   start="ddr2.sysclk"
+   end="data_cache_0.clockreset" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.instructionMaster"
+   end="pipeline_bridge_MEMORY.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.procMaster"
+   end="pipeline_bridge_PERIPHERALS.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0xf0000000" />
+ </connection>
+ <connection
+   kind="avalon_streaming"
+   version="11.1"
+   start="data_cache_0.PROC"
+   end="tiger_top_0.PROC" />
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="tiger_top_0.CACHE"
+   end="data_cache_0.CACHE0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="data_cache_0.dataMaster0"
+   end="pipeline_bridge_MEMORY.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="11.1"
+   start="jtag_to_ava_master_bridge.master"
+   end="tiger_top_0.leapSlave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x80000000" />
+ </connection>
+</system>

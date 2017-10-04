@@ -1,0 +1,14 @@
+load_lib legup.exp
+
+set hybridexpected {# sum: 376250}
+
+cd ../examples/parallel/single/alphablend
+set test "alphablend Single"
+run-test-hybrid-once $test $hybridexpected
+
+cd ../../pthreads/alphablend
+set test "alphablend Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+
+cd ../../../

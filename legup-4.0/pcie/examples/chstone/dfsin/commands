@@ -1,0 +1,109 @@
+function = sin
+sin 0 0x00000000 0x00000000
+poll_complete 0
+# Expected result: 0
+sin 0 0xfced55c1 0x3fc65717
+poll_complete 0
+# Expected result: 4595424353983311309
+sin 0 0xfced55c1 0x3fd65717
+poll_complete 0
+# Expected result: 4599832905844899646
+sin 0 0xfdb20051 0x3fe0c151
+poll_complete 0
+# Expected result: 4602678817326738065
+sin 0 0xfced55c1 0x3fe65717
+poll_complete 0
+# Expected result: 4603964934626362083
+sin 0 0xfc28ab31 0x3febecdd
+poll_complete 0
+# Expected result: 4605075133481489574
+sin 0 0xfdb20051 0x3ff0c151
+poll_complete 0
+# Expected result: 4605975682307795949
+sin 0 0xfd4fab09 0x3ff38c34
+poll_complete 0
+# Expected result: 4606639217416480941
+sin 0 0xfced55c1 0x3ff65717
+poll_complete 0
+# Expected result: 4607045578640063168
+sin 0 0xfc8b0079 0x3ff921fa
+poll_complete 0
+# Expected result: 4607182418293282730
+sin 0 0xfc28ab31 0x3ffbecdd
+poll_complete 0
+# Expected result: 4607045579801131401
+sin 0 0xfbc655e9 0x3ffeb7c0
+poll_complete 0
+# Expected result: 4606639219569943220
+sin 0 0xfdb20051 0x4000c151
+poll_complete 0
+# Expected result: 4605975685322773549
+sin 0 0x7d80d5ad 0x400226c3
+poll_complete 0
+# Expected result: 4605075138685085801
+sin 0 0xfd4fab09 0x40038c34
+poll_complete 0
+# Expected result: 4603964939033565416
+sin 0 0x7d1e8065 0x4004f1a6
+poll_complete 0
+# Expected result: 4602678823104758728
+sin 0 0xfced55c1 0x40065717
+poll_complete 0
+# Expected result: 4599832915021762757
+sin 0 0x7cbc2b1d 0x4007bc89
+poll_complete 0
+# Expected result: 4595424366569280812
+sin 0 0xfc8b0079 0x400921fa
+poll_complete 0
+# Expected result: 4514487953518840721
+sin 0 0x7c59d5d5 0x400a876c
+poll_complete 0
+# Expected result: 13818796365362082684
+sin 0 0xfc28ab31 0x400becdd
+poll_complete 0
+# Expected result: 13823204928665915198
+sin 0 0x7bf7808d 0x400d524f
+poll_complete 0
+# Expected result: 13826050844372302187
+sin 0 0xfbc655e9 0x400eb7c0
+poll_complete 0
+# Expected result: 13827336967286268883
+sin 0 0x3dca95a3 0x40100e99
+poll_complete 0
+# Expected result: 13828447167311575061
+sin 0 0xfdb20051 0x4010c151
+poll_complete 0
+# Expected result: 13829347717820362290
+sin 0 0xbd996aff 0x4011740a
+poll_complete 0
+# Expected result: 13830011252101685591
+sin 0 0x7d80d5ad 0x401226c3
+poll_complete 0
+# Expected result: 13830417614150978300
+sin 0 0x3d68405b 0x4012d97c
+poll_complete 0
+# Expected result: 13830554454629670031
+sin 0 0xfd4fab09 0x40138c34
+poll_complete 0
+# Expected result: 13830417615289509866
+sin 0 0xbd3715b7 0x40143eed
+poll_complete 0
+# Expected result: 13830011258544172583
+sin 0 0x7d1e8065 0x4014f1a6
+poll_complete 0
+# Expected result: 13829347725204900682
+sin 0 0x3d05eb13 0x4015a45f
+poll_complete 0
+# Expected result: 13828447179048474497
+sin 0 0xfced55c1 0x40165717
+poll_complete 0
+# Expected result: 13827336983130365270
+sin 0 0xbcd4c06f 0x401709d0
+poll_complete 0
+# Expected result: 13826050865104724749
+sin 0 0x7cbc2b1d 0x4017bc89
+poll_complete 0
+# Expected result: 13823204963627158263
+sin 0 0x3ca395cb 0x40186f42
+poll_complete 0
+# Expected result: 13818796431928484829

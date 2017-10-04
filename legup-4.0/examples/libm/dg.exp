@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd libm
+set test "libm"
+set expected {return_val=\s+19999099\s+}
+
+run-test $test $expected
+
+cd ..

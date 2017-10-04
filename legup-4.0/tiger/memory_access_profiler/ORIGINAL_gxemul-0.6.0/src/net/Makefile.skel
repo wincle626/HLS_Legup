@@ -1,0 +1,19 @@
+#
+#  Makefile for GXemul src/net
+#
+
+CXXFLAGS=$(CWARNINGS) $(COPTIM) $(XINCLUDE) $(DINCLUDE)
+
+OBJS=net.o net_ip.o net_misc.o
+
+all: $(OBJS)
+
+$(OBJS): Makefile
+
+
+clean:
+	rm -f $(OBJS) *core
+
+clean_all: clean
+	rm -f Makefile
+

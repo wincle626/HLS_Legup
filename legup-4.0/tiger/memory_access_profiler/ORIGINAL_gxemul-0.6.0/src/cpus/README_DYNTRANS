@@ -1,0 +1,69 @@
+Dyntrans TODO
+-------------
+
+Current state of dyntrans 2008-12-16 is:
+
+	x)  No native code generation, i.e. code is translated into function
+	    pointers (pointing to C code). An array contains one entry for
+	    each possible value of the program counter within a page (i.e.
+	    for 4 KB pages with 32-bit instruction words, that means 1024
+	    entries), plus one or two entries signifying the "end of page".
+	    (Two are only necessary for architectures that have delay slots.)
+
+	    One way to support native code generation could be to _optionally_
+	    generate new code in memory which is called using the already
+	    existing function pointers. However, this would not allow much
+	    optimization to take place.
+
+	    The big thing speaking _against_ native code generation is
+	    time! While native code generation may be fun and interesting,
+	    and produce very fast code in some cases, there are probably
+	    other things in the emulator that are bottlenecks as well, and
+	    the concept of instruction combinations (using host optimized C
+	    code for common code sequences) still has not been used to its
+	    limit.
+
+	x)  Variable-length ISAs are not yet emulated.
+
+	    There was some code for this before, but I removed it. The
+	    biggest problem is that of an instruction reaching past a page
+	    boundary. With virtual memory, the second page does not even
+	    have to exist! This needs to be solved some nice way.
+
+
+Long-term goal: Make sure that all of these could work, at least in theory:
+
+			Instruction			Word		Delay
+	Arch.:		length:				size:		slot:
+	------		-------				-----		-----
+	Alpha		32-bit				64		no
+	ARM		32-bit, 16-bit (Thumb)		32		no
+	AVR		16-bit + variable		8		no
+	AVR32		16-bit + variable		32		?
+	F-CPU		?				?		?
+	H8		16-bit				8/16		no
+	HPPA		32-bit				64/32		yes
+	i860		?				?		yes (?)
+	i960		32-bit + variable		32		?
+	IA64		128-bit				64		no
+	M32R		32-bit (*2)			32		?
+	M68K		16-bit + variable		32		no
+	M88K		32-bit				32		yes
+	MIPS		32-bit, 16-bit (MIPS16)		64/32		yes
+	OpenRISC	?				?		?
+	PC532		?				32 (?)		?
+	POWER/PPC	32-bit				64/32		no
+	RCA180x		8-bit (+ variable on 1805)	8-16 (?)	no
+	SH1..4		16-bit				32		yes
+	SH5		32-bit, 16-bit (SHcompact)	64		yes (*1)
+	SPARC		32-bit				64/32		yes
+	Transputer	8-bit				32/16		no
+	x86/AMD64	8-bit + variable		64/32/16	no
+	Z80000		16-bit + variable		32		no (?)
+	VAX		8-bit + variable		32		no
+
+
+(*1)  Delay slot in SHcompact/32-bit-mode
+(*2)  Sometmes multiple instructions are issued in the same
+      instruction word.
+

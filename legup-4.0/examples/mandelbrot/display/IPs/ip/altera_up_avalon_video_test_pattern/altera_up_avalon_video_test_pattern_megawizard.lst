@@ -1,0 +1,11 @@
+[University Program|Audio & Video|Video]
+Test-Pattern Generator = "%t" "%w/../../../../altera/common/lib/megawizard.pl" --wizard_file:"%w/altera_up_avalon_video_test_pattern_hw.tcl" --wizard:altera_up_avalon_video_test_pattern --early_gen:on %f %o %h
+<INFO>
+<QIP_FILE_ENABLED/>
+<ACCEPT_OTHER_CNX VALUE="ON"/>
+<LANGUAGES   AHDL="OFF" />
+<PINPLAN SUPPORTED="OFF"/>
+<ALIAS>Creates Sample Streaming Video for DE-series Boards</ALIAS>
+
+</INFO>
+

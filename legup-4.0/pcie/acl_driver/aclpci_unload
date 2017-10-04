@@ -1,0 +1,18 @@
+#!/bin/sh
+# Unload Altera OpenCL PCIe driver and delete file handle for the board
+# MUST BE RUN AS ROOT
+
+module="aclpci_drv"
+device="de4"
+
+# invoke rmmod with all arguments we got
+/sbin/rmmod $module
+if [ $? != 0 ]; then
+  echo
+  echo "To unload the driver, it must be loaded, unused, and you must have"
+  echo "root or sudo priviliges."
+  exit 1
+fi
+
+# Remove stale nodes
+rm -f /dev/${device}

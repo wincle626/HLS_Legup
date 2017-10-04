@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd signeddiv
+set test "signeddiv"
+set expected {return_val=\s+6\s+}
+set gxexpected {reg: v0 = 0x0000000000000006}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ..

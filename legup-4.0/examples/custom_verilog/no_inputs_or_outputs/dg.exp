@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd custom_verilog/no_inputs_or_outputs
+set test "custom_verilog_no_io"
+set expected {return_val=\s+6\s+}
+set gxexpected {reg: v0 = 0x0000000000000006}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..

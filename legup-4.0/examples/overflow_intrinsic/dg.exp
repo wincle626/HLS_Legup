@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd overflow_intrinsic
+set test "overflow_intrinsic"
+set expected {a=\s*-1.*sum=\s*1.*carry=\s*1}
+
+run-test $test $expected
+
+cd ..

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Miscellaneous</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Miscellaneous</h1>
+<p>
+
+<a href="./">Back to the index.</a>
+
+<!--
+
+Copyright (C) 2003-2010  Anders Gavare.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+-->
+
+<p><br>
+<ul>
+  <li><a href="#devel">Writing operating system code, or
+	developing firmware, using GXemul</a>
+  <li><a href="#compilercontruct">Using GXemul in compiler contruction courses</a>
+  <li><a href="#disk">How to start the emulator with a disk image</a>
+  <li><a href="#tape_images">How to start the emulator with tape images</a>
+  <li><a href="#disk_overlays">How to use disk image overlays</a>
+  <li><a href="#filexfer">Transfering files to/from the guest OS</a>
+  <li><a href="#largeimages">How to extract large gzipped disk images</a>
+  <li><a href="#promdump">Using a PROM dump from a real machine</a>
+</ul>
+
+
+
+
+
+
+
+
+
+<p><br>
+<a name="devel"></a>
+<h3>Writing operating system code, or developing firmware, using GXemul:</h3>
+
+Is this a good idea?  The answer is yes and no, depending on the level of
+detail you need in your simulations. If you are developing an operating
+system or operating system kernel of your own, then the emulator can be a 
+complement to testing on real hardware.
+
+<p>Important things to keep in mind:
+
+<ul>
+	<li>Porting code to a specific machine mode, e.g. a Silicon Graphics
+	machine, using GXemul, will not "magically" cause the code to
+	work on a real machine. Sometimes code works in GXemul which doesn't
+	work on real hardware, sometimes it's the other way around.
+
+	<p>
+	<li>GXemul contains bugs, and many things are not yet implemented.
+
+	<p>
+	<li><b>Very important!</b> I have only implemented devices in GXemul
+	to the degree that NetBSD, OpenBSD, Linux, etc don't complain too much.
+	<p>
+	If you are developing a driver for a device which is emulated by
+	GXemul, and your driver does not seem to be working, then the
+	probability of a bug in GXemul's implementation of the device is
+	very much higher than that of a bug in your driver.
+	<p>
+	The device implementations in GXemul are based on the assumption
+	that the emulated OS is already developed and bug-free. They are
+	not primarily intended to be used for development of new device
+	driver code in operating systems, so if you do that, then be
+	prepared for bugs and inconsitencies.
+	<p>
+	<li>CPU details in GXemul are usually wrong. If your code depends
+	on, say, R10000 or MIPS64 specifics, chances are that GXemul will
+	not be sufficient. One example is different revisions of ISAs;
+	some instructions which should trigger an exception on a
+	real MIPS processor usually execute anyway in GXemul. Another
+	example is if userland code tries to access kernel memory; in some
+	cases there is protection against this, but not in all cases (to get
+	higher performance).
+	<p>
+	<li>Caches. There is no cache emulation in GXemul right now. Caches
+	for R2000/R3000 are faked well enough to run NetBSD, Ultrix, etc
+	in the <a href="http://en.wikipedia.org/wiki/DECstation">DECstation</a>
+	emulation mode, but other than that, cache operations are treated as nops.
+</ul>
+
+<p>The bottom line is that GXemul can be useful as yet another way to test 
+your code during development, but it should not be fully relied on.
+
+
+
+
+
+
+<p><br>
+<a name="compilercontruct"></a>
+<h3>Using GXemul in compiler contruction courses:</h3>
+
+If you are learning how to write a compiler, and wish to target a 
+realistic target platform, then MIPS or ARM (as emulated by GXemul)
+might be suitable choices.
+
+<ul>
+  <li><b>(+)</b>&nbsp;&nbsp;Your compiler needs to output real assembly
+	language code, which the assembler (e.g. gas, the GNU assembler) can 
+	then compile into object format, and then you need to link this
+	into an executable image. This is much closer to how things work
+	in real life than running assembly language listings in a simulator
+	(e.g. <a href="http://pages.cs.wisc.edu/~larus/spim.html">SPIM</a>).
+  <p>
+  <li><b>(-)</b>&nbsp;&nbsp;GXemul does not simulate <a href="http://en.wikipedia.org/wiki/Out-of-order_execution">out-of-order
+	execution</a>, penalties related to instruction scheduling, or
+	load-delays, so it cannot be used to create optimizing compilers
+	that take advantage of such processor features. GXemul keeps
+	track of the number of instructions executed, and that's it.
+</ul>
+
+
+
+
+
+
+<p><br>
+<a name="disk"></a>
+<h3>How to start the emulator with a disk image:</h3>
+
+Add <i>-d [prefixes:]diskimagefilename</i> to the command line, where prefixes
+are one or more single-character options. Run <b>gxemul -h</b>
+to get a list of possible options.
+
+<p>
+Here are some examples. If you want to run a <a href="http://www.netbsd.org/ports/pmax/">NetBSD/pmax</a>
+kernel on an emulated <a href="http://en.wikipedia.org/wiki/DECstation">DECstation</a>
+machine, you would use a command line such as this:
+<pre>
+	$ <b>gxemul -e 3max -d pmax_diskimage.fs netbsd-pmax-INSTALL</b>
+</pre>
+
+<p>NOTE: For some emulation modes, such as the DECstation mode, you do 
+<i>not</i> actually have to specify the name of the kernel, if the disk 
+image is bootable!
+
+<p>It is possible to have more than one disk. For each -d argument, a disk
+image is added; the first will be SCSI target 0, the second will be target 1, and so on,
+unless you specify explicitly which ID number the devices should have.
+<pre>
+	$ <b>gxemul -e 3max -d disk0.raw -d disk1.raw -d 5:disk2.raw netbsd-pmax-INSTALL</b>
+</pre>
+Note: In the example above, disk2.raw will get scsi id 5.
+
+<p>If a filename has a 'c' prefix, or ends with ".iso", then it is assumed to be
+a CDROM device (this can be overridden with a 'd' prefix, to force a read/write disk).
+For example, the following command would start the emulator with two
+CDROM images, and one harddisk image:
+<pre>
+	$ <b>gxemul -e 3max -d image.iso -d disk0.img -d c:second_cdrom.img netbsd-pmax-INSTALL</b>
+</pre>
+Usually, the device with the lowest id becomes the boot device. To override
+this, add a 'b' prefix to one of the devices:
+<pre>
+	$ <b>gxemul -e 3max -d rootdisk.img -d bc:install-cd.iso name_of_kernel</b>
+</pre>
+If you have a physical CD-ROM drive on the host machine, say /dev/cd0c, you can
+use it as a CD-ROM directly accessible from within the emulator:
+<pre>
+	$ <b>gxemul -e 3max -d rootdisk.img -d bc:/dev/cd0c name_of_kernel</b>
+</pre>
+It is probably possible to use harddisks as well this way, but I would not
+recommend it.
+
+
+
+
+
+
+<p><br>
+<a name="tape_images"></a>
+<h3>How to start the emulator with tape images:</h3>
+
+Using emulated tape drives is a bit more complicated than disks, because a
+tape can be made up of several "files" with space in between. The solution
+I have choosen is to have one file in the host's file system space for each
+tape file. The prefix for using tapes is 't', and the filename given is
+for the <i>first</i> file on that tape (number zero, implicitly). For
+files following file nr 0, a dot and the filenumber is appended to the
+filename.
+<p>
+As an example, starting the emulator with
+<pre>
+	<b>-d t4:mytape.img</b>
+</pre>
+will cause SCSI id 4 to be a tape device, using the following file number
+to name translation scheme:
+<p>
+<center>
+ <table border="0">
+  <tr>
+    <td><b>File number:</b></td>
+    <td><b>File name in the host's filesystem:</b></td>
+  </tr>
+  <tr>
+    <td align="center">0</td>
+    <td align="left">mytape.img</td>
+  </tr>
+  <tr>
+    <td align="center">1</td>
+    <td align="left">mytape.img.1</td>
+  </tr>
+  <tr>
+    <td align="center">2</td>
+    <td align="left">mytape.img.2</td>
+  </tr>
+  <tr>
+    <td align="center">..</td>
+    <td align="left">..</td>
+  </tr>
+ </table>
+</center>
+<p>
+If you already have a number of tape files, which should be placed on the
+same emulated tape, then you might not want to rename all those files.
+Use symbolic links instead (ln -s).
+<p>
+There is another advantage to using symbolic links for tape filenames:
+every time a tape is rewound, it is reopened using the filename given
+on the command line. By changing what the symbolic name points to,
+you can "switch tapes" without quiting and restarting the emulator.
+
+<p>
+<font color="#ff0000">Note: Tape support is most likely very buggy, 
+because it has not been tested much, and has probably also suffered 
+from bit-rot by now.</font>
+
+
+
+
+
+
+<p><br>
+<a name="disk_overlays"></a>
+<h3>How to use disk image overlays:</h3>
+
+This is most likely best understood by an example:
+
+<p><ul>
+  <li>Install e.g. <a href="guestoses.html#netbsdcatsinstall">NetBSD/cats</a>.
+	You will end up with a disk image called
+	<tt>nbsd_cats.img</tt>.
+  <p>
+  <li>Running the following command will boot straight from the disk
+	image, with no overlay images:<pre>
+	<b>gxemul -XEcats -d nbsd_cats.img netbsd.aout-GENERIC.gz</b>
+
+</pre>
+  <li>You may now create an overlay file, a corresponding map file,
+	and start the emulator with the overlay image connected to
+	the same (explicit) ID as the base disk image:<pre>
+	<b>touch overlay.img overlay.img.map
+	gxemul -XEcats -d 0:nbsd_cats.img -d V0:overlay.img netbsd.aout-GENERIC.gz</b>
+
+</pre>
+  <li>Any changes to the filesystem you perform when using the overlay
+	will only be written to that overlay. For example, to perform
+	a "roll back", you can do the following:<pre>
+	<b>rm -f overlay.img overlay.img.map
+	touch overlay.img overlay.img.map</b>
+
+</pre>
+	and then simply start the emulator again, with the newly created
+	overlay image.
+</ul>
+
+<p>It is also possible to add multiple overlays. In that case, writes 
+always go the the <i>last</i> added overlay.
+
+<p>GXemul uses Unix' way of supporting files with "holes",
+so even if <tt>ls -l overlay.img</tt> says that the overlay is several 
+gigabytes large, <tt>du overlay.img</tt> should reveal that only the
+blocks that have actually been written to have been stored in the
+overlay, e.g.:<pre>
+	<b>$ ls -l
+	..
+	-rw-r--r--  1 debug  wheel  3072319488 Mar 24 11:59 nbsd_cats.img
+	-rw-r--r--  1 debug  wheel     2465354 Mar 24 11:44 netbsd.aout-GENERIC.gz
+	-rw-r--r--  1 debug  wheel  2930841600 Mar 24 14:02 overlay.img
+	-rw-r--r--  1 debug  wheel      715538 Mar 24 14:02 overlay.img.map
+	$ du overlay.img
+	864     overlay.img
+</b>
+</pre>
+
+<p>The .map file is simply a raw bitmap telling which blocks of the 
+overlay file that are in use.
+
+
+
+
+
+<p><br>
+<a name="filexfer"></a>
+<h3>Transfering files to/from the guest OS:</h3>
+
+If the emulated machine supports networking (see <a 
+href="networking.html#intro">this section</a> for more info), then the easiest
+way to transfer files is probably to use FTP or similar methods.
+
+<p>There is another way of transfering files which works for any kind of 
+emulated machine which supports disks (either SCSI or IDE). Any file can 
+be supplied as a disk image. For example, consider the following:<pre>
+	$ <b>gxemul -XEcats -d nbsd_cats.img -d archive.tar.gz netbsd-GENERIC</b>
+</pre>
+This will start NetBSD/cats with <tt>nbsd_cats.img</tt> as IDE master on
+controller 0 (wd0), and <tt>archive.tar.gz</tt> as IDE slave on controller
+0 (wd1). From inside NetBSD, it is now possible to extract the files using 
+the following command:<pre>
+	(inside emulated NetBSD/cats)
+	# <b>tar zxvf /dev/wd1c</b>
+</pre>
+Don't worry if NetBSD complains about lack of disklabel; it doesn't
+matter. On some machines, NetBSD uses <tt>wd1d</tt> instead of 
+<tt>wd1c</tt> for the entire disk.
+There is also a minor problem: reading the end of the disk image. If you 
+experience problems untaring archives like this, then pad out the archive 
+first with some zeroes.
+
+<p>Transfering files <i>out</i> from the emulated operating system to the 
+host can be done the same way. First, prepare an empty archive file:<pre>
+	$ <b>dd if=/dev/zero of=newarchive.tar bs=1024 count=1 seek=10000</b>
+</pre>This example created a 10 MB empty file. Then, start the emulator
+like this:<pre>
+	$ <b>gxemul -XEcats -d nbsd_cats.img -d archive.tar netbsd-GENERIC</b>
+</pre>
+and transfer files by creating an archive directly onto the disk image:<pre>
+	(inside emulated NetBSD/cats)
+	# <b>tar cvf /dev/wd1c filenames</b>
+</pre>
+where filenames are the files or directories to transfer.
+
+
+
+
+
+<p><br>
+<a name="largeimages"></a>
+<h3>How to extract large gzipped disk images:</h3>
+
+Unix filesystems usually support large files with "holes". Holes are 
+zero-filled blocks that don't actually exist on disk. This is very 
+practical for emulated disk images, as it is possible to create a very 
+large disk image without using up much space at all.
+
+<p>
+Using gzip and gunzip on disk images can be <i>very</i> slow, as these 
+files can be multiple gigabytes large, but this is usually necessary for
+transfering disk images over the internet. If you receive a gzipped disk 
+image, say disk.img.gz, and run a naive
+<p>
+<pre>
+	$ <b>gunzip disk.img.gz</b>
+</pre>
+<p>
+on it, you will not end up with an optimized file unless 
+gunzip supports that. (In my experiments, it doesn't.)  In plain English, 
+if you type <b>ls -l</b> and the filesize is 9 GB, it will actually occupy 
+9 GB of disk space! This is often unacceptable.
+<p>
+Using a simple tool which only writes blocks that are non-zero, a lot of 
+space can be saved. Compile the program cp_removeblocks in the 
+experiments/ directory, and type:
+<p>
+<pre>
+	$ <b>gunzip -c disk.img.gz | cp_removeblocks /dev/stdin disk.img</b>
+</pre>
+
+<p>
+This will give you a disk.img which looks like it is 9 GB, and works like
+the real file, but the holes are not written out to the disk. (You can see
+this by running for example <b>du disk.img</b> to see the physical block
+count.)
+
+
+
+
+
+
+<p><br>
+<a name="promdump"></a>
+<h3>Using a PROM dump from a real machine:</h3>
+
+Raw PROM images from real machines can, in a few cases, be used in
+the emulator. ROM code is usually much more sensitive to correctness
+of the emulator than operating system kernels or userland programs
+are, so don't expect any PROM image to just magically work.
+
+
+<p>
+<h4>Dumping the PROM on a DECstation 5000/125:</h4>
+
+The image first needs to be extracted from the machine. There are
+several ways to do this.
+
+<ul>
+  <li>Use hardware to read the PROM chip(s) directly. Not easy if you
+	don't have such a hardware reader.
+  <li>Copy the PROM memory range into a file, from a running
+	operating system. You need a running OS, and it must
+	have access to the PROM memory range. NetBSD, for example,
+	doesn't allow that from userland.
+  <li>Hook up a serial console and dump using the PROM's own dump
+	command.
+</ul>
+
+<p>The easiest way is to hook up a serial console. The terminal must be
+able to capture output to a file.
+
+<p>These are approximately the commands that I used:
+<pre>
+        >><b>cnfg</b>                             <i>Show machine configuration</i>
+
+        >><b>printenv</b>                         <i>Show environment variables</i>
+
+        >><b>setenv more 0</b>                    <i>This turns off the More messages</i>
+
+        >><b>e -x 0xbfc00000:0xbfffffff</b>       <i>Dump the PROM data</i>
+</pre>
+
+<p>Remember that DECstations are little endian, so if the dump data
+looks like this:
+<pre>
+        bfc00000:  0x0bf0007e
+</pre>
+then the bytes in memory are actually 0x7e, 0x00, 0xf0, and 0x0b.
+
+<p>At 9600 bps, about 10KB can be dumped per minute, so it takes a while.
+Once enough of the PROM has been dumped, you can press CTRL-C to break out.
+Then, restore the more environment variable:
+<pre>
+        >><b>setenv more 24</b>
+</pre>
+
+<p>Now, convert the data you just saved (little-endian words -> bytes),
+and store in a file. Let's call this file DECstation5000_125_promdump.bin.
+<pre>
+        $ <b>decprom_dump_txt_to_bin DECstation5000_125_promdump.txt DECstation5000_125_promdump.bin</b>
+</pre>
+
+This binary image can now be used in the emulator:
+<pre>
+	$ <b>gxemul -e 3min -Q -M128 -q 0xbfc00000:DECstation5000_125_promdump.bin</b>
+
+	KN02-BA V5.7e   
+	?TFL:  3/scc/access (1:Ln1 reg-12: actual=0x00 xpctd=0x01) [KN02-BA]
+	?TFL:  3/scc/io (1:Ln0 tx bfr not empty. status=0X 0) [KN02-BA]
+	...
+	--More--?TFL: 3/scsi/cntl (CUX, cause= 1000002C)
+	>><b>?</b>
+	 ? [cmd]
+	 boot [[-z #] [-n] #/path [ARG...]]
+	 cat SCRPT
+	 cnfg [#]
+	 d [-bhw] [-S #] RNG VAL
+	 e [-bhwcdoux] [-S #] RNG
+	 erl [-c]
+	 go [ADR]
+	 init [#] [-m] [ARG...]
+	 ls [#]
+	 passwd [-c] [-s]
+	 printenv [EVN]
+	 restart
+	 script SCRPT
+	 setenv EVN STR
+	 sh [-belvS] [SCRPT] [ARG..]
+	 t [-l] #/STR [ARG..]
+	 unsetenv EVN
+	>><b>cnfg</b>
+	 3: KN02-BA  DEC      V5.7e    TCF0  (128 MB)
+	                                     (enet: 00-00-00-00-00-00)
+	                                     (SCSI = 7)
+	 0: PMAG-BA  DEC      V5.3a    TCF0
+	>><b>printenv</b>
+	 boot=
+	 testaction=q
+	 haltaction=h
+	 more=24
+	 #=3
+	 console=*
+	 osconsole=3
+	>>
+</pre>
+
+<p><font color="#ff0000">(Note: at the moment, this doesn't work.
+I must have broken something when fixing something else, but this
+is what it looked like at the time.)</font>
+
+<p>During bootup, the PROM complains <i>a lot</i> about hardware failures.
+That's because the emulator doesn't emulate the hardware well enough yet.
+
+<p>The command line options used are: <tt>-e 3min</tt> for
+"DECstation 3min" (5000/1xx), <tt>-Q</tt> to supress the emulator's own PROM
+call emulation, <tt>-M128</tt> for 128MB RAM (because GXemul doesn't correctly
+emulate memory detection well enough for the PROM to accept, so it will
+always believe there is 128MB ram anyway), and <tt>-q</tt> to supress debug messages.
+The <tt>0xbfc00000</tt> in front of the filename tells GXemul that it is a raw
+binary file which should be loaded at a specific virtual address.
+
+
+<p><br>
+<a name="promdump_o2"><h4>Dumping the PROM on a SGI O2:</h4></a>
+
+<a href="machines/machine_sgi_ip32.html">Moved here</a>.
+
+
+
+
+</p>
+
+</body>
+</html>

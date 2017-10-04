@@ -1,0 +1,20 @@
+#!/bin/sh
+
+pwd
+
+rm -rf *.o
+rm ROM.*
+
+mipsel-unknown-elf-gcc -c start.S -o start.o -EL
+mipsel-unknown-elf-gcc -c exception.S -o exception.o -EL
+mipsel-unknown-elf-gcc -c utils.S -o utils.o -EL
+mipsel-unknown-elf-gcc -c uart_io.c -o uart_io.o -EL -O2 -nostartfiles -nostdlib -nodefaultlibs
+mipsel-unknown-elf-gcc -c init.c -o init.o -EL -O2 -nostartfiles -nostdlib -nodefaultlibs
+mipsel-unknown-elf-gcc -c debug_stub.c -o debug_stub.o -EL -G 0 -O2 -nostartfiles -nostdlib -nodefaultlibs
+
+mipsel-unknown-elf-ld init.o utils.o uart_io.o debug_stub.o -Tlink.ld -EL -o ROM.bin --oformat=binary
+mipsel-unknown-elf-ld init.o utils.o uart_io.o debug_stub.o -Tlink.ld -EL -o ROM.elf
+
+mipsel-unknown-elf-objdump -xsd ROM.elf > rom.lst
+
+./MifMaker ROM.bin ROM.mif

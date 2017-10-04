@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd backtracking_pipeline/faddtree
+set test "backtracking_pipeline/faddtree"
+set expected {return_val=\s+18160\s+.*Cycles:\s+1213\s+}
+
+run-test $test $expected
+
+cd ../..

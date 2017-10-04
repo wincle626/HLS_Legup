@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <systemtable filter="All">
+  <columns>
+   <connections preferredWidth="159" />
+   <irq preferredWidth="34" />
+   <inputclock preferredWidth="57" />
+   <name preferredWidth="222" />
+   <export visible="0" />
+  </columns>
+ </systemtable>
+ <clocktable>
+  <columns>
+   <clockname preferredWidth="323" />
+   <clocksource preferredWidth="319" />
+   <frequency preferredWidth="316" />
+   <pipeline visible="0" preferredWidth="58" />
+  </columns>
+ </clocktable>
+ <window width="1628" height="903" x="171" y="83" />
+ <library
+   expandedCategories="Library/Processor Additions,Library/PLL,Library/Peripherals/Microcontroller Peripherals,Library/SLS/Communication/USB,Library/Interface Protocols/Ethernet/Submodules,Library/SLS/Communication,Library/Interface Protocols/ASI,Library/Interface Protocols/PCI,Library/Interface Protocols/Serial,Library/Peripherals/Display,Project/JTAG,Library/Peripherals/Debug and Performance,Library/Merlin Components,Library/Peripherals/FPGA Peripherals,Library/Video and Image Processing,Library,Library/Bridges and Adapters,Library/Interface Protocols,Library/Interface Protocols/Ethernet/Example,Project,Library/Interface Protocols/Interlaken,Library/Video and Image Processing/IO,Library/Memories and Memory Controllers/On-Chip,Library/Bridges and Adapters/Streaming,Library/Memories and Memory Controllers/SRAM,Library/Interface Protocols/SDI,Library/Peripherals,Library/Bridges and Adapters/Memory Mapped,Library/Legacy Components,Library/Memories and Memory Controllers/SDRAM,Library/SLS,Library/Avalon Verification Suite,Library/Interface Protocols/Ethernet,Library/Processors,Library/Memories and Memory Controllers/Flash,Library/Memories and Memory Controllers/DMA,Library/Peripherals/Multiprocessor Coordination,Library/Memories and Memory Controllers" />
+ <debug showDebugMenu="0" />
+</preferences>

@@ -1,0 +1,20 @@
+load_lib legup.exp
+
+set expected {# RESULT:\s+PASS\s+}
+set hybridexpected {# RESULT: PASS}
+
+cd ../examples/parallel/openmp/boxfilter
+set test "boxfilter OpenMP"
+run-test-hybridparallel-once $test $hybridexpected
+
+set test "boxfilter OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/boxfilter
+set test "boxfilter Pthreads"
+run-test-hybrid-once $test $hybridexpected
+
+set test "boxfilter Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

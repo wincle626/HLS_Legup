@@ -1,0 +1,87 @@
+#!/bin/sh
+
+count=0
+arith_mean=0
+geo_mean=1
+
+function check_results {
+	BENCHMARK=${1##*/}
+	if [ -d $BENCHMARK ]; then
+		echo "Benchmark: $BENCHMARK"
+		cd $BENCHMARK
+		
+		# Check the result (make sure a 0 is output) -- exit otherwise
+		find transcript | xargs grep -ni -A200 "# --- STARTING EXEC ---" > transcript_temp
+		RESULT=`find transcript_temp | xargs grep -ni "# 0"`
+		rm transcript_temp
+		if [ "$RESULT" != "" ]; then
+			echo -e "Simulation correct!"
+		else
+			# Determine whether its incomplete or incorrect
+			RESULT=`find transcript | xargs grep -ni "# Simulation Breakpoint"`
+			if [ "$RESULT" != "" ]; then
+				echo -e "Simulation INCORRECT.\n"
+			else
+				echo -e "Simulation INCOMPLETE.\n"
+			fi
+			cd ../..
+			return
+		fi
+		
+		# Check for high confidence
+		RESULT=`find top.pow.summary | xargs grep -ni "Power Estimation Confidence : High: user provided sufficient toggle rate data"`
+		if [ "$RESULT" != "" ]; then
+			echo -e "Power Estimation Confidence : High"
+		else
+			echo -e "Power Estimation Confidence NOT High. Error.\n"
+			cd ..
+			return
+		fi
+		
+		# Output total dynamic power
+		RESULT=`find top.pow.summary | xargs grep -ni "Core Dynamic Thermal Power Dissipation"`
+		echo -e "${RESULT:2}\n"
+		
+		# Update means
+		dyn_pow=`echo ${RESULT:5} | tr -d '[a-zA-Z :]'`
+		arith_mean=`echo "scale=4; $arith_mean+$dyn_pow" | bc`
+		geo_mean=`echo "scale=4; $geo_mean*$dyn_pow" | bc`
+		count=$[$count+1]
+		cd ..
+	else
+		echo "No data for $BENCHMARK"
+	fi
+}
+
+if [ "$1" == "-all" ]; then
+	check_results chstone/adpcm
+	check_results chstone/aes
+	check_results chstone/blowfish
+	check_results chstone/dfadd
+	check_results chstone/dfdiv
+	check_results chstone/dfmul
+	check_results chstone/dfsin
+	check_results chstone/gsm
+	check_results chstone/jpeg
+	check_results chstone/mips
+	check_results chstone/motion
+	check_results chstone/sha
+	check_results dhrystone
+	
+	# Calculate means
+	arith_mean=`echo "scale=4; $arith_mean/$count" | bc`
+	geo_mean=`echo "scale=4; e(l($geo_mean)/$count)" | bc -l`
+
+	# Display results
+	echo "-------------------------------------------------"
+	echo "Legup HW-only Power Results  "
+	echo "-------------------------------------------------"
+	echo "Number of correct benchmarks: $count of 13"
+	echo "Arithmetic mean = $arith_mean"
+	echo "Geometric mean = $geo_mean"
+	echo "-------------------------------------------------"
+elif [ "$1" == "" ]; then
+	echo "Invalid! Either use '-all' or give a benchmark (bench or chstone/bench)"
+else
+	check_results $1
+fi

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+cd adpcm/
+make cleanall
+cd ../aes/
+make cleanall
+cd ../blowfish/
+make cleanall
+cd ../dfadd/
+make cleanall
+cd ../dfdiv/
+make cleanall
+cd ../dfmul/
+make cleanall
+cd ../dfsin/
+make cleanall
+cd ../dhrystone/
+make cleanall
+cd ../gsm/
+make cleanall
+cd ../jpeg/
+make cleanall
+cd ../mips/
+make cleanall
+cd ../motion/
+make cleanall
+cd ../sha/
+make cleanall
+cd ..
+rm -rf sim_results.log

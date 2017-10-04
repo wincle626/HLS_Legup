@@ -1,0 +1,72 @@
+#!/bin/bash
+
+NUM_INSTRS=500	# later can introduce loops
+
+# Instruction Classes
+ARITH_DST="addu,and,or,sllv,slt,sltu,srlv,sub,subu,xor"		# D = F(S,T)
+
+
+# Generate Random Number ($1 --> upper bound)
+function rand() {
+	local number=$RANDOM # $RANDOM returns in range 0..2^8
+	let "number %= $1"
+	echo "$number"
+}
+
+
+# Compile assembly to elf (and sdram.dat) ($1 --> filename.s)
+function assemble() {
+	NAME=${1%.*}
+	OUT_NAME="$NAME"
+	
+	# Find name so we don't overwrite previously created files
+	if [ -f $OUT_NAME.elf ]; then
+		IDX=1
+		while [ -f $OUT_NAME.$IDX.elf ]; do
+			let "IDX += 1"
+		done
+		OUT_NAME="$NAME.$IDX"
+	fi
+	
+	MIPS_PREFIX=../../../../mips-binutils/bin/mipsel-elf-
+	${MIPS_PREFIX}as $NAME.s -mips1 -O0 -mabi=32 -o $OUT_NAME.o -EL
+	${MIPS_PREFIX}ld -Ttext 0x800000 -e main $OUT_NAME.o -EL -o $OUT_NAME.elf
+	${MIPS_PREFIX}objdump -Dz $OUT_NAME.elf > $OUT_NAME.src
+	
+	g++ elf2sdram.cpp -O3 -o elf2sdram
+	elf2sdram ${OUT_NAME}.elf ${OUT_NAME}.sdram.dat
+	#elf2mif ${OUT_NAME}.elf ${OUT_NAME}.mif
+	rm $OUT_NAME.o
+	#rm $NAME.s
+	#rm $OUT_NAME.*dump
+	#rm $OUT_NAME.elf.src
+}
+	
+FILE=assembly/add.li.s
+echo -e "\t.text\n\t.globl\tmain\n\t.ent\tmain\nmain:" > $FILE
+
+for i in `seq 1 $NUM_INSTRS`; do	
+	RAND1=`rand 1000000`
+	RAND2=`rand 1000000`
+	echo -e "\tli \$10, ${RAND1}" >> $FILE
+	echo -e "\tli \$11, ${RAND2}" >> $FILE
+	echo -e "\tadd \$9, \$10, \$11" >> $FILE
+done
+
+echo -e "\tjr \$ra\n\t.end\tmain" >> $FILE
+
+assemble $FILE
+
+
+# create rest
+INSTR_LIST=${ARITH_DST//,/ }
+for op in $(echo $INSTR_LIST); do
+	sed "s|add \$9, \$10, \$11|${op} \$9, \$10, \$11|g" assembly/add.li.s > assembly/${op}.li.s
+	assemble assembly/${op}.li.s
+done
+
+# create li.add.s
+grep -v "add \$9," assembly/add.li.s > assembly/li.add.s
+assemble assembly/li.add.s
+
+exit

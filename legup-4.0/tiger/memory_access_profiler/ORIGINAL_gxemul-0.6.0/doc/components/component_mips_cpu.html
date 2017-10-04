@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>GXemul: Components: mips_cpu</title>
+  <meta name="robots" content="noarchive,nofollow,noindex">
+</head>
+<body style="font-family : sans-serif;">
+
+<!-- 10 lines header.  -->
+
+<h1>GXemul: Components: <tt>mips_cpu</tt></h1>
+<p>
+
+<a href="../">Back to the index.</a>
+<p><a href="../components.html">Back to the component index.</a>
+
+
+<p><br><h2><tt>mips_cpu</tt> component</h2>
+
+This component represents a
+<a href="http://en.wikipedia.org/wiki/MIPS_architecture">MIPS</a>-like 
+<a href="component_cpu.html">CPU component</a>.
+
+<p>Features that have been implemented:
+<ul>
+	<li>Some instruction disassembly.
+</ul>
+
+<p>TODO: Almost everything.
+
+<p>The following example shows, in addition to starting GXemul with a
+template machine, how to add <tt>mips_cpu</tt> components to the configuration.
+To add a specific CPU model, e.g. R4400, type <tt>mips_cpu(model=R4400)</tt>
+instead of just <tt>mips_cpu</tt>.
+
+<pre>
+$ <b>gxemul -V -e testmips</b>
+GXemul (unknown version)      Copyright (C) 2003-2009  Anders Gavare
+
+  mainbus0
+  |-- ram0  (32 MB at offset 0)
+  |-- rom0  (16 MB at offset 0x1fc00000)
+  \-- cpu0  (5KE, 100 MHz)
+
+GXemul> <b>add mips_cpu mainbus0</b>
+GXemul> <b>root</b>
+  root
+  \-- machine0  [testmips]
+      \-- mainbus0
+          |-- ram0  (32 MB at offset 0)
+          |-- rom0  (16 MB at offset 0x1fc00000)
+          |-- cpu0  (5KE, 100 MHz)
+          \-- cpu1  (5KE, 100 MHz)
+
+  accuracy = cycle
+  step     = 0
+GXemul> <b>add mips_cpu(model=R4400) mainbus0</b>
+GXemul> <b>root</b>
+  root
+  \-- machine0  [testmips]
+      \-- mainbus0
+          |-- ram0  (32 MB at offset 0)
+          |-- rom0  (16 MB at offset 0x1fc00000)
+          |-- cpu0  (5KE, 100 MHz)
+          |-- cpu1  (5KE, 100 MHz)
+          \-- cpu2  (R4400, 100 MHz)
+
+  accuracy = cycle
+  step     = 0
+GXemul> 
+</pre>
+
+<p>
+Source code documentation for this component can be found
+<a href="../doxygen/html/classMIPS__CPUComponent.html">here</a>.
+
+<p><br><hr>
+</body>
+</html>

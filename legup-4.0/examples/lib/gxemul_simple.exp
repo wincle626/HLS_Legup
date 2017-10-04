@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+###################################################
+#
+# This script runs gxemul with the script arguments
+# and quits gxemul upon completion
+#
+###################################################
+
+log_user 0
+eval spawn gxemul $argv
+log_user 1
+
+## wait until gxemul breaks
+expect {
+	"BREAKPOINT: pc" {
+		send quit\r
+		interact
+	}
+    default {
+        puts "Gxemul Error:"
+        puts "$expect_out(buffer)"
+
+        puts "If you are using a gxemul older than 0.6 run:"
+        puts "export GXEMUL_OPT=testmips"
+    }
+}

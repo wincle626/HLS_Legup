@@ -1,0 +1,57 @@
+#####################################################################################
+#   MIPS INSTRUCTION SET                                                            #	--> c = assembly created, r = simulation and powerplay run
+#####################################################################################
+# Arithmetic                                                                        #
+#   add $d, $s, $t          -- Add (with overflow)                                  #	c r
+#   addi $t, $s, imm        -- Add immediate (with overflow)                        #	c r
+#   addiu $t, $s, imm       -- Add immediate unsigned (no overflow)                 #	c r
+#   addu $d, $s, $t         -- Add unsigned (no overflow)                           #	c r
+#   and $d, $s, $t          -- Bitwise and                                          #	c r
+#   andi $t, $s, imm        -- Bitwise and immediate                                #	c r
+#   div $s, $t              -- Divide                                               #	
+#   divu $s, $t             -- Divide unsigned                                      #	
+#   mult $s, $t             -- Multiply                                             #	
+#   multu $s, $t            -- Multiply unsigned                                    #	
+#   or $d, $s, $t           -- Bitwise or                                           #	c
+#   ori $t, $s, imm         -- Bitwise or immediate                                 #	c r
+#   sll $d, $t, h           -- Shift left logical                                   #	c 	-- Warning: Improper shift amount
+#   sllv $d, $t, $s         -- Shift left logical variable                          #	c r
+#   slt $d, $s, $t          -- Set on less than (signed)                            #	
+#   slti $t, $s, imm        -- Set on less than immediate (signed)                  #		
+#   sltiu $t, $s, imm       -- Set on less than immediate unsigned                  #	
+#   sltu $d, $s, $t         -- Set on less than unsigned                            #	
+#   sra $d, $t, h           -- Shift right arithmetic                               #	
+#   srl $d, $t, h           -- Shift right logical                                  #	
+#   srlv $d, $t, $s         -- Shift right logical variable                         #		
+#   sub $d, $s, $t          -- Subtract                                             #	c r
+#   subu $d, $s, $t         -- Subtract unsigned                                    #	c r
+#   xor $d, $s, $t          -- Bitwise exclusive or                                 #	
+#   xori $t, $s, imm        -- Bitwise exclusive or immediate                       #	
+#####################################################################################	
+# Branch/Jumping                                                                    #	
+#   beq $s, $t, offset      -- Branch on equal                                      #	
+#   bgez $s, offset         -- Branch on greater than or equal to zero              #	
+#   bgezal $s, offset       -- Branch on greater than or equal to zero and link     #	
+#   bgtz $s, offset         -- Branch on greater than zero                          #	
+#   blez $s, offset         -- Branch on less than or equal to zero                 #	
+#   bltz $s, offset         -- Branch on less than zero                             #	
+#   bltzal $s, offset       -- Branch on less than zero and link                    #	
+#   bne $s, $t, offset      -- Branch on not equal                                  #	
+#   j target                -- Jump                                                 #	
+#   jal target              -- Jump and link                                        #	
+#   jalr $s                 -- Jump and link register                               #	
+#   jr $s                   -- Jump register                                        #	
+#####################################################################################
+# Load/Store                                                                        #	
+#   lb $t, offset($s)       -- Load byte                                            #		
+#   lui $t, imm             -- Load upper immediate                                 #	c r
+#   lw $t, offset($s)       -- Load word                                            #	c r
+#   sb $t, offset($s)       -- Store byte                                           #	
+#   sw $t, offset($s)       -- Store word                                           #	c
+#####################################################################################
+# Other                                                                             #
+#   mfhi $d                 -- Move from HI                                         #
+#   mflo $d                 -- Move from LO                                         #
+#   syscall                 -- System call                                          #
+#   nop                     -- No Operation                                         #
+#####################################################################################

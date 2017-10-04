@@ -1,0 +1,3 @@
+cp tiger_inst.v.copy tiger_inst.v
+
+vsim -c -do "source run_sim_nowave.tcl; quit;"

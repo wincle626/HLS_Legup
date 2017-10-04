@@ -1,0 +1,15 @@
+load_lib legup.exp
+
+set expected {# Result:\s+55000\s+}
+
+cd ../examples/parallel/openmp/add
+
+set test "add OpenMP_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../pthreads/add
+
+set test "add Pthreads_Pure_HW"
+run-test-parallel-once $test $expected
+
+cd ../../../

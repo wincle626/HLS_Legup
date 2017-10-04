@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd ../pcie/examples/byref_parallel
+set test "byref_parallel"
+
+set pcieexpected {avm_mem_readdata:\s+000000200000001c\n#\s+avm_mem_readdata:\s+0000002800000024}
+run-test-pcie $test $pcieexpected
+
+cd ../../../examples

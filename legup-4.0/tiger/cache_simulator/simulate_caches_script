@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#simulate multiple different cache configurations. 
+#input argument $1 specifies the memory accesses file 
+#input argument $2 specifies the csv file to append  results to
+
+
+for ((cachesize = 2; cachesize <= 32; cachesize = cachesize*2))
+do
+    for ((linesize = 16; linesize <= 128; linesize = linesize*2))
+    do
+        for ((ways = 1; ways <= 8; ways = ways*2))
+        do
+        ./cache_sim -file $1 -cachesize $cachesize -ways $ways -linesize $linesize -replacementpolicy LRU -prefetch 0 -savecsv $2
+            for ((prefetchh = 1; prefetchh <= 0; prefetchh = prefetchh + 1))
+            do
+        ./cache_sim -file $1 -cachesize $cachesize -ways $ways -linesize $linesize -replacementpolicy LRU -prefetch $prefetchh -savecsv $2
+            done
+
+        done
+    done
+done
+

@@ -1,0 +1,49 @@
+function = vector_add
+vector_add 0 0x00 0x0f
+vector_add 1 0x05 0x0e
+vector_add 2 0x0a 0x0d
+vector_add 3 0x0f 0x0c
+vector_add 4 0x14 0x0b
+vector_add 5 0x19 0x0a
+vector_add 6 0x1e 0x09
+vector_add 7 0x23 0x08
+poll_complete 0
+# Expected result: 15
+poll_complete 1
+# Expected result: 19
+poll_complete 2
+# Expected result: 23
+poll_complete 3
+# Expected result: 27
+poll_complete 4
+# Expected result: 31
+poll_complete 5
+# Expected result: 35
+poll_complete 6
+# Expected result: 39
+poll_complete 7
+# Expected result: 43
+vector_add 0 0x28 0x07
+vector_add 1 0x2d 0x06
+vector_add 2 0x32 0x05
+vector_add 3 0x37 0x04
+vector_add 4 0x3c 0x03
+vector_add 5 0x41 0x02
+vector_add 6 0x46 0x01
+vector_add 7 0x4b 0x00
+poll_complete 0
+# Expected result: 47
+poll_complete 1
+# Expected result: 51
+poll_complete 2
+# Expected result: 55
+poll_complete 3
+# Expected result: 59
+poll_complete 4
+# Expected result: 63
+poll_complete 5
+# Expected result: 67
+poll_complete 6
+# Expected result: 71
+poll_complete 7
+# Expected result: 75

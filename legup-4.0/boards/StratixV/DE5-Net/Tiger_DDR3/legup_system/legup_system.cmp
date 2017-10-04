@@ -1,0 +1,32 @@
+	component legup_system is
+		port (
+			clk_clk                       : in    std_logic                     := 'X';             -- clk
+			ddr3_memory_mem_a             : out   std_logic_vector(13 downto 0);                    -- mem_a
+			ddr3_memory_mem_ba            : out   std_logic_vector(2 downto 0);                     -- mem_ba
+			ddr3_memory_mem_ck            : out   std_logic_vector(0 downto 0);                     -- mem_ck
+			ddr3_memory_mem_ck_n          : out   std_logic_vector(0 downto 0);                     -- mem_ck_n
+			ddr3_memory_mem_cke           : out   std_logic_vector(0 downto 0);                     -- mem_cke
+			ddr3_memory_mem_cs_n          : out   std_logic_vector(0 downto 0);                     -- mem_cs_n
+			ddr3_memory_mem_dm            : out   std_logic_vector(7 downto 0);                     -- mem_dm
+			ddr3_memory_mem_ras_n         : out   std_logic_vector(0 downto 0);                     -- mem_ras_n
+			ddr3_memory_mem_cas_n         : out   std_logic_vector(0 downto 0);                     -- mem_cas_n
+			ddr3_memory_mem_we_n          : out   std_logic_vector(0 downto 0);                     -- mem_we_n
+			ddr3_memory_mem_reset_n       : out   std_logic;                                        -- mem_reset_n
+			ddr3_memory_mem_dq            : inout std_logic_vector(63 downto 0) := (others => 'X'); -- mem_dq
+			ddr3_memory_mem_dqs           : inout std_logic_vector(7 downto 0)  := (others => 'X'); -- mem_dqs
+			ddr3_memory_mem_dqs_n         : inout std_logic_vector(7 downto 0)  := (others => 'X'); -- mem_dqs_n
+			ddr3_memory_mem_odt           : out   std_logic_vector(0 downto 0);                     -- mem_odt
+			ddr3_oct_rzqin                : in    std_logic                     := 'X';             -- rzqin
+			ddr3_status_local_init_done   : out   std_logic;                                        -- local_init_done
+			ddr3_status_local_cal_success : out   std_logic;                                        -- local_cal_success
+			ddr3_status_local_cal_fail    : out   std_logic;                                        -- local_cal_fail
+			leap_debug_port_select        : in    std_logic_vector(2 downto 0)  := (others => 'X'); -- select
+			leap_debug_port_lights        : out   std_logic_vector(17 downto 0);                    -- lights
+			leap_profiling_signals_start  : out   std_logic;                                        -- start
+			leap_profiling_signals_end    : out   std_logic;                                        -- end
+			reset_reset_n                 : in    std_logic                     := 'X';             -- reset_n
+			uart_wire_rxd                 : in    std_logic                     := 'X';             -- rxd
+			uart_wire_txd                 : out   std_logic                                         -- txd
+		);
+	end component legup_system;
+

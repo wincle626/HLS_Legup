@@ -1,0 +1,9 @@
+load_lib legup.exp
+
+cd pipeline/if-conv-mem
+set test "pipeline/if-conv-mem"
+set expected {return_val=\s+464\s+.*Cycles:\s+248\s+}
+
+run-test $test $expected
+
+cd ../..

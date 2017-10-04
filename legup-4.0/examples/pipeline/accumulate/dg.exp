@@ -1,0 +1,11 @@
+load_lib legup.exp
+
+cd pipeline/accumulate
+set test "pipeline/accumulate"
+set expected {return_val=\s+4368\s+.*Cycles:\s+229\s+}
+set gxexpected {reg: v0 = 0x0000000000001110}
+
+run-test $test $expected
+run-test-gx $test $gxexpected
+
+cd ../..
